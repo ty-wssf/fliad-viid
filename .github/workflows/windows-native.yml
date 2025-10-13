@@ -41,7 +41,11 @@ jobs:
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
           mvn clean install
-          mvn package
+
+      - name: Build with Native Image
+        run: |
+          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+          mvn clean native:compile -P native -DskipTests
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
