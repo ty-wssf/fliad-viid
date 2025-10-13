@@ -1,0 +1,67 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Build linux and mac native image
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        # see: https://docs.github.com/zh/actions/using-jobs/choosing-the-runner-for-a-job
+        # os: ['ubuntu-20.04', 'macos-12']
+        os: [ 'ubuntu-20.04' ]
+    name: build - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+
+      # 缓存Maven的本地仓库
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - uses: actions/checkout@v3 # 这是GitHub提供的一个动作（action），用于将代码从GitHub仓库检出到工作目录中。v3是该动作的版本号。
+      - name: GitHub Action for GraalVM JDK 21
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21' # for a specific JDK 21;
+          distribution: 'graalvm' # New 'distribution' option
+          cache: maven
+
+      - name: Build with Maven
+        run: |
+          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+          mvn clean install
+
+      - name: Build with Native Image
+        run: |
+          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+          mvn clean native:compile -P native -DskipTests
+
+      - name: Upload artifacts app
+        uses: actions/upload-artifact@v4
+        with:
+          name: fliad-viid-app-artifacts
+          path: fliad-web-app/target/
+          if-no-files-found: error # 如果未找到文件，则报错
+
+
+    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+    #- name: Update dependency graph
+    #  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
