@@ -1,0 +1,1 @@
+import{h as t}from"./index-DcffTgQN.js";const e=(e,...r)=>t("/auth/third/"+e,...r),r={thirdPage:t=>e("page",t,"get"),thirdRender:t=>e("render",t,"get"),thirdCallback:t=>e("callback",t,"get")};export{r as t};

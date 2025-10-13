@@ -1,0 +1,1 @@
+import{h as i}from"./index-DcffTgQN.js";const t=(t,...e)=>i("/viid/notification/"+t,...e),e={viidSubscribeNotificationsPage:i=>t("page",i,"get"),viidSubscribeNotificationsSubmitForm:(i,e=!1)=>t(e?"edit":"add",i),viidSubscribeNotificationsDelete:i=>t("delete",i),viidSubscribeNotificationsDetail:i=>t("detail",i,"get")};export{e as v};

@@ -1,0 +1,1 @@
+import{h as a}from"./index-DcffTgQN.js";const e=(e,...i)=>a("/viid/cascadeplatform/"+e,...i),i={viidCascadePlatformPage:a=>e("page",a,"get"),viidCascadePlatformList:a=>e("list",a,"get"),viidCascadePlatformSubmitForm:(a,i=!1)=>e(i?"edit":"add",a),viidCascadePlatformDelete:a=>e("delete",a),viidCascadePlatformDetail:a=>e("detail",a,"get")};export{i as v};
