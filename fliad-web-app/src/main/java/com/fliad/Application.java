@@ -17,6 +17,7 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.*;
 import com.fliad.common.annotation.CommonWrapper;
 import com.fliad.core.config.CommonWrapperInterceptor;
+import org.noear.solon.annotation.SolonMain;
 
 /**
  * Solon 方式启动类
@@ -25,6 +26,7 @@ import com.fliad.core.config.CommonWrapperInterceptor;
  * @date 2021/12/18 16:57
  */
 @Slf4j
+@SolonMain
 @Controller
 public class Application {
 
