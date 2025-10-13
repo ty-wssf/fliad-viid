@@ -47,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: fliad-viid-app-artifacts
-          path: target/
+          path: fliad-web-app/target/
           if-no-files-found: error # 如果未找到文件，则报错
 
 
