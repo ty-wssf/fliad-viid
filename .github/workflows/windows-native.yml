@@ -45,6 +45,7 @@ jobs:
       - name: Build with Native Image
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+          cd fliad-web-app
           mvn clean native:compile -P native -DskipTests
 
       - name: Upload artifacts app
