@@ -55,6 +55,13 @@ jobs:
           path: fliad-web-app/target/fliad-web-app.exe
           if-no-files-found: error # 如果未找到文件，则报错
 
+      - name: Create Release and Attach Artifact
+        uses: softprops/action-gh-release@v2
+        with:
+          files: fliad-web-app/target/fliad-web-app.exe  # 将构建产物作为 Release 附件上传
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 自动生成的 Token，用于创建 Release
+
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
