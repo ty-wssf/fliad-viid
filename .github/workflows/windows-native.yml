@@ -30,10 +30,10 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - uses: actions/checkout@v3 # 这是GitHub提供的一个动作（action），用于将代码从GitHub仓库检出到工作目录中。v3是该动作的版本号。
-      - name: GitHub Action for GraalVM JDK 21
+      - name: GitHub Action for GraalVM JDK 25
         uses: graalvm/setup-graalvm@v1
         with:
-          java-version: '17' # for a specific JDK 21;
+          java-version: '25' # for a specific JDK 25;
           distribution: 'graalvm' # New 'distribution' option
           cache: maven
 
