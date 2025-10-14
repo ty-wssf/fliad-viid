@@ -51,8 +51,7 @@ jobs:
       # 尝试运行可执行文件进行测试，设置超时时间并捕获输出
       - name: Test Run Native Executable
         run: |
-          cd fliad-web-app/target
-          timeout /t 10 & fliad-web-app.exe || echo "应用已启动或超时退出"
+          timeout /t 10 & "D:\a\fliad-viid\fliad-viid\fliad-web-app\target\fliad-web-app.exe" || echo "应用已启动或超时退出"
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
