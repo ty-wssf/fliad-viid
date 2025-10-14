@@ -48,16 +48,11 @@ jobs:
           cd fliad-web-app
           mvn clean native:compile -P native -DskipTests
 
-      # 尝试运行可执行文件进行测试，设置超时时间并捕获输出
-      - name: Test Run Native Executable
-        run: |
-          timeout /t 10 & "D:\a\fliad-viid\fliad-viid\fliad-web-app\target\fliad-web-app.exe" || echo "应用已启动或超时退出"
-
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
         with:
-          name: fliad-viid-app-artifacts
-          path: fliad-web-app/target/
+          name: fliad-web-app.exe
+          path: fliad-web-app/target/fliad-web-app.exe
           if-no-files-found: error # 如果未找到文件，则报错
 
 
