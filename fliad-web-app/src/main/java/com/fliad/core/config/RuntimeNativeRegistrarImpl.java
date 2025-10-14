@@ -3,6 +3,7 @@ package com.fliad.core.config;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiBasicAuth;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiExtendSetting;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiSetting;
+import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.solon.MybatisFlexProperties;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.aot.RuntimeNativeMetadata;
@@ -26,6 +27,9 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(MybatisFlexProperties.AdminConfig.class,  MemberCategory.values());
         metadata.registerReflection(MybatisFlexProperties.SeataConfig.class,  MemberCategory.values());
         metadata.registerReflection(MybatisFlexProperties.SeataMode.class,  MemberCategory.values());
+        metadata.registerReflection(FlexGlobalConfig.class,  MemberCategory.values());
+        metadata.registerReflection(FlexGlobalConfig.KeyConfig.class,  MemberCategory.values());
+
     }
 
 }
