@@ -8,6 +8,7 @@ import org.noear.solon.aot.RuntimeNativeMetadata;
 import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.aot.hint.MemberCategory;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.serialization.prop.JsonProps;
 
 @Component
 public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
@@ -17,6 +18,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(OpenApiSetting.class,  MemberCategory.values());
         metadata.registerReflection(OpenApiExtendSetting.class,  MemberCategory.values());
         metadata.registerReflection(OpenApiBasicAuth.class,  MemberCategory.values());
+        metadata.registerReflection(JsonProps.class,  MemberCategory.values());
     }
 
 }
