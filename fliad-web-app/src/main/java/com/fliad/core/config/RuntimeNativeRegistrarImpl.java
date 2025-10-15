@@ -48,11 +48,11 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     className = className.replace('/', '.');
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
                     if (clz != null) {
-                        if (clz.isAnnotationPresent(Component.class)) {
-                            metadata.registerLambdaSerialization(clz);
-                        }
+                        metadata.registerReflection(clz, MemberCategory.values());
                     }
                 });
+        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
