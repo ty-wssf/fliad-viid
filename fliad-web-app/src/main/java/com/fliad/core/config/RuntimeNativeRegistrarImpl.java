@@ -57,19 +57,19 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
                         // 检查类中是否包含lambda表达式
-                        /*if (hasLambdaExpressions(clz) && clz.isAnnotationPresent(Component.class)) {
+                        if (clz.isAnnotationPresent(Component.class) && hasLambdaExpressions(clz)) {
                             metadata.registerLambdaSerialization(clz);
-                        }*/
+                        }
                     }
                 });
-        
+
         // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        /*metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
         metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
         metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
         metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobListener.class);
-
+*/
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
 
@@ -92,24 +92,12 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
      */
     private boolean hasLambdaExpressions(Class<?> clazz) {
         try {
-            // 检查类中是否有writeReplace方法（Lambda表达式会生成此方法）
             for (Method method : clazz.getDeclaredMethods()) {
-                if ("writeReplace".equals(method.getName()) && method.getParameterCount() == 0) {
-                    method.setAccessible(true);
-                    // 尝试调用writeReplace方法看是否返回SerializedLambda
-                    try {
-                        Object instance = clazz.newInstance();
-                        Object result = method.invoke(instance);
-                        if (result instanceof SerializedLambda) {
-                            return true;
-                        }
-                    } catch (Exception e) {
-                        // 忽略异常，继续检查其他方法
-                    }
+                if (method.getName().contains("lambda$") || method.getName().contains("Lambda$")) {
+                    return true;
                 }
             }
-            
-            // 通过检查类名判断是否是lambda表达式类
+
             // Lambda表达式类名通常包含$$Lambda$这样的格式
             if (clazz.getName().contains("$$Lambda$")) {
                 return true;
