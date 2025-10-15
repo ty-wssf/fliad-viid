@@ -20,6 +20,11 @@ import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.serialization.prop.JsonProps;
 
+import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
@@ -49,10 +54,16 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
+                        // 检查类中是否包含lambda表达式
+                        if (hasLambdaExpressions(clz)) {
+                            metadata.registerLambdaSerialization(clz);
+                        }
                     }
                 });
-        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
+        
+        // 移除手动注册的lambda序列化，因为上面已经自动处理了
+        // metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        // metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
@@ -68,4 +79,39 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-march=compatibility");
     }
 
+    /**
+     * 检查类中是否包含Lambda表达式
+     *
+     * @param clazz 要检查的类
+     * @return 如果包含Lambda表达式返回true，否则返回false
+     */
+    private boolean hasLambdaExpressions(Class<?> clazz) {
+        try {
+            // 检查类中是否有writeReplace方法（Lambda表达式会生成此方法）
+            for (Method method : clazz.getDeclaredMethods()) {
+                if ("writeReplace".equals(method.getName()) && method.getParameterCount() == 0) {
+                    method.setAccessible(true);
+                    // 尝试调用writeReplace方法看是否返回SerializedLambda
+                    try {
+                        Object instance = clazz.newInstance();
+                        Object result = method.invoke(instance);
+                        if (result instanceof SerializedLambda) {
+                            return true;
+                        }
+                    } catch (Exception e) {
+                        // 忽略异常，继续检查其他方法
+                    }
+                }
+            }
+            
+            // 通过检查类名判断是否是lambda表达式类
+            // Lambda表达式类名通常包含$$Lambda$这样的格式
+            if (clazz.getName().contains("$$Lambda$")) {
+                return true;
+            }
+        } catch (Exception e) {
+            // 发生异常表示不是lambda表达式类
+        }
+        return false;
+    }
 }
