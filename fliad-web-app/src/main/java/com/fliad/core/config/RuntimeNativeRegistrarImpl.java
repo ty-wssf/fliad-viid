@@ -44,7 +44,10 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     String className = name.substring(0, name.length() - 6);
                     className = className.replace('/', '.');
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
-                    metadata.registerLambdaSerialization(clz);
+                    // metadata.registerLambdaSerialization(clz);
+                    if (clz != null) {
+                        metadata.registerReflection(clz, MemberCategory.values());
+                    }
                 });
 
         metadata.registerResourceInclude("_sql/.*");
