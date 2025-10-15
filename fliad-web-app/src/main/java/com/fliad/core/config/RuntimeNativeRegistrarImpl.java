@@ -47,6 +47,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     // metadata.registerLambdaSerialization(clz);
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
+                        metadata.registerLambdaSerialization(clz);
                     }
                 });
 
