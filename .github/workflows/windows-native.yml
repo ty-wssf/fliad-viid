@@ -11,6 +11,7 @@ name: Build windows native image1
 on:
   push:
     branches: [ "main" ]
+    tags: [ 'v*' ]  # 只在推送 v 开头的标签时触发（例如 v1.0.0）
   pull_request:
     branches: [ "main" ]
 
@@ -54,6 +55,14 @@ jobs:
           name: fliad-web-app.exe
           path: fliad-web-app/target/fliad-web-app.exe
           if-no-files-found: error # 如果未找到文件，则报错
+
+      - name: Create Release and Attach Artifact
+        if: startsWith(github.ref, 'refs/tags/')  # 仅在标签推送时执行
+        uses: softprops/action-gh-release@v2
+        with:
+          files: fliad-web-app/target/fliad-web-app.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
 
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
