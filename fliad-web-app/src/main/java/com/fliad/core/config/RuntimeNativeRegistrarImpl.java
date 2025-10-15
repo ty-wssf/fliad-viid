@@ -1,5 +1,7 @@
 package com.fliad.core.config;
 
+import com.fliad.dev.core.listener.DevJobListener;
+import com.fliad.dev.modular.config.service.impl.DevConfigServiceImpl;
 import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
 import com.fliad.viid.modular.cascadeplatform.service.impl.ViidPlatformStatusServiceImpl;
 import com.fliad.viid.modular.datasource.service.impl.ViidDatasourceServiceImpl;
@@ -55,15 +57,18 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
                         // 检查类中是否包含lambda表达式
-                        if (hasLambdaExpressions(clz)) {
+                        if (hasLambdaExpressions(clz) && clz.isAnnotationPresent(Component.class)) {
                             metadata.registerLambdaSerialization(clz);
                         }
                     }
                 });
         
         // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        // metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
-        // metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
+        /*metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
+        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
+        metadata.registerLambdaSerialization(DevJobListener.class);*/
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
