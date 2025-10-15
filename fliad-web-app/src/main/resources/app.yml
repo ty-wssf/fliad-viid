@@ -4,13 +4,6 @@
 server.port: 82
 
 #########################################
-# solon profiles configuration
-#########################################
-solon.env: local
-#solon.env: test
-#solon.env: prod
-
-#########################################
 # request configuration
 #########################################
 server.request.maxHeaderSize: 10kb
@@ -100,3 +93,5 @@ easy.poi.base.isDev: false
 # common configuration
 snowy.config.common.front-url: http://localhost:81
 snowy.config.common.backend-url: http://localhost:82
+
+solon.config.add: ./app-local.yml
