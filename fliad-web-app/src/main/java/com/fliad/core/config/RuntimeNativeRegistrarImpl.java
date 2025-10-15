@@ -7,6 +7,7 @@ import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.provider.EntitySqlProvider;
 import com.mybatisflex.core.provider.RowSqlProvider;
 import com.mybatisflex.solon.MybatisFlexProperties;
+import org.h2.server.TcpServer;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.aot.RuntimeNativeMetadata;
 import org.noear.solon.aot.RuntimeNativeRegistrar;
@@ -33,6 +34,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(FlexGlobalConfig.KeyConfig.class,  MemberCategory.values());
         metadata.registerReflection(EntitySqlProvider.class,  MemberCategory.values());
         metadata.registerReflection(RowSqlProvider.class,  MemberCategory.values());
+        metadata.registerReflection(TcpServer.class,  MemberCategory.values());
 
         // 允许访问 java.lang.invoke 包中的内部API，解决反射调用相关问题
         metadata.registerArg("-J--add-opens=java.base/java.lang.invoke=ALL-UNNAMED");
