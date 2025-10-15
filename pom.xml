@@ -13,14 +13,14 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>3.5.1</version>
+        <version>3.6.0</version>
         <relativePath />
     </parent>
 
     <properties>
         <java.version>21</java.version>
         <snowy.version>3.5.0</snowy.version>
-        <solon.version>3.5.1</solon.version>
+        <solon.version>3.6.0</solon.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
