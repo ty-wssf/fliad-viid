@@ -13,6 +13,8 @@ import org.noear.solon.aot.RuntimeNativeMetadata;
 import org.noear.solon.aot.RuntimeNativeRegistrar;
 import org.noear.solon.aot.hint.MemberCategory;
 import org.noear.solon.core.AppContext;
+import org.noear.solon.core.util.ClassUtil;
+import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.serialization.prop.JsonProps;
 
 @Component
@@ -20,21 +22,30 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
     @Override
     public void register(AppContext context, RuntimeNativeMetadata metadata) {
-        metadata.registerReflection(OpenApiSetting.class,  MemberCategory.values());
-        metadata.registerReflection(OpenApiExtendSetting.class,  MemberCategory.values());
-        metadata.registerReflection(OpenApiBasicAuth.class,  MemberCategory.values());
-        metadata.registerReflection(JsonProps.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.CoreConfiguration.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.GlobalConfig.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.AdminConfig.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.SeataConfig.class,  MemberCategory.values());
-        metadata.registerReflection(MybatisFlexProperties.SeataMode.class,  MemberCategory.values());
-        metadata.registerReflection(FlexGlobalConfig.class,  MemberCategory.values());
-        metadata.registerReflection(FlexGlobalConfig.KeyConfig.class,  MemberCategory.values());
-        metadata.registerReflection(EntitySqlProvider.class,  MemberCategory.values());
-        metadata.registerReflection(RowSqlProvider.class,  MemberCategory.values());
-        metadata.registerReflection(TcpServer.class,  MemberCategory.values());
+        metadata.registerReflection(OpenApiSetting.class, MemberCategory.values());
+        metadata.registerReflection(OpenApiExtendSetting.class, MemberCategory.values());
+        metadata.registerReflection(OpenApiBasicAuth.class, MemberCategory.values());
+        metadata.registerReflection(JsonProps.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.CoreConfiguration.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.GlobalConfig.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.AdminConfig.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.SeataConfig.class, MemberCategory.values());
+        metadata.registerReflection(MybatisFlexProperties.SeataMode.class, MemberCategory.values());
+        metadata.registerReflection(FlexGlobalConfig.class, MemberCategory.values());
+        metadata.registerReflection(FlexGlobalConfig.KeyConfig.class, MemberCategory.values());
+        metadata.registerReflection(EntitySqlProvider.class, MemberCategory.values());
+        metadata.registerReflection(RowSqlProvider.class, MemberCategory.values());
+        metadata.registerReflection(TcpServer.class, MemberCategory.values());
+
+        //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
+        ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))
+                .forEach(name -> {
+                    String className = name.substring(0, name.length() - 6);
+                    className = className.replace('/', '.');
+                    Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
+                    metadata.registerLambdaSerialization(clz);
+                });
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
