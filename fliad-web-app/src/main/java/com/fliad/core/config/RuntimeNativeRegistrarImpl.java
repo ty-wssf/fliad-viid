@@ -57,18 +57,18 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
                         // 检查类中是否包含lambda表达式
-                        if (hasLambdaExpressions(clz) && clz.isAnnotationPresent(Component.class)) {
+                        /*if (hasLambdaExpressions(clz) && clz.isAnnotationPresent(Component.class)) {
                             metadata.registerLambdaSerialization(clz);
-                        }
+                        }*/
                     }
                 });
         
         // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        /*metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
         metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
         metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
         metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
-        metadata.registerLambdaSerialization(DevJobListener.class);*/
+        metadata.registerLambdaSerialization(DevJobListener.class);
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
