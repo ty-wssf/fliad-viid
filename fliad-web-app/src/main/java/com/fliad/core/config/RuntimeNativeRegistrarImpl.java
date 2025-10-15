@@ -36,8 +36,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(RowSqlProvider.class,  MemberCategory.values());
         metadata.registerReflection(TcpServer.class,  MemberCategory.values());
 
-        metadata.registerResourceInclude("_sql/h2/*.sql");
-        metadata.registerResourceInclude("_sql/mysql/*.sql");
+        metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
 
         // 允许访问 java.lang.invoke 包中的内部API，解决反射调用相关问题
