@@ -1,15 +1,14 @@
 package com.fliad.core.config;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.resource.ResourceUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.noear.solon.core.util.ResourceUtil;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -48,14 +47,14 @@ public class H2DataSourceInitializer implements LifecycleBean {
     private void executeInitScript() {
         try (Connection connection = dataSource.getConnection()) {
             // 执行schema脚本
-            executeScript(connection, "classpath:_sql/h2/snowy_schema.sql");
-            executeScript(connection, "classpath:_sql/h2/biz_schema.sql");
-            executeScript(connection, "classpath:_sql/h2/viid_schema.sql");
+            executeScript(connection, "./_sql/h2/snowy_schema.sql");
+            executeScript(connection, "./_sql/h2/biz_schema.sql");
+            executeScript(connection, "./_sql/h2/viid_schema.sql");
 
             // 执行data脚本
-            executeScript(connection, "classpath:_sql/h2/snowy_data.sql");
-            executeScript(connection, "classpath:_sql/h2/biz_data.sql");
-            executeScript(connection, "classpath:_sql/h2/viid_data.sql");
+            executeScript(connection, "./_sql/h2/snowy_data.sql");
+            executeScript(connection, "./_sql/h2/biz_data.sql");
+            executeScript(connection, "./_sql/h2/viid_data.sql");
 
         } catch (SQLException e) {
             log.error("执行H2数据库初始化脚本失败", e);
@@ -70,7 +69,7 @@ public class H2DataSourceInitializer implements LifecycleBean {
      */
     private void executeScript(Connection connection, String scriptPath) {
         try {
-            URL resource = ResourceUtil.getResource(scriptPath.replace("classpath:", ""));
+            URL resource = ResourceUtil.findResourceOrFile(null, scriptPath);
             if (resource == null) {
                 log.warn("未找到脚本文件: {}", scriptPath);
                 return;
