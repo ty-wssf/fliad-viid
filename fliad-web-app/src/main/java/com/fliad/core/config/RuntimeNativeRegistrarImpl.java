@@ -1,5 +1,7 @@
 package com.fliad.core.config;
 
+import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
+import com.fliad.viid.modular.cascadeplatform.service.impl.ViidPlatformStatusServiceImpl;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiBasicAuth;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiExtendSetting;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiSetting;
@@ -44,12 +46,12 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     String className = name.substring(0, name.length() - 6);
                     className = className.replace('/', '.');
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
-                    // metadata.registerLambdaSerialization(clz);
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
-                        metadata.registerLambdaSerialization(clz);
                     }
                 });
+        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidCascadePlatform.class);
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
