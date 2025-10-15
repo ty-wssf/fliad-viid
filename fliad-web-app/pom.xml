@@ -239,10 +239,10 @@
         </dependency>
 
         <!-- 代码生成插件 -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.fliad</groupId>
             <artifactId>fliad-plugin-gen</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- 移动端管理插件 -->
         <dependency>
