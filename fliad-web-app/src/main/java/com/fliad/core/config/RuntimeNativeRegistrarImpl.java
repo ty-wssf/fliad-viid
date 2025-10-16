@@ -1,5 +1,6 @@
 package com.fliad.core.config;
 
+import com.fliad.auth.modular.login.service.impl.AuthServiceImpl;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
 import com.fliad.biz.modular.dict.service.impl.BizDictServiceImpl;
 import com.fliad.biz.modular.group.service.impl.BizGroupServiceImpl;
@@ -100,6 +101,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                 });
 
         // 手动注册的lambda序列化
+        metadata.registerLambdaSerialization(AuthServiceImpl.class);
+        metadata.registerLambdaSerialization(DevDictServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobListener.class);
         metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobServiceImpl.class);
