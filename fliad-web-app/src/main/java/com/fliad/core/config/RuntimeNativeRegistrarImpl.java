@@ -101,6 +101,11 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                 });
 
         // 手动注册的lambda序列化
+        metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
+        metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
+        metadata.registerLambdaSerialization(SysRoleServiceImpl.class);
+        metadata.registerLambdaSerialization(SysUserServiceImpl.class);
         metadata.registerLambdaSerialization(AuthServiceImpl.class);
         metadata.registerLambdaSerialization(DevDictServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobListener.class);
