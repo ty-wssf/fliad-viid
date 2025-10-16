@@ -74,9 +74,9 @@ public enum AuthExceptionEnum {
     CLIENT_TYPE_ERROR("客户端类型错误"),
 
     /**
-     * 密码解密失败，请检查前端公钥
+     * 密码解密失败，请检查前端公钥（已废弃）
      */
-    PWD_DECRYPT_ERROR("密码解密失败，请检查前端公钥");
+    PWD_DECRYPT_ERROR("密码解密失败，请检查前端公钥（已废弃）");
 
     private final String value;
 

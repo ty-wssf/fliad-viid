@@ -223,13 +223,15 @@ public class AuthServiceImpl implements AuthService {
             }
         }
         // SM2解密并获得前端传来的密码哈希值
-        String passwordHash;
-        try {
+        // String passwordHash;
+        // try {
             // 解密，并做哈希值
-            passwordHash = CommonCryptogramUtil.doHashValue(CommonCryptogramUtil.doSm2Decrypt(password));
-        } catch (Exception e) {
-            throw new CommonException(AuthExceptionEnum.PWD_DECRYPT_ERROR.getValue());
-        }
+            // passwordHash = CommonCryptogramUtil.doHashValue(CommonCryptogramUtil.doSm2Decrypt(password));
+        // } catch (Exception e) {
+            // throw new CommonException(AuthExceptionEnum.PWD_DECRYPT_ERROR.getValue());
+        // }
+        // 直接对前端传来的明文密码做哈希值
+        String passwordHash = CommonCryptogramUtil.doHashValue(password);
         // 根据账号获取用户信息，根据B端或C端判断
         if(SaClientTypeEnum.B.getValue().equals(type)) {
             SaBaseLoginUser saBaseLoginUser = loginUserApi.getUserByAccount(account);

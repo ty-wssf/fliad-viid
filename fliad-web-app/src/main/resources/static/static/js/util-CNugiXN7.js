@@ -1,1 +1,0 @@
-import{t,r as a}from"./index-DcffTgQN.js";import{c as s}from"./clientLoginApi-CbOluBR5.js";import{k as e}from"./ant-design-vendor-CRFwT3Wn.js";const n=async n=>{t.data.set("CLIENT_TOKEN",n);const i={token:n},o=await s.clientGetLoginUser(i);t.data.set("CLIENT_USER_INFO",o);e.success("登录成功"),await a.replace({path:"/front/client/index"})};export{n as a};

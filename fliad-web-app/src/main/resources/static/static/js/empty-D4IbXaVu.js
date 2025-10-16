@@ -1,1 +1,0 @@
-import{_ as r}from"./index-DcffTgQN.js";import{a1 as e,a6 as o,V as n}from"./vue-vendor-BzDj5Url.js";import"./ant-design-vendor-CRFwT3Wn.js";const s=r({},[["render",function(r,s){const t=e("router-view");return n(),o(t)}]]);export{s as default};

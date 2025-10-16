@@ -90,6 +90,16 @@ easy.poi.base.isDev: false
 # snowy configuration
 #########################################
 
+#添加MIME印射（如果有需要？）
+#是否启用静态文件服务。（可不配，默认为启用）
+solon.staticfiles.enable: true
+#静态文件的304缓存时长。（可不配，默认为10分钟）
+solon.staticfiles.maxAge: 600
+#添加静态目录映射。（按需选择）#v1.11.0 后支持
+solon.staticfiles.mappings:
+  - path: "/"
+    repository: "./fliad-admin-web/dist/" #2.添加资源路径（仓库只能是目录）
+
 # common configuration
 snowy.config.common.front-url: http://localhost:81
 snowy.config.common.backend-url: http://localhost:82

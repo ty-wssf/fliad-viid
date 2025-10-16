@@ -231,7 +231,9 @@
 				const loginData = {
 					account: ruleForm.account,
 					// 密码进行SM2加密，传输过程中看到的只有密文，后端存储使用hash
-					password: smCrypto.doSm2Encrypt(ruleForm.password),
+					// password: smCrypto.doSm2Encrypt(ruleForm.password),
+					// 直接传输明文密码，后端直接进行哈希处理
+					password: ruleForm.password,
 					validCode: ruleForm.validCode,
 					validCodeReqNo: ruleForm.validCodeReqNo
 				}

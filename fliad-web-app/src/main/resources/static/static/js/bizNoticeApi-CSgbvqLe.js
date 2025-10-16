@@ -1,1 +1,0 @@
-import{h as e}from"./index-DcffTgQN.js";const t=(t,...i)=>e("/biz/notice/"+t,...i),i={bizNoticePage:e=>t("page",e,"get"),bizNoticeSubmitForm:(e,i=!1)=>t(i?"edit":"add",e),bizNoticeDelete:e=>t("delete",e),bizNoticeDetail:e=>t("detail",e,"get"),bizNoticeDisableStatus:e=>t("disableStatus",e),bizNoticeEnableStatus:e=>t("enableStatus",e)};export{i as b};
