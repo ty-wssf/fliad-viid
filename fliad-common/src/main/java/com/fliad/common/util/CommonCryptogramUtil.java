@@ -12,11 +12,14 @@
  */
 package com.fliad.common.util;
 
+import cn.hutool.core.util.HexUtil;
 import com.antherd.smcrypto.sm2.Sm2;
-import com.antherd.smcrypto.sm3.Sm3;
 import com.antherd.smcrypto.sm4.Sm4;
 import com.antherd.smcrypto.sm4.Sm4Options;
 import lombok.extern.slf4j.Slf4j;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * 加密工具类，本框架目前使用 https://github.com/antherd/sm-crypto 项目中一些加解密方式
@@ -137,6 +140,17 @@ public class CommonCryptogramUtil {
      * @return hash 值
      */
     public static String doHashValue(String str) {
-        return Sm3.sm3(str);
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(str.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            log.error("计算哈希值时出错:", e);
+            throw new RuntimeException("无法计算哈希值", e);
+        }
     }
 }
