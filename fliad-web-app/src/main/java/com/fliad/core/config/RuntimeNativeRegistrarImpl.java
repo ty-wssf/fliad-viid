@@ -96,55 +96,10 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
-                        // 检查类中是否包含lambda表达式
-                        if (clz.isAnnotationPresent(Component.class) && hasLambdaExpressions(clz)) {
-                            // metadata.registerLambdaSerialization(clz);
-                        }
                     }
                 });
 
-        // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        /*metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
-        metadata.registerLambdaSerialization(BizDictServiceImpl.class);
-        metadata.registerLambdaSerialization(BizGroupServiceImpl.class);
-        metadata.registerLambdaSerialization(BizIndexServiceImpl.class);
-        metadata.registerLambdaSerialization(BizNoticeServiceImpl.class);
-        metadata.registerLambdaSerialization(BizOrgServiceImpl.class);
-        metadata.registerLambdaSerialization(BizPositionServiceImpl.class);
-        metadata.registerLambdaSerialization(BizUserServiceImpl.class);
-        metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
-        metadata.registerLambdaSerialization(DevJobListener.class);
-        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
-        metadata.registerLambdaSerialization(DevApiProvider.class);
-        metadata.registerLambdaSerialization(DevDictServiceImpl.class);
-        metadata.registerLambdaSerialization(DevEmailServiceImpl.class);
-        metadata.registerLambdaSerialization(DevFileServiceImpl.class);
-        metadata.registerLambdaSerialization(DevJobServiceImpl.class);
-        metadata.registerLambdaSerialization(DevLogApiProvider.class);
-        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
-        metadata.registerLambdaSerialization(DevMessageProvider.class);
-        metadata.registerLambdaSerialization(DevMessageServiceImpl.class);
-        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
-        metadata.registerLambdaSerialization(DevSmsServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileButtonServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
-        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
-        metadata.registerLambdaSerialization(SysIndexServiceImpl.class);
-        metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
-        metadata.registerLambdaSerialization(SysPositionServiceImpl.class);
-        metadata.registerLambdaSerialization(SysRelationApiProvider.class);
-        metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(SysButtonServiceImpl.class);
-        metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
-        metadata.registerLambdaSerialization(SysModuleServiceImpl.class);
-        metadata.registerLambdaSerialization(SysRoleApiProvider.class);
-        metadata.registerLambdaSerialization(SysRoleServiceImpl.class);
-        metadata.registerLambdaSerialization(SysUserApiProvider.class);
-        metadata.registerLambdaSerialization(SysUserServiceImpl.class);*/
-
+        // 手动注册的lambda序列化
         metadata.registerLambdaSerialization(DevJobListener.class);
         metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobServiceImpl.class);
