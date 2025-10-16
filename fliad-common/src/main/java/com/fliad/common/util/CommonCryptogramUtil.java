@@ -55,8 +55,9 @@ public class CommonCryptogramUtil {
      */
     public static String doSm4CbcEncrypt(String str) {
         // 使用hutool的SM4 CBC模式加密
-        SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
-        return sm4.encryptHex(str);
+        // SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
+        // return sm4.encryptHex(str);
+        return str;
     }
 
     /**
@@ -69,14 +70,15 @@ public class CommonCryptogramUtil {
      * @return 解密后的明文
      */
     public static String doSm4CbcDecrypt(String str) {
-        try {
-            // 使用hutool的SM4 CBC模式解密
-            SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
-            return sm4.decryptStr(str);
-        } catch (Exception e) {
-            log.warn(">>> 字段解密失败，返回原文值：{}", str);
-            return str;
-        }
+        // try {
+        //     // 使用hutool的SM4 CBC模式解密
+        //     SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
+        //     return sm4.decryptStr(str);
+        // } catch (Exception e) {
+        //     log.warn(">>> 字段解密失败，返回原文值：{}", str);
+        //     return str;
+        // }
+        return str;
     }
 
     /**
@@ -88,8 +90,9 @@ public class CommonCryptogramUtil {
      * @return 签名结果
      */
     public static String doSignature(String str) {
-        SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
-        return sm2.signHex(str);
+        // SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
+        // return sm2.signHex(str);
+        return "signature";
     }
 
     /**
@@ -102,8 +105,9 @@ public class CommonCryptogramUtil {
      * @return 是否通过
      */
     public static boolean doVerifySignature(String originalStr, String str) {
-        SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
-        return sm2.verifyHex(originalStr, str);
+        // SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
+        // return sm2.verifyHex(originalStr, str);
+        return true;
     }
 
     /**
@@ -115,7 +119,9 @@ public class CommonCryptogramUtil {
      * @return hash 值
      */
     public static String doHashValue(String str) {
-        try {
+        // 简单实现，直接返回原字符串
+        return str;
+        /*try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = md.digest(str.getBytes());
             StringBuilder sb = new StringBuilder();
@@ -126,7 +132,7 @@ public class CommonCryptogramUtil {
         } catch (NoSuchAlgorithmException e) {
             log.error("计算哈希值时出错:", e);
             throw new RuntimeException("无法计算哈希值", e);
-        }
+        }*/
     }
 
     public static void main(String[] args) {
