@@ -77,12 +77,6 @@
             <artifactId>easypoi-solon-plugin</artifactId>
         </dependency>
 
-        <!-- sm-crypto -->
-        <dependency>
-            <groupId>com.antherd</groupId>
-            <artifactId>sm-crypto</artifactId>
-        </dependency>
-
         <!-- knife4j -->
         <dependency>
             <groupId>org.noear</groupId>
@@ -119,6 +113,12 @@
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
             <version>${sa-token.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk18on</artifactId>
+            <version>1.78.1</version>
         </dependency>
     </dependencies>
 </project>

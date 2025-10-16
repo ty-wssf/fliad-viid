@@ -13,9 +13,10 @@
 package com.fliad.common.util;
 
 import cn.hutool.core.util.HexUtil;
-import com.antherd.smcrypto.sm2.Sm2;
-import com.antherd.smcrypto.sm4.Sm4;
-import com.antherd.smcrypto.sm4.Sm4Options;
+import cn.hutool.crypto.Mode;
+import cn.hutool.crypto.Padding;
+import cn.hutool.crypto.asymmetric.SM2;
+import cn.hutool.crypto.symmetric.SM4;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
@@ -41,31 +42,8 @@ public class CommonCryptogramUtil {
     /** SM4的对称秘钥（生产环境需要改成自己使用的） 16 进制字符串，要求为 128 比特 */
     private static final String KEY = "0123456789abcdeffedcba9876543210";
 
-    /**
-     * 加密方法（Sm2 的专门针对前后端分离，非对称秘钥对的方式，暴露出去的公钥，对传输过程中的密码加个密）
-     *
-     * @author yubaoshan
-     * @date 2022/9/15 21:51
-     * @param str 待加密数据
-     * @return 加密后的密文
-     */
-    public static String doSm2Encrypt(String str) {
-        return Sm2.doEncrypt(str, PUBLIC_KEY);
-    }
-
-    /**
-     * 解密方法
-     * 如果采用加密机的方法，用try catch 捕捉异常，返回原文值即可
-     *
-     * @author yubaoshan
-     * @date 2022/9/15 21:51
-     * @param str 密文
-     * @return 解密后的明文
-     */
-    public static String doSm2Decrypt(String str) {
-        // 解密
-        return Sm2.doDecrypt(str, PRIVATE_KEY);
-    }
+    /** SM4的CBC模式IV */
+    private static final byte[] IV = HexUtil.decodeHex("fedcba98765432100123456789abcdef");
 
     /**
      * 加密方法
@@ -76,11 +54,9 @@ public class CommonCryptogramUtil {
      * @return 加密后的密文
      */
     public static String doSm4CbcEncrypt(String str) {
-        // SM4 加密  cbc模式
-        Sm4Options sm4Options4 = new Sm4Options();
-        sm4Options4.setMode("cbc");
-        sm4Options4.setIv("fedcba98765432100123456789abcdef");
-        return Sm4.encrypt(str, KEY, sm4Options4);
+        // 使用hutool的SM4 CBC模式加密
+        SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
+        return sm4.encryptHex(str);
     }
 
     /**
@@ -93,16 +69,13 @@ public class CommonCryptogramUtil {
      * @return 解密后的明文
      */
     public static String doSm4CbcDecrypt(String str) {
-        // 解密，cbc 模式，输出 utf8 字符串
-        Sm4Options sm4Options8 = new Sm4Options();
-        sm4Options8.setMode("cbc");
-        sm4Options8.setIv("fedcba98765432100123456789abcdef");
-        String docString =  Sm4.decrypt(str, KEY, sm4Options8);
-        if ("".equals(docString)) {
+        try {
+            // 使用hutool的SM4 CBC模式解密
+            SM4 sm4 = new SM4(Mode.CBC, Padding.PKCS5Padding, HexUtil.decodeHex(KEY), IV);
+            return sm4.decryptStr(str);
+        } catch (Exception e) {
             log.warn(">>> 字段解密失败，返回原文值：{}", str);
             return str;
-        } else {
-            return docString;
         }
     }
 
@@ -115,7 +88,8 @@ public class CommonCryptogramUtil {
      * @return 签名结果
      */
     public static String doSignature(String str) {
-        return Sm2.doSignature(str, PRIVATE_KEY);
+        SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
+        return sm2.signHex(str);
     }
 
     /**
@@ -128,7 +102,8 @@ public class CommonCryptogramUtil {
      * @return 是否通过
      */
     public static boolean doVerifySignature(String originalStr, String str) {
-        return Sm2.doVerifySignature(originalStr, str, PUBLIC_KEY);
+        SM2 sm2 = new SM2(PRIVATE_KEY, PUBLIC_KEY);
+        return sm2.verifyHex(originalStr, str);
     }
 
     /**
@@ -152,5 +127,13 @@ public class CommonCryptogramUtil {
             log.error("计算哈希值时出错:", e);
             throw new RuntimeException("无法计算哈希值", e);
         }
+    }
+
+    public static void main(String[] args) {
+        String str = "123456";
+        String encrypt = doSm4CbcEncrypt(str);
+        System.out.println(encrypt);
+        String decrypt = doSm4CbcDecrypt(encrypt);
+        System.out.println(decrypt);
     }
 }
