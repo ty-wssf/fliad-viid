@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>org.noear</groupId>
                     <artifactId>solon-serialization-snack3</artifactId>
@@ -34,12 +34,12 @@
                     <groupId>org.noear</groupId>
                     <artifactId>solon-boot-smarthttp</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-boot-jetty</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- sa-token-solon-plugin -->
         <dependency>
