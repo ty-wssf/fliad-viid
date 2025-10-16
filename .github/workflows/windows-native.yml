@@ -30,6 +30,12 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: 启动 tmate 调试
+        uses: mxschmitt/action-tmate@v3
+        # 可选：设置超时时间（默认 15 分钟）
+        with:
+          timeout-minutes: 30
+
       - uses: actions/checkout@v3 # 这是GitHub提供的一个动作（action），用于将代码从GitHub仓库检出到工作目录中。v3是该动作的版本号。
       - name: GitHub Action for GraalVM JDK 21
         uses: graalvm/setup-graalvm@v1
