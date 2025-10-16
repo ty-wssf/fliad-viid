@@ -104,7 +104,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                 });
 
         // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
+        /*metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
         metadata.registerLambdaSerialization(BizDictServiceImpl.class);
         metadata.registerLambdaSerialization(BizGroupServiceImpl.class);
         metadata.registerLambdaSerialization(BizIndexServiceImpl.class);
@@ -143,7 +143,11 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerLambdaSerialization(SysRoleApiProvider.class);
         metadata.registerLambdaSerialization(SysRoleServiceImpl.class);
         metadata.registerLambdaSerialization(SysUserApiProvider.class);
-        metadata.registerLambdaSerialization(SysUserServiceImpl.class);
+        metadata.registerLambdaSerialization(SysUserServiceImpl.class);*/
+
+        metadata.registerLambdaSerialization(DevJobListener.class);
+        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
+        metadata.registerLambdaSerialization(DevJobServiceImpl.class);
         metadata.registerLambdaSerialization(ViidApeServiceImpl.class);
         metadata.registerLambdaSerialization(ViidCascadePlatformServiceImpl.class);
         metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
