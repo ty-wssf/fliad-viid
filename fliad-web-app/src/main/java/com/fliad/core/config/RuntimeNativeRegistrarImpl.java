@@ -1,10 +1,53 @@
 package com.fliad.core.config;
 
+import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
+import com.fliad.biz.modular.dict.service.impl.BizDictServiceImpl;
+import com.fliad.biz.modular.group.service.impl.BizGroupServiceImpl;
+import com.fliad.biz.modular.index.service.impl.BizIndexServiceImpl;
+import com.fliad.biz.modular.notice.service.impl.BizNoticeServiceImpl;
+import com.fliad.biz.modular.org.service.impl.BizOrgServiceImpl;
+import com.fliad.biz.modular.position.service.impl.BizPositionServiceImpl;
+import com.fliad.biz.modular.user.service.impl.BizUserServiceImpl;
+import com.fliad.client.modular.relation.service.impl.ClientRelationServiceImpl;
+import com.fliad.client.modular.user.service.impl.ClientUserServiceImpl;
 import com.fliad.dev.core.listener.DevJobListener;
 import com.fliad.dev.modular.config.service.impl.DevConfigServiceImpl;
-import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
+import com.fliad.dev.modular.dev.DevApiProvider;
+import com.fliad.dev.modular.dict.service.impl.DevDictServiceImpl;
+import com.fliad.dev.modular.email.service.impl.DevEmailServiceImpl;
+import com.fliad.dev.modular.file.service.impl.DevFileServiceImpl;
+import com.fliad.dev.modular.job.service.impl.DevJobServiceImpl;
+import com.fliad.dev.modular.log.provider.DevLogApiProvider;
+import com.fliad.dev.modular.log.service.impl.DevLogServiceImpl;
+import com.fliad.dev.modular.message.provider.DevMessageProvider;
+import com.fliad.dev.modular.message.service.impl.DevMessageServiceImpl;
+import com.fliad.dev.modular.relation.service.impl.DevRelationServiceImpl;
+import com.fliad.dev.modular.slideshow.service.impl.DevSlideshowServiceImpl;
+import com.fliad.dev.modular.sms.service.impl.DevSmsServiceImpl;
+import com.fliad.mobile.modular.resource.service.impl.MobileButtonServiceImpl;
+import com.fliad.mobile.modular.resource.service.impl.MobileMenuServiceImpl;
+import com.fliad.mobile.modular.resource.service.impl.MobileModuleServiceImpl;
+import com.fliad.sys.modular.group.service.impl.SysGroupServiceImpl;
+import com.fliad.sys.modular.index.service.impl.SysIndexServiceImpl;
+import com.fliad.sys.modular.org.service.impl.SysOrgServiceImpl;
+import com.fliad.sys.modular.position.service.impl.SysPositionServiceImpl;
+import com.fliad.sys.modular.relation.provider.SysRelationApiProvider;
+import com.fliad.sys.modular.relation.service.impl.SysRelationServiceImpl;
+import com.fliad.sys.modular.resource.service.impl.SysButtonServiceImpl;
+import com.fliad.sys.modular.resource.service.impl.SysMenuServiceImpl;
+import com.fliad.sys.modular.resource.service.impl.SysModuleServiceImpl;
+import com.fliad.sys.modular.role.provider.SysRoleApiProvider;
+import com.fliad.sys.modular.role.service.impl.SysRoleServiceImpl;
+import com.fliad.sys.modular.user.provider.SysUserApiProvider;
+import com.fliad.sys.modular.user.service.impl.SysUserServiceImpl;
+import com.fliad.viid.modular.ape.service.impl.ViidApeServiceImpl;
+import com.fliad.viid.modular.cascadeplatform.service.impl.ViidCascadePlatformServiceImpl;
 import com.fliad.viid.modular.cascadeplatform.service.impl.ViidPlatformStatusServiceImpl;
+import com.fliad.viid.modular.cascadeplatform.service.impl.ViidSystemServiceImpl;
 import com.fliad.viid.modular.datasource.service.impl.ViidDatasourceServiceImpl;
+import com.fliad.viid.modular.subscribe.service.impl.ViidSubscribeServiceImpl;
+import com.fliad.viid.modular.tollgate.service.impl.ViidTollgateServiceImpl;
+import com.fliad.viid.modular.workflow.service.impl.ViidWorkflowServiceImpl;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiBasicAuth;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiExtendSetting;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiSetting;
@@ -22,10 +65,7 @@ import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.serialization.prop.JsonProps;
 
-import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
@@ -58,18 +98,61 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                         metadata.registerReflection(clz, MemberCategory.values());
                         // 检查类中是否包含lambda表达式
                         if (clz.isAnnotationPresent(Component.class) && hasLambdaExpressions(clz)) {
-                            metadata.registerLambdaSerialization(clz);
+                            // metadata.registerLambdaSerialization(clz);
                         }
                     }
                 });
 
         // 移除手动注册的lambda序列化，因为上面已经自动处理了
-        /*metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
-        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
+        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
+        metadata.registerLambdaSerialization(BizDictServiceImpl.class);
+        metadata.registerLambdaSerialization(BizGroupServiceImpl.class);
+        metadata.registerLambdaSerialization(BizIndexServiceImpl.class);
+        metadata.registerLambdaSerialization(BizNoticeServiceImpl.class);
+        metadata.registerLambdaSerialization(BizOrgServiceImpl.class);
+        metadata.registerLambdaSerialization(BizPositionServiceImpl.class);
+        metadata.registerLambdaSerialization(BizUserServiceImpl.class);
+        metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
         metadata.registerLambdaSerialization(DevJobListener.class);
-*/
+        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
+        metadata.registerLambdaSerialization(DevApiProvider.class);
+        metadata.registerLambdaSerialization(DevDictServiceImpl.class);
+        metadata.registerLambdaSerialization(DevEmailServiceImpl.class);
+        metadata.registerLambdaSerialization(DevFileServiceImpl.class);
+        metadata.registerLambdaSerialization(DevJobServiceImpl.class);
+        metadata.registerLambdaSerialization(DevLogApiProvider.class);
+        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
+        metadata.registerLambdaSerialization(DevMessageProvider.class);
+        metadata.registerLambdaSerialization(DevMessageServiceImpl.class);
+        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
+        metadata.registerLambdaSerialization(DevSmsServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileButtonServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
+        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
+        metadata.registerLambdaSerialization(SysIndexServiceImpl.class);
+        metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
+        metadata.registerLambdaSerialization(SysPositionServiceImpl.class);
+        metadata.registerLambdaSerialization(SysRelationApiProvider.class);
+        metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(SysButtonServiceImpl.class);
+        metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
+        metadata.registerLambdaSerialization(SysModuleServiceImpl.class);
+        metadata.registerLambdaSerialization(SysRoleApiProvider.class);
+        metadata.registerLambdaSerialization(SysRoleServiceImpl.class);
+        metadata.registerLambdaSerialization(SysUserApiProvider.class);
+        metadata.registerLambdaSerialization(SysUserServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidApeServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidCascadePlatformServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidSystemServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidSubscribeServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidTollgateServiceImpl.class);
+        metadata.registerLambdaSerialization(ViidWorkflowServiceImpl.class);
+
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
 
