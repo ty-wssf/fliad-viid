@@ -93,14 +93,9 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
     private boolean hasLambdaExpressions(Class<?> clazz) {
         try {
             for (Method method : clazz.getDeclaredMethods()) {
-                if (method.getName().contains("lambda$") || method.getName().contains("Lambda$")) {
+                if (method.getName().contains("SerializedLambda")) {
                     return true;
                 }
-            }
-
-            // Lambda表达式类名通常包含$$Lambda$这样的格式
-            if (clazz.getName().contains("$$Lambda$")) {
-                return true;
             }
         } catch (Exception e) {
             // 发生异常表示不是lambda表达式类
