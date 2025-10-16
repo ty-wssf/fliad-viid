@@ -1,5 +1,6 @@
 package com.fliad.core.config;
 
+import cn.hutool.json.JSONConverter;
 import com.fliad.auth.modular.login.service.impl.AuthServiceImpl;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
 import com.fliad.biz.modular.dict.service.impl.BizDictServiceImpl;
@@ -88,6 +89,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(EntitySqlProvider.class, MemberCategory.values());
         metadata.registerReflection(RowSqlProvider.class, MemberCategory.values());
         metadata.registerReflection(TcpServer.class, MemberCategory.values());
+        metadata.registerReflection(JSONConverter.class, MemberCategory.values());
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))
