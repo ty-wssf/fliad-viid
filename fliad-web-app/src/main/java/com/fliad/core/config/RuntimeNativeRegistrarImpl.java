@@ -157,6 +157,12 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
         metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
         metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
+
+        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
+        metadata.registerLambdaSerialization(BizOrgServiceImpl.class);
+        metadata.registerLambdaSerialization(BizPositionServiceImpl.class);
+        metadata.registerLambdaSerialization(BizIndexServiceImpl.class);
+        metadata.registerLambdaSerialization(BizDictServiceImpl.class);
         metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
         metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
         metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
