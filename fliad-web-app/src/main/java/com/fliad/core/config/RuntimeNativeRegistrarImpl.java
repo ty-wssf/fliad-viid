@@ -1,6 +1,8 @@
 package com.fliad.core.config;
 
 import cn.hutool.json.JSONConverter;
+import com.fliad.auth.core.pojo.SaBaseClientLoginUser;
+import com.fliad.auth.core.pojo.SaBaseLoginUser;
 import com.fliad.auth.modular.login.service.impl.AuthServiceImpl;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
 import com.fliad.biz.modular.dict.service.impl.BizDictServiceImpl;
@@ -101,6 +103,10 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                         metadata.registerReflection(clz, MemberCategory.values());
                     }
                 });
+
+        // 手动注册序列化
+        metadata.registerSerialization(SaBaseClientLoginUser.class);
+        metadata.registerSerialization(SaBaseLoginUser.class);
 
         // 手动注册的lambda序列化
         metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
