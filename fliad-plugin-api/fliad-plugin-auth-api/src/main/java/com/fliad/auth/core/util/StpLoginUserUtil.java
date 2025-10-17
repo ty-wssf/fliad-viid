@@ -14,9 +14,9 @@ package com.fliad.auth.core.util;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.fliad.auth.core.pojo.SaBaseLoginUser;
 import com.fliad.common.util.CommonServletUtil;
+import org.noear.snack.ONode;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class StpLoginUserUtil {
      * @date 2022/7/8 10:41
      **/
     public static SaBaseLoginUser getLoginUser() {
-        return ObjectUtil.cloneByStream((SaBaseLoginUser) StpUtil.getTokenSession().get("loginUser"));
+        return ONode.deserialize(ONode.serialize(StpUtil.getTokenSession().get("loginUser")));
     }
 
     /**

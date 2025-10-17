@@ -13,8 +13,8 @@
 package com.fliad.auth.core.util;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.fliad.auth.core.pojo.SaBaseClientLoginUser;
+import org.noear.snack.ONode;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class StpClientLoginUserUtil {
      * @date 2022/7/8 10:41
      **/
     public static SaBaseClientLoginUser getClientLoginUser() {
-        return ObjectUtil.cloneByStream((SaBaseClientLoginUser) StpClientUtil.getTokenSession().get("loginUser"));
+        return ONode.deserialize(ONode.serialize(StpClientUtil.getTokenSession().get("loginUser")));
     }
 
     /**
