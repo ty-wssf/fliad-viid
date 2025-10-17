@@ -100,7 +100,8 @@ public class H2DataSourceInitializer implements LifecycleBean {
                         try {
                             statement.execute(sql);
                         } catch (SQLException e) {
-                            log.warn("执行SQL语句失败: {}", sql, e);
+                            // 允许单个语句执行失败，因为表可能已经存在或者数据已经存在
+                            log.debug("执行SQL语句时遇到预期的错误（表可能已存在或数据已存在）: {}", sql);
                         }
                     }
 

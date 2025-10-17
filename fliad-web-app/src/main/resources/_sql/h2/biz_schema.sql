@@ -1,4 +1,3 @@
-drop table if exists dahua_non_motor_vehicle;
 CREATE TABLE dahua_non_motor_vehicle
 (
     absScore                          INT,

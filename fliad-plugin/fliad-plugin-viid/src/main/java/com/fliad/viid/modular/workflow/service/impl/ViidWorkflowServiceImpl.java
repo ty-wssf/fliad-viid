@@ -77,9 +77,13 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
             CommonSortOrderEnum.validate(viidWorkflowPageParam.getSortOrder());
             queryWrapper.orderBy(StrUtil.toUnderlineCase(viidWorkflowPageParam.getSortField()), viidWorkflowPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
         } else {
-            queryWrapper.orderBy(ViidWorkflow::getId,  false);
+            queryWrapper.orderBy(ViidWorkflow::getId, false);
         }
-        return this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        Page<ViidWorkflow> pageList = this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        pageList.getRecords().forEach(item -> {
+            removeEscapeCharacters(item);
+        });
+        return pageList;
     }
 
     @Tran
@@ -114,7 +118,9 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
 
     @Override
     public ViidWorkflow detail(ViidWorkflowIdParam viidWorkflowIdParam) {
-        return this.queryEntity(viidWorkflowIdParam.getId());
+        ViidWorkflow viidWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
+        removeEscapeCharacters(viidWorkflow);
+        return viidWorkflow;
     }
 
     @Override
@@ -130,7 +136,7 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
     public void copy(ViidWorkflowIdParam viidWorkflowIdParam) {
         // 获取原工作流
         ViidWorkflow originalWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
-        
+
         // 创建新工作流对象
         ViidWorkflow newWorkflow = new ViidWorkflow();
         // 复制属性，但使用新的ID和标题
@@ -138,7 +144,7 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
         newWorkflow.setId(null); // 生成新的ID
         newWorkflow.setTitle(originalWorkflow.getTitle() + "_副本"); // 添加副本标识
         newWorkflow.setStatus(ViidWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
-        
+
         // 保存新工作流
         this.save(newWorkflow);
         // 使缓存失效
@@ -161,4 +167,66 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
         cacheService.remove("viid_workflow_list");
     }
 
+    /**
+     * 移除字符串中的转义字符
+     *
+     * @param viidWorkflow 工作流对象
+     */
+    private void removeEscapeCharacters(ViidWorkflow viidWorkflow) {
+        // 处理 subscribeDetail 字段中的转义字符
+        viidWorkflow.setSubscribeDetail(handleEscapeCharacters(viidWorkflow.getSubscribeDetail()));
+        
+        // 处理 content 字段中的转义字符
+        viidWorkflow.setContent(handleEscapeCharacters(viidWorkflow.getContent()));
+    }
+    
+    /**
+     * 处理字符串中的转义字符
+     * 
+     * @param jsonStr 包含可能转义字符的JSON字符串
+     * @return 处理后的JSON字符串
+     */
+    private String handleEscapeCharacters(String jsonStr) {
+        if (jsonStr == null || jsonStr.isEmpty()) {
+            return jsonStr;
+        }
+        
+        // 先尝试直接解析
+        if (isValidJson(jsonStr)) {
+            return jsonStr;
+        }
+        
+        // 尝试不同的策略来修复转义字符
+        String[] strategies = {
+            jsonStr.replace("\\\"", "\""),           // 将 \" 替换为 "
+            jsonStr.replace("\\\\", "\\"),           // 将 \\ 替换为 \
+            jsonStr.replace("\\\"", "\"").replace("\\\\", "\\"),  // 组合策略1
+            jsonStr.replace("\\\\\"", "\"").replace("\\\\'", "'"), // 组合策略2
+        };
+        
+        // 尝试每种策略，找到第一个能生成有效JSON的
+        for (String strategy : strategies) {
+            if (isValidJson(strategy)) {
+                return strategy;
+            }
+        }
+        
+        // 如果所有策略都失败，返回原始字符串
+        return jsonStr;
+    }
+    
+    /**
+     * 检查字符串是否为有效的JSON
+     * 
+     * @param jsonStr 待检查的字符串
+     * @return 是否为有效的JSON
+     */
+    private boolean isValidJson(String jsonStr) {
+        try {
+            ONode.loadStr(jsonStr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }

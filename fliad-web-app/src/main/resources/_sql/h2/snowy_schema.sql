@@ -1,7 +1,6 @@
 -- ----------------------------
 -- Table structure for AUTH_THIRD_USER
 -- ----------------------------
-DROP TABLE IF EXISTS AUTH_THIRD_USER;
 CREATE TABLE AUTH_THIRD_USER (
   ID varchar(20) NOT NULL,
   THIRD_ID varchar(255) DEFAULT NULL,
@@ -23,7 +22,6 @@ CREATE TABLE AUTH_THIRD_USER (
 -- ----------------------------
 -- Table structure for CLIENT_RELATION
 -- ----------------------------
-DROP TABLE IF EXISTS CLIENT_RELATION;
 CREATE TABLE CLIENT_RELATION (
   ID varchar(20) NOT NULL,
   OBJECT_ID varchar(255) DEFAULT NULL,
@@ -36,7 +34,6 @@ CREATE TABLE CLIENT_RELATION (
 -- ----------------------------
 -- Table structure for CLIENT_USER
 -- ----------------------------
-DROP TABLE IF EXISTS CLIENT_USER;
 CREATE TABLE CLIENT_USER (
   ID varchar(20) NOT NULL,
   AVATAR longtext,
@@ -89,7 +86,6 @@ CREATE TABLE CLIENT_USER (
 -- ----------------------------
 -- Table structure for DEV_CONFIG
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_CONFIG;
 CREATE TABLE DEV_CONFIG (
   ID varchar(20) NOT NULL,
   CONFIG_KEY varchar(255) DEFAULT NULL,
@@ -109,7 +105,6 @@ CREATE TABLE DEV_CONFIG (
 -- ----------------------------
 -- Table structure for DEV_DICT
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_DICT;
 CREATE TABLE DEV_DICT (
   ID varchar(20) NOT NULL,
   PARENT_ID varchar(20) DEFAULT NULL,
@@ -129,7 +124,6 @@ CREATE TABLE DEV_DICT (
 -- ----------------------------
 -- Table structure for DEV_EMAIL
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_EMAIL;
 CREATE TABLE DEV_EMAIL (
   ID varchar(20) NOT NULL,
   ENGINE varchar(255) DEFAULT NULL,
@@ -154,7 +148,6 @@ CREATE TABLE DEV_EMAIL (
 -- ----------------------------
 -- Table structure for DEV_FILE
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_FILE;
 CREATE TABLE DEV_FILE (
   ID varchar(20) NOT NULL,
   ENGINE varchar(255) DEFAULT NULL,
@@ -179,7 +172,6 @@ CREATE TABLE DEV_FILE (
 -- ----------------------------
 -- Table structure for DEV_JOB
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_JOB;
 CREATE TABLE DEV_JOB (
   ID varchar(20) NOT NULL,
   NAME varchar(255) DEFAULT NULL,
@@ -201,7 +193,6 @@ CREATE TABLE DEV_JOB (
 -- ----------------------------
 -- Table structure for DEV_LOG
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_LOG;
 CREATE TABLE DEV_LOG (
   ID varchar(20) NOT NULL,
   CATEGORY varchar(255) DEFAULT NULL,
@@ -231,7 +222,6 @@ CREATE TABLE DEV_LOG (
 -- ----------------------------
 -- Table structure for DEV_MESSAGE
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_MESSAGE;
 CREATE TABLE DEV_MESSAGE (
   ID varchar(20) NOT NULL,
   CATEGORY varchar(255) DEFAULT NULL,
@@ -249,7 +239,6 @@ CREATE TABLE DEV_MESSAGE (
 -- ----------------------------
 -- Table structure for DEV_RELATION
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_RELATION;
 CREATE TABLE DEV_RELATION (
   ID varchar(20) NOT NULL,
   OBJECT_ID varchar(255) DEFAULT NULL,
@@ -262,7 +251,6 @@ CREATE TABLE DEV_RELATION (
 -- ----------------------------
 -- Table structure for DEV_SMS
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_SMS;
 CREATE TABLE DEV_SMS (
   ID varchar(20) NOT NULL,
   ENGINE varchar(255) DEFAULT NULL,
@@ -283,7 +271,6 @@ CREATE TABLE DEV_SMS (
 -- ----------------------------
 -- Table structure for GEN_BASIC
 -- ----------------------------
-DROP TABLE IF EXISTS GEN_BASIC;
 CREATE TABLE GEN_BASIC (
   ID varchar(20) NOT NULL,
   DB_TABLE varchar(255) DEFAULT NULL,
@@ -314,7 +301,6 @@ CREATE TABLE GEN_BASIC (
 -- ----------------------------
 -- Table structure for GEN_CONFIG
 -- ----------------------------
-DROP TABLE IF EXISTS GEN_CONFIG;
 CREATE TABLE GEN_CONFIG (
   ID varchar(20) NOT NULL,
   BASIC_ID varchar(20) DEFAULT NULL,
@@ -343,7 +329,6 @@ CREATE TABLE GEN_CONFIG (
 -- ----------------------------
 -- Table structure for MOBILE_RESOURCE
 -- ----------------------------
-DROP TABLE IF EXISTS MOBILE_RESOURCE;
 CREATE TABLE MOBILE_RESOURCE (
   ID varchar(20) NOT NULL,
   PARENT_ID varchar(255) DEFAULT NULL,
@@ -370,7 +355,6 @@ CREATE TABLE MOBILE_RESOURCE (
 -- ----------------------------
 -- Table structure for SYS_GROUP
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_GROUP;
 CREATE TABLE SYS_GROUP (
   ID varchar(50) NOT NULL,
   NAME varchar(200) NOT NULL,
@@ -388,7 +372,6 @@ CREATE TABLE SYS_GROUP (
 -- ----------------------------
 -- Table structure for SYS_ORG
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_ORG;
 CREATE TABLE SYS_ORG (
   ID varchar(20) NOT NULL,
   PARENT_ID varchar(20) DEFAULT NULL,
@@ -409,7 +392,6 @@ CREATE TABLE SYS_ORG (
 -- ----------------------------
 -- Table structure for SYS_POSITION
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_POSITION;
 CREATE TABLE SYS_POSITION (
   ID varchar(20) NOT NULL,
   ORG_ID varchar(20) DEFAULT NULL,
@@ -429,7 +411,6 @@ CREATE TABLE SYS_POSITION (
 -- ----------------------------
 -- Table structure for SYS_RELATION
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_RELATION;
 CREATE TABLE SYS_RELATION (
   ID varchar(20) NOT NULL,
   OBJECT_ID varchar(255) DEFAULT NULL,
@@ -442,7 +423,6 @@ CREATE TABLE SYS_RELATION (
 -- ----------------------------
 -- Table structure for SYS_RESOURCE
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_RESOURCE;
 CREATE TABLE SYS_RESOURCE (
   ID varchar(20) NOT NULL,
   PARENT_ID varchar(255) DEFAULT NULL,
@@ -470,7 +450,6 @@ CREATE TABLE SYS_RESOURCE (
 -- ----------------------------
 -- Table structure for SYS_ROLE
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_ROLE;
 CREATE TABLE SYS_ROLE (
   ID varchar(20) NOT NULL,
   ORG_ID varchar(20) DEFAULT NULL,
@@ -490,7 +469,6 @@ CREATE TABLE SYS_ROLE (
 -- ----------------------------
 -- Table structure for SYS_USER
 -- ----------------------------
-DROP TABLE IF EXISTS SYS_USER;
 CREATE TABLE SYS_USER (
   ID varchar(20) NOT NULL,
   AVATAR longtext,
@@ -550,7 +528,6 @@ CREATE TABLE SYS_USER (
 -- ----------------------------
 -- Table structure for BIZ_NOTICE
 -- ----------------------------
-DROP TABLE IF EXISTS BIZ_NOTICE;
 CREATE TABLE BIZ_NOTICE (
    ID varchar(20) NOT NULL,
    TITLE varchar(200) DEFAULT NULL,
@@ -574,7 +551,6 @@ CREATE TABLE BIZ_NOTICE (
 -- ----------------------------
 -- Table structure for DEV_SLIDESHOW
 -- ----------------------------
-DROP TABLE IF EXISTS DEV_SLIDESHOW;
 CREATE TABLE DEV_SLIDESHOW (
   ID varchar(20) NOT NULL,
   TITLE varchar(200) DEFAULT NULL,
