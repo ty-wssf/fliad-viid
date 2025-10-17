@@ -104,10 +104,10 @@
         </dependency>
 
         <!-- nashorn-core -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>cn.dev33</groupId>
@@ -115,10 +115,5 @@
             <version>${sa-token.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk18on</artifactId>
-            <version>1.78.1</version>
-        </dependency>
     </dependencies>
 </project>
