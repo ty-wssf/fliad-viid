@@ -1,5 +1,6 @@
 package com.fliad.core.config;
 
+import cn.hutool.core.lang.Snowflake;
 import cn.hutool.json.JSONConverter;
 import com.fliad.auth.core.pojo.SaBaseClientLoginUser;
 import com.fliad.auth.core.pojo.SaBaseLoginUser;
@@ -92,6 +93,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(RowSqlProvider.class, MemberCategory.values());
         metadata.registerReflection(TcpServer.class, MemberCategory.values());
         metadata.registerReflection(JSONConverter.class, MemberCategory.values());
+        metadata.registerReflection(Snowflake.class, MemberCategory.values());
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))
@@ -158,6 +160,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
         metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
 
+        metadata.registerLambdaSerialization(BizUserServiceImpl.class);
+        metadata.registerLambdaSerialization(SysIndexServiceImpl.class);
         metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
         metadata.registerLambdaSerialization(BizOrgServiceImpl.class);
         metadata.registerLambdaSerialization(BizPositionServiceImpl.class);
