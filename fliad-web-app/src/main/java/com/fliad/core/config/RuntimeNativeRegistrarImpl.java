@@ -15,6 +15,7 @@ import com.fliad.dev.core.listener.DevJobListener;
 import com.fliad.dev.modular.config.service.impl.DevConfigServiceImpl;
 import com.fliad.dev.modular.dict.service.impl.DevDictServiceImpl;
 import com.fliad.dev.modular.job.service.impl.DevJobServiceImpl;
+import com.fliad.dev.modular.log.provider.DevLogApiProvider;
 import com.fliad.dev.modular.log.service.impl.DevLogServiceImpl;
 import com.fliad.dev.modular.relation.service.impl.DevRelationServiceImpl;
 import com.fliad.dev.modular.slideshow.service.impl.DevSlideshowServiceImpl;
@@ -129,57 +130,6 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerSerialization(boolean[].class);
         metadata.registerSerialization(Double[].class);
         metadata.registerSerialization(double[].class);
-
-        // 手动注册的lambda序列化
-        /*metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
-        metadata.registerLambdaSerialization(BizNoticeServiceImpl.class);
-        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileButtonServiceImpl.class);
-        metadata.registerLambdaSerialization(DevSmsServiceImpl.class);
-        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(DevMessageServiceImpl.class);
-        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
-        metadata.registerLambdaSerialization(DevFileServiceImpl.class);
-        metadata.registerLambdaSerialization(DevEmailServiceImpl.class);
-        metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
-        metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
-
-        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
-        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
-        /*metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
-        metadata.registerLambdaSerialization(SysModuleServiceImpl.class);
-        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
-        metadata.registerLambdaSerialization(SysPositionServiceImpl.class);
-        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
-        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(BizUserServiceImpl.class);
-        metadata.registerLambdaSerialization(SysIndexServiceImpl.class);
-        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
-        metadata.registerLambdaSerialization(BizOrgServiceImpl.class);
-        metadata.registerLambdaSerialization(BizPositionServiceImpl.class);
-        metadata.registerLambdaSerialization(BizIndexServiceImpl.class);
-        metadata.registerLambdaSerialization(BizDictServiceImpl.class);
-        metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
-        metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
-        metadata.registerLambdaSerialization(SysRoleServiceImpl.class);
-        metadata.registerLambdaSerialization(SysUserServiceImpl.class);
-        metadata.registerLambdaSerialization(AuthServiceImpl.class);
-        metadata.registerLambdaSerialization(DevDictServiceImpl.class);
-        metadata.registerLambdaSerialization(DevJobListener.class);
-        metadata.registerLambdaSerialization(DevConfigServiceImpl.class);
-        metadata.registerLambdaSerialization(DevJobServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidApeServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidCascadePlatformServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidPlatformStatusServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidSystemServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidDatasourceServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidSubscribeServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidTollgateServiceImpl.class);
-        metadata.registerLambdaSerialization(ViidWorkflowServiceImpl.class);
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
