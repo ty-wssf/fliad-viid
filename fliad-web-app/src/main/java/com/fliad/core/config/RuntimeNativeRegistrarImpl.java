@@ -94,43 +94,6 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     }
                 });
 
-        // 手动注册序列化
-        metadata.registerSerialization(SaBaseClientLoginUser.class);
-        metadata.registerSerialization(SaBaseClientLoginUser.DataScope.class);
-        metadata.registerSerialization(SaBaseLoginUser.class);
-        metadata.registerSerialization(SaBaseLoginUser.DataScope.class);
-
-        // 注册所有基本类型
-        metadata.registerSerialization(String.class);
-        metadata.registerSerialization(Byte.class);
-        metadata.registerSerialization(byte.class);
-        metadata.registerSerialization(Short.class);
-        metadata.registerSerialization(short.class);
-        metadata.registerSerialization(Integer.class);
-        metadata.registerSerialization(int.class);
-        metadata.registerSerialization(Long.class);
-        metadata.registerSerialization(long.class);
-        metadata.registerSerialization(Float.class);
-        metadata.registerSerialization(float.class);
-        metadata.registerSerialization(Double.class);
-        metadata.registerSerialization(double.class);
-        metadata.registerSerialization(Boolean.class);
-        metadata.registerSerialization(boolean.class);
-        metadata.registerSerialization(Character.class);
-        metadata.registerSerialization(char.class);
-
-        // 注册常用包装类型和数组类型
-        metadata.registerSerialization(Number.class);
-        metadata.registerSerialization(String[].class);
-        metadata.registerSerialization(Integer[].class);
-        metadata.registerSerialization(int[].class);
-        metadata.registerSerialization(Long[].class);
-        metadata.registerSerialization(long[].class);
-        metadata.registerSerialization(Boolean[].class);
-        metadata.registerSerialization(boolean[].class);
-        metadata.registerSerialization(Double[].class);
-        metadata.registerSerialization(double[].class);
-
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
 
