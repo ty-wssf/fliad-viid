@@ -28,10 +28,10 @@
         </dependency>
 
         <!-- redis -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- lombok -->
         <dependency>

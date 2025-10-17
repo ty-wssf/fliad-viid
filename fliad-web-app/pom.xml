@@ -67,7 +67,7 @@
         </dependency>
 
         <!-- cache -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.cache.jedis</artifactId>
             <exclusions>
@@ -76,7 +76,7 @@
                     <groupId>org.noear</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
+        </dependency>-->
 
         <!-- hikari -->
         <dependency>
@@ -91,10 +91,10 @@
         </dependency>
 
         <!-- redis -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.noear</groupId>
             <artifactId>redisx</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- oracle -->
         <!--<dependency>

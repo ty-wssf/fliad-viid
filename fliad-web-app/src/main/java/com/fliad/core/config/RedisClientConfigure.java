@@ -1,18 +1,18 @@
 package com.fliad.core.config;
 
-import org.noear.redisx.RedisClient;
+/*import org.noear.redisx.RedisClient;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
-import org.noear.solon.annotation.Inject;
+import org.noear.solon.annotation.Inject;*/
 
 /**
  * @author noear 2022/12/18 created
  */
-@Configuration
+/*@Configuration
 public class RedisClientConfigure {
 
     @Bean
     public RedisClient redisClient(@Inject("${snowy.redis}") RedisClient redisClient){
         return redisClient;
     }
-}
+}*/
