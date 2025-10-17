@@ -87,7 +87,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
                     Class<?> clz = ClassUtil.loadClass(context.getClassLoader(), className);
                     if (clz != null) {
                         metadata.registerReflection(clz, MemberCategory.values());
-                        if (hasLambdaExpressions(clz) && clz != AuthThirdServiceImpl.class) {
+                        if (clz.isAnnotationPresent(Component.class) && hasLambdaExpressions(clz) && clz != AuthThirdServiceImpl.class) {
                             metadata.registerLambdaSerialization(clz);
                         }
                     }
