@@ -112,7 +112,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerSerialization(String.class);
 
         // 手动注册的lambda序列化
-        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
+        /*metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
         metadata.registerLambdaSerialization(BizNoticeServiceImpl.class);
         metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
         metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
@@ -126,7 +126,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerLambdaSerialization(DevEmailServiceImpl.class);
         metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
         metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
-        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
+        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
         metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
         metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
         metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
