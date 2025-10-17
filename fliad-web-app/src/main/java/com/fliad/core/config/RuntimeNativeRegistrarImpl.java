@@ -7,43 +7,27 @@ import com.fliad.auth.core.pojo.SaBaseLoginUser;
 import com.fliad.auth.modular.login.service.impl.AuthServiceImpl;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
 import com.fliad.biz.modular.dict.service.impl.BizDictServiceImpl;
-import com.fliad.biz.modular.group.service.impl.BizGroupServiceImpl;
 import com.fliad.biz.modular.index.service.impl.BizIndexServiceImpl;
-import com.fliad.biz.modular.notice.service.impl.BizNoticeServiceImpl;
 import com.fliad.biz.modular.org.service.impl.BizOrgServiceImpl;
 import com.fliad.biz.modular.position.service.impl.BizPositionServiceImpl;
 import com.fliad.biz.modular.user.service.impl.BizUserServiceImpl;
-import com.fliad.client.modular.relation.service.impl.ClientRelationServiceImpl;
-import com.fliad.client.modular.user.service.impl.ClientUserServiceImpl;
 import com.fliad.dev.core.listener.DevJobListener;
 import com.fliad.dev.modular.config.service.impl.DevConfigServiceImpl;
-import com.fliad.dev.modular.dev.DevApiProvider;
 import com.fliad.dev.modular.dict.service.impl.DevDictServiceImpl;
-import com.fliad.dev.modular.email.service.impl.DevEmailServiceImpl;
-import com.fliad.dev.modular.file.service.impl.DevFileServiceImpl;
 import com.fliad.dev.modular.job.service.impl.DevJobServiceImpl;
-import com.fliad.dev.modular.log.provider.DevLogApiProvider;
 import com.fliad.dev.modular.log.service.impl.DevLogServiceImpl;
-import com.fliad.dev.modular.message.provider.DevMessageProvider;
-import com.fliad.dev.modular.message.service.impl.DevMessageServiceImpl;
 import com.fliad.dev.modular.relation.service.impl.DevRelationServiceImpl;
 import com.fliad.dev.modular.slideshow.service.impl.DevSlideshowServiceImpl;
-import com.fliad.dev.modular.sms.service.impl.DevSmsServiceImpl;
-import com.fliad.mobile.modular.resource.service.impl.MobileButtonServiceImpl;
 import com.fliad.mobile.modular.resource.service.impl.MobileMenuServiceImpl;
 import com.fliad.mobile.modular.resource.service.impl.MobileModuleServiceImpl;
 import com.fliad.sys.modular.group.service.impl.SysGroupServiceImpl;
 import com.fliad.sys.modular.index.service.impl.SysIndexServiceImpl;
 import com.fliad.sys.modular.org.service.impl.SysOrgServiceImpl;
 import com.fliad.sys.modular.position.service.impl.SysPositionServiceImpl;
-import com.fliad.sys.modular.relation.provider.SysRelationApiProvider;
 import com.fliad.sys.modular.relation.service.impl.SysRelationServiceImpl;
-import com.fliad.sys.modular.resource.service.impl.SysButtonServiceImpl;
 import com.fliad.sys.modular.resource.service.impl.SysMenuServiceImpl;
 import com.fliad.sys.modular.resource.service.impl.SysModuleServiceImpl;
-import com.fliad.sys.modular.role.provider.SysRoleApiProvider;
 import com.fliad.sys.modular.role.service.impl.SysRoleServiceImpl;
-import com.fliad.sys.modular.user.provider.SysUserApiProvider;
 import com.fliad.sys.modular.user.service.impl.SysUserServiceImpl;
 import com.fliad.viid.modular.ape.service.impl.ViidApeServiceImpl;
 import com.fliad.viid.modular.cascadeplatform.service.impl.ViidCascadePlatformServiceImpl;
@@ -111,7 +95,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerSerialization(SaBaseClientLoginUser.DataScope.class);
         metadata.registerSerialization(SaBaseLoginUser.class);
         metadata.registerSerialization(SaBaseLoginUser.DataScope.class);
-        
+
         // 注册所有基本类型
         metadata.registerSerialization(String.class);
         metadata.registerSerialization(Byte.class);
@@ -130,7 +114,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerSerialization(boolean.class);
         metadata.registerSerialization(Character.class);
         metadata.registerSerialization(char.class);
-        
+
         // 注册常用包装类型和数组类型
         metadata.registerSerialization(Number.class);
         metadata.registerSerialization(String[].class);
@@ -160,6 +144,14 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
         metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);*/
 
+        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
+        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
+        metadata.registerLambdaSerialization(SysModuleServiceImpl.class);
+        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
+        metadata.registerLambdaSerialization(SysPositionServiceImpl.class);
+        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
+        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
         metadata.registerLambdaSerialization(BizUserServiceImpl.class);
         metadata.registerLambdaSerialization(SysIndexServiceImpl.class);
         metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
