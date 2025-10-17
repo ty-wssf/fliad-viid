@@ -106,10 +106,27 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         // 手动注册序列化
         metadata.registerSerialization(SaBaseClientLoginUser.class);
+        metadata.registerSerialization(SaBaseClientLoginUser.DataScope.class);
         metadata.registerSerialization(SaBaseLoginUser.class);
+        metadata.registerSerialization(SaBaseLoginUser.DataScope.class);
         metadata.registerSerialization(String.class);
 
         // 手动注册的lambda序列化
+        metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
+        metadata.registerLambdaSerialization(BizNoticeServiceImpl.class);
+        metadata.registerLambdaSerialization(SysGroupServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileModuleServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileMenuServiceImpl.class);
+        metadata.registerLambdaSerialization(MobileButtonServiceImpl.class);
+        metadata.registerLambdaSerialization(DevSmsServiceImpl.class);
+        metadata.registerLambdaSerialization(DevRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(DevMessageServiceImpl.class);
+        metadata.registerLambdaSerialization(DevLogServiceImpl.class);
+        metadata.registerLambdaSerialization(DevFileServiceImpl.class);
+        metadata.registerLambdaSerialization(DevEmailServiceImpl.class);
+        metadata.registerLambdaSerialization(ClientUserServiceImpl.class);
+        metadata.registerLambdaSerialization(ClientRelationServiceImpl.class);
+        metadata.registerLambdaSerialization(AuthThirdServiceImpl.class);
         metadata.registerLambdaSerialization(SysRelationServiceImpl.class);
         metadata.registerLambdaSerialization(SysOrgServiceImpl.class);
         metadata.registerLambdaSerialization(SysMenuServiceImpl.class);
