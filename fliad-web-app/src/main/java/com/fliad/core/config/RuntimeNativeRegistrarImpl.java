@@ -110,6 +110,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerSerialization(SaBaseLoginUser.class);
         metadata.registerSerialization(SaBaseLoginUser.DataScope.class);
         metadata.registerSerialization(String.class);
+        metadata.registerSerialization(Number.class);
+        metadata.registerSerialization(Boolean.class);
 
         // 手动注册的lambda序列化
         /*metadata.registerLambdaSerialization(DevSlideshowServiceImpl.class);
