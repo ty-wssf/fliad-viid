@@ -312,19 +312,19 @@
                             <!-- 原生镜像生成参数（关键配置） -->
                             <buildArgs>
                                 <buildArgs>
-                                    # 解锁实验性选项
+                                    <!--解锁实验性选项-->
                                     -H:+UnlockExperimentalVMOptions
-                                    # 包含资源文件
+                                    <!--# 包含资源文件-->
                                     -H:IncludeResources=rabbitmq-amqp-client.properties|version.properties
-                                    # 启用安全服务（按需）
+                                    <!--# 启用安全服务（按需）-->
                                     -H:+EnableAllSecurityServices
-                                    # 生成纯原生镜像
+                                    <!--# 生成纯原生镜像-->
                                     --no-fallback
-                                    # 调试堆栈（可选）
+                                    <!--# 调试堆栈（可选）-->
                                     -H:+ReportExceptionStackTraces
-                                    # JS 类运行时初始化
+                                    <!--# JS 类运行时初始化-->
                                     --initialize-at-run-time=org.graalvm.js,com.oracle.truffle,org.graalvm.polyglot
-                                    # 启用 GraalJS 原生支持（GraalVM 21+ 推荐）
+                                    <!--# 启用 GraalJS 原生支持（GraalVM 21+ 推荐）-->
                                     -H:+IncludeJSGraalFeatures
                                 </buildArgs>
                             </buildArgs>
