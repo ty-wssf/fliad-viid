@@ -108,6 +108,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         // 设置生成的native镜像的目标CPU架构兼容性模式
         metadata.registerArg("-march=compatibility");
 
+        metadata.registerArg("-Dpolyglot.js.enabled=true");
+
     }
 
     /**
