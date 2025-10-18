@@ -109,7 +109,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-march=compatibility");
 
         metadata.registerArg("-Dpolyglot.js.enabled=true");
-
+        metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");
+        metadata.registerArg("--initialize-at-run-time=org.graalvm.polyglot.Context");
     }
 
     /**
