@@ -111,7 +111,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-Dpolyglot.js.enabled=true");
         metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");
         metadata.registerArg("--initialize-at-run-time=org.graalvm.polyglot.Context");
-        metadata.registerArg("--language:js");
+        /*metadata.registerArg("--language:js");*/
     }
 
     /**
