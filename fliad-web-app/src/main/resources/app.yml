@@ -100,6 +100,11 @@ solon.staticfiles.mappings:
   - path: "/"
     repository: "./fliad-admin-web/dist/" #2.添加资源路径（仓库只能是目录）
 
+# graalvm.engine.WarnInterpreterOnly=false
+polyglot:
+  engine:
+    WarnInterpreterOnly: false
+
 # common configuration
 snowy.config.common.front-url: http://localhost:81
 snowy.config.common.backend-url: http://localhost:82
