@@ -18,6 +18,7 @@ import cn.hutool.crypto.Padding;
 import cn.hutool.crypto.asymmetric.SM2;
 import cn.hutool.crypto.symmetric.SM4;
 import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -120,7 +121,7 @@ public class CommonCryptogramUtil {
      */
     public static String doHashValue(String str) {
         // 简单实现，直接返回原字符串
-        return str;
+        return Utils.md5(str);
         /*try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = md.digest(str.getBytes());
