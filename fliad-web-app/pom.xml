@@ -308,7 +308,7 @@
                         </executions>
                         <configuration>
                             <!-- 指定主类 -->
-                            <mainClass>com.fliad.Application</mainClass>
+                           <!-- <mainClass>com.fliad.Application</mainClass>-->
                             <!-- 原生镜像生成参数（关键配置） -->
                             <buildArgs>
                                 --features=org.graalvm.js.extra.NativeImageFeature
