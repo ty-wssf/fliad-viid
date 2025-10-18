@@ -79,6 +79,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(TcpServer.class, MemberCategory.values());
         metadata.registerReflection(JSONConverter.class, MemberCategory.values());
         metadata.registerReflection(Snowflake.class, MemberCategory.values());
+        metadata.registerReflection(org.graalvm.polyglot.Context.class, MemberCategory.values());
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))

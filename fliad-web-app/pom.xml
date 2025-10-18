@@ -237,6 +237,16 @@
             </exclusions>
         </dependency>
 
+        <!-- GraalVM JS引擎 -->
+        <!-- GraalVM JavaScript 核心包 -->
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js</artifactId>
+            <version>21.3.15</version>
+            <!-- 标记为构建时依赖，不包含在运行时类路径 -->
+            <scope>provided</scope>
+        </dependency>
+
         <!-- 代码生成插件 -->
         <!--<dependency>
             <groupId>com.fliad</groupId>
