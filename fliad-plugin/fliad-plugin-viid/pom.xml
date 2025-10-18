@@ -78,6 +78,7 @@
         <dependency>
             <groupId>org.graalvm.sdk</groupId>
             <artifactId>graal-sdk</artifactId>
+            <scope>provided</scope> <!-- 仅编译时可用，不打包 -->
             <version>22.3.2</version>
         </dependency>
     </dependencies>
