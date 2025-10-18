@@ -320,7 +320,7 @@
                                     -H:+ReportExceptionStackTraces
                                     <!--# JS 类运行时初始化-->
                                     --initialize-at-run-time=org.graalvm.js,com.oracle.truffle,org.graalvm.polyglot
-                                    -H:PrintFlags=
+                                    -H:+CopyLanguageResources
                                 </buildArgs>
                             </buildArgs>
                         </configuration>
