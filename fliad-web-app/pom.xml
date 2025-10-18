@@ -312,7 +312,7 @@
                             <!-- 原生镜像生成参数（关键配置） -->
                             <buildArgs>
                                 <!-- 启用 JavaScript 语言支持 -->
-                                --language:js
+                                <!--&#45;&#45;language:js-->
                                 <!-- 允许不完整的类路径（GraalJS 依赖特性） -->
                                 --allow-incomplete-classpath
                                 <!-- 生成纯原生镜像（非 fallback 模式） -->
