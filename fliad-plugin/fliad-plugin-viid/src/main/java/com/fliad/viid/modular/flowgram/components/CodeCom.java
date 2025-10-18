@@ -34,6 +34,7 @@ public class CodeCom implements TaskComponent {
         });
 
         // 使用GraalVM Polyglot API执行JavaScript代码
+        log.info("执行JavaScript代码：{}", ONode.load(node.getMetas()).select("data.script.content").getString());
         try (Context polyglotContext = Context.newBuilder("js")
                 .allowHostAccess(HostAccess.ALL)  // 允许JavaScript访问Java对象的所有公共成员
                 .allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)
@@ -59,9 +60,9 @@ public class CodeCom implements TaskComponent {
                 resultMap.put("result", result.isHostObject() ? result.asHostObject() : result.toString());
                 context.put("output", resultMap);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("Error executing JavaScript code with GraalVM Polyglot", e);
-            throw new RuntimeException("Failed to execute JavaScript code in native environment", e);
+            throw e;
         }
     }
 }
