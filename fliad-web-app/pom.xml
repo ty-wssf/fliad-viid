@@ -311,14 +311,24 @@
                            <!-- <mainClass>com.fliad.Application</mainClass>-->
                             <!-- 原生镜像生成参数（关键配置） -->
                             <buildArgs>
-                                --features=org.graalvm.js.extra.NativeImageFeature
-                                --allow-incomplete-classpath
-                                --no-fallback
-                                -H:+ReportExceptionStackTraces
-                                -H:+AddAllCharsets
-                                <!-- 额外添加 JS 所需的反射和动态特性支持 -->
-                                -H:+EnableAllSecurityServices
-                                --initialize-at-run-time=org.graalvm.js,com.oracle.truffle,org.graalvm.polyglot
+                                <buildArgs>
+                                    <!-- 解锁实验性选项（用于 IncludeResources 等） -->
+                                    -H:+UnlockExperimentalVMOptions
+                                    <!-- 启用 GraalJS 支持（GraalVM 21+ 方式） -->
+                                    --features=org.graalvm.js.extra.NativeImageFeature
+                                    <!-- 包含必要资源文件 -->
+                                    -H:IncludeResources=rabbitmq-amqp-client.properties|version.properties
+                                    <!-- 禁用 fallback 模式（生成纯原生镜像） -->
+                                    --no-fallback
+                                    <!-- 调试用：输出异常堆栈 -->
+                                    -H:+ReportExceptionStackTraces
+                                    <!-- 启用必要的字符集支持 -->
+                                    -H:+IncludeAllCharsets
+                                    <!-- 按需启用安全服务（替代 EnableAllSecurityServices） -->
+                                    -H:SecurityServices=jsse,ssl
+                                    <!-- 运行时初始化 JS 相关类 -->
+                                    --initialize-at-run-time=org.graalvm.js,com.oracle.truffle,org.graalvm.polyglot
+                                </buildArgs>
                             </buildArgs>
                         </configuration>
                     </plugin>
