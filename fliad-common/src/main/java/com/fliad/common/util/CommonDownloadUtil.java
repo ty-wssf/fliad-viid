@@ -17,6 +17,8 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.URLUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.handle.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +29,9 @@ import java.io.IOException;
  * @author xuyuxiang
  * @date 2020/8/5 21:45
  */
-@Slf4j
 public class CommonDownloadUtil {
+
+    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
 
     /**
      * 下载文件

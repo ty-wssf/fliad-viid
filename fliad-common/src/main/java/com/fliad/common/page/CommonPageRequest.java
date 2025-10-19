@@ -20,9 +20,10 @@ import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.query.QueryOrderBy;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import com.fliad.common.pojo.CommonPageOrderItem;
 import com.fliad.common.util.CommonServletUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -32,8 +33,9 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2021/12/18 14:43
  */
-@Slf4j
 public class CommonPageRequest {
+
+    private static Logger log = LoggerFactory.getLogger(CommonPageRequest.class);
 
     private static final String PAGE_SIZE_PARAM_NAME = "size";
 

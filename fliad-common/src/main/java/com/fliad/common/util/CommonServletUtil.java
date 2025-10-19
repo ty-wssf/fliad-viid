@@ -16,6 +16,8 @@ import cn.hutool.core.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.handle.Context;
 import com.fliad.common.exception.CommonException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * HttpServlet工具类，获取当前request和response
@@ -23,8 +25,9 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2020/3/30 15:09
  */
-@Slf4j
 public class CommonServletUtil {
+
+    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
 
     /**
      * 从请求中中获取参数

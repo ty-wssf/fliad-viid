@@ -16,7 +16,10 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.system.SystemUtil;
+import com.fliad.common.page.CommonPageRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,8 +32,9 @@ import java.util.*;
  * @author xuyuxiang
  * @date 2022/9/1 23:45
  */
-@Slf4j
 public class CommonNetWorkInfoUtil {
+
+    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
 
     /**
      * 网速测速时间2s
