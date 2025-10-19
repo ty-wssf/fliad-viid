@@ -28,7 +28,7 @@
         <module>fliad-plugin-dev</module>
 
         <!-- 代码生成插件 -->
-        <module>fliad-plugin-gen</module>
+        <!--<module>fliad-plugin-gen</module>-->
 
         <!-- 移动端管理插件 -->
         <module>fliad-plugin-mobile</module>
