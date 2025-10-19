@@ -63,20 +63,11 @@
             <version>${rabbitmq.version}</version>
         </dependency>
 
-        <!-- GraalVM JS引擎 -->
-        <!-- 核心多语言交互 API（已添加） -->
+        <!-- JavaScript 语言实现（必须添加） -->
         <dependency>
             <groupId>org.graalvm.polyglot</groupId>
             <artifactId>polyglot</artifactId>
-            <version>23.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- JavaScript 语言实现（必须添加） -->
-        <dependency>
-            <groupId>org.graalvm.js</groupId>
-            <artifactId>js</artifactId>
-            <version>23.0.1</version>
+            <version>25.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
