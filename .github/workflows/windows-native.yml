@@ -41,7 +41,7 @@ jobs:
       - name: Verify GraalVM JS support
         run: |       
           java -version
-          polyglot --language js --eval "console.log('Hello from JavaScript')"
+          "$env:GRAALVM_HOME\bin\polyglot.cmd" --language js --eval "console.log('Hello from JavaScript')"
 
       - name: Build with Maven
         run: |
