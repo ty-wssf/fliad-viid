@@ -255,8 +255,6 @@ public abstract class SaBaseLoginUser implements Serializable {
      * @author xuyuxiang
      * @date 2022/8/15 13:57
      **/
-    @Getter
-    @Setter
     public static class DataScope implements Serializable {
 
         /** API接口 */
@@ -266,6 +264,23 @@ public abstract class SaBaseLoginUser implements Serializable {
         /** 数据范围 */
         @ApiModelProperty(value = "数据范围", position = 2)
         private List<String> dataScope;
+
+        public String getApiUrl() {
+            return apiUrl;
+        }
+
+        public void setApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+        }
+
+        public List<String> getDataScope() {
+            return dataScope;
+        }
+
+        public void setDataScope(List<String> dataScope) {
+            this.dataScope = dataScope;
+        }
+
     }
 
     public String getPositionLevel() {
