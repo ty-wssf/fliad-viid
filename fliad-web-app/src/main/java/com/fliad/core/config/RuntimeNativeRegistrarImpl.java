@@ -83,7 +83,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
         // # 允许部分类路径不完整（JS 引擎可能依赖动态加载类）
         metadata.registerArg("--allow-incomplete-classpath");
-
+        metadata.registerArg("-H:Features=org.graalvm.home.HomeFinderFeature");
+        metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");
     }
 
     /**
