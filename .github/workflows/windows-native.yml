@@ -37,12 +37,6 @@ jobs:
           java-version: '21' # for a specific JDK 21;
           distribution: 'graalvm' # New 'distribution' option
           cache: maven
-          components: 'js'  # 显式安装 JavaScript 组件
-
-      - name: Verify GraalVM JS support
-        run: |       
-          java -version
-          "$env:GRAALVM_HOME\bin\polyglot.cmd" --language js --eval "console.log('Hello from JavaScript')"
 
       - name: Build with Maven
         run: |
