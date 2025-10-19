@@ -78,9 +78,12 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         // 设置生成的native镜像的目标CPU架构兼容性模式
         metadata.registerArg("-march=compatibility");
 
+        // jdk17对应参数
         metadata.registerArg("-Ob");
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
         metadata.registerArg("--language:js");
+        metadata.registerArg("-H:+ReportExceptionStackTraces");
+
         /*metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
         metadata.registerArg("-H:Features=org.graalvm.home.HomeFinderFeature");
         metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");*/
