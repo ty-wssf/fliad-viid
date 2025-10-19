@@ -19,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.noear.solon.core.handle.Context;
 import com.fliad.common.exception.CommonException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.InputStream;
@@ -30,8 +32,9 @@ import java.io.InputStream;
  * @author xuyuxiang
  * @date 2020/3/16 11:25
  */
-@Slf4j
 public class CommonIpAddressUtil {
+
+    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
 
     private static final String LOCAL_REMOTE_HOST = "0:0:0:0:0:0:0:1";
 

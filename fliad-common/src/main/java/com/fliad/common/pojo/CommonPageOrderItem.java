@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
  * @author ChengChuanYao
  * @date 2024/06/22 11:20
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommonPageOrderItem implements Serializable {
@@ -50,4 +49,21 @@ public class CommonPageOrderItem implements Serializable {
     private static CommonPageOrderItem build(String Column, boolean asc) {
         return new CommonPageOrderItem(Column, asc);
     }
+
+    public String getColumn() {
+        return Column;
+    }
+
+    public void setColumn(String column) {
+        Column = column;
+    }
+
+    public boolean isAsc() {
+        return asc;
+    }
+
+    public void setAsc(boolean asc) {
+        this.asc = asc;
+    }
+
 }
