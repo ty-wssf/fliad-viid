@@ -16,7 +16,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fliad.viid.modular.subscribe.param.ViidSubscribeIdParam;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
@@ -35,7 +34,6 @@ import com.fliad.viid.modular.ape.service.ViidApeService;
 
 import java.util.List;
 
-import static com.fliad.viid.modular.ape.entity.table.ViidApeTableDef.VIID_APE;
 
 /**
  * 采集设备Service接口实现类
