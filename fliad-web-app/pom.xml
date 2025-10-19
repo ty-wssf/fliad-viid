@@ -243,7 +243,6 @@
             <groupId>org.graalvm.polyglot</groupId>
             <artifactId>polyglot</artifactId>
             <version>23.1.0</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- JavaScript 语言实现（必须添加） -->
@@ -251,7 +250,12 @@
             <groupId>org.graalvm.js</groupId>
             <artifactId>js</artifactId>
             <version>23.0.1</version>
-            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.graalvm.sdk</groupId>
+                    <artifactId>graal-sdk</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- 代码生成插件 -->
