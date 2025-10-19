@@ -246,6 +246,11 @@
             <!-- 标记为构建时依赖，不包含在运行时类路径 -->
             <scope>provided</scope>
         </dependency>
+        <dependency> <!-- We also move from graal-sdk => polyglot -->
+            <groupId>org.graalvm.polyglot</groupId>
+            <artifactId>polyglot</artifactId>
+            <version>23.1.0</version>
+        </dependency>
         
         <!-- GraalVM JavaScript ScriptEngine -->
         <dependency>
