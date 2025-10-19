@@ -83,6 +83,10 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
         metadata.registerArg("--language:js");
         metadata.registerArg("-H:+ReportExceptionStackTraces");
+        metadata.registerArg("--allow-incomplete-classpath");
+        metadata.registerArg("--initialize-at-run-time=org.noear.solon.core.handle.MethodType,org.apache.ibatis.type.JdbcType");
+        metadata.registerArg("--initialize-at-run-time=org.graalvm.js.runtime.JSContext");
+        metadata.registerArg("--initialize-at-build-time=org.graalvm.js,com.oracle.truffle");
 
         /*metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
         metadata.registerArg("-H:Features=org.graalvm.home.HomeFinderFeature");
