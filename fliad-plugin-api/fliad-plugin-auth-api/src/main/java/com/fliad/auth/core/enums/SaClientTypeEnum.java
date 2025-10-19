@@ -21,7 +21,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2021/10/11 14:02
  **/
-@Getter
 public enum SaClientTypeEnum {
 
     /**
@@ -46,4 +45,9 @@ public enum SaClientTypeEnum {
             throw new CommonException("不支持的登录端类型：{}", value);
         }
     }
+
+    public String getValue() {
+        return value;
+    }
+
 }
