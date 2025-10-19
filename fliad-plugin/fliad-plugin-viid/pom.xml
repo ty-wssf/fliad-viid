@@ -64,13 +64,18 @@
         </dependency>
 
         <!-- GraalVM JS引擎 -->
-        <!-- GraalVM JavaScript 核心包 -->
+        <!-- 核心多语言交互 API（已添加） -->
+        <dependency>
+            <groupId>org.graalvm.polyglot</groupId>
+            <artifactId>polyglot</artifactId>
+            <version>23.1.0</version>
+        </dependency>
+
+        <!-- JavaScript 语言实现（必须添加） -->
         <dependency>
             <groupId>org.graalvm.js</groupId>
             <artifactId>js</artifactId>
-            <version>21.3.15</version>
-            <!-- 标记为构建时依赖，不包含在运行时类路径 -->
-            <scope>provided</scope>
+            <version>23.0.1</version>
         </dependency>
     </dependencies>
 
