@@ -311,17 +311,14 @@
                            <!-- <mainClass>com.fliad.Application</mainClass>-->
                             <!-- 原生镜像生成参数（关键配置） -->
                             <buildArgs>
-                                <buildArgs>
-                                    <!--解锁实验性选项-->
-                                    -H:+UnlockExperimentalVMOptions
-                                    <!--# 生成纯原生镜像-->
-                                    --no-fallback
-                                    <!--# 调试堆栈（可选）-->
-                                    -H:+ReportExceptionStackTraces
-                                    <!--# JS 类运行时初始化-->
-                                    --initialize-at-run-time=org.graalvm.js,com.oracle.truffle,org.graalvm.polyglot
-                                    -H:+CopyLanguageResources
-                                </buildArgs>
+                                <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
+                                <buildArg>--no-fallback</buildArg>
+                                <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                                <!-- 启用语言支持 -->
+                                <buildArg>--language:js</buildArg>
+                                <!-- 包含必要的资源 -->
+                                <buildArg>-H:IncludeResources=.*\.js$</buildArg>
+                                <buildArg>-H:IncludeResources=.*\.properties$</buildArg>
                             </buildArgs>
                         </configuration>
                     </plugin>
