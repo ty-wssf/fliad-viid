@@ -37,6 +37,7 @@ jobs:
           java-version: '21' # for a specific JDK 21;
           distribution: 'graalvm' # New 'distribution' option
           cache: maven
+          components: 'native-image,js'
 
       - name: Build with Maven
         run: |
