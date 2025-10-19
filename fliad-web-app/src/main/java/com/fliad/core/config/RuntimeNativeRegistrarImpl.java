@@ -80,7 +80,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         metadata.registerArg("-Ob");
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
-        metadata.registerArg("--language:js");
+        /*metadata.registerArg("--language:js");*/
 
     }
 
