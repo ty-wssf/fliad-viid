@@ -78,16 +78,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         // 设置生成的native镜像的目标CPU架构兼容性模式
         metadata.registerArg("-march=compatibility");
 
-        // jdk17对应参数
         metadata.registerArg("-Ob");
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
-        metadata.registerArg("--language:js");
-        metadata.registerArg("-H:+ReportExceptionStackTraces");
-        metadata.registerArg("--allow-incomplete-classpath");
-        metadata.registerArg("--initialize-at-run-time=org.noear.solon.core.handle.MethodType,org.apache.ibatis.type.JdbcType");
-        metadata.registerArg("--initialize-at-run-time=org.graalvm.js.runtime.JSContext");
-        metadata.registerArg("--initialize-at-build-time=org.graalvm.js,com.oracle.truffle");
-        metadata.registerArg("--trace-class-initialization=org.apache.ibatis.type.JdbcType,org.noear.solon.core.handle.MethodType");
 
     }
 
