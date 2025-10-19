@@ -80,9 +80,10 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         metadata.registerArg("-Ob");
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
-        metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
+        metadata.registerArg("--language:js");
+        /*metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
         metadata.registerArg("-H:Features=org.graalvm.home.HomeFinderFeature");
-        metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");
+        metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");*/
     }
 
     /**
