@@ -41,7 +41,7 @@ jobs:
       - name: Verify GraalVM JS support
         run: |       
           java -version
-          gu list  # 查看已安装的语言组件
+          gu.cmd list  # 查看已安装的语言组件
 
       - name: Build with Maven
         run: |
