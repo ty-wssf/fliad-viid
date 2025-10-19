@@ -38,6 +38,11 @@ jobs:
           distribution: 'graalvm' # New 'distribution' option
           cache: maven
 
+      - name: Verify GraalVM JS support
+        run: |       
+          java -version
+          gu list  # 查看已安装的语言组件
+
       - name: Build with Maven
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
