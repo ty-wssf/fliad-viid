@@ -12,7 +12,7 @@
  */
 package com.fliad.sys.modular.role.enums;
 
-import lombok.Getter;
+
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +21,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum SysRoleCategoryEnum {
 
     /** 全局 */
@@ -34,6 +33,10 @@ public enum SysRoleCategoryEnum {
 
     SysRoleCategoryEnum(String value) {
         this.value = value;
+    }
+    
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

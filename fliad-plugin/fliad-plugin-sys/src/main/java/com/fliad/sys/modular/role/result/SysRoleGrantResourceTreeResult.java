@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.role.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:09
  **/
-@Getter
-@Setter
 public class SysRoleGrantResourceTreeResult {
 
     /** 模块id */
@@ -43,6 +40,38 @@ public class SysRoleGrantResourceTreeResult {
     /** 模块下菜单集合*/
     @ApiModelProperty(value = "模块下菜单集合", position = 4)
     private List<SysRoleGrantResourceMenuResult> menu;
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public List<SysRoleGrantResourceMenuResult> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<SysRoleGrantResourceMenuResult> menu) {
+        this.menu = menu;
+    }
 
     /**
      * 授权菜单类
@@ -50,8 +79,6 @@ public class SysRoleGrantResourceTreeResult {
      * @author xuyuxiang
      * @date 2022/8/13 16:54
      */
-    @Getter
-    @Setter
     public static class SysRoleGrantResourceMenuResult {
 
         /** 菜单id */
@@ -76,6 +103,54 @@ public class SysRoleGrantResourceTreeResult {
         /** 菜单下按钮集合 */
         @ApiModelProperty(value = "菜单下按钮集合", position = 6)
         private List<SysRoleGrantResourceButtonResult> button;
+        
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getParentId() {
+            return parentId;
+        }
+
+        public void setParentId(String parentId) {
+            this.parentId = parentId;
+        }
+
+        public String getParentName() {
+            return parentName;
+        }
+
+        public void setParentName(String parentName) {
+            this.parentName = parentName;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+        
+        public String getModule() {
+            return module;
+        }
+
+        public void setModule(String module) {
+            this.module = module;
+        }
+
+        public List<SysRoleGrantResourceButtonResult> getButton() {
+            return button;
+        }
+
+        public void setButton(List<SysRoleGrantResourceButtonResult> button) {
+            this.button = button;
+        }
 
         /**
          * 授权按钮类
@@ -83,8 +158,6 @@ public class SysRoleGrantResourceTreeResult {
          * @author xuyuxiang
          * @date 2022/8/13 16:54
          */
-        @Getter
-        @Setter
         public static class SysRoleGrantResourceButtonResult {
 
             /** 按钮id */
@@ -94,6 +167,22 @@ public class SysRoleGrantResourceTreeResult {
             /** 标题 */
             @ApiModelProperty(value = "按钮标题", position = 2)
             private String title;
+            
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
         }
     }
 }

@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -24,12 +22,18 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
 public class SysUserIdListParam {
 
     /** id集合 */
     @ApiModelProperty(value = "id集合", required = true)
     @NotNull(message = "idList不能为空")
     private List<String> idList;
+
+    public List<String> getIdList() {
+        return idList;
+    }
+
+    public void setIdList(List<String> idList) {
+        this.idList = idList;
+    }
 }

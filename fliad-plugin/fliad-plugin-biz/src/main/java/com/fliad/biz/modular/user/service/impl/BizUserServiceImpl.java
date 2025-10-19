@@ -47,8 +47,9 @@ import com.fliad.common.util.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Component;
@@ -94,9 +95,10 @@ import java.util.stream.Collectors;
  * @author xuyuxiang
  * @date 2022/2/23 18:43
  **/
-@Slf4j
 @Component
 public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> implements BizUserService {
+
+    private static final Logger log = LoggerFactory.getLogger(BizUserServiceImpl.class);
 
     private static final String SNOWY_SYS_DEFAULT_PASSWORD_KEY = "SNOWY_SYS_DEFAULT_PASSWORD";
 

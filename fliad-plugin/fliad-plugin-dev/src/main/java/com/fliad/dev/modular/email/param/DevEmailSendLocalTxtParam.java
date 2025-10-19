@@ -14,8 +14,6 @@ package com.fliad.dev.modular.email.param;
 
 import cn.hutool.core.collection.CollectionUtil;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import java.io.File;
@@ -27,8 +25,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/6/21 15:38
  **/
-@Getter
-@Setter
 public class DevEmailSendLocalTxtParam {
 
     /** 接收人 */
@@ -49,4 +45,36 @@ public class DevEmailSendLocalTxtParam {
     /** 附件列表 */
     @ApiModelProperty(value = "附件列表", position = 4, hidden = true)
     private List<File> files = CollectionUtil.newArrayList();
+
+    public String getReceiveAccounts() {
+        return receiveAccounts;
+    }
+
+    public void setReceiveAccounts(String receiveAccounts) {
+        this.receiveAccounts = receiveAccounts;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 }

@@ -14,8 +14,6 @@ package com.fliad.viid.modular.datasource.param;
 
 import com.mybatisflex.annotation.Column;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import java.util.Date;
@@ -26,8 +24,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/09/24 20:05
  **/
-@Getter
-@Setter
 public class ViidDatasourceEditParam {
 
     /** ID */
@@ -58,4 +54,51 @@ public class ViidDatasourceEditParam {
     @ApiModelProperty(value = "备注", position = 6)
     private String remark;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSubscribeDetail() {
+        return subscribeDetail;
+    }
+
+    public void setSubscribeDetail(String subscribeDetail) {
+        this.subscribeDetail = subscribeDetail;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

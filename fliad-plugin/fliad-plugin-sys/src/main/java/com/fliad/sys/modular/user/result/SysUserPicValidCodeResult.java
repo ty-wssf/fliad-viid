@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.user.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 图片验证码结果
@@ -22,8 +21,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/8 9:28
  **/
-@Getter
-@Setter
 public class SysUserPicValidCodeResult {
 
     /** 验证码图片，Base64 */
@@ -33,4 +30,20 @@ public class SysUserPicValidCodeResult {
     /** 验证码请求号 */
     @ApiModelProperty(value = "验证码请求号", position = 2)
     private String validCodeReqNo;
+
+    public String getValidCodeBase64() {
+        return validCodeBase64;
+    }
+
+    public void setValidCodeBase64(String validCodeBase64) {
+        this.validCodeBase64 = validCodeBase64;
+    }
+
+    public String getValidCodeReqNo() {
+        return validCodeReqNo;
+    }
+
+    public void setValidCodeReqNo(String validCodeReqNo) {
+        this.validCodeReqNo = validCodeReqNo;
+    }
 }

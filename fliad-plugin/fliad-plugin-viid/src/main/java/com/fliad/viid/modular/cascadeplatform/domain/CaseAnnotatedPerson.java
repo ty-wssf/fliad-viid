@@ -1,13 +1,10 @@
 package com.fliad.viid.modular.cascadeplatform.domain;
 
-import lombok.Data;
-
 import java.util.List;
 
 /**
  * 案事件标注人员对象（参照文档附录A.11.2，案事件标注场景下的人员扩展信息）
  */
-@Data
 public class CaseAnnotatedPerson {
 
     // 1. 人员标识（必选）
@@ -60,7 +57,7 @@ public class CaseAnnotatedPerson {
     private String ChineseAccentCode;
     // 25. 单位名称（人员所在工作单位，可选）
     private String PersonOrg;
-    // 26. 职业类别代码（职业分类与代码，不含“—”，可选）
+    // 26. 职业类别代码（职业分类与代码，不含"&#45;&#45;"，可选）
     private String JobCategory;
     // 27. 同行人数（被标注人的同行人数，可选）
     private Integer AccompanyNumber;
@@ -94,7 +91,7 @@ public class CaseAnnotatedPerson {
     private String Behavior;
     // 42. 行为描述（可选）
     private String BehaviorDescription;
-    // 43. 附属物（多个用英文半角分号“;”分隔，可选）
+    // 43. 附属物（多个用英文半角分号";"分隔，可选）
     private String Appendant;
     // 44. 附属物描述（可选）
     private String AppendantDescription;
@@ -183,4 +180,691 @@ public class CaseAnnotatedPerson {
     // 86. 归属分类标签标识（可选）
     private String TabID;
 
+    public String getPersonID() {
+        return PersonID;
+    }
+
+    public void setPersonID(String personID) {
+        PersonID = personID;
+    }
+
+    public String getInfoKind() {
+        return InfoKind;
+    }
+
+    public void setInfoKind(String infoKind) {
+        InfoKind = infoKind;
+    }
+
+    public String getSourceID() {
+        return SourceID;
+    }
+
+    public void setSourceID(String sourceID) {
+        SourceID = sourceID;
+    }
+
+    public String getDeviceID() {
+        return DeviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        DeviceID = deviceID;
+    }
+
+    public Integer getLeftTopX() {
+        return LeftTopX;
+    }
+
+    public void setLeftTopX(Integer leftTopX) {
+        LeftTopX = leftTopX;
+    }
+
+    public Integer getLeftTopY() {
+        return LeftTopY;
+    }
+
+    public void setLeftTopY(Integer leftTopY) {
+        LeftTopY = leftTopY;
+    }
+
+    public Integer getRightBtmX() {
+        return RightBtmX;
+    }
+
+    public void setRightBtmX(Integer rightBtmX) {
+        RightBtmX = rightBtmX;
+    }
+
+    public Integer getRightBtmY() {
+        return RightBtmY;
+    }
+
+    public void setRightBtmY(Integer rightBtmY) {
+        RightBtmY = rightBtmY;
+    }
+
+    public String getLocationMarkTime() {
+        return LocationMarkTime;
+    }
+
+    public void setLocationMarkTime(String locationMarkTime) {
+        LocationMarkTime = locationMarkTime;
+    }
+
+    public String getPersonAppearTime() {
+        return PersonAppearTime;
+    }
+
+    public void setPersonAppearTime(String personAppearTime) {
+        PersonAppearTime = personAppearTime;
+    }
+
+    public String getPersonDisAppearTime() {
+        return PersonDisAppearTime;
+    }
+
+    public void setPersonDisAppearTime(String personDisAppearTime) {
+        PersonDisAppearTime = personDisAppearTime;
+    }
+
+    public String getIDType() {
+        return IDType;
+    }
+
+    public void setIDType(String IDType) {
+        this.IDType = IDType;
+    }
+
+    public String getIDNumber() {
+        return IDNumber;
+    }
+
+    public void setIDNumber(String IDNumber) {
+        this.IDNumber = IDNumber;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getUsedName() {
+        return UsedName;
+    }
+
+    public void setUsedName(String usedName) {
+        UsedName = usedName;
+    }
+
+    public String getAlias() {
+        return Alias;
+    }
+
+    public void setAlias(String alias) {
+        Alias = alias;
+    }
+
+    public String getGenderCode() {
+        return GenderCode;
+    }
+
+    public void setGenderCode(String genderCode) {
+        GenderCode = genderCode;
+    }
+
+    public Integer getAgeUpLimit() {
+        return AgeUpLimit;
+    }
+
+    public void setAgeUpLimit(Integer ageUpLimit) {
+        AgeUpLimit = ageUpLimit;
+    }
+
+    public Integer getAgeLowerLimit() {
+        return AgeLowerLimit;
+    }
+
+    public void setAgeLowerLimit(Integer ageLowerLimit) {
+        AgeLowerLimit = ageLowerLimit;
+    }
+
+    public String getEthicCode() {
+        return EthicCode;
+    }
+
+    public void setEthicCode(String ethicCode) {
+        EthicCode = ethicCode;
+    }
+
+    public String getNationalityCode() {
+        return NationalityCode;
+    }
+
+    public void setNationalityCode(String nationalityCode) {
+        NationalityCode = nationalityCode;
+    }
+
+    public String getNativeCityCode() {
+        return NativeCityCode;
+    }
+
+    public void setNativeCityCode(String nativeCityCode) {
+        NativeCityCode = nativeCityCode;
+    }
+
+    public String getResidenceAdminDivision() {
+        return ResidenceAdminDivision;
+    }
+
+    public void setResidenceAdminDivision(String residenceAdminDivision) {
+        ResidenceAdminDivision = residenceAdminDivision;
+    }
+
+    public String getChineseAccentCode() {
+        return ChineseAccentCode;
+    }
+
+    public void setChineseAccentCode(String chineseAccentCode) {
+        ChineseAccentCode = chineseAccentCode;
+    }
+
+    public String getPersonOrg() {
+        return PersonOrg;
+    }
+
+    public void setPersonOrg(String personOrg) {
+        PersonOrg = personOrg;
+    }
+
+    public String getJobCategory() {
+        return JobCategory;
+    }
+
+    public void setJobCategory(String jobCategory) {
+        JobCategory = jobCategory;
+    }
+
+    public Integer getAccompanyNumber() {
+        return AccompanyNumber;
+    }
+
+    public void setAccompanyNumber(Integer accompanyNumber) {
+        AccompanyNumber = accompanyNumber;
+    }
+
+    public Integer getHeightUpLimit() {
+        return HeightUpLimit;
+    }
+
+    public void setHeightUpLimit(Integer heightUpLimit) {
+        HeightUpLimit = heightUpLimit;
+    }
+
+    public Integer getHeightLowerLimit() {
+        return HeightLowerLimit;
+    }
+
+    public void setHeightLowerLimit(Integer heightLowerLimit) {
+        HeightLowerLimit = heightLowerLimit;
+    }
+
+    public String getBodyType() {
+        return BodyType;
+    }
+
+    public void setBodyType(String bodyType) {
+        BodyType = bodyType;
+    }
+
+    public String getSkinColor() {
+        return SkinColor;
+    }
+
+    public void setSkinColor(String skinColor) {
+        SkinColor = skinColor;
+    }
+
+    public String getHairStyle() {
+        return HairStyle;
+    }
+
+    public void setHairStyle(String hairStyle) {
+        HairStyle = hairStyle;
+    }
+
+    public String getHairColor() {
+        return HairColor;
+    }
+
+    public void setHairColor(String hairColor) {
+        HairColor = hairColor;
+    }
+
+    public String getGesture() {
+        return Gesture;
+    }
+
+    public void setGesture(String gesture) {
+        Gesture = gesture;
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public String getFaceStyle() {
+        return FaceStyle;
+    }
+
+    public void setFaceStyle(String faceStyle) {
+        FaceStyle = faceStyle;
+    }
+
+    public String getFacialFeature() {
+        return FacialFeature;
+    }
+
+    public void setFacialFeature(String facialFeature) {
+        FacialFeature = facialFeature;
+    }
+
+    public String getPhysicalFeature() {
+        return PhysicalFeature;
+    }
+
+    public void setPhysicalFeature(String physicalFeature) {
+        PhysicalFeature = physicalFeature;
+    }
+
+    public String getBodyFeature() {
+        return BodyFeature;
+    }
+
+    public void setBodyFeature(String bodyFeature) {
+        BodyFeature = bodyFeature;
+    }
+
+    public String getHabitualMovement() {
+        return HabitualMovement;
+    }
+
+    public void setHabitualMovement(String habitualMovement) {
+        HabitualMovement = habitualMovement;
+    }
+
+    public String getBehavior() {
+        return Behavior;
+    }
+
+    public void setBehavior(String behavior) {
+        Behavior = behavior;
+    }
+
+    public String getBehaviorDescription() {
+        return BehaviorDescription;
+    }
+
+    public void setBehaviorDescription(String behaviorDescription) {
+        BehaviorDescription = behaviorDescription;
+    }
+
+    public String getAppendant() {
+        return Appendant;
+    }
+
+    public void setAppendant(String appendant) {
+        Appendant = appendant;
+    }
+
+    public String getAppendantDescription() {
+        return AppendantDescription;
+    }
+
+    public void setAppendantDescription(String appendantDescription) {
+        AppendantDescription = appendantDescription;
+    }
+
+    public String getUmbrellaColor() {
+        return UmbrellaColor;
+    }
+
+    public void setUmbrellaColor(String umbrellaColor) {
+        UmbrellaColor = umbrellaColor;
+    }
+
+    public String getRespiratorColor() {
+        return RespiratorColor;
+    }
+
+    public void setRespiratorColor(String respiratorColor) {
+        RespiratorColor = respiratorColor;
+    }
+
+    public String getCapStyle() {
+        return CapStyle;
+    }
+
+    public void setCapStyle(String capStyle) {
+        CapStyle = capStyle;
+    }
+
+    public String getCapColor() {
+        return CapColor;
+    }
+
+    public void setCapColor(String capColor) {
+        CapColor = capColor;
+    }
+
+    public String getGlassStyle() {
+        return GlassStyle;
+    }
+
+    public void setGlassStyle(String glassStyle) {
+        GlassStyle = glassStyle;
+    }
+
+    public String getGlassColor() {
+        return GlassColor;
+    }
+
+    public void setGlassColor(String glassColor) {
+        GlassColor = glassColor;
+    }
+
+    public String getScarfColor() {
+        return ScarfColor;
+    }
+
+    public void setScarfColor(String scarfColor) {
+        ScarfColor = scarfColor;
+    }
+
+    public String getBagStyle() {
+        return BagStyle;
+    }
+
+    public void setBagStyle(String bagStyle) {
+        BagStyle = bagStyle;
+    }
+
+    public String getBagColor() {
+        return BagColor;
+    }
+
+    public void setBagColor(String bagColor) {
+        BagColor = bagColor;
+    }
+
+    public String getCoatStyle() {
+        return CoatStyle;
+    }
+
+    public void setCoatStyle(String coatStyle) {
+        CoatStyle = coatStyle;
+    }
+
+    public String getCoatLength() {
+        return CoatLength;
+    }
+
+    public void setCoatLength(String coatLength) {
+        CoatLength = coatLength;
+    }
+
+    public String getCoatColor() {
+        return CoatColor;
+    }
+
+    public void setCoatColor(String coatColor) {
+        CoatColor = coatColor;
+    }
+
+    public String getTrousersStyle() {
+        return TrousersStyle;
+    }
+
+    public void setTrousersStyle(String trousersStyle) {
+        TrousersStyle = trousersStyle;
+    }
+
+    public String getTrousersColor() {
+        return TrousersColor;
+    }
+
+    public void setTrousersColor(String trousersColor) {
+        TrousersColor = trousersColor;
+    }
+
+    public String getTrousersLen() {
+        return TrousersLen;
+    }
+
+    public void setTrousersLen(String trousersLen) {
+        TrousersLen = trousersLen;
+    }
+
+    public String getShoesStyle() {
+        return ShoesStyle;
+    }
+
+    public void setShoesStyle(String shoesStyle) {
+        ShoesStyle = shoesStyle;
+    }
+
+    public String getShoesColor() {
+        return ShoesColor;
+    }
+
+    public void setShoesColor(String shoesColor) {
+        ShoesColor = shoesColor;
+    }
+
+    public Integer getIsDriver() {
+        return IsDriver;
+    }
+
+    public void setIsDriver(Integer isDriver) {
+        IsDriver = isDriver;
+    }
+
+    public Integer getIsForeigner() {
+        return IsForeigner;
+    }
+
+    public void setIsForeigner(Integer isForeigner) {
+        IsForeigner = isForeigner;
+    }
+
+    public String getPassportType() {
+        return PassportType;
+    }
+
+    public void setPassportType(String passportType) {
+        PassportType = passportType;
+    }
+
+    public String getImmigrantTypeCode() {
+        return ImmigrantTypeCode;
+    }
+
+    public void setImmigrantTypeCode(String immigrantTypeCode) {
+        ImmigrantTypeCode = immigrantTypeCode;
+    }
+
+    public Integer getIsSuspectedTerrorist() {
+        return IsSuspectedTerrorist;
+    }
+
+    public void setIsSuspectedTerrorist(Integer isSuspectedTerrorist) {
+        IsSuspectedTerrorist = isSuspectedTerrorist;
+    }
+
+    public String getSuspectedTerroristNumber() {
+        return SuspectedTerroristNumber;
+    }
+
+    public void setSuspectedTerroristNumber(String suspectedTerroristNumber) {
+        SuspectedTerroristNumber = suspectedTerroristNumber;
+    }
+
+    public Integer getIsCriminalInvolved() {
+        return IsCriminalInvolved;
+    }
+
+    public void setIsCriminalInvolved(Integer isCriminalInvolved) {
+        IsCriminalInvolved = isCriminalInvolved;
+    }
+
+    public String getCriminalInvolvedSpecilisationCode() {
+        return CriminalInvolvedSpecilisationCode;
+    }
+
+    public void setCriminalInvolvedSpecilisationCode(String criminalInvolvedSpecilisationCode) {
+        CriminalInvolvedSpecilisationCode = criminalInvolvedSpecilisationCode;
+    }
+
+    public String getBodySpeciallMark() {
+        return BodySpeciallMark;
+    }
+
+    public void setBodySpeciallMark(String bodySpeciallMark) {
+        BodySpeciallMark = bodySpeciallMark;
+    }
+
+    public String getCrimeMethod() {
+        return CrimeMethod;
+    }
+
+    public void setCrimeMethod(String crimeMethod) {
+        CrimeMethod = crimeMethod;
+    }
+
+    public String getCrimeCharacterCode() {
+        return CrimeCharacterCode;
+    }
+
+    public void setCrimeCharacterCode(String crimeCharacterCode) {
+        CrimeCharacterCode = crimeCharacterCode;
+    }
+
+    public String getEscapedCriminalNumber() {
+        return EscapedCriminalNumber;
+    }
+
+    public void setEscapedCriminalNumber(String escapedCriminalNumber) {
+        EscapedCriminalNumber = escapedCriminalNumber;
+    }
+
+    public Integer getIsDetainees() {
+        return IsDetainees;
+    }
+
+    public void setIsDetainees(Integer isDetainees) {
+        IsDetainees = isDetainees;
+    }
+
+    public String getDetentionHouseCode() {
+        return DetentionHouseCode;
+    }
+
+    public void setDetentionHouseCode(String detentionHouseCode) {
+        DetentionHouseCode = detentionHouseCode;
+    }
+
+    public String getDetaineesIdentity() {
+        return DetaineesIdentity;
+    }
+
+    public void setDetaineesIdentity(String detaineesIdentity) {
+        DetaineesIdentity = detaineesIdentity;
+    }
+
+    public String getDetaineesSpecialIdentity() {
+        return DetaineesSpecialIdentity;
+    }
+
+    public void setDetaineesSpecialIdentity(String detaineesSpecialIdentity) {
+        DetaineesSpecialIdentity = detaineesSpecialIdentity;
+    }
+
+    public String getMemberTypeCode() {
+        return MemberTypeCode;
+    }
+
+    public void setMemberTypeCode(String memberTypeCode) {
+        MemberTypeCode = memberTypeCode;
+    }
+
+    public Integer getIsVictim() {
+        return IsVictim;
+    }
+
+    public void setIsVictim(Integer isVictim) {
+        IsVictim = isVictim;
+    }
+
+    public String getVictimType() {
+        return VictimType;
+    }
+
+    public void setVictimType(String victimType) {
+        VictimType = victimType;
+    }
+
+    public String getInjuredDegree() {
+        return InjuredDegree;
+    }
+
+    public void setInjuredDegree(String injuredDegree) {
+        InjuredDegree = injuredDegree;
+    }
+
+    public String getCorpseConditionCode() {
+        return CorpseConditionCode;
+    }
+
+    public void setCorpseConditionCode(String corpseConditionCode) {
+        CorpseConditionCode = corpseConditionCode;
+    }
+
+    public Integer getIsSuspiciousPerson() {
+        return IsSuspiciousPerson;
+    }
+
+    public void setIsSuspiciousPerson(Integer isSuspiciousPerson) {
+        IsSuspiciousPerson = isSuspiciousPerson;
+    }
+
+    public List<SubImageInfo> getSubImageList() {
+        return SubImageList;
+    }
+
+    public void setSubImageList(List<SubImageInfo> subImageList) {
+        SubImageList = subImageList;
+    }
+
+    public List<FeatureInfo> getFeatureList() {
+        return FeatureList;
+    }
+
+    public void setFeatureList(List<FeatureInfo> featureList) {
+        FeatureList = featureList;
+    }
+
+    public String getTabID() {
+        return TabID;
+    }
+
+    public void setTabID(String tabID) {
+        TabID = tabID;
+    }
 }

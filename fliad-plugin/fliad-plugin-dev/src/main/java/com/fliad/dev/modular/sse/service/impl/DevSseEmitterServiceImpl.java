@@ -12,10 +12,11 @@
  */
 package com.fliad.dev.modular.sse.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import com.fliad.dev.modular.sse.service.DevSseEmitterService;
 import java.util.concurrent.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SSE通信Service接口实现类
@@ -23,9 +24,10 @@ import java.util.concurrent.*;
  * @author diantu
  * @date 2023/7/3
  **/
-@Slf4j
 @Component
 public class DevSseEmitterServiceImpl implements DevSseEmitterService {
+
+    private static final Logger log = LoggerFactory.getLogger(DevSseEmitterServiceImpl.class);
 
     /**
      * 心跳线程池

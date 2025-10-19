@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.subscribe.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -27,8 +25,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/22 15:00
  **/
-@Getter
-@Setter
 public class ViidSubscribeAddParam {
 
     /** 订阅标题 */
@@ -85,4 +81,91 @@ public class ViidSubscribeAddParam {
     @NotBlank(message = "subscriberrecoverorgid不能为空")
     private String SubscriberRecoverOrgid;
 
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
+
+    public String getSubscribeDetail() {
+        return SubscribeDetail;
+    }
+
+    public void setSubscribeDetail(String SubscribeDetail) {
+        this.SubscribeDetail = SubscribeDetail;
+    }
+
+    public String getResourceURI() {
+        return ResourceURI;
+    }
+
+    public void setResourceURI(String ResourceURI) {
+        this.ResourceURI = ResourceURI;
+    }
+
+    public String getApplicantName() {
+        return ApplicantName;
+    }
+
+    public void setApplicantName(String ApplicantName) {
+        this.ApplicantName = ApplicantName;
+    }
+
+    public String getApplicantOrg() {
+        return ApplicantOrg;
+    }
+
+    public void setApplicantOrg(String ApplicantOrg) {
+        this.ApplicantOrg = ApplicantOrg;
+    }
+
+    public String getBeginTime() {
+        return BeginTime;
+    }
+
+    public void setBeginTime(String BeginTime) {
+        this.BeginTime = BeginTime;
+    }
+
+    public String getEndTime() {
+        return EndTime;
+    }
+
+    public void setEndTime(String EndTime) {
+        this.EndTime = EndTime;
+    }
+
+    public String getReceiveAddr() {
+        return ReceiveAddr;
+    }
+
+    public void setReceiveAddr(String ReceiveAddr) {
+        this.ReceiveAddr = ReceiveAddr;
+    }
+
+    public Integer getReportInterval() {
+        return ReportInterval;
+    }
+
+    public void setReportInterval(Integer ReportInterval) {
+        this.ReportInterval = ReportInterval;
+    }
+
+    public String getReason() {
+        return Reason;
+    }
+
+    public void setReason(String Reason) {
+        this.Reason = Reason;
+    }
+
+    public String getSubscriberRecoverOrgid() {
+        return SubscriberRecoverOrgid;
+    }
+
+    public void setSubscriberRecoverOrgid(String SubscriberRecoverOrgid) {
+        this.SubscriberRecoverOrgid = SubscriberRecoverOrgid;
+    }
 }

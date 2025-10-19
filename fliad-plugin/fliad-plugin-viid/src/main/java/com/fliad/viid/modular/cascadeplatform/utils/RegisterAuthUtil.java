@@ -2,8 +2,9 @@ package com.fliad.viid.modular.cascadeplatform.utils;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,8 +15,9 @@ import java.util.UUID;
 /**
  * 注册认证工具类
  */
-@Slf4j
 public class RegisterAuthUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(RegisterAuthUtil.class);
 
     /**
      * 解密验证

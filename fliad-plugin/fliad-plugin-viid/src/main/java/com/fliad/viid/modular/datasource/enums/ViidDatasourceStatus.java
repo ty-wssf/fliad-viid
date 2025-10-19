@@ -1,9 +1,6 @@
 package com.fliad.viid.modular.datasource.enums;
 
 import com.fliad.common.exception.CommonException;
-import lombok.Getter;
-
-@Getter
 public enum ViidDatasourceStatus {
 
     /**
@@ -20,6 +17,10 @@ public enum ViidDatasourceStatus {
 
     ViidDatasourceStatus(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

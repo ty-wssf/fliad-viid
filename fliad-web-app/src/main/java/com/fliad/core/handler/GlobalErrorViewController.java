@@ -15,12 +15,13 @@ package com.fliad.core.handler;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Mapping;
 import org.noear.solon.core.handle.Context;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.pojo.CommonResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 全局异常页面处理器，覆盖默认的Whitelabel Error Page
@@ -28,9 +29,10 @@ import com.fliad.common.pojo.CommonResult;
  * @author xuyuxiang
  * @date 2022/2/11 15:41
  **/
-@Slf4j
 @Controller
 public class GlobalErrorViewController {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalErrorViewController.class);
 
     /**
      * Error页面视图，直接响应JSON
@@ -42,15 +44,15 @@ public class GlobalErrorViewController {
     public CommonResult<String> globalError(Context ctx) {
         CommonResult<String> commonResult = new CommonResult<>(404, "路径不存在", null);
         Object model = ctx.attr("model");
-        if(ObjectUtil.isNotEmpty(model)) {
-            if(model instanceof Exception) {
+        if (ObjectUtil.isNotEmpty(model)) {
+            if (model instanceof Exception) {
                 if (model instanceof CommonException) {
                     JSONObject errorObj = JSONUtil.parseObj(model);
                     Integer code = errorObj.getInt("code");
                     String msg = errorObj.getStr("msg");
-                    if(ObjectUtil.isAllNotEmpty(code, msg)) {
+                    if (ObjectUtil.isAllNotEmpty(code, msg)) {
                         commonResult.setCode(code).setMsg(msg);
-                    } else if(ObjectUtil.isNotEmpty(msg)) {
+                    } else if (ObjectUtil.isNotEmpty(msg)) {
                         commonResult = CommonResult.error(msg);
                     } else {
                         commonResult = CommonResult.error();

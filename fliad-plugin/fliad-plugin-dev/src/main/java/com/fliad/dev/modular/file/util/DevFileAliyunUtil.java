@@ -22,7 +22,8 @@ import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.UploadedFile;
 import com.fliad.common.exception.CommonException;
@@ -42,8 +43,9 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/1/2 18:13
  */
-@Slf4j
 public class DevFileAliyunUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevFileAliyunUtil.class);
 
     private static OSS client;
 

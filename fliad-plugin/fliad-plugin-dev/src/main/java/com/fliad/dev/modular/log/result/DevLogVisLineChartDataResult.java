@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.log.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 访问日志折线图数据结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/9/4 21:14
  */
-@Getter
-@Setter
 public class DevLogVisLineChartDataResult {
 
     /** 日期 */
@@ -37,4 +33,28 @@ public class DevLogVisLineChartDataResult {
     /** 登出数量 */
     @ApiModelProperty(value = "登出数量", position = 3)
     private Long logoutCount;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Long getLoginCount() {
+        return loginCount;
+    }
+
+    public void setLoginCount(Long loginCount) {
+        this.loginCount = loginCount;
+    }
+
+    public Long getLogoutCount() {
+        return logoutCount;
+    }
+
+    public void setLogoutCount(Long logoutCount) {
+        this.logoutCount = logoutCount;
+    }
 }

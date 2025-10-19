@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.user.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/31 16:39
  */
-@Getter
-@Setter
 public class SysUserMessageDetailResult {
 
     /** id */
@@ -51,6 +48,54 @@ public class SysUserMessageDetailResult {
     /** 接收信息集合 */
     @ApiModelProperty(value = "接收信息集合", position = 6)
     private List<DevReceiveInfo> receiveInfoList;
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
+
+    public List<DevReceiveInfo> getReceiveInfoList() {
+        return receiveInfoList;
+    }
+
+    public void setReceiveInfoList(List<DevReceiveInfo> receiveInfoList) {
+        this.receiveInfoList = receiveInfoList;
+    }
 
     /**
      * 接收信息类
@@ -58,8 +103,6 @@ public class SysUserMessageDetailResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevReceiveInfo {
 
         /** 接收人ID */
@@ -73,5 +116,29 @@ public class SysUserMessageDetailResult {
         /** 是否已读 */
         @ApiModelProperty(value = "是否已读", position = 3)
         private Boolean read;
+        
+        public String getReceiveUserId() {
+            return receiveUserId;
+        }
+
+        public void setReceiveUserId(String receiveUserId) {
+            this.receiveUserId = receiveUserId;
+        }
+
+        public String getReceiveUserName() {
+            return receiveUserName;
+        }
+
+        public void setReceiveUserName(String receiveUserName) {
+            this.receiveUserName = receiveUserName;
+        }
+
+        public Boolean getRead() {
+            return read;
+        }
+
+        public void setRead(Boolean read) {
+            this.read = read;
+        }
     }
 }

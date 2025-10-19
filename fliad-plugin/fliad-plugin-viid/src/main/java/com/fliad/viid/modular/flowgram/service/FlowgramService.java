@@ -3,24 +3,25 @@ package com.fliad.viid.modular.flowgram.service;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.fliad.viid.modular.flowgram.domain.*;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
-import org.noear.solon.core.util.RunUtil;
 import org.noear.solon.data.cache.CacheService;
 import org.noear.solon.expression.snel.SnEL;
 import org.noear.solon.flow.*;
 import org.noear.solon.flow.driver.SimpleFlowDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Slf4j
 @Component
 public class FlowgramService implements LifecycleBean {
+
+    private Logger log = LoggerFactory.getLogger(FlowgramService.class);
 
     private FlowEngine flowEngine;
 

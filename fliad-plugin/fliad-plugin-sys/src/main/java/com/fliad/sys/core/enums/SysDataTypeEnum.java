@@ -12,7 +12,7 @@
  */
 package com.fliad.sys.core.enums;
 
-import lombok.Getter;
+
 
 /**
  * 系统模块数据类型枚举
@@ -20,7 +20,6 @@ import lombok.Getter;
  * @author xuyuxiang
  * @date 2023/3/3 10:40
  **/
-@Getter
 public enum SysDataTypeEnum {
 
     /**
@@ -53,5 +52,8 @@ public enum SysDataTypeEnum {
     SysDataTypeEnum(String value) {
         this.value = value;
     }
-
+    
+    public String getValue() {
+        return value;
+    }
 }

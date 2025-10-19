@@ -4,10 +4,11 @@ import com.fliad.dev.api.DevConfigApi;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionAlarmManager;
 import com.fliad.viid.modular.hikvision.entity.ViidHikvisionCamera;
 import com.fliad.viid.modular.hikvision.service.ViidHikvisionCameraService;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,25 +20,26 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @author yourname
  * @date 2025/09/28
  */
-@Slf4j
 @Component(index = 10)
 public class ViidHikvisionCameraInitRunner implements LifecycleBean {
+
+    private static final Logger log = LoggerFactory.getLogger(ViidHikvisionCameraInitRunner.class);
 
     @Inject
     private ViidHikvisionCameraService viidHikvisionCameraService;
 
     @Inject
     private HikvisionAlarmManager hikvisionAlarmManager;
-    
+
     @Inject
     private DevConfigApi devConfigApi;
 
     // 存储已初始化的设备ID列表
     private final List<String> initializedDevices = new CopyOnWriteArrayList<>();
-    
+
     // 海康布防功能是否启用
     private boolean hikvisionDefenseEnabled = false;
-    
+
     /**
      * 检查海康布防功能是否启用
      */
@@ -64,15 +66,15 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
     public void start() throws Throwable {
         // 检查海康布防功能是否启用
         checkHikvisionDefenseEnabled();
-        
+
         if (!hikvisionDefenseEnabled) {
             log.info("海康布防功能未启用，跳过设备初始化");
             return;
         }
-        
+
         // 初始化海康威视报警管理器
         hikvisionAlarmManager.init();
-        
+
         log.info("开始初始化海康威视设备...");
 
         try {
@@ -139,7 +141,7 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
             log.info("海康布防功能未启用，跳过资源清理");
             return;
         }
-        
+
         log.info("开始清理海康威视设备资源...");
 
         try {

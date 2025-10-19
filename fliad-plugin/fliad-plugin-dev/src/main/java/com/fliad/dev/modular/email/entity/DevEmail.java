@@ -15,8 +15,6 @@ package com.fliad.dev.modular.email.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import com.fliad.common.pojo.CommonEntity;
 
 /**
@@ -25,8 +23,6 @@ import com.fliad.common.pojo.CommonEntity;
  * @author xuyuxiang
  * @date 2022/2/23 18:27
  **/
-@Getter
-@Setter
 @Table(value = "DEV_EMAIL")
 public class DevEmail extends CommonEntity {
 
@@ -78,4 +74,100 @@ public class DevEmail extends CommonEntity {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 12)
     private String extJson;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public String getSendAccount() {
+        return sendAccount;
+    }
+
+    public void setSendAccount(String sendAccount) {
+        this.sendAccount = sendAccount;
+    }
+
+    public String getSendUser() {
+        return sendUser;
+    }
+
+    public void setSendUser(String sendUser) {
+        this.sendUser = sendUser;
+    }
+
+    public String getReceiveAccounts() {
+        return receiveAccounts;
+    }
+
+    public void setReceiveAccounts(String receiveAccounts) {
+        this.receiveAccounts = receiveAccounts;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public String getTemplateParam() {
+        return templateParam;
+    }
+
+    public void setTemplateParam(String templateParam) {
+        this.templateParam = templateParam;
+    }
+
+    public String getReceiptInfo() {
+        return receiptInfo;
+    }
+
+    public void setReceiptInfo(String receiptInfo) {
+        this.receiptInfo = receiptInfo;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

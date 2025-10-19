@@ -15,8 +15,6 @@ package com.fliad.common.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mybatisflex.annotation.Column;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -30,8 +28,6 @@ import java.util.Date;
  * @author xuyuxiang
  * @date 2020/3/10 16:02
  */
-@Getter
-@Setter
 public class CommonEntity implements Serializable {
 
     /** 删除标志 */
@@ -55,4 +51,44 @@ public class CommonEntity implements Serializable {
     /** 更新人 */
     @ApiModelProperty(value = "更新人", position = 1003)
     private String updateUser;
+    
+    public String getDeleteFlag() {
+        return deleteFlag;
+    }
+    
+    public void setDeleteFlag(String deleteFlag) {
+        this.deleteFlag = deleteFlag;
+    }
+    
+    public Date getCreateTime() {
+        return createTime;
+    }
+    
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+    
+    public String getCreateUser() {
+        return createUser;
+    }
+    
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+    
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+    
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+    
+    public String getUpdateUser() {
+        return updateUser;
+    }
+    
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
 }

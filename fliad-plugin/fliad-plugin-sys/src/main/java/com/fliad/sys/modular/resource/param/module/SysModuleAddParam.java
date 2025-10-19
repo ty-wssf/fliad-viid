@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.resource.param.module;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -25,8 +23,6 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author xuyuxiang
  * @date 2022/7/27 18:40
  **/
-@Getter
-@Setter
 public class SysModuleAddParam {
 
     /** 标题 */
@@ -52,4 +48,44 @@ public class SysModuleAddParam {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 5)
     private String extJson;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

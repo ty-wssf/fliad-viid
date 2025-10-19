@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.resource.param.menu;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,8 +22,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/27 18:40
  **/
-@Getter
-@Setter
 public class SysMenuChangeModuleParam {
 
     /** id */
@@ -37,4 +33,20 @@ public class SysMenuChangeModuleParam {
     @ApiModelProperty(value = "module", required = true)
     @NotBlank(message = "module不能为空")
     private String module;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
 }

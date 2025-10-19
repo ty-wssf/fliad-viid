@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.group.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 用户组查询参数
@@ -22,8 +21,7 @@ import lombok.Setter;
  * @author chengchuanyao
  * @date 2025/1/6 11:27
  */
-@Getter
-@Setter
+
 public class BizGroupPageParam {
 
     /** 当前页 */
@@ -49,4 +47,52 @@ public class BizGroupPageParam {
     /** 名称 */
     @ApiModelProperty(value = "名称", position = 6)
     private String name;
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

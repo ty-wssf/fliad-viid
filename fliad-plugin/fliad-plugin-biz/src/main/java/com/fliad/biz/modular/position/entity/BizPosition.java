@@ -16,8 +16,7 @@ package com.fliad.biz.modular.position.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import com.fliad.common.pojo.CommonEntity;
 
 /**
@@ -26,8 +25,7 @@ import com.fliad.common.pojo.CommonEntity;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
+
 @Table(value = "SYS_POSITION")
 public class BizPosition extends CommonEntity {
 
@@ -59,4 +57,60 @@ public class BizPosition extends CommonEntity {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 7)
     private String extJson;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
 }

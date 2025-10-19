@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.monitor.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,12 +21,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/6/24 22:28
  */
-@Getter
-@Setter
 public class AuthExitSessionParam {
 
     /** 用户id */
     @ApiModelProperty(value = "用户id", required = true)
     @NotBlank(message = "userId不能为空")
     private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

@@ -3,7 +3,8 @@ package com.fliad.viid.modular.hikvision.acl.alarm;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.fliad.viid.modular.hikvision.acl.CommonMethod.CommonUtil;
 import com.sun.jna.Pointer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,8 +15,9 @@ import java.util.Date;
 /**
  * 海康威视报警数据解析类
  */
-@Slf4j
 public class HikvisionAlarmDataParser {
+    
+    private static final Logger log = LoggerFactory.getLogger(HikvisionAlarmDataParser.class);
     
     /**
      * 解析报警数据

@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.role.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:08
  **/
-@Getter
-@Setter
 public class SysRoleOwnMobileMenuResult {
 
     /** 角色id */
@@ -35,6 +32,22 @@ public class SysRoleOwnMobileMenuResult {
     /** 已授权移动端菜单信息 */
     @ApiModelProperty(value = "已授权移动端菜单信息", position = 2)
     private List<SysRoleOwnMobileMenu> grantInfoList;
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<SysRoleOwnMobileMenu> getGrantInfoList() {
+        return grantInfoList;
+    }
+
+    public void setGrantInfoList(List<SysRoleOwnMobileMenu> grantInfoList) {
+        this.grantInfoList = grantInfoList;
+    }
 
     /**
      * 角色拥有移动端菜单类
@@ -42,8 +55,6 @@ public class SysRoleOwnMobileMenuResult {
      * @author xuyuxiang
      * @date 2022/4/28 23:19
      */
-    @Getter
-    @Setter
     public static class SysRoleOwnMobileMenu {
 
         /** 菜单id */
@@ -53,5 +64,21 @@ public class SysRoleOwnMobileMenuResult {
         /** 按钮id集合 */
         @ApiModelProperty(value = "按钮id集合", position = 2)
         private List<String> buttonInfo;
+        
+        public String getMenuId() {
+            return menuId;
+        }
+
+        public void setMenuId(String menuId) {
+            this.menuId = menuId;
+        }
+
+        public List<String> getButtonInfo() {
+            return buttonInfo;
+        }
+
+        public void setButtonInfo(List<String> buttonInfo) {
+            this.buttonInfo = buttonInfo;
+        }
     }
 }

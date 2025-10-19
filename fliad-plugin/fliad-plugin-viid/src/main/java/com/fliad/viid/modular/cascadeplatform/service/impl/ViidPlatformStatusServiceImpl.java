@@ -10,12 +10,13 @@ import com.fliad.viid.modular.cascadeplatform.enums.OnlineStatusEnum;
 import com.fliad.viid.modular.cascadeplatform.enums.PlatformTypeEnum;
 import com.fliad.viid.modular.cascadeplatform.service.ViidPlatformStatusService;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
 import org.noear.solon.core.util.RunUtil;
 import org.noear.solon.data.cache.CacheService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,9 +29,10 @@ import java.util.stream.Collectors;
  * @author your-name
  * @since 2025-08-21
  */
-@Slf4j
 @Component
 public class ViidPlatformStatusServiceImpl implements ViidPlatformStatusService, LifecycleBean {
+
+    private Logger log = LoggerFactory.getLogger(ViidPlatformStatusServiceImpl.class);
 
     @Inject
     ViidCascadePlatformService cascadePlatformService;

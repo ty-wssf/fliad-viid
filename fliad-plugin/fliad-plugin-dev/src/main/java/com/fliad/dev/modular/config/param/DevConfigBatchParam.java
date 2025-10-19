@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.config.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,8 +21,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/7 17:01
  **/
-@Getter
-@Setter
 public class DevConfigBatchParam {
 
     /** 配置键 */
@@ -36,5 +32,21 @@ public class DevConfigBatchParam {
     @ApiModelProperty(value = "配置值", required = true, position = 2)
     @NotBlank(message = "configValue不能为空")
     private String configValue;
+
+    public String getConfigKey() {
+        return configKey;
+    }
+
+    public void setConfigKey(String configKey) {
+        this.configKey = configKey;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
+    }
 
 }

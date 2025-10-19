@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.cascadeplatform.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,12 +22,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author wyl
  * @date  2025/08/14 16:24
  **/
-@Getter
-@Setter
 public class ViidCascadePlatformIdParam {
 
     /** 主键 */
     @ApiModelProperty(value = "主键", required = true)
     @NotBlank(message = "id不能为空")
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

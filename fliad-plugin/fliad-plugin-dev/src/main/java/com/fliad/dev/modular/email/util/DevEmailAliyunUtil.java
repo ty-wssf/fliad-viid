@@ -20,10 +20,12 @@ import com.aliyuncs.dm.model.v20151123.SingleSendMailRequest;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.exception.CommonException;
 import com.fliad.dev.api.DevConfigApi;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 阿里云邮件工具类
@@ -32,8 +34,9 @@ import com.fliad.dev.api.DevConfigApi;
  * @author xuyuxiang
  * @date 2022/6/17 10:17
  **/
-@Slf4j
 public class DevEmailAliyunUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevEmailAliyunUtil.class);
 
     private static IAcsClient client;
 

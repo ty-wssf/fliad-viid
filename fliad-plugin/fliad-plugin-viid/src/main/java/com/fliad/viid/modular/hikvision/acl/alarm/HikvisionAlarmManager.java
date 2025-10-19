@@ -4,9 +4,10 @@ import com.fliad.dev.api.DevConfigApi;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
@@ -15,9 +16,10 @@ import java.util.Map;
  * 海康威视设备报警管理器
  * 支持多设备管理的正式代码实现
  */
-@Slf4j
 @Component
 public class HikvisionAlarmManager {
+    
+    private static final Logger log = LoggerFactory.getLogger(HikvisionAlarmManager.class);
 
     private static HCNetSDK hCNetSDK = null;
     

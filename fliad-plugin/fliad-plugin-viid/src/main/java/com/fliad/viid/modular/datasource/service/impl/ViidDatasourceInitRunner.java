@@ -23,11 +23,12 @@ import com.fliad.viid.modular.flowgram.service.FlowgramService;
 import com.fliad.viid.modular.workflow.entity.ViidWorkflow;
 import com.fliad.viid.modular.workflow.service.ViidWorkflowService;
 import com.rabbitmq.client.*;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,10 +42,10 @@ import java.util.concurrent.TimeoutException;
  *
  * @author wyl
  * @date 2025/09/25 10:00
- **/
-@Slf4j
+ */
 @Component
 public class ViidDatasourceInitRunner implements LifecycleBean {
+    private static final Logger log = LoggerFactory.getLogger(ViidDatasourceInitRunner.class);
 
     @Inject
     private ViidDatasourceService viidDatasourceService;

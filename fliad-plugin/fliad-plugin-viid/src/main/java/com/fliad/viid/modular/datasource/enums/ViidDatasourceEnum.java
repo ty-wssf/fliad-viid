@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.datasource.enums;
 
-import lombok.Getter;
-
 /**
  * 数据源枚举
  *
  * @author wyl
  * @date  2025/09/24 20:05
- **/
-@Getter
+ */
 public enum ViidDatasourceEnum {
 
     /** 测试 */
@@ -30,5 +27,9 @@ public enum ViidDatasourceEnum {
 
     ViidDatasourceEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

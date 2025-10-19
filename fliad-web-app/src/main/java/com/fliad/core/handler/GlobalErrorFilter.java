@@ -1,6 +1,6 @@
 package com.fliad.core.handler;
 
-import lombok.extern.slf4j.Slf4j;
+import com.fliad.viid.modular.flowgram.components.DatabaseCom;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.exception.StatusException;
 import org.noear.solon.core.handle.Context;
@@ -9,13 +9,17 @@ import org.noear.solon.core.handle.FilterChain;
 import org.noear.solon.validation.ValidatorException;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.pojo.CommonResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author noear 2022/10/4 created
  */
-@Slf4j
 @Component
 public class GlobalErrorFilter implements Filter {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalErrorFilter.class);
+
     @Override
     public void doFilter(Context ctx, FilterChain chain) throws Throwable {
         try {

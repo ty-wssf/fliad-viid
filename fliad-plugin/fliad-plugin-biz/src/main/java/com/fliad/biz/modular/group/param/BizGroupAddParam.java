@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.group.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -24,8 +23,7 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author chengchuanyao
  * @date 2025/1/6 11:25
  */
-@Getter
-@Setter
+
 public class BizGroupAddParam {
     /** 名称 */
     @ApiModelProperty(value = "名称", required = true, position = 1)
@@ -40,4 +38,28 @@ public class BizGroupAddParam {
     @ApiModelProperty(value = "排序码", required = true, position = 3)
     @NotNull(message = "排序码不能为空")
     private Integer sortCode;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
 }

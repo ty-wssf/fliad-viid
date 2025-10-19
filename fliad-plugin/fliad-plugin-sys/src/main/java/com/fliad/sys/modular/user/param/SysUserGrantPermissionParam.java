@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import javax.validation.Valid;
@@ -27,8 +25,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:05
  **/
-@Getter
-@Setter
 public class SysUserGrantPermissionParam {
 
     /** 用户id */
@@ -48,8 +44,6 @@ public class SysUserGrantPermissionParam {
      * @author xuyuxiang
      * @date 2022/4/28 23:19
      */
-    @Getter
-    @Setter
     public static class SysUserGrantPermission {
 
         /** 接口地址 */
@@ -66,5 +60,45 @@ public class SysUserGrantPermissionParam {
         @ApiModelProperty(value = "自定义范围组织id集合", position = 3)
         @NotNull(message = "scopeDefineOrgIdList不能为空")
         private List<String> scopeDefineOrgIdList;
+
+        public String getApiUrl() {
+            return apiUrl;
+        }
+
+        public void setApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+        }
+
+        public String getScopeCategory() {
+            return scopeCategory;
+        }
+
+        public void setScopeCategory(String scopeCategory) {
+            this.scopeCategory = scopeCategory;
+        }
+
+        public List<String> getScopeDefineOrgIdList() {
+            return scopeDefineOrgIdList;
+        }
+
+        public void setScopeDefineOrgIdList(List<String> scopeDefineOrgIdList) {
+            this.scopeDefineOrgIdList = scopeDefineOrgIdList;
+        }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<SysUserGrantPermission> getGrantInfoList() {
+        return grantInfoList;
+    }
+
+    public void setGrantInfoList(List<SysUserGrantPermission> grantInfoList) {
+        this.grantInfoList = grantInfoList;
     }
 }

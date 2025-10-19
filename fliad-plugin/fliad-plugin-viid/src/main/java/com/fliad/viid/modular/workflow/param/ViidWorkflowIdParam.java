@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.workflow.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,12 +22,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author wyl
  * @date  2025/08/27 14:03
  **/
-@Getter
-@Setter
 public class ViidWorkflowIdParam {
 
     /** ID */
     @ApiModelProperty(value = "ID", required = true)
     @NotBlank(message = "id不能为空")
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

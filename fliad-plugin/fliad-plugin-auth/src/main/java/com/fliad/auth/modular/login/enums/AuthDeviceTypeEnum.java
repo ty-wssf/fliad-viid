@@ -12,7 +12,6 @@
  */
 package com.fliad.auth.modular.login.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2021/10/11 14:02
  **/
-@Getter
 public enum AuthDeviceTypeEnum {
 
     /**
@@ -43,6 +41,10 @@ public enum AuthDeviceTypeEnum {
 
     AuthDeviceTypeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

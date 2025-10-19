@@ -12,8 +12,7 @@
  */
 package com.fliad.biz.modular.user.param;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 人员导入参数
@@ -21,8 +20,7 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/8 13:22
  **/
-@Getter
-@Setter
+
 public class BizUserImportParam {
 
     /** 账号 */
@@ -117,4 +115,252 @@ public class BizUserImportParam {
 
     /** 紧急联系人地址 */
     private String emergencyAddress;
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setDirectorName(String directorName) {
+        this.directorName = directorName;
+    }
+
+    public String getDirectorName() {
+        return directorName;
+    }
+
+    public void setEmpNo(String empNo) {
+        this.empNo = empNo;
+    }
+
+    public String getEmpNo() {
+        return empNo;
+    }
+
+    public void setEntryDate(String entryDate) {
+        this.entryDate = entryDate;
+    }
+
+    public String getEntryDate() {
+        return entryDate;
+    }
+
+    public void setPositionLevel(String positionLevel) {
+        this.positionLevel = positionLevel;
+    }
+
+    public String getPositionLevel() {
+        return positionLevel;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setNation(String nation) {
+        this.nation = nation;
+    }
+
+    public String getNation() {
+        return nation;
+    }
+
+    public void setNativePlace(String nativePlace) {
+        this.nativePlace = nativePlace;
+    }
+
+    public String getNativePlace() {
+        return nativePlace;
+    }
+
+    public void setHomeAddress(String homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+
+    public String getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setMailingAddress(String mailingAddress) {
+        this.mailingAddress = mailingAddress;
+    }
+
+    public String getMailingAddress() {
+        return mailingAddress;
+    }
+
+    public void setIdCardType(String idCardType) {
+        this.idCardType = idCardType;
+    }
+
+    public String getIdCardType() {
+        return idCardType;
+    }
+
+    public void setIdCardNumber(String idCardNumber) {
+        this.idCardNumber = idCardNumber;
+    }
+
+    public String getIdCardNumber() {
+        return idCardNumber;
+    }
+
+    public void setCultureLevel(String cultureLevel) {
+        this.cultureLevel = cultureLevel;
+    }
+
+    public String getCultureLevel() {
+        return cultureLevel;
+    }
+
+    public void setPoliticalOutlook(String politicalOutlook) {
+        this.politicalOutlook = politicalOutlook;
+    }
+
+    public String getPoliticalOutlook() {
+        return politicalOutlook;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEduLength(String eduLength) {
+        this.eduLength = eduLength;
+    }
+
+    public String getEduLength() {
+        return eduLength;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setHomeTel(String homeTel) {
+        this.homeTel = homeTel;
+    }
+
+    public String getHomeTel() {
+        return homeTel;
+    }
+
+    public void setOfficeTel(String officeTel) {
+        this.officeTel = officeTel;
+    }
+
+    public String getOfficeTel() {
+        return officeTel;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public void setEmergencyPhone(String emergencyPhone) {
+        this.emergencyPhone = emergencyPhone;
+    }
+
+    public String getEmergencyPhone() {
+        return emergencyPhone;
+    }
+
+    public void setEmergencyAddress(String emergencyAddress) {
+        this.emergencyAddress = emergencyAddress;
+    }
+
+    public String getEmergencyAddress() {
+        return emergencyAddress;
+    }
 }

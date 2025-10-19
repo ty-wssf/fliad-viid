@@ -15,8 +15,6 @@ package com.fliad.viid.modular.workflow.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import java.math.BigDecimal;
@@ -28,8 +26,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/27 14:03
  **/
-@Getter
-@Setter
 @Table(value = "viid_workflow")
 public class ViidWorkflow {
 
@@ -74,4 +70,84 @@ public class ViidWorkflow {
     /** 修改用户 */
     @ApiModelProperty(value = "修改用户", position = 9)
     private String updateUser;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSubscribeDetail() {
+        return subscribeDetail;
+    }
+
+    public void setSubscribeDetail(String subscribeDetail) {
+        this.subscribeDetail = subscribeDetail;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
 }

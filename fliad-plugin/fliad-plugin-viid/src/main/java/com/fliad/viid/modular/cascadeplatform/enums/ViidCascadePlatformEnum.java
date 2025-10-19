@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.cascadeplatform.enums;
 
-import lombok.Getter;
-
 /**
  * 视图库枚举
  *
  * @author wyl
  * @date  2025/08/14 16:24
- **/
-@Getter
+ */
 public enum ViidCascadePlatformEnum {
 
     /** 测试 */
@@ -30,5 +27,9 @@ public enum ViidCascadePlatformEnum {
 
     ViidCascadePlatformEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

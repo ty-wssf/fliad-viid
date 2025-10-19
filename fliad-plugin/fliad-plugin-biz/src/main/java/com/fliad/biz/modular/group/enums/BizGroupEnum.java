@@ -12,15 +12,12 @@
  */
 package com.fliad.biz.modular.group.enums;
 
-import lombok.Getter;
-
 /**
  * 用户组枚举
  *
  * @author chengchuanyao
  * @date 2025/1/6 11:23
  */
-@Getter
 public enum BizGroupEnum {
     /** 测试 */
     TEST("TEST");
@@ -29,5 +26,9 @@ public enum BizGroupEnum {
 
     BizGroupEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

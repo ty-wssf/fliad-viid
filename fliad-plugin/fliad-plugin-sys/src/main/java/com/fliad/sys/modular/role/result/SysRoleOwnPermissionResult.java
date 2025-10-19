@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.role.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:08
  **/
-@Getter
-@Setter
 public class SysRoleOwnPermissionResult {
 
     /** 角色id */
@@ -36,14 +33,28 @@ public class SysRoleOwnPermissionResult {
     @ApiModelProperty(value = "已授权权限信息", position = 2)
     private List<SysRoleOwnPermission> grantInfoList;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<SysRoleOwnPermission> getGrantInfoList() {
+        return grantInfoList;
+    }
+
+    public void setGrantInfoList(List<SysRoleOwnPermission> grantInfoList) {
+        this.grantInfoList = grantInfoList;
+    }
+
     /**
      * 角色拥有资源类
      *
      * @author xuyuxiang
      * @date 2022/4/28 23:19
      */
-    @Getter
-    @Setter
     public static class SysRoleOwnPermission {
 
         /** 菜单id */
@@ -58,5 +69,28 @@ public class SysRoleOwnPermissionResult {
         @ApiModelProperty(value = "自定义范围组织id集合", position = 2)
         private List<String> scopeDefineOrgIdList;
 
+        public String getApiUrl() {
+            return apiUrl;
+        }
+
+        public void setApiUrl(String apiUrl) {
+            this.apiUrl = apiUrl;
+        }
+
+        public String getScopeCategory() {
+            return scopeCategory;
+        }
+
+        public void setScopeCategory(String scopeCategory) {
+            this.scopeCategory = scopeCategory;
+        }
+
+        public List<String> getScopeDefineOrgIdList() {
+            return scopeDefineOrgIdList;
+        }
+
+        public void setScopeDefineOrgIdList(List<String> scopeDefineOrgIdList) {
+            this.scopeDefineOrgIdList = scopeDefineOrgIdList;
+        }
     }
 }

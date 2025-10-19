@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.role.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -26,8 +24,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:05
  **/
-@Getter
-@Setter
 public class SysRoleGrantUserParam {
 
     /** 角色id */
@@ -39,4 +35,20 @@ public class SysRoleGrantUserParam {
     @ApiModelProperty(value = "授权用户信息", required = true, position = 2)
     @NotNull(message = "grantInfoList不能为空")
     private List<String> grantInfoList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getGrantInfoList() {
+        return grantInfoList;
+    }
+
+    public void setGrantInfoList(List<String> grantInfoList) {
+        this.grantInfoList = grantInfoList;
+    }
 }

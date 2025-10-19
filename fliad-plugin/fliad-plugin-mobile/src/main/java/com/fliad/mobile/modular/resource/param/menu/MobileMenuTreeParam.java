@@ -13,8 +13,6 @@
 package com.fliad.mobile.modular.resource.param.menu;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 移动端菜单tree查询参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author yubaoshan
  * @date  2023/01/28 22:42
  **/
-@Getter
-@Setter
 public class MobileMenuTreeParam {
 
     /** 关键词 */
@@ -34,4 +30,19 @@ public class MobileMenuTreeParam {
     @ApiModelProperty(value = "模块")
     private String module;
 
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
 }

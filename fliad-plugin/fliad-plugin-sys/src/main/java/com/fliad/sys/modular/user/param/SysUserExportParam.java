@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 用户导出参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/26 16:00
  **/
-@Getter
-@Setter
 public class SysUserExportParam {
 
     /** 用户状态 */
@@ -37,4 +33,28 @@ public class SysUserExportParam {
     /** 用户id集合 */
     @ApiModelProperty(value = "用户id集合")
     private String userIds;
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(String userIds) {
+        this.userIds = userIds;
+    }
 }

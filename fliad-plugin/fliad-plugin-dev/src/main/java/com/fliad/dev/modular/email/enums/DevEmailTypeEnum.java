@@ -12,15 +12,12 @@
  */
 package com.fliad.dev.modular.email.enums;
 
-import lombok.Getter;
-
 /**
  * 邮件类型枚举
  *
  * @author xuyuxiang
  * @date 2022/6/16 16:14
  **/
-@Getter
 public enum DevEmailTypeEnum {
 
     /** 纯文本 */
@@ -36,5 +33,9 @@ public enum DevEmailTypeEnum {
 
     DevEmailTypeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

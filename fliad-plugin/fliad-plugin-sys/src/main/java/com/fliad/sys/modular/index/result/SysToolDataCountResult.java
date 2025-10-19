@@ -12,8 +12,7 @@
  */
 package com.fliad.sys.modular.index.result;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 基础工具数据
@@ -21,8 +20,6 @@ import lombok.Setter;
  * @author yubaoshan
  * @date 2024/7/18 17:35
  */
-@Getter
-@Setter
 public class SysToolDataCountResult {
 
     /** 文件数量 */
@@ -36,4 +33,36 @@ public class SysToolDataCountResult {
 
     /** 站内信数量 */
     private Long messageCount;
+
+    public Long getFileCount() {
+        return fileCount;
+    }
+
+    public void setFileCount(Long fileCount) {
+        this.fileCount = fileCount;
+    }
+
+    public Long getSmsCount() {
+        return smsCount;
+    }
+
+    public void setSmsCount(Long smsCount) {
+        this.smsCount = smsCount;
+    }
+
+    public Long getEmailCount() {
+        return emailCount;
+    }
+
+    public void setEmailCount(Long emailCount) {
+        this.emailCount = emailCount;
+    }
+
+    public Long getMessageCount() {
+        return messageCount;
+    }
+
+    public void setMessageCount(Long messageCount) {
+        this.messageCount = messageCount;
+    }
 }

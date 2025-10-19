@@ -12,8 +12,6 @@
  */
 package com.fliad.common.pojo;
 
-import lombok.Data;
-
 import org.noear.solon.validation.annotation.Validated;
 import java.util.*;
 
@@ -23,7 +21,6 @@ import java.util.*;
  * @author xuyuxiang
  * @date 2022/7/28 16:08
  **/
-@Data
 public class CommonValidList<E> implements List<E> {
 
     @Validated
@@ -142,5 +139,26 @@ public class CommonValidList<E> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
+    }
+    
+    public List<E> getList() {
+        return list;
+    }
+    
+    public void setList(List<E> list) {
+        this.list = list;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonValidList<?> that = (CommonValidList<?>) o;
+        return Objects.equals(list, that.list);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 }

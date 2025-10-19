@@ -18,8 +18,6 @@ import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -29,8 +27,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/22 15:00
  **/
-@Getter
-@Setter
 @Table(value = "viid_subscribe")
 public class ViidSubscribe {
 
@@ -161,4 +157,171 @@ public class ViidSubscribe {
     @Column(ignore = true)
     private String SubscriberRecoverOrgname;
 
+    public String getSubscribeID() {
+        return SubscribeID;
+    }
+
+    public void setSubscribeID(String SubscribeID) {
+        this.SubscribeID = SubscribeID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
+
+    public String getSubscribeDetail() {
+        return SubscribeDetail;
+    }
+
+    public void setSubscribeDetail(String SubscribeDetail) {
+        this.SubscribeDetail = SubscribeDetail;
+    }
+
+    public String getResourceURI() {
+        return ResourceURI;
+    }
+
+    public void setResourceURI(String ResourceURI) {
+        this.ResourceURI = ResourceURI;
+    }
+
+    public String getApplicantName() {
+        return ApplicantName;
+    }
+
+    public void setApplicantName(String ApplicantName) {
+        this.ApplicantName = ApplicantName;
+    }
+
+    public String getApplicantOrg() {
+        return ApplicantOrg;
+    }
+
+    public void setApplicantOrg(String ApplicantOrg) {
+        this.ApplicantOrg = ApplicantOrg;
+    }
+
+    public String getBeginTime() {
+        return BeginTime;
+    }
+
+    public void setBeginTime(String BeginTime) {
+        this.BeginTime = BeginTime;
+    }
+
+    public String getEndTime() {
+        return EndTime;
+    }
+
+    public void setEndTime(String EndTime) {
+        this.EndTime = EndTime;
+    }
+
+    public String getReceiveAddr() {
+        return ReceiveAddr;
+    }
+
+    public void setReceiveAddr(String ReceiveAddr) {
+        this.ReceiveAddr = ReceiveAddr;
+    }
+
+    public Integer getReportInterval() {
+        return ReportInterval;
+    }
+
+    public void setReportInterval(Integer ReportInterval) {
+        this.ReportInterval = ReportInterval;
+    }
+
+    public String getReason() {
+        return Reason;
+    }
+
+    public void setReason(String Reason) {
+        this.Reason = Reason;
+    }
+
+    public String getOperateType() {
+        return OperateType;
+    }
+
+    public void setOperateType(String OperateType) {
+        this.OperateType = OperateType;
+    }
+
+    public String getSubscribeStatus() {
+        return SubscribeStatus;
+    }
+
+    public void setSubscribeStatus(String SubscribeStatus) {
+        this.SubscribeStatus = SubscribeStatus;
+    }
+
+    public String getSubscribeCancelOrg() {
+        return SubscribeCancelOrg;
+    }
+
+    public void setSubscribeCancelOrg(String SubscribeCancelOrg) {
+        this.SubscribeCancelOrg = SubscribeCancelOrg;
+    }
+
+    public String getSubscribeCancelPerson() {
+        return SubscribeCancelPerson;
+    }
+
+    public void setSubscribeCancelPerson(String SubscribeCancelPerson) {
+        this.SubscribeCancelPerson = SubscribeCancelPerson;
+    }
+
+    public Date getCancelTime() {
+        return CancelTime;
+    }
+
+    public void setCancelTime(Date CancelTime) {
+        this.CancelTime = CancelTime;
+    }
+
+    public String getCancelReason() {
+        return CancelReason;
+    }
+
+    public void setCancelReason(String CancelReason) {
+        this.CancelReason = CancelReason;
+    }
+
+    public String getSubscribeType() {
+        return SubscribeType;
+    }
+
+    public void setSubscribeType(String SubscribeType) {
+        this.SubscribeType = SubscribeType;
+    }
+
+    public String getSubscriberSendOrgid() {
+        return SubscriberSendOrgid;
+    }
+
+    public void setSubscriberSendOrgid(String SubscriberSendOrgid) {
+        this.SubscriberSendOrgid = SubscriberSendOrgid;
+    }
+
+    public String getSubscriberRecoverOrgid() {
+        return SubscriberRecoverOrgid;
+    }
+
+    public void setSubscriberRecoverOrgid(String SubscriberRecoverOrgid) {
+        this.SubscriberRecoverOrgid = SubscriberRecoverOrgid;
+    }
+
+    public String getSubscriberRecoverOrgname() {
+        return SubscriberRecoverOrgname;
+    }
+
+    public void setSubscriberRecoverOrgname(String SubscriberRecoverOrgname) {
+        this.SubscriberRecoverOrgname = SubscriberRecoverOrgname;
+    }
 }

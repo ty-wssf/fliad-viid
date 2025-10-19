@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.index.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 
@@ -24,8 +22,6 @@ import java.util.Date;
  * @author yubaoshan
  * @date  2024/07/13 00:31
  */
-@Getter
-@Setter
 public class BizIndexNoticeListResult {
 
     /** 主键 */
@@ -55,4 +51,60 @@ public class BizIndexNoticeListResult {
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDigest() {
+        return digest;
+    }
+
+    public void setDigest(String digest) {
+        this.digest = digest;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(String sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 }

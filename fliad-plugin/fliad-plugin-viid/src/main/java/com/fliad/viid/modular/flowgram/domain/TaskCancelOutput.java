@@ -1,8 +1,5 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
-@Data
 public class TaskCancelOutput {
 
     /**
@@ -14,4 +11,11 @@ public class TaskCancelOutput {
         this.success = success;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }

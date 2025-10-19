@@ -1,11 +1,8 @@
 package com.fliad.viid.modular.subscribe.enums;
 
-import lombok.Getter;
-
 /**
  * 订阅执行状态枚举
  */
-@Getter
 public enum SubscribeStatusEnum {
 
     /**
@@ -49,6 +46,14 @@ public enum SubscribeStatusEnum {
             }
         }
         return null;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

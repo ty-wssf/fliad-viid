@@ -15,8 +15,6 @@ package com.fliad.viid.modular.cascadeplatform.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -25,9 +23,7 @@ import java.util.Date;
  *
  * @author wyl
  * @date  2025/08/14 16:24
- **/
-@Getter
-@Setter
+ */
 @Table(value = "viid_cascade_platform")
 public class ViidCascadePlatform {
 
@@ -83,5 +79,109 @@ public class ViidCascadePlatform {
     /** 保活超时次数 */
     @ApiModelProperty(value = "保活超时次数", position = 12)
     private Integer keepaliveTimeoutCount;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSystemId() {
+        return systemId;
+    }
+
+    public void setSystemId(String systemId) {
+        this.systemId = systemId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIpAddr() {
+        return ipAddr;
+    }
+
+    public void setIpAddr(String ipAddr) {
+        this.ipAddr = ipAddr;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public String getIsRegister() {
+        return isRegister;
+    }
+
+    public void setIsRegister(String isRegister) {
+        this.isRegister = isRegister;
+    }
+
+    public String getIsOnline() {
+        return isOnline;
+    }
+
+    public void setIsOnline(String isOnline) {
+        this.isOnline = isOnline;
+    }
+
+    public Date getLastOnlineTime() {
+        return lastOnlineTime;
+    }
+
+    public void setLastOnlineTime(Date lastOnlineTime) {
+        this.lastOnlineTime = lastOnlineTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getHeartbeatInterval() {
+        return heartbeatInterval;
+    }
+
+    public void setHeartbeatInterval(Long heartbeatInterval) {
+        this.heartbeatInterval = heartbeatInterval;
+    }
+
+    public Integer getKeepaliveTimeoutCount() {
+        return keepaliveTimeoutCount;
+    }
+
+    public void setKeepaliveTimeoutCount(Integer keepaliveTimeoutCount) {
+        this.keepaliveTimeoutCount = keepaliveTimeoutCount;
+    }
 
 }

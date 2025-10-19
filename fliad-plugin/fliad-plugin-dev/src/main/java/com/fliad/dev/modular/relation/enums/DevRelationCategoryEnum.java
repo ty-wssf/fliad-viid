@@ -12,15 +12,12 @@
  */
 package com.fliad.dev.modular.relation.enums;
 
-import lombok.Getter;
-
 /**
  * 关系分类枚举
  *
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum DevRelationCategoryEnum {
 
     /* ====文件与业务关系==== */
@@ -37,5 +34,9 @@ public enum DevRelationCategoryEnum {
 
     DevRelationCategoryEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

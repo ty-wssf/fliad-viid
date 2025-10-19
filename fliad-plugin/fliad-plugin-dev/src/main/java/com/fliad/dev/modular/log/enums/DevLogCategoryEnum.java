@@ -12,7 +12,7 @@
  */
 package com.fliad.dev.modular.log.enums;
 
-import lombok.Getter;
+
 
 /**
  * 日志分类枚举
@@ -20,7 +20,6 @@ import lombok.Getter;
  * @author xuyuxiang
  * @date 2022/6/16 16:14
  **/
-@Getter
 public enum DevLogCategoryEnum {
 
     /** 操作日志 */
@@ -39,5 +38,9 @@ public enum DevLogCategoryEnum {
 
     DevLogCategoryEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

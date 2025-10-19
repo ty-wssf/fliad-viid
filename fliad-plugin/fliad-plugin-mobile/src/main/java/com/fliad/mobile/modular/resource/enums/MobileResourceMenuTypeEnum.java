@@ -12,7 +12,6 @@
  */
 package com.fliad.mobile.modular.resource.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum MobileResourceMenuTypeEnum {
 
     /** 目录 */
@@ -48,5 +46,9 @@ public enum MobileResourceMenuTypeEnum {
         if(!flag) {
             throw new CommonException("不支持的菜单类型：{}", value);
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

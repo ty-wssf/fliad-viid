@@ -12,7 +12,6 @@
  */
 package com.fliad.dev.modular.job.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/27 21:47
  */
-@Getter
 public enum DevJobStatusEnum {
 
     /**
@@ -38,6 +36,10 @@ public enum DevJobStatusEnum {
 
     DevJobStatusEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

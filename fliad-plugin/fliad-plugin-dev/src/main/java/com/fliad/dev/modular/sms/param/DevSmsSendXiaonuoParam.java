@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.sms.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,8 +21,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/31 15:21
  */
-@Getter
-@Setter
 public class DevSmsSendXiaonuoParam {
 
     /** 手机号 */
@@ -39,4 +35,28 @@ public class DevSmsSendXiaonuoParam {
     /** 短信签名 */
     @ApiModelProperty(value = "短信签名")
     private String signName;
+
+    public String getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(String phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getSignName() {
+        return signName;
+    }
+
+    public void setSignName(String signName) {
+        this.signName = signName;
+    }
 }

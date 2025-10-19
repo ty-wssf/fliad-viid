@@ -1,8 +1,5 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
-@Data
 public class TaskRunOutput {
 
     /**
@@ -14,4 +11,11 @@ public class TaskRunOutput {
         this.taskID = taskID;
     }
 
+    public String getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
 }

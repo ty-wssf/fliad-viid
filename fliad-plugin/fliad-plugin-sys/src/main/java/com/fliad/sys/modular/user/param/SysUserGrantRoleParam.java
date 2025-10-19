@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -26,8 +24,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
 public class SysUserGrantRoleParam {
 
     /** id */
@@ -39,4 +35,20 @@ public class SysUserGrantRoleParam {
     @ApiModelProperty(value = "角色id集合", required = true, position = 2)
     @NotNull(message = "roleIdList不能为空")
     private List<String> roleIdList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getRoleIdList() {
+        return roleIdList;
+    }
+
+    public void setRoleIdList(List<String> roleIdList) {
+        this.roleIdList = roleIdList;
+    }
 }

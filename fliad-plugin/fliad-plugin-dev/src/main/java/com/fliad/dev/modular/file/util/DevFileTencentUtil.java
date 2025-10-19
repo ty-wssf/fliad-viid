@@ -26,7 +26,8 @@ import com.qcloud.cos.model.*;
 import com.qcloud.cos.region.Region;
 import com.qcloud.cos.transfer.TransferManager;
 import com.qcloud.cos.transfer.TransferManagerConfiguration;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.UploadedFile;
 import com.fliad.common.exception.CommonException;
@@ -47,8 +48,9 @@ import java.util.concurrent.Executors;
  * @author xuyuxiang
  * @date 2022/1/2 18:13
  */
-@Slf4j
 public class DevFileTencentUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevFileTencentUtil.class);
 
     private static COSClient client;
 

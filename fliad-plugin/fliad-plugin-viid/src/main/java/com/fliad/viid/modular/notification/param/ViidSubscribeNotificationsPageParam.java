@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.notification.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 订阅通知查询参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author wyl
  * @date 2025/09/22
  **/
-@Getter
-@Setter
 public class ViidSubscribeNotificationsPageParam {
 
     /** 当前页 */
@@ -53,4 +49,60 @@ public class ViidSubscribeNotificationsPageParam {
     /** 订阅标识 */
     @ApiModelProperty(value = "订阅标识")
     private String SubscribeID;
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getNotificationID() {
+        return NotificationID;
+    }
+
+    public void setNotificationID(String NotificationID) {
+        this.NotificationID = NotificationID;
+    }
+
+    public String getSubscribeID() {
+        return SubscribeID;
+    }
+
+    public void setSubscribeID(String SubscribeID) {
+        this.SubscribeID = SubscribeID;
+    }
 }

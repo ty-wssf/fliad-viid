@@ -1,12 +1,10 @@
 package com.fliad.viid.modular.cascadeplatform.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Data
 public class ResponseStatusObject {
 
     @JsonProperty("ResponseStatusObject")
@@ -16,4 +14,11 @@ public class ResponseStatusObject {
         this.ResponseStatusObject = new ResponseStatus(id, requestURL, statusCode, statusString);
     }
 
+    public ResponseStatus getResponseStatusObject() {
+        return ResponseStatusObject;
+    }
+
+    public void setResponseStatusObject(ResponseStatus responseStatusObject) {
+        ResponseStatusObject = responseStatusObject;
+    }
 }

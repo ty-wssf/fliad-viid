@@ -12,8 +12,6 @@
  */
 package com.fliad.common.prop;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 
@@ -23,8 +21,6 @@ import org.noear.solon.annotation.Inject;
  * @author xuyuxiang
  * @date 2022/1/2 17:03
  */
-@Getter
-@Setter
 @Inject("${snowy.config.common}")
 @Configuration
 public class CommonProperties {
@@ -34,4 +30,20 @@ public class CommonProperties {
 
     /** 后端地址 */
     private String backendUrl;
+    
+    public String getFrontUrl() {
+        return frontUrl;
+    }
+    
+    public void setFrontUrl(String frontUrl) {
+        this.frontUrl = frontUrl;
+    }
+    
+    public String getBackendUrl() {
+        return backendUrl;
+    }
+    
+    public void setBackendUrl(String backendUrl) {
+        this.backendUrl = backendUrl;
+    }
 }

@@ -17,8 +17,6 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import com.mybatisflex.annotation.Column;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,9 +26,7 @@ import java.util.Date;
  *
  * @author wyl
  * @date  2025/09/19
- **/
-@Getter
-@Setter
+ */
 @Table(value = "viid_ape")
 public class ViidApe {
 
@@ -171,4 +167,187 @@ public class ViidApe {
     @ApiModelProperty(value = "记录最后更新时间", position = 23)
     private Date UpdateTime;
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getApeID() {
+        return ApeID;
+    }
+
+    public void setApeID(String ApeID) {
+        this.ApeID = ApeID;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public String getModel() {
+        return Model;
+    }
+
+    public void setModel(String Model) {
+        this.Model = Model;
+    }
+
+    public String getIPAddr() {
+        return IPAddr;
+    }
+
+    public void setIPAddr(String IPAddr) {
+        this.IPAddr = IPAddr;
+    }
+
+    public String getIPV6Addr() {
+        return IPV6Addr;
+    }
+
+    public void setIPV6Addr(String IPV6Addr) {
+        this.IPV6Addr = IPV6Addr;
+    }
+
+    public Integer getPort() {
+        return Port;
+    }
+
+    public void setPort(Integer Port) {
+        this.Port = Port;
+    }
+
+    public BigDecimal getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(BigDecimal Longitude) {
+        this.Longitude = Longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(BigDecimal Latitude) {
+        this.Latitude = Latitude;
+    }
+
+    public String getPlaceCode() {
+        return PlaceCode;
+    }
+
+    public void setPlaceCode(String PlaceCode) {
+        this.PlaceCode = PlaceCode;
+    }
+
+    public String getPlace() {
+        return Place;
+    }
+
+    public void setPlace(String Place) {
+        this.Place = Place;
+    }
+
+    public String getOrgCode() {
+        return OrgCode;
+    }
+
+    public void setOrgCode(String OrgCode) {
+        this.OrgCode = OrgCode;
+    }
+
+    public Integer getCapDirection() {
+        return CapDirection;
+    }
+
+    public void setCapDirection(Integer CapDirection) {
+        this.CapDirection = CapDirection;
+    }
+
+    public String getMonitorDirection() {
+        return MonitorDirection;
+    }
+
+    public void setMonitorDirection(String MonitorDirection) {
+        this.MonitorDirection = MonitorDirection;
+    }
+
+    public String getMonitorAreaDesc() {
+        return MonitorAreaDesc;
+    }
+
+    public void setMonitorAreaDesc(String MonitorAreaDesc) {
+        this.MonitorAreaDesc = MonitorAreaDesc;
+    }
+
+    public Integer getIsOnline() {
+        return IsOnline;
+    }
+
+    public void setIsOnline(Integer IsOnline) {
+        this.IsOnline = IsOnline;
+    }
+
+    public String getOwnerApsID() {
+        return OwnerApsID;
+    }
+
+    public void setOwnerApsID(String OwnerApsID) {
+        this.OwnerApsID = OwnerApsID;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String UserId) {
+        this.UserId = UserId;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String Password) {
+        this.Password = Password;
+    }
+
+    public String getFunctionType() {
+        return FunctionType;
+    }
+
+    public void setFunctionType(String FunctionType) {
+        this.FunctionType = FunctionType;
+    }
+
+    public String getPositionType() {
+        return PositionType;
+    }
+
+    public void setPositionType(String PositionType) {
+        this.PositionType = PositionType;
+    }
+
+    public Date getCreateTime() {
+        return CreateTime;
+    }
+
+    public void setCreateTime(Date CreateTime) {
+        this.CreateTime = CreateTime;
+    }
+
+    public Date getUpdateTime() {
+        return UpdateTime;
+    }
+
+    public void setUpdateTime(Date UpdateTime) {
+        this.UpdateTime = UpdateTime;
+    }
 }

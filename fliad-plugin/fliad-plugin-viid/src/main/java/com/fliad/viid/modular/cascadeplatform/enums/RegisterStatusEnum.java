@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.cascadeplatform.enums;
 
-import lombok.Getter;
-
 /**
  * 注册状态枚举
  *
  * @author wyl
  * @date  2025/08/14 16:24
- **/
-@Getter
+ */
 public enum RegisterStatusEnum {
 
     /** 未注册 */
@@ -49,5 +46,13 @@ public enum RegisterStatusEnum {
             }
         }
         return null;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
     }
 }

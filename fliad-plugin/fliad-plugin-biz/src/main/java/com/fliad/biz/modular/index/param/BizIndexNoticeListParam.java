@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.index.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 通知公告列表参数
@@ -22,11 +20,17 @@ import lombok.Setter;
  * @author yubaoshan
  * @date 2024/7/13 21:02
  **/
-@Getter
-@Setter
 public class BizIndexNoticeListParam {
 
     /** 条数" */
     @ApiModelProperty(value = "条数")
     private Integer limit;
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 }

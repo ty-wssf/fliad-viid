@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.message.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
@@ -24,8 +22,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/6/21 15:34
  **/
-@Getter
-@Setter
 public class DevMessageListParam {
 
     /** 接收人id集合 */
@@ -35,4 +31,20 @@ public class DevMessageListParam {
     /** 条数" */
     @ApiModelProperty(value = "条数")
     private Integer limit;
+
+    public List<String> getReceiverIdList() {
+        return receiverIdList;
+    }
+
+    public void setReceiverIdList(List<String> receiverIdList) {
+        this.receiverIdList = receiverIdList;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 }

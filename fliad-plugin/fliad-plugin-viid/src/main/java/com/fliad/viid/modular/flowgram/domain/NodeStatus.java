@@ -1,12 +1,9 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
 import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 public class NodeStatus {
 
     private String id;
@@ -51,4 +48,59 @@ public class NodeStatus {
         return snapshots.get(snapshots.size() - 1);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public List<Snapshot> getSnapshots() {
+        return snapshots;
+    }
+
+    public void setSnapshots(List<Snapshot> snapshots) {
+        this.snapshots = snapshots;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
+    }
+
+    public long getTimeCost() {
+        return timeCost;
+    }
+
+    public void setTimeCost(long timeCost) {
+        this.timeCost = timeCost;
+    }
 }

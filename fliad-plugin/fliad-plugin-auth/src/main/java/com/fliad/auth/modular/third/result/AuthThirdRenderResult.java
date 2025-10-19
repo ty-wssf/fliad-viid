@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.third.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 第三方登录授权结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/8 20:39
  */
-@Getter
-@Setter
 public class AuthThirdRenderResult {
 
     /** 授权地址 */
@@ -33,4 +29,20 @@ public class AuthThirdRenderResult {
     /** 状态码 */
     @ApiModelProperty(value = "状态码")
     private String state;
+
+    public String getAuthorizeUrl() {
+        return authorizeUrl;
+    }
+
+    public void setAuthorizeUrl(String authorizeUrl) {
+        this.authorizeUrl = authorizeUrl;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

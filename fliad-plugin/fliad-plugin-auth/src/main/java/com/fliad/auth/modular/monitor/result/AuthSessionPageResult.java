@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.monitor.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
@@ -25,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/28 14:46
  **/
-@Getter
-@Setter
 public class AuthSessionPageResult {
 
     /** id */
@@ -97,14 +93,148 @@ public class AuthSessionPageResult {
     @ApiModelProperty(value = "令牌信息集合", position = 17)
     private List<TokenSignInfo> tokenSignList;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastLoginIp() {
+        return lastLoginIp;
+    }
+
+    public void setLastLoginIp(String lastLoginIp) {
+        this.lastLoginIp = lastLoginIp;
+    }
+
+    public String getLastLoginAddress() {
+        return lastLoginAddress;
+    }
+
+    public void setLastLoginAddress(String lastLoginAddress) {
+        this.lastLoginAddress = lastLoginAddress;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getLastLoginDevice() {
+        return lastLoginDevice;
+    }
+
+    public void setLastLoginDevice(String lastLoginDevice) {
+        this.lastLoginDevice = lastLoginDevice;
+    }
+
+    public String getLatestLoginIp() {
+        return latestLoginIp;
+    }
+
+    public void setLatestLoginIp(String latestLoginIp) {
+        this.latestLoginIp = latestLoginIp;
+    }
+
+    public String getLatestLoginAddress() {
+        return latestLoginAddress;
+    }
+
+    public void setLatestLoginAddress(String latestLoginAddress) {
+        this.latestLoginAddress = latestLoginAddress;
+    }
+
+    public Date getLatestLoginTime() {
+        return latestLoginTime;
+    }
+
+    public void setLatestLoginTime(Date latestLoginTime) {
+        this.latestLoginTime = latestLoginTime;
+    }
+
+    public String getLatestLoginDevice() {
+        return latestLoginDevice;
+    }
+
+    public void setLatestLoginDevice(String latestLoginDevice) {
+        this.latestLoginDevice = latestLoginDevice;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public Date getSessionCreateTime() {
+        return sessionCreateTime;
+    }
+
+    public void setSessionCreateTime(Date sessionCreateTime) {
+        this.sessionCreateTime = sessionCreateTime;
+    }
+
+    public String getSessionTimeout() {
+        return sessionTimeout;
+    }
+
+    public void setSessionTimeout(String sessionTimeout) {
+        this.sessionTimeout = sessionTimeout;
+    }
+
+    public Integer getTokenCount() {
+        return tokenCount;
+    }
+
+    public void setTokenCount(Integer tokenCount) {
+        this.tokenCount = tokenCount;
+    }
+
+    public List<TokenSignInfo> getTokenSignList() {
+        return tokenSignList;
+    }
+
+    public void setTokenSignList(List<TokenSignInfo> tokenSignList) {
+        this.tokenSignList = tokenSignList;
+    }
+
     /**
      * 令牌信息类
      *
      * @author xuyuxiang
      * @date 2022/7/28 15:04
      **/
-    @Getter
-    @Setter
     public static class TokenSignInfo {
 
         /** token值 */
@@ -122,5 +252,37 @@ public class AuthSessionPageResult {
         /** token剩余有效期百分比 */
         @ApiModelProperty(value = "token剩余有效期百分比", position = 4)
         private Double tokenTimeoutPercent;
+
+        public String getTokenValue() {
+            return tokenValue;
+        }
+
+        public void setTokenValue(String tokenValue) {
+            this.tokenValue = tokenValue;
+        }
+
+        public String getTokenDevice() {
+            return tokenDevice;
+        }
+
+        public void setTokenDevice(String tokenDevice) {
+            this.tokenDevice = tokenDevice;
+        }
+
+        public String getTokenTimeout() {
+            return tokenTimeout;
+        }
+
+        public void setTokenTimeout(String tokenTimeout) {
+            this.tokenTimeout = tokenTimeout;
+        }
+
+        public Double getTokenTimeoutPercent() {
+            return tokenTimeoutPercent;
+        }
+
+        public void setTokenTimeoutPercent(Double tokenTimeoutPercent) {
+            this.tokenTimeoutPercent = tokenTimeoutPercent;
+        }
     }
 }

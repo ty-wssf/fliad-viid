@@ -14,12 +14,11 @@ package com.fliad.auth.core.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 基础的B端登录用户对象，可继承此类扩展更多属性
@@ -279,6 +278,19 @@ public abstract class SaBaseLoginUser implements Serializable {
 
         public void setDataScope(List<String> dataScope) {
             this.dataScope = dataScope;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            DataScope dataScope1 = (DataScope) o;
+            return Objects.equals(apiUrl, dataScope1.apiUrl) && Objects.equals(dataScope, dataScope1.dataScope);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(apiUrl, dataScope);
         }
 
     }

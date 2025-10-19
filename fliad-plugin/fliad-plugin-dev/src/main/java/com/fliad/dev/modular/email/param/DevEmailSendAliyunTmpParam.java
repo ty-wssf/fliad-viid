@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.email.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,8 +21,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/6/21 15:38
  **/
-@Getter
-@Setter
 public class DevEmailSendAliyunTmpParam {
 
     /** 发件人邮箱 */
@@ -45,4 +41,36 @@ public class DevEmailSendAliyunTmpParam {
     /** 标签名 */
     @ApiModelProperty(value = "标签名", position = 5)
     private String tagName;
+
+    public String getSendAccount() {
+        return sendAccount;
+    }
+
+    public void setSendAccount(String sendAccount) {
+        this.sendAccount = sendAccount;
+    }
+
+    public String getReceiveAccounts() {
+        return receiveAccounts;
+    }
+
+    public void setReceiveAccounts(String receiveAccounts) {
+        this.receiveAccounts = receiveAccounts;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
 }

@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.index.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 轮播图结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author yubaoshan
  * @date  2024/07/13 00:31
  */
-@Getter
-@Setter
 public class BizIndexSlideshowListResult {
 
     /** id */
@@ -41,4 +37,36 @@ public class BizIndexSlideshowListResult {
     /** 路径详情 */
     @ApiModelProperty(value = "路径详情")
     private String pathDetails;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPathDetails() {
+        return pathDetails;
+    }
+
+    public void setPathDetails(String pathDetails) {
+        this.pathDetails = pathDetails;
+    }
 }

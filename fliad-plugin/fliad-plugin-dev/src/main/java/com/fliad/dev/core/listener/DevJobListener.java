@@ -14,12 +14,13 @@ package com.fliad.dev.core.listener;
 
 import cn.hutool.cron.CronUtil;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.event.AppLoadEndEvent;
 import org.noear.solon.core.event.EventListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.timer.CommonTimerTaskRunner;
 import com.fliad.dev.modular.job.entity.DevJob;
@@ -32,9 +33,10 @@ import com.fliad.dev.modular.job.service.DevJobService;
  * @author xuyuxiang
  * @date 2022/8/5 16:07
  **/
-@Slf4j
 @Component
 public class DevJobListener implements EventListener<AppLoadEndEvent> {
+
+    private static final Logger log = LoggerFactory.getLogger(DevJobListener.class);
 
     @Inject
     DevJobService devJobService;

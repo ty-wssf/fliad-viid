@@ -2,11 +2,12 @@ package com.fliad.core.config;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
 import org.noear.solon.core.util.ResourceUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.net.URL;
@@ -21,9 +22,10 @@ import java.util.List;
  *
  * @author lingma
  */
-@Slf4j
 @Component(index = -10)
 public class H2DataSourceInitializer implements LifecycleBean {
+
+    private static final Logger log = LoggerFactory.getLogger(H2DataSourceInitializer.class);
 
     @Inject
     private DataSource dataSource;

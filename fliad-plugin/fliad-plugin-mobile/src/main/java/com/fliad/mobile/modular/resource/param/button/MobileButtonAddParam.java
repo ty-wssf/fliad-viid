@@ -13,8 +13,6 @@
 package com.fliad.mobile.modular.resource.param.button;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -25,8 +23,6 @@ import javax.validation.constraints.NotNull;
  * @author xuyuxiang
  * @date 2022/7/27 18:40
  **/
-@Getter
-@Setter
 public class MobileButtonAddParam {
 
     /** 父id */
@@ -52,4 +48,44 @@ public class MobileButtonAddParam {
     /** 扩展JSON */
     @ApiModelProperty(value = "扩展JSON", position = 5)
     private String extJson;
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

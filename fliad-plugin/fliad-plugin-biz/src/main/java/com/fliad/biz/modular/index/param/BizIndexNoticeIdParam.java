@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.index.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 通知公告详情参数
@@ -22,11 +20,17 @@ import lombok.Setter;
  * @author yubaoshan
  * @date 2024/7/13 21:02
  **/
-@Getter
-@Setter
 public class BizIndexNoticeIdParam {
 
     /** ID */
     @ApiModelProperty(value = "ID")
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

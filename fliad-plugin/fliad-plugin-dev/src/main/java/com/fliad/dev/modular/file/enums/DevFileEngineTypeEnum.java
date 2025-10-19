@@ -12,15 +12,12 @@
  */
 package com.fliad.dev.modular.file.enums;
 
-import lombok.Getter;
-
 /**
  * 文件存储引擎类型枚举
  *
  * @author xuyuxiang
  * @date 2022/6/16 16:14
  **/
-@Getter
 public enum DevFileEngineTypeEnum {
 
     /** 本地 */
@@ -39,5 +36,9 @@ public enum DevFileEngineTypeEnum {
 
     DevFileEngineTypeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

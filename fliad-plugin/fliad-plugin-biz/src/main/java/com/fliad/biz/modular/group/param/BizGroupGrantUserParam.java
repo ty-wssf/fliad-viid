@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.group.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -26,8 +25,7 @@ import java.util.List;
  * @author chengchuanyao
  * @date 2025/1/6 11:26
  */
-@Getter
-@Setter
+
 public class BizGroupGrantUserParam {
 
     /** 用户组id */
@@ -39,4 +37,20 @@ public class BizGroupGrantUserParam {
     @ApiModelProperty(value = "授权用户信息", required = true, position = 2)
     @NotNull(message = "grantInfoList不能为空")
     private List<String> grantInfoList;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setGrantInfoList(List<String> grantInfoList) {
+        this.grantInfoList = grantInfoList;
+    }
+
+    public List<String> getGrantInfoList() {
+        return grantInfoList;
+    }
 }

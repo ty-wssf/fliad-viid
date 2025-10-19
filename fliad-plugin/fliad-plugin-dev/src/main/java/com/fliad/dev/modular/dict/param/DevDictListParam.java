@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.dict.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 字典列表参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/30 21:49
  */
-@Getter
-@Setter
 public class DevDictListParam {
 
     /** 父id */
@@ -33,4 +29,20 @@ public class DevDictListParam {
     /** 字典分类 */
     @ApiModelProperty(value = "字典分类")
     private String category;
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

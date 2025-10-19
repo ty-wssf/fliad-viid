@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.notification.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -27,8 +25,6 @@ import java.util.Date;
  * @author wyl
  * @date 2025/09/22
  **/
-@Getter
-@Setter
 public class ViidSubscribeNotificationsEditParam {
 
     /** 主键 */
@@ -68,4 +64,76 @@ public class ViidSubscribeNotificationsEditParam {
     /** 请求耗时（毫秒） */
     @ApiModelProperty(value = "请求耗时（毫秒）", position = 9)
     private Integer RequestCost;
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getNotificationID() {
+        return NotificationID;
+    }
+
+    public void setNotificationID(String NotificationID) {
+        this.NotificationID = NotificationID;
+    }
+
+    public String getSubscribeID() {
+        return SubscribeID;
+    }
+
+    public void setSubscribeID(String SubscribeID) {
+        this.SubscribeID = SubscribeID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
+        this.Title = Title;
+    }
+
+    public Date getTriggerTime() {
+        return TriggerTime;
+    }
+
+    public void setTriggerTime(Date TriggerTime) {
+        this.TriggerTime = TriggerTime;
+    }
+
+    public String getInfoIDs() {
+        return InfoIDs;
+    }
+
+    public void setInfoIDs(String InfoIDs) {
+        this.InfoIDs = InfoIDs;
+    }
+
+    public String getRequestData() {
+        return RequestData;
+    }
+
+    public void setRequestData(String RequestData) {
+        this.RequestData = RequestData;
+    }
+
+    public String getResponseData() {
+        return ResponseData;
+    }
+
+    public void setResponseData(String ResponseData) {
+        this.ResponseData = ResponseData;
+    }
+
+    public Integer getRequestCost() {
+        return RequestCost;
+    }
+
+    public void setRequestCost(Integer RequestCost) {
+        this.RequestCost = RequestCost;
+    }
 }

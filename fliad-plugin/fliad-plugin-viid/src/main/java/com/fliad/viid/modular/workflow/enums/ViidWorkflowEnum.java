@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.workflow.enums;
 
-import lombok.Getter;
-
 /**
  * 工作流枚举
  *
  * @author wyl
  * @date  2025/08/27 14:03
- **/
-@Getter
+ */
 public enum ViidWorkflowEnum {
 
     /** 测试 */
@@ -30,5 +27,9 @@ public enum ViidWorkflowEnum {
 
     ViidWorkflowEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

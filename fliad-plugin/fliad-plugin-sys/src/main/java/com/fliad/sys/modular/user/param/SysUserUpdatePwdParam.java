@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,8 +22,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/26 16:04
  **/
-@Getter
-@Setter
 public class SysUserUpdatePwdParam {
 
     /** 旧密码 */
@@ -37,4 +33,20 @@ public class SysUserUpdatePwdParam {
     @ApiModelProperty(value = "新密码", required = true, position = 3)
     @NotBlank(message = "newPassword不能为空")
     private String newPassword;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 }

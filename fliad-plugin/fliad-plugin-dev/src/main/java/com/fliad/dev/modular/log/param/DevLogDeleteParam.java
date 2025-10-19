@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.log.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,12 +21,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/9/6 13:16
  */
-@Getter
-@Setter
 public class DevLogDeleteParam {
 
     /** 日志分类 */
     @ApiModelProperty(value = "日志分类", required = true)
     @NotBlank(message = "category不能为空")
     private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

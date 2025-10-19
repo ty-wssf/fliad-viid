@@ -22,7 +22,8 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import io.minio.*;
 import io.minio.http.Method;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.UploadedFile;
 import com.fliad.common.exception.CommonException;
@@ -39,8 +40,9 @@ import java.io.*;
  * @author xuyuxiang
  * @date 2022/1/2 18:13
  */
-@Slf4j
 public class DevFileMinIoUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevFileMinIoUtil.class);
 
     private static MinioClient client;
 

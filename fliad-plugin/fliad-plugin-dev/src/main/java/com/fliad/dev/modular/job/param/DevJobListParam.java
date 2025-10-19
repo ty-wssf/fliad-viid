@@ -13,8 +13,7 @@
 package com.fliad.dev.modular.job.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 定时任务列表参数
@@ -22,8 +21,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/30 17:53
  */
-@Getter
-@Setter
 public class DevJobListParam {
 
     /** 任务分类 */
@@ -37,4 +34,28 @@ public class DevJobListParam {
     /** 任务状态 */
     @ApiModelProperty(value = "任务状态")
     private String jobStatus;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
+    }
 }

@@ -13,18 +13,19 @@ import com.fliad.viid.modular.cascadeplatform.domain.SubscribeNotificationReques
 import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
 import com.fliad.viid.modular.cascadeplatform.utils.RegisterAuthUtil;
 import com.fliad.viid.modular.subscribe.entity.ViidSubscribe;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-
-@Slf4j
 public class ViidHttpUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(ViidHttpUtil.class);
 
     // 用于存储每个平台的nc计数器
     private static final Map<String, AtomicInteger> ncCountMap = new ConcurrentHashMap<>();

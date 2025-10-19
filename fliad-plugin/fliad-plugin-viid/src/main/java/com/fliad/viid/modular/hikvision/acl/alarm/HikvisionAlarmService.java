@@ -1,17 +1,19 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 海康威视报警服务类
  * 提供对外的报警管理接口
  */
-@Slf4j
 @Component
 public class HikvisionAlarmService {
+    
+    private static final Logger log = LoggerFactory.getLogger(HikvisionAlarmService.class);
     
     @Inject
     private HikvisionAlarmManager alarmManager;

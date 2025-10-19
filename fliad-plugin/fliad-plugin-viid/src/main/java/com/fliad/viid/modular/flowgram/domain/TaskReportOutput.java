@@ -1,7 +1,5 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 任务的执行报告
  */
-@Data
 public class TaskReportOutput {
 
     private String id;
@@ -41,4 +38,43 @@ public class TaskReportOutput {
         return reports.get(id);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Map<String, Object> getInputs() {
+        return inputs;
+    }
+
+    public void setInputs(Map<String, Object> inputs) {
+        this.inputs = inputs;
+    }
+
+    public Map<String, Object> getOutputs() {
+        return outputs;
+    }
+
+    public void setOutputs(Map<String, Object> outputs) {
+        this.outputs = outputs;
+    }
+
+    public WorkflowStatus getWorkflowStatus() {
+        return workflowStatus;
+    }
+
+    public void setWorkflowStatus(WorkflowStatus workflowStatus) {
+        this.workflowStatus = workflowStatus;
+    }
+
+    public Map<String, NodeStatus> getReports() {
+        return reports;
+    }
+
+    public void setReports(Map<String, NodeStatus> reports) {
+        this.reports = reports;
+    }
 }

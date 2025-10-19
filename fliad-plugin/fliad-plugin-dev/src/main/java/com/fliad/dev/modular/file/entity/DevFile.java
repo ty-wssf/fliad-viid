@@ -15,8 +15,7 @@ package com.fliad.dev.modular.file.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import com.fliad.common.pojo.CommonEntity;
 
 /**
@@ -25,8 +24,6 @@ import com.fliad.common.pojo.CommonEntity;
  * @author xuyuxiang
  * @date 2022/2/23 18:27
  **/
-@Getter
-@Setter
 @Table(value = "DEV_FILE")
 public class DevFile extends CommonEntity {
 
@@ -78,4 +75,100 @@ public class DevFile extends CommonEntity {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 12)
     private String extJson;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public String getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(String bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSuffix() {
+        return suffix;
+    }
+
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public String getSizeKb() {
+        return sizeKb;
+    }
+
+    public void setSizeKb(String sizeKb) {
+        this.sizeKb = sizeKb;
+    }
+
+    public String getSizeInfo() {
+        return sizeInfo;
+    }
+
+    public void setSizeInfo(String sizeInfo) {
+        this.sizeInfo = sizeInfo;
+    }
+
+    public String getObjName() {
+        return objName;
+    }
+
+    public void setObjName(String objName) {
+        this.objName = objName;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
+    }
+
+    public void setStoragePath(String storagePath) {
+        this.storagePath = storagePath;
+    }
+
+    public String getDownloadPath() {
+        return downloadPath;
+    }
+
+    public void setDownloadPath(String downloadPath) {
+        this.downloadPath = downloadPath;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

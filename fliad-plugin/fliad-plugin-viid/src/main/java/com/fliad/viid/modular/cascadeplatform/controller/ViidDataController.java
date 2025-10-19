@@ -13,11 +13,12 @@ import com.fliad.viid.modular.workflow.entity.ViidWorkflow;
 import com.fliad.viid.modular.workflow.service.ViidWorkflowService;
 import com.fliad.dev.api.DevDictApi;
 import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.validation.annotation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -25,12 +26,13 @@ import java.util.List;
  * 视图库数据相关接口控制器
  * 处理VIID协议相关的数据交互，包括车流量数据和订阅通知等
  */
-@Slf4j
 @Api(tags = "视图库数据相关接口")
 @Controller
 @Valid
 @Mapping("/VIID")
 public class ViidDataController {
+
+    private Logger log = LoggerFactory.getLogger(ViidDataController.class);
 
     @Inject
     private ViidPlatformStatusService viidPlatformStatusService;

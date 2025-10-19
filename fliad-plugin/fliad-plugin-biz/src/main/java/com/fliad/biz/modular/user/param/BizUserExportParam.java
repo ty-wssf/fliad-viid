@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 人员导出参数
@@ -22,8 +21,7 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/26 16:00
  **/
-@Getter
-@Setter
+
 public class BizUserExportParam {
 
     /** 人员状态 */
@@ -37,4 +35,28 @@ public class BizUserExportParam {
     /** 人员id集合 */
     @ApiModelProperty(value = "人员id集合")
     private String userIds;
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setUserIds(String userIds) {
+        this.userIds = userIds;
+    }
+
+    public String getUserIds() {
+        return userIds;
+    }
 }

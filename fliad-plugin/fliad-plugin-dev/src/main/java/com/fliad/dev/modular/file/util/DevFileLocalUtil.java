@@ -18,7 +18,8 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import cn.hutool.system.SystemUtil;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.UploadedFile;
 import com.fliad.common.exception.CommonException;
@@ -35,8 +36,9 @@ import java.io.InputStream;
  * @author xuyuxiang
  * @date 2022/1/2 18:13
  */
-@Slf4j
 public class DevFileLocalUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevFileLocalUtil.class);
 
     private static JSONObject client;
 

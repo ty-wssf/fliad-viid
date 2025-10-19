@@ -12,15 +12,12 @@
  */
 package com.fliad.dev.modular.sse.enums;
 
-import lombok.Getter;
-
 /**
  * SSE通信参数枚举
  *
  * @author diantu
  * @date 2023/7/17
  **/
-@Getter
 public enum DevSseEmitterParameterEnum {
 
     /**
@@ -42,6 +39,10 @@ public enum DevSseEmitterParameterEnum {
 
     DevSseEmitterParameterEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
 }

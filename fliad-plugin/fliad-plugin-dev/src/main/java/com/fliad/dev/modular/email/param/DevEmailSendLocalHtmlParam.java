@@ -15,8 +15,6 @@ package com.fliad.dev.modular.email.param;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import java.io.File;
@@ -30,8 +28,6 @@ import java.util.Map;
  * @author xuyuxiang
  * @date 2022/6/21 15:38
  **/
-@Getter
-@Setter
 public class DevEmailSendLocalHtmlParam {
 
     /** 接收人 */
@@ -56,4 +52,44 @@ public class DevEmailSendLocalHtmlParam {
     /** 附件列表 */
     @ApiModelProperty(value = "附件列表", position = 5, hidden = true)
     private List<File> files = CollectionUtil.newArrayList();
+
+    public String getReceiveAccounts() {
+        return receiveAccounts;
+    }
+
+    public void setReceiveAccounts(String receiveAccounts) {
+        this.receiveAccounts = receiveAccounts;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Map<String, InputStream> getImageMap() {
+        return imageMap;
+    }
+
+    public void setImageMap(Map<String, InputStream> imageMap) {
+        this.imageMap = imageMap;
+    }
+
+    public List<File> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<File> files) {
+        this.files = files;
+    }
 }

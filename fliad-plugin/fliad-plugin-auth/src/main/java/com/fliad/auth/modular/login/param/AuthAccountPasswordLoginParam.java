@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.login.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 
@@ -24,8 +22,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/7 16:46
  **/
-@Getter
-@Setter
 public class AuthAccountPasswordLoginParam {
 
     /** 账号 */
@@ -49,4 +45,44 @@ public class AuthAccountPasswordLoginParam {
     /** 验证码请求号 */
     @ApiModelProperty(value = "验证码请求号", position = 5)
     private String validCodeReqNo;
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+
+    public String getValidCode() {
+        return validCode;
+    }
+
+    public void setValidCode(String validCode) {
+        this.validCode = validCode;
+    }
+
+    public String getValidCodeReqNo() {
+        return validCodeReqNo;
+    }
+
+    public void setValidCodeReqNo(String validCodeReqNo) {
+        this.validCodeReqNo = validCodeReqNo;
+    }
 }

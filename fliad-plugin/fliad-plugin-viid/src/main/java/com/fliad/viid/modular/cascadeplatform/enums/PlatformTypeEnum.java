@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.cascadeplatform.enums;
 
-import lombok.Getter;
-
 /**
  * 平台类型枚举
  *
  * @author wyl
  * @date  2025/08/14 16:24
- **/
-@Getter
+ */
 public enum PlatformTypeEnum {
 
     /** 上级平台 */
@@ -49,6 +46,14 @@ public enum PlatformTypeEnum {
             }
         }
         return null;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

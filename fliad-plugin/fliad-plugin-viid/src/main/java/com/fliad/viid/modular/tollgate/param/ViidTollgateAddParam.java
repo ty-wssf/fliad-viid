@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.tollgate.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -28,8 +26,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/09/19
  **/
-@Getter
-@Setter
 public class ViidTollgateAddParam {
 
     /** 卡口ID，全局唯一标识，对应DeviceIDType类型，必选字段 */
@@ -88,4 +84,99 @@ public class ViidTollgateAddParam {
     @ApiModelProperty(value = "卡口启用时间，启用时间之后的数据有效，可选字段", position = 13)
     private Date ActiveTime;
 
+    public String getTollgateID() {
+        return TollgateID;
+    }
+
+    public void setTollgateID(String TollgateID) {
+        this.TollgateID = TollgateID;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
+
+    public BigDecimal getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(BigDecimal Longitude) {
+        this.Longitude = Longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(BigDecimal Latitude) {
+        this.Latitude = Latitude;
+    }
+
+    public String getPlaceCode() {
+        return PlaceCode;
+    }
+
+    public void setPlaceCode(String PlaceCode) {
+        this.PlaceCode = PlaceCode;
+    }
+
+    public String getPlace() {
+        return Place;
+    }
+
+    public void setPlace(String Place) {
+        this.Place = Place;
+    }
+
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer Status) {
+        this.Status = Status;
+    }
+
+    public String getTollgateCat() {
+        return TollgateCat;
+    }
+
+    public void setTollgateCat(String TollgateCat) {
+        this.TollgateCat = TollgateCat;
+    }
+
+    public Integer getTollgateUsage() {
+        return TollgateUsage;
+    }
+
+    public void setTollgateUsage(Integer TollgateUsage) {
+        this.TollgateUsage = TollgateUsage;
+    }
+
+    public Integer getLaneNum() {
+        return LaneNum;
+    }
+
+    public void setLaneNum(Integer LaneNum) {
+        this.LaneNum = LaneNum;
+    }
+
+    public String getOrgCode() {
+        return OrgCode;
+    }
+
+    public void setOrgCode(String OrgCode) {
+        this.OrgCode = OrgCode;
+    }
+
+    public Date getActiveTime() {
+        return ActiveTime;
+    }
+
+    public void setActiveTime(Date ActiveTime) {
+        this.ActiveTime = ActiveTime;
+    }
 }

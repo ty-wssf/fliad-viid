@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 岗位选择器参数
@@ -22,8 +21,7 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/26 15:58
  **/
-@Getter
-@Setter
+
 public class BizUserSelectorPositionParam {
 
     /** 当前页 */
@@ -41,4 +39,36 @@ public class BizUserSelectorPositionParam {
     /** 名称关键词 */
     @ApiModelProperty(value = "名称关键词")
     private String searchKey;
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
 }

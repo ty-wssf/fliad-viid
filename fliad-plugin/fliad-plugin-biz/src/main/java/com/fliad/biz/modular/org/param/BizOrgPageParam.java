@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.org.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 机构查询参数
@@ -22,8 +21,7 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
+
 public class BizOrgPageParam {
 
     /** 当前页 */
@@ -49,4 +47,52 @@ public class BizOrgPageParam {
     /** 名称关键词 */
     @ApiModelProperty(value = "名称关键词")
     private String searchKey;
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
 }

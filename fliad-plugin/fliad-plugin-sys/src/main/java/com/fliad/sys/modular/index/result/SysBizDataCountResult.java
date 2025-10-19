@@ -12,8 +12,7 @@
  */
 package com.fliad.sys.modular.index.result;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 系统业务数量
@@ -21,8 +20,6 @@ import lombok.Setter;
  * @author yubaoshan
  * @date 2024/7/18 17:35
  */
-@Getter
-@Setter
 public class SysBizDataCountResult {
 
     /** 用户数量 */
@@ -36,4 +33,36 @@ public class SysBizDataCountResult {
 
     /** 职位数量 */
     private Long positionCount;
+
+    public Long getUserCount() {
+        return userCount;
+    }
+
+    public void setUserCount(Long userCount) {
+        this.userCount = userCount;
+    }
+
+    public Long getRoleCount() {
+        return roleCount;
+    }
+
+    public void setRoleCount(Long roleCount) {
+        this.roleCount = roleCount;
+    }
+
+    public Long getOrgCount() {
+        return orgCount;
+    }
+
+    public void setOrgCount(Long orgCount) {
+        this.orgCount = orgCount;
+    }
+
+    public Long getPositionCount() {
+        return positionCount;
+    }
+
+    public void setPositionCount(Long positionCount) {
+        this.positionCount = positionCount;
+    }
 }

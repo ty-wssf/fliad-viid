@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.workflow.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -27,8 +25,6 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/27 14:03
  **/
-@Getter
-@Setter
 public class ViidWorkflowAddParam {
 
     /** 标题 */
@@ -45,4 +41,27 @@ public class ViidWorkflowAddParam {
     @ApiModelProperty(value = "备注", position = 4)
     private String remark;
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSubscribeDetail() {
+        return subscribeDetail;
+    }
+
+    public void setSubscribeDetail(String subscribeDetail) {
+        this.subscribeDetail = subscribeDetail;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 }

@@ -1,9 +1,6 @@
 package com.fliad.viid.modular.workflow.enums;
 
 import com.fliad.common.exception.CommonException;
-import lombok.Getter;
-
-@Getter
 public enum ViidWorkflowStatus {
 
     /**
@@ -20,6 +17,10 @@ public enum ViidWorkflowStatus {
 
     ViidWorkflowStatus(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

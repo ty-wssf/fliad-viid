@@ -12,13 +12,14 @@
  */
 package com.fliad.dev.modular.sse.util;
 
-import lombok.extern.slf4j.Slf4j;
 import com.fliad.dev.modular.sse.enums.DevSseEmitterParameterEnum;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SseEmitter工具类
@@ -26,8 +27,9 @@ import java.util.concurrent.ScheduledFuture;
  * @author diantu
  * @date 2023/7/3
  **/
-@Slf4j
 public class DevSseCacheUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevSseCacheUtil.class);
 
     /**
      * 创建一个容器来存储所有的 SseEmitter(使用ConcurrentHashMap是因为它是线程安全的)。

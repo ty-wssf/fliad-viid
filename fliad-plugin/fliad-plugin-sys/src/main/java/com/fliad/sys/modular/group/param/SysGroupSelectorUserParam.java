@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.group.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 用户选择器参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author chengchuanyao
  * @date 2025/1/6 11:28
  */
-@Getter
-@Setter
 public class SysGroupSelectorUserParam {
 
     /** 当前页 */
@@ -41,4 +37,36 @@ public class SysGroupSelectorUserParam {
     /** 姓名关键词 */
     @ApiModelProperty(value = "姓名关键词", position = 4)
     private String searchKey;
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 }

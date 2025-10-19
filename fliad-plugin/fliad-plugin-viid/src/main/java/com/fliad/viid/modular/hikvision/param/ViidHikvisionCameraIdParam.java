@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.hikvision.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -22,13 +20,19 @@ import org.noear.solon.validation.annotation.NotBlank;
  *
  * @author yubaoshan
  * @date 2025/09/27
- **/
-@Getter
-@Setter
+ */
 public class ViidHikvisionCameraIdParam {
 
     /** ID */
     @ApiModelProperty(value = "ID", required = true)
     @NotBlank(message = "ID不能为空")
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

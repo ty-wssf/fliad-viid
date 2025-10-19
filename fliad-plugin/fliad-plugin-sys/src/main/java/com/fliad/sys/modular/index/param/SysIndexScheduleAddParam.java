@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.index.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,8 +23,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/9/2 11:06
  */
-@Getter
-@Setter
 public class SysIndexScheduleAddParam {
 
     /** 日程日期 */
@@ -50,4 +47,44 @@ public class SysIndexScheduleAddParam {
     /** 用户姓名 */
     @ApiModelProperty(value = "用户姓名", hidden = true, position = 5)
     private String scheduleUserName;
+    
+    public String getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setScheduleDate(String scheduleDate) {
+        this.scheduleDate = scheduleDate;
+    }
+
+    public String getScheduleTime() {
+        return scheduleTime;
+    }
+
+    public void setScheduleTime(String scheduleTime) {
+        this.scheduleTime = scheduleTime;
+    }
+
+    public String getScheduleContent() {
+        return scheduleContent;
+    }
+
+    public void setScheduleContent(String scheduleContent) {
+        this.scheduleContent = scheduleContent;
+    }
+
+    public String getScheduleUserId() {
+        return scheduleUserId;
+    }
+
+    public void setScheduleUserId(String scheduleUserId) {
+        this.scheduleUserId = scheduleUserId;
+    }
+
+    public String getScheduleUserName() {
+        return scheduleUserName;
+    }
+
+    public void setScheduleUserName(String scheduleUserName) {
+        this.scheduleUserName = scheduleUserName;
+    }
 }

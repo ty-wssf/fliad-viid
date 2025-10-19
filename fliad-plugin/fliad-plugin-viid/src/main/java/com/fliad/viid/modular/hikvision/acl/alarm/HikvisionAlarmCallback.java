@@ -2,13 +2,15 @@ package com.fliad.viid.modular.hikvision.acl.alarm;
 
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.sun.jna.Pointer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 海康威视报警回调处理类
  */
-@Slf4j
 public class HikvisionAlarmCallback implements HCNetSDK.FMSGCallBack {
+    
+    private static final Logger log = LoggerFactory.getLogger(HikvisionAlarmCallback.class);
     
     private final HikvisionAlarmManager alarmManager;
     

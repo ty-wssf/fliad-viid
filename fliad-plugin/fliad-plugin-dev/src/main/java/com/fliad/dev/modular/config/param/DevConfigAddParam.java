@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.config.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -24,8 +22,6 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author xuyuxiang
  * @date 2022/7/30 17:53
  */
-@Getter
-@Setter
 public class DevConfigAddParam {
 
     /** 配置键 */
@@ -50,4 +46,44 @@ public class DevConfigAddParam {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 5)
     private String extJson;
+
+    public String getConfigKey() {
+        return configKey;
+    }
+
+    public void setConfigKey(String configKey) {
+        this.configKey = configKey;
+    }
+
+    public String getConfigValue() {
+        return configValue;
+    }
+
+    public void setConfigValue(String configValue) {
+        this.configValue = configValue;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

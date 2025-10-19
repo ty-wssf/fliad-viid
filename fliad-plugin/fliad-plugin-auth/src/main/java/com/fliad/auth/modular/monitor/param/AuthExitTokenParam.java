@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.monitor.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,12 +21,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/6/24 22:28
  */
-@Getter
-@Setter
 public class AuthExitTokenParam {
 
     /** token值 */
     @ApiModelProperty(value = "token值", required = true)
     @NotBlank(message = "tokenValue不能为空")
     private String tokenValue;
+
+    public String getTokenValue() {
+        return tokenValue;
+    }
+
+    public void setTokenValue(String tokenValue) {
+        this.tokenValue = tokenValue;
+    }
 }

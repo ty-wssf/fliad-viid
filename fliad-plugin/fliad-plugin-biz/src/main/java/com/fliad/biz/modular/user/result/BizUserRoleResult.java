@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.user.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 角色选择器结果
@@ -22,8 +21,7 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/22 14:29
  **/
-@Getter
-@Setter
+
 public class BizUserRoleResult {
 
     /** id */
@@ -45,4 +43,44 @@ public class BizUserRoleResult {
     /** 排序码 */
     @ApiModelProperty(value = "排序码", position = 5)
     private Integer sortCode;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
 }

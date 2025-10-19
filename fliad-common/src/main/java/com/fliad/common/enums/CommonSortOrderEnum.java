@@ -12,7 +12,6 @@
  */
 package com.fliad.common.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/7/13 17:48
  **/
-@Getter
 public enum CommonSortOrderEnum {
 
     /** 升序 */

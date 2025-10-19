@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.file.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 文件分页列表参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/31 10:24
  */
-@Getter
-@Setter
 public class DevFilePageParam {
 
     /** 文件引擎 */
@@ -33,4 +29,20 @@ public class DevFilePageParam {
     /** 文件名关键词 */
     @ApiModelProperty(value = "文件名关键词")
     private String searchKey;
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 }

@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.tollgate.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 视频卡口查询参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author wyl
  * @date  2025/09/19
  **/
-@Getter
-@Setter
 public class ViidTollgatePageParam {
 
     /** 当前页 */
@@ -50,4 +46,51 @@ public class ViidTollgatePageParam {
     @ApiModelProperty(value = "卡口名称")
     private String Name;
 
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
 }

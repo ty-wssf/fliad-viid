@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.role.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.util.List;
 
@@ -24,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/7/27 15:08
  **/
-@Getter
-@Setter
 public class SysRoleOwnResourceResult {
 
     /** 角色id */
@@ -35,6 +32,22 @@ public class SysRoleOwnResourceResult {
     /** 已授权资源信息 */
     @ApiModelProperty(value = "已授权资源信息", position = 2)
     private List<SysRoleOwnResource> grantInfoList;
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<SysRoleOwnResource> getGrantInfoList() {
+        return grantInfoList;
+    }
+
+    public void setGrantInfoList(List<SysRoleOwnResource> grantInfoList) {
+        this.grantInfoList = grantInfoList;
+    }
 
     /**
      * 角色拥有资源类
@@ -42,8 +55,6 @@ public class SysRoleOwnResourceResult {
      * @author xuyuxiang
      * @date 2022/4/28 23:19
      */
-    @Getter
-    @Setter
     public static class SysRoleOwnResource {
 
         /** 菜单id */
@@ -53,5 +64,21 @@ public class SysRoleOwnResourceResult {
         /** 按钮id集合 */
         @ApiModelProperty(value = "按钮id集合", position = 2)
         private List<String> buttonInfo;
+        
+        public String getMenuId() {
+            return menuId;
+        }
+
+        public void setMenuId(String menuId) {
+            this.menuId = menuId;
+        }
+
+        public List<String> getButtonInfo() {
+            return buttonInfo;
+        }
+
+        public void setButtonInfo(List<String> buttonInfo) {
+            this.buttonInfo = buttonInfo;
+        }
     }
 }

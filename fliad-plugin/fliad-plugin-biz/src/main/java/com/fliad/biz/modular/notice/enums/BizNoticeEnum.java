@@ -12,15 +12,12 @@
  */
 package com.fliad.biz.modular.notice.enums;
 
-import lombok.Getter;
-
 /**
  * 通知公告枚举
  *
  * @author yubaoshan
  * @date  2024/07/11 14:46
  **/
-@Getter
 public enum BizNoticeEnum {
 
     /** 测试 */
@@ -30,5 +27,9 @@ public enum BizNoticeEnum {
 
     BizNoticeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

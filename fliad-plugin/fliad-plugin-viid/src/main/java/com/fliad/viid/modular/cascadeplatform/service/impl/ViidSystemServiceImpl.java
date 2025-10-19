@@ -6,25 +6,25 @@ import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
 import com.fliad.viid.modular.cascadeplatform.service.ViidCascadePlatformService;
 import com.fliad.viid.modular.cascadeplatform.service.ViidSystemService;
 import com.fliad.viid.modular.cascadeplatform.utils.RegisterAuthUtil;
-import com.fliad.viid.modular.cascadeplatform.enums.RegisterStatusEnum;
-import com.fliad.viid.modular.cascadeplatform.enums.OnlineStatusEnum;
 import com.fliad.viid.modular.cascadeplatform.enums.PlatformTypeEnum;
 import com.fliad.viid.modular.ape.entity.ViidApe;
 import com.fliad.viid.modular.ape.service.ViidApeService;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.bean.LifecycleBean;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Slf4j
 @Component
 public class ViidSystemServiceImpl implements ViidSystemService, LifecycleBean {
+
+    private static final Logger log = LoggerFactory.getLogger(ViidSystemServiceImpl.class);
 
     @Inject
     ViidCascadePlatformService cascadePlatformService;

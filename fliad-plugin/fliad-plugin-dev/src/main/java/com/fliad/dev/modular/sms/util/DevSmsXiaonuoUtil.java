@@ -16,7 +16,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.dromara.sms4j.api.SmsBlend;
 import org.dromara.sms4j.api.entity.SmsResponse;
 import org.dromara.sms4j.core.factory.SmsFactory;
@@ -33,7 +32,6 @@ import com.fliad.dev.api.DevConfigApi;
  * @author xuyuxiang
  * @date 2022/1/2 17:05
  */
-@Slf4j
 public class DevSmsXiaonuoUtil {
 
     private static SmsBlend smsBlend;

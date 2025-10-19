@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.cascadeplatform.enums;
 
-import lombok.Getter;
-
 /**
  * 在线状态枚举
  *
  * @author wyl
  * @date  2025/08/14 16:24
- **/
-@Getter
+ */
 public enum OnlineStatusEnum {
 
     /** 离线 */
@@ -49,5 +46,13 @@ public enum OnlineStatusEnum {
             }
         }
         return null;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
     }
 }

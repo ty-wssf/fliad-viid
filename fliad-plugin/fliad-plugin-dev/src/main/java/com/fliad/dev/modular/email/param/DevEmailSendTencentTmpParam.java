@@ -15,8 +15,6 @@ package com.fliad.dev.modular.email.param;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONObject;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import java.util.List;
@@ -27,8 +25,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/6/21 15:38
  **/
-@Getter
-@Setter
 public class DevEmailSendTencentTmpParam {
 
     /** 发件人邮箱 */
@@ -62,4 +58,60 @@ public class DevEmailSendTencentTmpParam {
     /** 附件列表 */
     @ApiModelProperty(value = "附件列表", position = 7, hidden = true)
     List<JSONObject> attachmentList = CollectionUtil.newArrayList();
+
+    public String getSendAccount() {
+        return sendAccount;
+    }
+
+    public void setSendAccount(String sendAccount) {
+        this.sendAccount = sendAccount;
+    }
+
+    public String getReceiveAccounts() {
+        return receiveAccounts;
+    }
+
+    public void setReceiveAccounts(String receiveAccounts) {
+        this.receiveAccounts = receiveAccounts;
+    }
+
+    public String getTemplateName() {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName) {
+        this.templateName = templateName;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public String getSendUser() {
+        return sendUser;
+    }
+
+    public void setSendUser(String sendUser) {
+        this.sendUser = sendUser;
+    }
+
+    public String getTemplateParam() {
+        return templateParam;
+    }
+
+    public void setTemplateParam(String templateParam) {
+        this.templateParam = templateParam;
+    }
+
+    public List<JSONObject> getAttachmentList() {
+        return attachmentList;
+    }
+
+    public void setAttachmentList(List<JSONObject> attachmentList) {
+        this.attachmentList = attachmentList;
+    }
 }

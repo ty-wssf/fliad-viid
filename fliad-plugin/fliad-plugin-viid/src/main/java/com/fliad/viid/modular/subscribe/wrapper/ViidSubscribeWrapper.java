@@ -7,14 +7,14 @@ import com.fliad.viid.modular.cascadeplatform.entity.ViidCascadePlatform;
 import com.fliad.viid.modular.cascadeplatform.service.ViidCascadePlatformService;
 import com.fliad.viid.modular.subscribe.entity.ViidSubscribe;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
-
-
-@Slf4j
 public class ViidSubscribeWrapper implements CommonWrapperInterface<ViidSubscribe> {
+
+    private static final Logger log = LoggerFactory.getLogger(ViidSubscribeWrapper.class);
 
     private static ViidCascadePlatformService viidCascadePlatformService;
 

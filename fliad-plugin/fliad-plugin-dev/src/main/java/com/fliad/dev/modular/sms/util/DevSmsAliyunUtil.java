@@ -19,7 +19,6 @@ import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponseBody;
 import com.aliyun.teaopenapi.models.Config;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.exception.CommonException;
 import com.fliad.dev.api.DevConfigApi;
@@ -31,7 +30,6 @@ import com.fliad.dev.api.DevConfigApi;
  * @author xuyuxiang
  * @date 2022/1/2 17:05
  */
-@Slf4j
 public class DevSmsAliyunUtil {
 
     private static Client client;

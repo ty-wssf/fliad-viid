@@ -12,15 +12,12 @@
  */
 package com.fliad.common.enums;
 
-import lombok.Getter;
-
 /**
  *
  *
  * @author xuyuxiang
  * @date 2022/8/15 16:09
  **/
-@Getter
 public enum CommonExceptionEnum {
 
     OK200(200, "请求成功"),
@@ -38,5 +35,13 @@ public enum CommonExceptionEnum {
     CommonExceptionEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
+    }
+    
+    public Integer getCode() {
+        return code;
+    }
+    
+    public String getMessage() {
+        return message;
     }
 }

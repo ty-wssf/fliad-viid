@@ -12,7 +12,7 @@
  */
 package com.fliad.sys.modular.relation.enums;
 
-import lombok.Getter;
+
 
 /**
  * 关系分类枚举
@@ -20,7 +20,6 @@ import lombok.Getter;
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum SysRelationCategoryEnum {
 
     /** 用户工作台数据 */
@@ -54,5 +53,9 @@ public enum SysRelationCategoryEnum {
 
     SysRelationCategoryEnum(String value) {
         this.value = value;
+    }
+    
+    public String getValue() {
+        return value;
     }
 }

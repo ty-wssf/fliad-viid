@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.dict.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -25,8 +23,6 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author xuyuxiang
  * @date 2022/7/30 21:48
  */
-@Getter
-@Setter
 public class DevDictAddParam {
 
     /** 父id */
@@ -57,4 +53,52 @@ public class DevDictAddParam {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 6)
     private String extJson;
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getDictLabel() {
+        return dictLabel;
+    }
+
+    public void setDictLabel(String dictLabel) {
+        this.dictLabel = dictLabel;
+    }
+
+    public String getDictValue() {
+        return dictValue;
+    }
+
+    public void setDictValue(String dictValue) {
+        this.dictValue = dictValue;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

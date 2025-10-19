@@ -16,7 +16,6 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.extra.mail.MailAccount;
 import cn.hutool.extra.mail.MailUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.exception.CommonException;
 import com.fliad.dev.api.DevConfigApi;
@@ -26,14 +25,18 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * 本地邮件工具类
  *
  * @author xuyuxiang
  * @date 2022/6/17 11:15
  **/
-@Slf4j
 public class DevEmailLocalUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevEmailLocalUtil.class);
 
     private static MailAccount mailAccount;
 

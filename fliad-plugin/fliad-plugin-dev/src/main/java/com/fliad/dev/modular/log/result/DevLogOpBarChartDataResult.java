@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.log.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 操作日志柱状图数据结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/9/4 21:14
  */
-@Getter
-@Setter
 public class DevLogOpBarChartDataResult {
 
     /** 日期 */
@@ -37,4 +33,28 @@ public class DevLogOpBarChartDataResult {
     /** 数量 */
     @ApiModelProperty(value = "数量", position = 3)
     private Long count;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
 }

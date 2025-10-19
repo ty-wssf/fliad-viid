@@ -12,15 +12,12 @@
  */
 package com.fliad.auth.modular.login.enums;
 
-import lombok.Getter;
-
 /**
  * 登录异常提示语枚举
  *
  * @author xuyuxiang
  * @date 2021/10/11 14:02
  **/
-@Getter
 public enum AuthExceptionEnum {
 
     /**
@@ -82,5 +79,9 @@ public enum AuthExceptionEnum {
 
     AuthExceptionEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

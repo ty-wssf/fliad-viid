@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,12 +22,19 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
+
 public class BizUserIdParam {
 
     /** id */
     @ApiModelProperty(value = "id", required = true)
     @NotBlank(message = "id不能为空")
     private String id;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

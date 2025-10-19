@@ -12,8 +12,7 @@
  */
 package com.fliad.sys.modular.index.result;
 
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 运维一览数据
@@ -21,8 +20,6 @@ import lombok.Setter;
  * @author yubaoshan
  * @date 2024/7/18 17:35
  */
-@Getter
-@Setter
 public class SysOpDataCountResult {
     /** 定时任务数量 */
     private Long jobCount;
@@ -41,4 +38,52 @@ public class SysOpDataCountResult {
 
     /** 三方用户数量 */
     private Long thirdUserCount;
+
+    public Long getJobCount() {
+        return jobCount;
+    }
+
+    public void setJobCount(Long jobCount) {
+        this.jobCount = jobCount;
+    }
+
+    public Long getSysDictCount() {
+        return sysDictCount;
+    }
+
+    public void setSysDictCount(Long sysDictCount) {
+        this.sysDictCount = sysDictCount;
+    }
+
+    public Long getBizDictCount() {
+        return bizDictCount;
+    }
+
+    public void setBizDictCount(Long bizDictCount) {
+        this.bizDictCount = bizDictCount;
+    }
+
+    public Long getBackUserSessionCount() {
+        return backUserSessionCount;
+    }
+
+    public void setBackUserSessionCount(Long backUserSessionCount) {
+        this.backUserSessionCount = backUserSessionCount;
+    }
+
+    public Long getClientUserSessionCount() {
+        return clientUserSessionCount;
+    }
+
+    public void setClientUserSessionCount(Long clientUserSessionCount) {
+        this.clientUserSessionCount = clientUserSessionCount;
+    }
+
+    public Long getThirdUserCount() {
+        return thirdUserCount;
+    }
+
+    public void setThirdUserCount(Long thirdUserCount) {
+        this.thirdUserCount = thirdUserCount;
+    }
 }

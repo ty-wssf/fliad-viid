@@ -13,15 +13,7 @@
 package com.fliad.common.util;
 
 import cn.hutool.core.util.HexUtil;
-import cn.hutool.crypto.Mode;
-import cn.hutool.crypto.Padding;
-import cn.hutool.crypto.asymmetric.SM2;
-import cn.hutool.crypto.symmetric.SM4;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Utils;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * 加密工具类，本框架目前使用 https://github.com/antherd/sm-crypto 项目中一些加解密方式
@@ -31,7 +23,6 @@ import java.security.NoSuchAlgorithmException;
  * @author yubaoshan
  * @date 2022/9/15 21:51
  */
-@Slf4j
 public class CommonCryptogramUtil {
 
     /** 公钥 */

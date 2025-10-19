@@ -1,7 +1,8 @@
 package com.fliad.biz.modular.notice.wrapper;
 
 import cn.hutool.json.JSONObject;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.noear.solon.Solon;
 import com.fliad.biz.modular.notice.entity.BizNotice;
 import com.fliad.common.annotation.CommonWrapperField;
@@ -16,8 +17,9 @@ import java.util.Optional;
  * @author chengchuanyao
  * @date 2025/1/6 16:32
  */
-@Slf4j
 public class BizNoticeWrapper implements CommonWrapperInterface<BizNotice> {
+
+    private static final Logger log = LoggerFactory.getLogger(BizNoticeWrapper.class);
 
     private static SysUserApi userApi;
 

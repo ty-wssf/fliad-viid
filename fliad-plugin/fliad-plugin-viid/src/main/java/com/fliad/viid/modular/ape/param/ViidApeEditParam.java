@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.ape.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
@@ -27,8 +25,6 @@ import java.math.BigDecimal;
  * @author wyl
  * @date  2025/09/19
  **/
-@Getter
-@Setter
 public class ViidApeEditParam {
 
     /** 主键ID */
@@ -120,4 +116,163 @@ public class ViidApeEditParam {
     @ApiModelProperty(value = "位置类型（多选，/分隔：1=省际检查站,2=党政机关,3=车站码头,4=中心广场,5=体育场馆,6=商业中心,7=宗教场所,8=校园周边,9=治安复杂区域,10=交通干线,11=医院周边,12=金融机构周边,13=危险物品场所周边,14=博物馆展览馆,15=重点水域、航道,96=市际公安检查站,97=涉外场所,98=边境沿线,99=旅游景区）", position = 21)
     private String PositionType;
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getApeID() {
+        return ApeID;
+    }
+
+    public void setApeID(String apeID) {
+        ApeID = apeID;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getModel() {
+        return Model;
+    }
+
+    public void setModel(String model) {
+        Model = model;
+    }
+
+    public String getIPAddr() {
+        return IPAddr;
+    }
+
+    public void setIPAddr(String IPAddr) {
+        this.IPAddr = IPAddr;
+    }
+
+    public String getIPV6Addr() {
+        return IPV6Addr;
+    }
+
+    public void setIPV6Addr(String IPV6Addr) {
+        this.IPV6Addr = IPV6Addr;
+    }
+
+    public Integer getPort() {
+        return Port;
+    }
+
+    public void setPort(Integer port) {
+        Port = port;
+    }
+
+    public BigDecimal getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        Longitude = longitude;
+    }
+
+    public BigDecimal getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        Latitude = latitude;
+    }
+
+    public String getPlaceCode() {
+        return PlaceCode;
+    }
+
+    public void setPlaceCode(String placeCode) {
+        PlaceCode = placeCode;
+    }
+
+    public String getPlace() {
+        return Place;
+    }
+
+    public void setPlace(String place) {
+        Place = place;
+    }
+
+    public String getOrgCode() {
+        return OrgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        OrgCode = orgCode;
+    }
+
+    public Integer getCapDirection() {
+        return CapDirection;
+    }
+
+    public void setCapDirection(Integer capDirection) {
+        CapDirection = capDirection;
+    }
+
+    public String getMonitorDirection() {
+        return MonitorDirection;
+    }
+
+    public void setMonitorDirection(String monitorDirection) {
+        MonitorDirection = monitorDirection;
+    }
+
+    public String getMonitorAreaDesc() {
+        return MonitorAreaDesc;
+    }
+
+    public void setMonitorAreaDesc(String monitorAreaDesc) {
+        MonitorAreaDesc = monitorAreaDesc;
+    }
+
+    public String getOwnerApsID() {
+        return OwnerApsID;
+    }
+
+    public void setOwnerApsID(String ownerApsID) {
+        OwnerApsID = ownerApsID;
+    }
+
+    public String getUserId() {
+        return UserId;
+    }
+
+    public void setUserId(String userId) {
+        UserId = userId;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getFunctionType() {
+        return FunctionType;
+    }
+
+    public void setFunctionType(String functionType) {
+        FunctionType = functionType;
+    }
+
+    public String getPositionType() {
+        return PositionType;
+    }
+
+    public void setPositionType(String positionType) {
+        PositionType = positionType;
+    }
 }

@@ -12,7 +12,6 @@
  */
 package com.fliad.client.modular.user.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/27 21:47
  */
-@Getter
 public enum ClientUserStatusEnum {
 
     /**
@@ -45,5 +43,9 @@ public enum ClientUserStatusEnum {
         if(!flag) {
             throw new CommonException("不支持的C端用户状态：{}", value);
         }
+    }
+
+    public String getValue() {
+        return value;
     }
 }

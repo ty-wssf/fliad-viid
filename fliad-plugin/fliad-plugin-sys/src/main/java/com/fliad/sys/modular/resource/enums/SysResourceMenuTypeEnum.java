@@ -12,7 +12,7 @@
  */
 package com.fliad.sys.modular.resource.enums;
 
-import lombok.Getter;
+
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +21,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum SysResourceMenuTypeEnum {
 
     /** 目录 */
@@ -40,6 +39,10 @@ public enum SysResourceMenuTypeEnum {
 
     SysResourceMenuTypeEnum(String value) {
         this.value = value;
+    }
+    
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

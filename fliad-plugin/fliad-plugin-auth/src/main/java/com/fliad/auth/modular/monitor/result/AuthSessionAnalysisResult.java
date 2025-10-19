@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.monitor.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 会话统计结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/19 9:29
  **/
-@Getter
-@Setter
 public class AuthSessionAnalysisResult {
 
     /** 当前会话总数量 */
@@ -41,4 +37,36 @@ public class AuthSessionAnalysisResult {
     /** BC端会话比例 */
     @ApiModelProperty(value = "BC端会话比例", position = 4)
     private String proportionOfBAndC;
+
+    public String getCurrentSessionTotalCount() {
+        return currentSessionTotalCount;
+    }
+
+    public void setCurrentSessionTotalCount(String currentSessionTotalCount) {
+        this.currentSessionTotalCount = currentSessionTotalCount;
+    }
+
+    public String getMaxTokenCount() {
+        return maxTokenCount;
+    }
+
+    public void setMaxTokenCount(String maxTokenCount) {
+        this.maxTokenCount = maxTokenCount;
+    }
+
+    public String getOneHourNewlyAdded() {
+        return oneHourNewlyAdded;
+    }
+
+    public void setOneHourNewlyAdded(String oneHourNewlyAdded) {
+        this.oneHourNewlyAdded = oneHourNewlyAdded;
+    }
+
+    public String getProportionOfBAndC() {
+        return proportionOfBAndC;
+    }
+
+    public void setProportionOfBAndC(String proportionOfBAndC) {
+        this.proportionOfBAndC = proportionOfBAndC;
+    }
 }

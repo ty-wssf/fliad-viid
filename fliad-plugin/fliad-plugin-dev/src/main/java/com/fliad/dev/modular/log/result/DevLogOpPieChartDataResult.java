@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.log.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 操作日志饼状图数据结果
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/9/4 21:14
  */
-@Getter
-@Setter
 public class DevLogOpPieChartDataResult {
 
     /** 类型 */
@@ -33,4 +29,20 @@ public class DevLogOpPieChartDataResult {
     /** 数量 */
     @ApiModelProperty(value = "数量", position = 2)
     private Long value;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Long getValue() {
+        return value;
+    }
+
+    public void setValue(Long value) {
+        this.value = value;
+    }
 }

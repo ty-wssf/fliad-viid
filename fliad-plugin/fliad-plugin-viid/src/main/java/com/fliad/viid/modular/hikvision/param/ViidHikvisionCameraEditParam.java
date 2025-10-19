@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.hikvision.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -22,9 +20,7 @@ import org.noear.solon.validation.annotation.NotBlank;
  *
  * @author yubaoshan
  * @date 2025/09/27
- **/
-@Getter
-@Setter
+ */
 public class ViidHikvisionCameraEditParam {
 
     /** ID */
@@ -59,4 +55,60 @@ public class ViidHikvisionCameraEditParam {
     /** 启用状态：1=启用，0=禁用 */
     @ApiModelProperty(value = "启用状态：1=启用，0=禁用", position = 7)
     private Integer enableStatus;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getIpAddr() {
+        return ipAddr;
+    }
+
+    public void setIpAddr(String ipAddr) {
+        this.ipAddr = ipAddr;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getEnableStatus() {
+        return enableStatus;
+    }
+
+    public void setEnableStatus(Integer enableStatus) {
+        this.enableStatus = enableStatus;
+    }
 }

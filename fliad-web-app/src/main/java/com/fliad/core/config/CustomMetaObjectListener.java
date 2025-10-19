@@ -16,10 +16,11 @@ import cn.hutool.core.util.EnumUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.mybatisflex.annotation.InsertListener;
 import com.mybatisflex.annotation.UpdateListener;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.enums.CommonDeleteFlagEnum;
 import com.fliad.common.pojo.CommonEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.function.Supplier;
@@ -30,8 +31,9 @@ import java.util.function.Supplier;
  * @author ChengChuanYao
  * @date 2024/6/22 14:17
  */
-@Slf4j
 public class CustomMetaObjectListener implements UpdateListener, InsertListener {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomMetaObjectListener.class);
 
     /**
      * 自定义新增注入

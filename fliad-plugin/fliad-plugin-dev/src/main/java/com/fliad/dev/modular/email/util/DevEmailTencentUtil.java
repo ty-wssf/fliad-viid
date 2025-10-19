@@ -22,12 +22,14 @@ import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.ses.v20201002.SesClient;
 import com.tencentcloudapi.ses.v20201002.models.*;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.exception.CommonException;
 import com.fliad.dev.api.DevConfigApi;
 
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 腾讯云邮件工具类
@@ -36,8 +38,9 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/6/17 11:26
  **/
-@Slf4j
 public class DevEmailTencentUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(DevEmailTencentUtil.class);
 
     private static SesClient client;
 

@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.message.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotEmpty;
@@ -26,8 +24,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/6/21 15:34
  **/
-@Getter
-@Setter
 public class DevMessageSendParam {
 
     /** 主题 */
@@ -48,4 +44,36 @@ public class DevMessageSendParam {
     @ApiModelProperty(value = "分类", position = 4, hidden = true)
     @NotBlank(message = "category不能为空")
     private String category;
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public List<String> getReceiverIdList() {
+        return receiverIdList;
+    }
+
+    public void setReceiverIdList(List<String> receiverIdList) {
+        this.receiverIdList = receiverIdList;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }

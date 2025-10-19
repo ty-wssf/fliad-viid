@@ -13,11 +13,12 @@
 package com.fliad.core.handler;
 
 import cn.dev33.satoken.exception.SaTokenException;
-import lombok.extern.slf4j.Slf4j;
 import com.fliad.auth.core.util  .AuthExceptionUtil;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.util.CommonServletUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 全局异常处理工具类，将异常转为通用结果
@@ -25,8 +26,9 @@ import com.fliad.common.util.CommonServletUtil;
  * @author xuyuxiang
  * @date 2021/12/18 16:44
  */
-@Slf4j
 public class GlobalExceptionUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionUtil.class);
 
     /**
      * 根据错误类型获取对应的CommonResult

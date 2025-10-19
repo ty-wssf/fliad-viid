@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.dict.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -25,8 +23,6 @@ import javax.validation.constraints.NotNull;
  * @author xuyuxiang
  * @date 2022/7/30 21:48
  */
-@Getter
-@Setter
 public class BizDictEditParam {
 
     /** id */
@@ -47,4 +43,36 @@ public class BizDictEditParam {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 4)
     private String extJson;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDictLabel() {
+        return dictLabel;
+    }
+
+    public void setDictLabel(String dictLabel) {
+        this.dictLabel = dictLabel;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

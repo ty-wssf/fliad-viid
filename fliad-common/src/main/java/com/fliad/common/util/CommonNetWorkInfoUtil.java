@@ -17,7 +17,6 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.system.SystemUtil;
 import com.fliad.common.page.CommonPageRequest;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ import java.util.*;
  */
 public class CommonNetWorkInfoUtil {
 
-    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
 
     /**
      * 网速测速时间2s

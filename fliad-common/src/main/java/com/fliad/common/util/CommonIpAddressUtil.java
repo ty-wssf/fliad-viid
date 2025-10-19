@@ -15,7 +15,6 @@ package com.fliad.common.util;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.net.Ipv4Util;
 import cn.hutool.core.util.ObjectUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.xdb.Searcher;
 import org.noear.solon.core.handle.Context;
 import com.fliad.common.exception.CommonException;

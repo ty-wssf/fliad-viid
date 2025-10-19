@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.index.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 轮播图列表参数
@@ -22,11 +20,17 @@ import lombok.Setter;
  * @author yubaoshan
  * @date  2024/07/13 00:31
  **/
-@Getter
-@Setter
 public class BizIndexSlideshowListParam {
 
     /** 位置" */
     @ApiModelProperty(value = "位置")
     private String place;
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
 }

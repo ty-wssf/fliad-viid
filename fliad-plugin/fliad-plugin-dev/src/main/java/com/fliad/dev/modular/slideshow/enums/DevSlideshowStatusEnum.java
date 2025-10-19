@@ -12,7 +12,6 @@
  */
 package com.fliad.dev.modular.slideshow.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author yubaoshan
  * @date  2024/07/11 14:46
  */
-@Getter
 public enum DevSlideshowStatusEnum {
 
     /**
@@ -38,6 +36,10 @@ public enum DevSlideshowStatusEnum {
 
     DevSlideshowStatusEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

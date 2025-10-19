@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.user.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 用户职位信息
@@ -22,8 +21,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/8/22 9:00
  **/
-@Getter
-@Setter
 public class SysUserPositionResult {
 
     /** 组织id */
@@ -49,4 +46,52 @@ public class SysUserPositionResult {
     /** 职位类型 */
     @ApiModelProperty(value = "职位类型", position = 6)
     private String type;
+    
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(String positionId) {
+        this.positionId = positionId;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.file.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotNull;
 
 import java.util.List;
@@ -25,12 +23,18 @@ import java.util.List;
  * @author yubaoshan
  * @date 2024/6/9 23:52
  */
-@Getter
-@Setter
 public class DevFileUrlListParam {
 
     /** 文件路径集合 */
     @ApiModelProperty( "文件路径集合")
     @NotNull(message = "urlList不能为空")
     private List<String> urlList;
+
+    public List<String> getUrlList() {
+        return urlList;
+    }
+
+    public void setUrlList(List<String> urlList) {
+        this.urlList = urlList;
+    }
 }

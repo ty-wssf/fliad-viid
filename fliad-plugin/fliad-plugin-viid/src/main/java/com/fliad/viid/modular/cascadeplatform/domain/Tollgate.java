@@ -1,14 +1,11 @@
 package com.fliad.viid.modular.cascadeplatform.domain;
 
-import lombok.Data;
-
 import java.util.Date;
 
 /**
  * 视频卡口对象（参照《部、省级公安视频图像信息数据库对接技术要求(试行)》附录A.3）
  * 说明：字段首字母大写，忽略set/get方法，包含视频卡口基础属性，必选（R）/可选（O）参照文档定义
  */
-@Data
 public class Tollgate {
     // 1. 卡口ID（用于区分不同卡口对象，必选）
     private String TollgateID;
@@ -34,4 +31,100 @@ public class Tollgate {
     private String OrgCode;
     // 12. 卡口启用时间（启用时间之后的数据有效，可选）
     private Date ActiveTime;
+
+    public String getTollgateID() {
+        return TollgateID;
+    }
+
+    public void setTollgateID(String tollgateID) {
+        TollgateID = tollgateID;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public Double getLongitude() {
+        return Longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        Longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return Latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        Latitude = latitude;
+    }
+
+    public String getPlaceCode() {
+        return PlaceCode;
+    }
+
+    public void setPlaceCode(String placeCode) {
+        PlaceCode = placeCode;
+    }
+
+    public String getPlace() {
+        return Place;
+    }
+
+    public void setPlace(String place) {
+        Place = place;
+    }
+
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer status) {
+        Status = status;
+    }
+
+    public String getTollgateCat() {
+        return TollgateCat;
+    }
+
+    public void setTollgateCat(String tollgateCat) {
+        TollgateCat = tollgateCat;
+    }
+
+    public Integer getTollgateUsage() {
+        return TollgateUsage;
+    }
+
+    public void setTollgateUsage(Integer tollgateUsage) {
+        TollgateUsage = tollgateUsage;
+    }
+
+    public Integer getLaneNum() {
+        return LaneNum;
+    }
+
+    public void setLaneNum(Integer laneNum) {
+        LaneNum = laneNum;
+    }
+
+    public String getOrgCode() {
+        return OrgCode;
+    }
+
+    public void setOrgCode(String orgCode) {
+        OrgCode = orgCode;
+    }
+
+    public Date getActiveTime() {
+        return ActiveTime;
+    }
+
+    public void setActiveTime(Date activeTime) {
+        ActiveTime = activeTime;
+    }
 }

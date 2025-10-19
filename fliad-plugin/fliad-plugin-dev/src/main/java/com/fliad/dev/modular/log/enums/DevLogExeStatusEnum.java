@@ -12,7 +12,7 @@
  */
 package com.fliad.dev.modular.log.enums;
 
-import lombok.Getter;
+
 
 /**
  * 日志执行状态枚举
@@ -20,7 +20,6 @@ import lombok.Getter;
  * @author xuyuxiang
  * @date 2022/6/16 16:14
  **/
-@Getter
 public enum DevLogExeStatusEnum {
 
     /** 成功 */
@@ -33,5 +32,9 @@ public enum DevLogExeStatusEnum {
 
     DevLogExeStatusEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

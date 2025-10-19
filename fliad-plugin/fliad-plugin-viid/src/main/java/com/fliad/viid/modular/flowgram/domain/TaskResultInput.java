@@ -7,4 +7,11 @@ public class TaskResultInput {
      */
     private String taskID;
 
+    public String getTaskID() {
+        return taskID;
+    }
+
+    public void setTaskID(String taskID) {
+        this.taskID = taskID;
+    }
 }

@@ -13,8 +13,6 @@
 package com.fliad.dev.modular.slideshow.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -24,8 +22,6 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author yubaoshan
  * @date  2024/07/13 00:31
  **/
-@Getter
-@Setter
 public class DevSlideshowEditParam {
 
     /** 主键 */
@@ -58,4 +54,51 @@ public class DevSlideshowEditParam {
     private Integer sortCode;
 
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPathDetails() {
+        return pathDetails;
+    }
+
+    public void setPathDetails(String pathDetails) {
+        this.pathDetails = pathDetails;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
 }

@@ -15,8 +15,7 @@ package com.fliad.biz.modular.group.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import com.fliad.common.pojo.CommonEntity;
 
 /**
@@ -25,8 +24,7 @@ import com.fliad.common.pojo.CommonEntity;
  * @author chengchuanyao
  * @date 2025/1/6 11:21
  */
-@Getter
-@Setter
+
 @Table(value ="SYS_GROUP")
 public class BizGroup extends CommonEntity {
 
@@ -50,4 +48,44 @@ public class BizGroup extends CommonEntity {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 5)
     private String extJson;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
 }

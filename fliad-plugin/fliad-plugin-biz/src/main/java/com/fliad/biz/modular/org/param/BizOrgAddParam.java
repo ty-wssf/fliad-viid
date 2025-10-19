@@ -13,8 +13,7 @@
 package com.fliad.biz.modular.org.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 import org.noear.solon.validation.annotation.NotBlank;
 import org.noear.solon.validation.annotation.NotNull;
 
@@ -25,8 +24,7 @@ import org.noear.solon.validation.annotation.NotNull;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
+
 public class BizOrgAddParam {
 
     /** 父id */
@@ -56,4 +54,52 @@ public class BizOrgAddParam {
     /** 扩展JSON */
     @ApiModelProperty(value = "扩展JSON", position = 6)
     private String extJson;
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setDirectorId(String directorId) {
+        this.directorId = directorId;
+    }
+
+    public String getDirectorId() {
+        return directorId;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
 }

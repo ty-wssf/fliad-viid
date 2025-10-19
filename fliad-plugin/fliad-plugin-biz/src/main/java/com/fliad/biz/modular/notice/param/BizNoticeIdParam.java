@@ -13,8 +13,6 @@
 package com.fliad.biz.modular.notice.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,12 +22,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author yubaoshan
  * @date  2024/07/11 14:46
  **/
-@Getter
-@Setter
 public class BizNoticeIdParam {
 
     /** 主键 */
     @ApiModelProperty(value = "主键", required = true)
     @NotBlank(message = "id不能为空")
     private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

@@ -14,7 +14,7 @@ package com.fliad.sys.modular.user.wrapper;
 
 import cn.hutool.json.JSONObject;
 import com.mybatisflex.core.query.QueryWrapper;
-import lombok.extern.slf4j.Slf4j;
+
 import org.noear.solon.Solon;
 import com.fliad.common.annotation.CommonWrapperField;
 import com.fliad.common.pojo.CommonWrapperInterface;
@@ -33,8 +33,9 @@ import java.util.Optional;
  * @author ChengChuanYao
  * @date 2024/7/12 14:17
  */
-@Slf4j
 public class SysUserWrapper implements CommonWrapperInterface<SysUser> {
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SysUserWrapper.class);
 
     private static SysOrgService orgService;
 

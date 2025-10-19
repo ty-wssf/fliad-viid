@@ -20,7 +20,6 @@ import com.tencentcloudapi.sms.v20210111.SmsClient;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import com.tencentcloudapi.sms.v20210111.models.SendStatus;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import com.fliad.common.exception.CommonException;
 import com.fliad.dev.api.DevConfigApi;
@@ -32,7 +31,6 @@ import com.fliad.dev.api.DevConfigApi;
  * @author xuyuxiang
  * @date 2022/1/2 17:05
  */
-@Slf4j
 public class DevSmsTencentUtil {
 
     private static SmsClient client;

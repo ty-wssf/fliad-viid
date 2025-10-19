@@ -16,7 +16,6 @@
 package com.mybatisflex.core.paginate;
 
 import com.mybatisflex.core.FlexGlobalConfig;
-import lombok.Getter;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ public class Page<T> implements Serializable {
      */
     private transient Long pageNumber = 1L;
 
-    @Getter
     private long current = 1;
 
     /**
@@ -57,7 +55,6 @@ public class Page<T> implements Serializable {
      */
     private transient Long pageSize = Long.valueOf(FlexGlobalConfig.getDefaultConfig().getDefaultPageSize());
 
-    @Getter
     private long size = FlexGlobalConfig.getDefaultConfig().getDefaultPageSize();
 
     /**
@@ -65,7 +62,6 @@ public class Page<T> implements Serializable {
      */
     private transient long totalPage = INIT_VALUE;
 
-    @Getter
     private long pages = INIT_VALUE;
 
     /**
@@ -73,13 +69,11 @@ public class Page<T> implements Serializable {
      */
     private transient long totalRow = INIT_VALUE;
 
-    @Getter
     private long total = INIT_VALUE;
 
     /**
      * 是否优化分页查询 COUNT 语句。
      */
-    @Getter
     private boolean optimizeCountQuery = true;
 
     /**
@@ -348,6 +342,26 @@ public class Page<T> implements Serializable {
                 ", totalRow=" + totalRow +
                 ", records=" + records +
                 '}';
+    }
+
+    public long getCurrent() {
+        return current;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public long getPages() {
+        return pages;
+    }
+
+    public long getTotal() {
+        return total;
+    }
+
+    public boolean isOptimizeCountQuery() {
+        return optimizeCountQuery;
     }
 
 }

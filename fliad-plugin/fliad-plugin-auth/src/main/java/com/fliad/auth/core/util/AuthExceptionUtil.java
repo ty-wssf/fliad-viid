@@ -14,12 +14,14 @@ package com.fliad.auth.core.util;
 
 import cn.dev33.satoken.exception.*;
 import cn.hutool.http.HttpStatus;
-import lombok.extern.slf4j.Slf4j;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.util.CommonServletUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class AuthExceptionUtil {
+    
+    private static final Logger log = LoggerFactory.getLogger(AuthExceptionUtil.class);
 
     /**
      * 根据错误类型获取对应的CommonResult（只处理SaToken相关异常）

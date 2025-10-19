@@ -2,10 +2,12 @@ package com.fliad.viid.modular.hikvision.acl.alarmtest;
 
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.sun.jna.Pointer;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 public class FExceptionCallBack implements HCNetSDK.FExceptionCallBack {
+
+    private static final Logger log = LoggerFactory.getLogger(FExceptionCallBack.class);
 
     @Override
     public void invoke(int dwType, int lUserID, int lHandle, Pointer pUser) {

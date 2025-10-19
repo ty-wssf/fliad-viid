@@ -12,7 +12,6 @@
  */
 package com.fliad.biz.modular.org.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum BizOrgCategoryEnum {
 
     /** 公司 */
@@ -34,6 +32,10 @@ public enum BizOrgCategoryEnum {
 
     BizOrgCategoryEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

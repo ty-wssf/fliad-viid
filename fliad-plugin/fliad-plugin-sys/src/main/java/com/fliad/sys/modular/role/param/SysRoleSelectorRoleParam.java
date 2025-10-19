@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.role.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -25,8 +23,6 @@ import java.util.List;
  * @author xuyuxiang
  * @date 2022/4/21 16:13
  **/
-@Getter
-@Setter
 public class SysRoleSelectorRoleParam {
 
     /** 当前页 */
@@ -56,4 +52,60 @@ public class SysRoleSelectorRoleParam {
     /** 是否排除超管 */
     @ApiModelProperty(value = "是否排除超管")
     private boolean excludeSuperAdmin = false;
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public List<String> getDataScopeList() {
+        return dataScopeList;
+    }
+
+    public void setDataScopeList(List<String> dataScopeList) {
+        this.dataScopeList = dataScopeList;
+    }
+
+    public boolean isExcludeSuperAdmin() {
+        return excludeSuperAdmin;
+    }
+
+    public void setExcludeSuperAdmin(boolean excludeSuperAdmin) {
+        this.excludeSuperAdmin = excludeSuperAdmin;
+    }
 }

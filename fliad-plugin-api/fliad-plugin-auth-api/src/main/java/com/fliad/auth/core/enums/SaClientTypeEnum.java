@@ -12,7 +12,6 @@
  */
 package com.fliad.auth.core.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**

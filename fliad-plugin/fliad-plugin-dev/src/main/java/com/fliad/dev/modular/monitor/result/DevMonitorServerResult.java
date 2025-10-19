@@ -13,8 +13,7 @@
 package com.fliad.dev.modular.monitor.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 服务器监控结果
@@ -22,8 +21,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/9/1 16:00
  */
-@Getter
-@Setter
 public class DevMonitorServerResult {
 
     /* ==============概览数据============ */
@@ -59,8 +56,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorCpuInfo {
 
         /** CPU名称 */
@@ -98,6 +93,78 @@ public class DevMonitorServerResult {
         /** CPU当前空闲率 */
         @ApiModelProperty(value = "CPU当前空闲率", position = 9)
         private String cpuFreeRate;
+
+        public String getCpuName() {
+            return cpuName;
+        }
+
+        public void setCpuName(String cpuName) {
+            this.cpuName = cpuName;
+        }
+
+        public String getCpuNum() {
+            return cpuNum;
+        }
+
+        public void setCpuNum(String cpuNum) {
+            this.cpuNum = cpuNum;
+        }
+
+        public String getCpuPhysicalCoreNum() {
+            return cpuPhysicalCoreNum;
+        }
+
+        public void setCpuPhysicalCoreNum(String cpuPhysicalCoreNum) {
+            this.cpuPhysicalCoreNum = cpuPhysicalCoreNum;
+        }
+
+        public String getCpuLogicalCoreNum() {
+            return cpuLogicalCoreNum;
+        }
+
+        public void setCpuLogicalCoreNum(String cpuLogicalCoreNum) {
+            this.cpuLogicalCoreNum = cpuLogicalCoreNum;
+        }
+
+        public String getCpuSysUseRate() {
+            return cpuSysUseRate;
+        }
+
+        public void setCpuSysUseRate(String cpuSysUseRate) {
+            this.cpuSysUseRate = cpuSysUseRate;
+        }
+
+        public String getCpuUserUseRate() {
+            return cpuUserUseRate;
+        }
+
+        public void setCpuUserUseRate(String cpuUserUseRate) {
+            this.cpuUserUseRate = cpuUserUseRate;
+        }
+
+        public Double getCpuTotalUseRate() {
+            return cpuTotalUseRate;
+        }
+
+        public void setCpuTotalUseRate(Double cpuTotalUseRate) {
+            this.cpuTotalUseRate = cpuTotalUseRate;
+        }
+
+        public String getCpuWaitRate() {
+            return cpuWaitRate;
+        }
+
+        public void setCpuWaitRate(String cpuWaitRate) {
+            this.cpuWaitRate = cpuWaitRate;
+        }
+
+        public String getCpuFreeRate() {
+            return cpuFreeRate;
+        }
+
+        public void setCpuFreeRate(String cpuFreeRate) {
+            this.cpuFreeRate = cpuFreeRate;
+        }
     }
 
     /**
@@ -106,8 +173,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorMemoryInfo {
 
         /** 内存总量 */
@@ -125,6 +190,38 @@ public class DevMonitorServerResult {
         /** 内存使用率 */
         @ApiModelProperty(value = "内存使用率", position = 4)
         private Double memoryUseRate;
+
+        public String getMemoryTotal() {
+            return memoryTotal;
+        }
+
+        public void setMemoryTotal(String memoryTotal) {
+            this.memoryTotal = memoryTotal;
+        }
+
+        public String getMemoryUsed() {
+            return memoryUsed;
+        }
+
+        public void setMemoryUsed(String memoryUsed) {
+            this.memoryUsed = memoryUsed;
+        }
+
+        public String getMemoryFree() {
+            return memoryFree;
+        }
+
+        public void setMemoryFree(String memoryFree) {
+            this.memoryFree = memoryFree;
+        }
+
+        public Double getMemoryUseRate() {
+            return memoryUseRate;
+        }
+
+        public void setMemoryUseRate(Double memoryUseRate) {
+            this.memoryUseRate = memoryUseRate;
+        }
     }
 
     /**
@@ -133,8 +230,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorStorageInfo {
 
         /** 存储总量 */
@@ -152,6 +247,38 @@ public class DevMonitorServerResult {
         /** 存储使用率 */
         @ApiModelProperty(value = "存储使用率", position = 4)
         private Double storageUseRate;
+
+        public String getStorageTotal() {
+            return storageTotal;
+        }
+
+        public void setStorageTotal(String storageTotal) {
+            this.storageTotal = storageTotal;
+        }
+
+        public String getStorageUsed() {
+            return storageUsed;
+        }
+
+        public void setStorageUsed(String storageUsed) {
+            this.storageUsed = storageUsed;
+        }
+
+        public String getStorageFree() {
+            return storageFree;
+        }
+
+        public void setStorageFree(String storageFree) {
+            this.storageFree = storageFree;
+        }
+
+        public Double getStorageUseRate() {
+            return storageUseRate;
+        }
+
+        public void setStorageUseRate(Double storageUseRate) {
+            this.storageUseRate = storageUseRate;
+        }
     }
 
     /**
@@ -160,8 +287,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorNetworkInfo {
 
         /** 上行速率 */
@@ -172,6 +297,21 @@ public class DevMonitorServerResult {
         @ApiModelProperty(value = "下行速率", position = 2)
         private String downLinkRate;
 
+        public String getUpLinkRate() {
+            return upLinkRate;
+        }
+
+        public void setUpLinkRate(String upLinkRate) {
+            this.upLinkRate = upLinkRate;
+        }
+
+        public String getDownLinkRate() {
+            return downLinkRate;
+        }
+
+        public void setDownLinkRate(String downLinkRate) {
+            this.downLinkRate = downLinkRate;
+        }
     }
 
     /**
@@ -180,8 +320,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorServerInfo {
 
         /** 服务器名称 */
@@ -199,6 +337,38 @@ public class DevMonitorServerResult {
         /** 服务器架构 */
         @ApiModelProperty(value = "服务器架构", position = 4)
         private String serverArchitecture;
+
+        public String getServerName() {
+            return serverName;
+        }
+
+        public void setServerName(String serverName) {
+            this.serverName = serverName;
+        }
+
+        public String getServerOs() {
+            return serverOs;
+        }
+
+        public void setServerOs(String serverOs) {
+            this.serverOs = serverOs;
+        }
+
+        public String getServerIp() {
+            return serverIp;
+        }
+
+        public void setServerIp(String serverIp) {
+            this.serverIp = serverIp;
+        }
+
+        public String getServerArchitecture() {
+            return serverArchitecture;
+        }
+
+        public void setServerArchitecture(String serverArchitecture) {
+            this.serverArchitecture = serverArchitecture;
+        }
     }
 
     /**
@@ -207,8 +377,6 @@ public class DevMonitorServerResult {
      * @author xuyuxiang
      * @date 2022/7/31 16:42
      */
-    @Getter
-    @Setter
     public static class DevMonitorJvmInfo {
 
         /** JVM名称 */
@@ -250,5 +418,133 @@ public class DevMonitorServerResult {
         /** Java安装路径 */
         @ApiModelProperty(value = "Java安装路径", position = 10)
         private String javaPath;
+
+        public String getJvmName() {
+            return jvmName;
+        }
+
+        public void setJvmName(String jvmName) {
+            this.jvmName = jvmName;
+        }
+
+        public String getJvmVersion() {
+            return jvmVersion;
+        }
+
+        public void setJvmVersion(String jvmVersion) {
+            this.jvmVersion = jvmVersion;
+        }
+
+        public String getJvmMemoryTotal() {
+            return jvmMemoryTotal;
+        }
+
+        public void setJvmMemoryTotal(String jvmMemoryTotal) {
+            this.jvmMemoryTotal = jvmMemoryTotal;
+        }
+
+        public String getJvmMemoryUsed() {
+            return jvmMemoryUsed;
+        }
+
+        public void setJvmMemoryUsed(String jvmMemoryUsed) {
+            this.jvmMemoryUsed = jvmMemoryUsed;
+        }
+
+        public String getJvmMemoryFree() {
+            return jvmMemoryFree;
+        }
+
+        public void setJvmMemoryFree(String jvmMemoryFree) {
+            this.jvmMemoryFree = jvmMemoryFree;
+        }
+
+        public Double getJvmUseRate() {
+            return jvmUseRate;
+        }
+
+        public void setJvmUseRate(Double jvmUseRate) {
+            this.jvmUseRate = jvmUseRate;
+        }
+
+        public String getJvmStartTime() {
+            return jvmStartTime;
+        }
+
+        public void setJvmStartTime(String jvmStartTime) {
+            this.jvmStartTime = jvmStartTime;
+        }
+
+        public String getJvmRunTime() {
+            return jvmRunTime;
+        }
+
+        public void setJvmRunTime(String jvmRunTime) {
+            this.jvmRunTime = jvmRunTime;
+        }
+
+        public String getJavaVersion() {
+            return javaVersion;
+        }
+
+        public void setJavaVersion(String javaVersion) {
+            this.javaVersion = javaVersion;
+        }
+
+        public String getJavaPath() {
+            return javaPath;
+        }
+
+        public void setJavaPath(String javaPath) {
+            this.javaPath = javaPath;
+        }
+    }
+
+    public DevMonitorCpuInfo getDevMonitorCpuInfo() {
+        return devMonitorCpuInfo;
+    }
+
+    public void setDevMonitorCpuInfo(DevMonitorCpuInfo devMonitorCpuInfo) {
+        this.devMonitorCpuInfo = devMonitorCpuInfo;
+    }
+
+    public DevMonitorMemoryInfo getDevMonitorMemoryInfo() {
+        return devMonitorMemoryInfo;
+    }
+
+    public void setDevMonitorMemoryInfo(DevMonitorMemoryInfo devMonitorMemoryInfo) {
+        this.devMonitorMemoryInfo = devMonitorMemoryInfo;
+    }
+
+    public DevMonitorStorageInfo getDevMonitorStorageInfo() {
+        return devMonitorStorageInfo;
+    }
+
+    public void setDevMonitorStorageInfo(DevMonitorStorageInfo devMonitorStorageInfo) {
+        this.devMonitorStorageInfo = devMonitorStorageInfo;
+    }
+
+    public DevMonitorNetworkInfo getDevMonitorNetworkInfo() {
+        return devMonitorNetworkInfo;
+    }
+
+    public void setDevMonitorNetworkInfo(DevMonitorNetworkInfo devMonitorNetworkInfo) {
+        this.devMonitorNetworkInfo = devMonitorNetworkInfo;
+    }
+
+    public DevMonitorServerInfo getDevMonitorServerInfo() {
+        return devMonitorServerInfo;
+    }
+
+    public void setDevMonitorServerInfo(DevMonitorServerInfo devMonitorServerInfo) {
+        this.devMonitorServerInfo = devMonitorServerInfo;
+    }
+
+    public DevMonitorJvmInfo getDevMonitorJvmInfo() {
+        return devMonitorJvmInfo;
+    }
+
+    public void setDevMonitorJvmInfo(DevMonitorJvmInfo devMonitorJvmInfo) {
+        this.devMonitorJvmInfo = devMonitorJvmInfo;
     }
 }

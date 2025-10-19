@@ -12,15 +12,12 @@
  */
 package com.fliad.biz.core.enums;
 
-import lombok.Getter;
-
 /**
  * 系统内置的不可删除的标识枚举
  *
  * @author xuyuxiang
  * @date 2022/4/21 19:56
  **/
-@Getter
 public enum BizBuildInEnum {
 
     /** 超管用户账号 */
@@ -33,5 +30,13 @@ public enum BizBuildInEnum {
     BizBuildInEnum(String value, String name) {
         this.value = value;
         this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getName() {
+        return name;
     }
 }

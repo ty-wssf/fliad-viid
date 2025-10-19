@@ -1,7 +1,5 @@
 package com.fliad.viid.modular.cascadeplatform.domain;
 
-import lombok.Data;
-
 import java.util.List;
 
 /**
@@ -9,7 +7,6 @@ import java.util.List;
  * 对应文档：视图库对接技术要求 - 附录A.10 非标注车辆对象MotorVehicle特征属性
  * 适用场景：非案事件标注情况下产生的车辆对象数据交互
  */
-@Data
 public class MotorVehicle {
 
     // 1. 车辆全局唯一标识（必选）
@@ -50,7 +47,7 @@ public class MotorVehicle {
     private String PlateClass;
     // 19. 车牌颜色（号牌底色：黑/白/黄/蓝/绿，可选）
     private String PlateColor;
-    // 20. 车牌号（无法识别标“无车牌”，部分未识别用“-”代替，可选）
+    // 20. 车牌号（无法识别标"无车牌"，部分未识别用"&#45;"代替，可选）
     private String PlateNo;
     // 21. 挂车牌号（挂车号牌编号，可选）
     private String PlateNoAttach;
@@ -153,4 +150,563 @@ public class MotorVehicle {
     // 70. 归属分类标签标识（可选）
     private String TabID;
 
+    public String getMotorVehicleID() {
+        return MotorVehicleID;
+    }
+
+    public void setMotorVehicleID(String motorVehicleID) {
+        MotorVehicleID = motorVehicleID;
+    }
+
+    public String getInfoKind() {
+        return InfoKind;
+    }
+
+    public void setInfoKind(String infoKind) {
+        InfoKind = infoKind;
+    }
+
+    public String getSourceID() {
+        return SourceID;
+    }
+
+    public void setSourceID(String sourceID) {
+        SourceID = sourceID;
+    }
+
+    public String getTollgateID() {
+        return TollgateID;
+    }
+
+    public void setTollgateID(String tollgateID) {
+        TollgateID = tollgateID;
+    }
+
+    public String getPassTime() {
+        return PassTime;
+    }
+
+    public void setPassTime(String passTime) {
+        PassTime = passTime;
+    }
+
+    public String getDeviceID() {
+        return DeviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        DeviceID = deviceID;
+    }
+
+    public String getStorageUrl1() {
+        return StorageUrl1;
+    }
+
+    public void setStorageUrl1(String storageUrl1) {
+        StorageUrl1 = storageUrl1;
+    }
+
+    public String getStorageUrl2() {
+        return StorageUrl2;
+    }
+
+    public void setStorageUrl2(String storageUrl2) {
+        StorageUrl2 = storageUrl2;
+    }
+
+    public String getStorageUrl3() {
+        return StorageUrl3;
+    }
+
+    public void setStorageUrl3(String storageUrl3) {
+        StorageUrl3 = storageUrl3;
+    }
+
+    public String getStorageUrl4() {
+        return StorageUrl4;
+    }
+
+    public void setStorageUrl4(String storageUrl4) {
+        StorageUrl4 = storageUrl4;
+    }
+
+    public String getStorageUrl5() {
+        return StorageUrl5;
+    }
+
+    public void setStorageUrl5(String storageUrl5) {
+        StorageUrl5 = storageUrl5;
+    }
+
+    public Integer getLeftTopX() {
+        return LeftTopX;
+    }
+
+    public void setLeftTopX(Integer leftTopX) {
+        LeftTopX = leftTopX;
+    }
+
+    public Integer getLeftTopY() {
+        return LeftTopY;
+    }
+
+    public void setLeftTopY(Integer leftTopY) {
+        LeftTopY = leftTopY;
+    }
+
+    public Integer getRightBtmX() {
+        return RightBtmX;
+    }
+
+    public void setRightBtmX(Integer rightBtmX) {
+        RightBtmX = rightBtmX;
+    }
+
+    public Integer getRightBtmY() {
+        return RightBtmY;
+    }
+
+    public void setRightBtmY(Integer rightBtmY) {
+        RightBtmY = rightBtmY;
+    }
+
+    public Integer getLaneNo() {
+        return LaneNo;
+    }
+
+    public void setLaneNo(Integer laneNo) {
+        LaneNo = laneNo;
+    }
+
+    public Boolean getHasPlate() {
+        return HasPlate;
+    }
+
+    public void setHasPlate(Boolean hasPlate) {
+        HasPlate = hasPlate;
+    }
+
+    public String getPlateClass() {
+        return PlateClass;
+    }
+
+    public void setPlateClass(String plateClass) {
+        PlateClass = plateClass;
+    }
+
+    public String getPlateColor() {
+        return PlateColor;
+    }
+
+    public void setPlateColor(String plateColor) {
+        PlateColor = plateColor;
+    }
+
+    public String getPlateNo() {
+        return PlateNo;
+    }
+
+    public void setPlateNo(String plateNo) {
+        PlateNo = plateNo;
+    }
+
+    public String getPlateNoAttach() {
+        return PlateNoAttach;
+    }
+
+    public void setPlateNoAttach(String plateNoAttach) {
+        PlateNoAttach = plateNoAttach;
+    }
+
+    public String getPlateDescribe() {
+        return PlateDescribe;
+    }
+
+    public void setPlateDescribe(String plateDescribe) {
+        PlateDescribe = plateDescribe;
+    }
+
+    public Boolean getDecked() {
+        return IsDecked;
+    }
+
+    public void setDecked(Boolean decked) {
+        IsDecked = decked;
+    }
+
+    public Boolean getAltered() {
+        return IsAltered;
+    }
+
+    public void setAltered(Boolean altered) {
+        IsAltered = altered;
+    }
+
+    public Boolean getCovered() {
+        return IsCovered;
+    }
+
+    public void setCovered(Boolean covered) {
+        IsCovered = covered;
+    }
+
+    public String getSpeed() {
+        return Speed;
+    }
+
+    public void setSpeed(String speed) {
+        Speed = speed;
+    }
+
+    public String getDirection() {
+        return Direction;
+    }
+
+    public void setDirection(String direction) {
+        Direction = direction;
+    }
+
+    public String getDrivingStatusCode() {
+        return DrivingStatusCode;
+    }
+
+    public void setDrivingStatusCode(String drivingStatusCode) {
+        DrivingStatusCode = drivingStatusCode;
+    }
+
+    public String getUsingPropertiesCode() {
+        return UsingPropertiesCode;
+    }
+
+    public void setUsingPropertiesCode(String usingPropertiesCode) {
+        UsingPropertiesCode = usingPropertiesCode;
+    }
+
+    public String getVehicleClass() {
+        return VehicleClass;
+    }
+
+    public void setVehicleClass(String vehicleClass) {
+        VehicleClass = vehicleClass;
+    }
+
+    public String getVehicleBrand() {
+        return VehicleBrand;
+    }
+
+    public void setVehicleBrand(String vehicleBrand) {
+        VehicleBrand = vehicleBrand;
+    }
+
+    public String getVehicleModel() {
+        return VehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        VehicleModel = vehicleModel;
+    }
+
+    public String getVehicleStyles() {
+        return VehicleStyles;
+    }
+
+    public void setVehicleStyles(String vehicleStyles) {
+        VehicleStyles = vehicleStyles;
+    }
+
+    public String getVehicleLength() {
+        return VehicleLength;
+    }
+
+    public void setVehicleLength(String vehicleLength) {
+        VehicleLength = vehicleLength;
+    }
+
+    public String getVehicleWidth() {
+        return VehicleWidth;
+    }
+
+    public void setVehicleWidth(String vehicleWidth) {
+        VehicleWidth = vehicleWidth;
+    }
+
+    public String getVehicleHeight() {
+        return VehicleHeight;
+    }
+
+    public void setVehicleHeight(String vehicleHeight) {
+        VehicleHeight = vehicleHeight;
+    }
+
+    public String getVehicleColor() {
+        return VehicleColor;
+    }
+
+    public void setVehicleColor(String vehicleColor) {
+        VehicleColor = vehicleColor;
+    }
+
+    public String getVehicleColorDepth() {
+        return VehicleColorDepth;
+    }
+
+    public void setVehicleColorDepth(String vehicleColorDepth) {
+        VehicleColorDepth = vehicleColorDepth;
+    }
+
+    public String getVehicleHood() {
+        return VehicleHood;
+    }
+
+    public void setVehicleHood(String vehicleHood) {
+        VehicleHood = vehicleHood;
+    }
+
+    public String getVehicleTrunk() {
+        return VehicleTrunk;
+    }
+
+    public void setVehicleTrunk(String vehicleTrunk) {
+        VehicleTrunk = vehicleTrunk;
+    }
+
+    public String getVehicleWheel() {
+        return VehicleWheel;
+    }
+
+    public void setVehicleWheel(String vehicleWheel) {
+        VehicleWheel = vehicleWheel;
+    }
+
+    public String getWheelPrintedPattern() {
+        return WheelPrintedPattern;
+    }
+
+    public void setWheelPrintedPattern(String wheelPrintedPattern) {
+        WheelPrintedPattern = wheelPrintedPattern;
+    }
+
+    public String getVehicleWindow() {
+        return VehicleWindow;
+    }
+
+    public void setVehicleWindow(String vehicleWindow) {
+        VehicleWindow = vehicleWindow;
+    }
+
+    public String getVehicleRoof() {
+        return VehicleRoof;
+    }
+
+    public void setVehicleRoof(String vehicleRoof) {
+        VehicleRoof = vehicleRoof;
+    }
+
+    public String getVehicleDoor() {
+        return VehicleDoor;
+    }
+
+    public void setVehicleDoor(String vehicleDoor) {
+        VehicleDoor = vehicleDoor;
+    }
+
+    public String getSideOfVehicle() {
+        return SideOfVehicle;
+    }
+
+    public void setSideOfVehicle(String sideOfVehicle) {
+        SideOfVehicle = sideOfVehicle;
+    }
+
+    public String getCarOfVehicle() {
+        return CarOfVehicle;
+    }
+
+    public void setCarOfVehicle(String carOfVehicle) {
+        CarOfVehicle = carOfVehicle;
+    }
+
+    public String getRearviewMirror() {
+        return RearviewMirror;
+    }
+
+    public void setRearviewMirror(String rearviewMirror) {
+        RearviewMirror = rearviewMirror;
+    }
+
+    public String getVehicleChassis() {
+        return VehicleChassis;
+    }
+
+    public void setVehicleChassis(String vehicleChassis) {
+        VehicleChassis = vehicleChassis;
+    }
+
+    public String getVehicleShielding() {
+        return VehicleShielding;
+    }
+
+    public void setVehicleShielding(String vehicleShielding) {
+        VehicleShielding = vehicleShielding;
+    }
+
+    public String getFilmColor() {
+        return FilmColor;
+    }
+
+    public void setFilmColor(String filmColor) {
+        FilmColor = filmColor;
+    }
+
+    public Boolean getModified() {
+        return IsModified;
+    }
+
+    public void setModified(Boolean modified) {
+        IsModified = modified;
+    }
+
+    public String getHitMarkInfo() {
+        return HitMarkInfo;
+    }
+
+    public void setHitMarkInfo(String hitMarkInfo) {
+        HitMarkInfo = hitMarkInfo;
+    }
+
+    public String getVehicleBodyDesc() {
+        return VehicleBodyDesc;
+    }
+
+    public void setVehicleBodyDesc(String vehicleBodyDesc) {
+        VehicleBodyDesc = vehicleBodyDesc;
+    }
+
+    public String getVehicleFrontItem() {
+        return VehicleFrontItem;
+    }
+
+    public void setVehicleFrontItem(String vehicleFrontItem) {
+        VehicleFrontItem = vehicleFrontItem;
+    }
+
+    public String getDescOfFrontItem() {
+        return DescOfFrontItem;
+    }
+
+    public void setDescOfFrontItem(String descOfFrontItem) {
+        DescOfFrontItem = descOfFrontItem;
+    }
+
+    public String getVehicleRearItem() {
+        return VehicleRearItem;
+    }
+
+    public void setVehicleRearItem(String vehicleRearItem) {
+        VehicleRearItem = vehicleRearItem;
+    }
+
+    public String getDescOfRearItem() {
+        return DescOfRearItem;
+    }
+
+    public void setDescOfRearItem(String descOfRearItem) {
+        DescOfRearItem = descOfRearItem;
+    }
+
+    public Integer getNumOfPassenger() {
+        return NumOfPassenger;
+    }
+
+    public void setNumOfPassenger(Integer numOfPassenger) {
+        NumOfPassenger = numOfPassenger;
+    }
+
+    public String getNameOfPassedRoad() {
+        return NameOfPassedRoad;
+    }
+
+    public void setNameOfPassedRoad(String nameOfPassedRoad) {
+        NameOfPassedRoad = nameOfPassedRoad;
+    }
+
+    public Integer getSunvisor() {
+        return Sunvisor;
+    }
+
+    public void setSunvisor(Integer sunvisor) {
+        Sunvisor = sunvisor;
+    }
+
+    public Integer getSafetyBelt() {
+        return SafetyBelt;
+    }
+
+    public void setSafetyBelt(Integer safetyBelt) {
+        SafetyBelt = safetyBelt;
+    }
+
+    public Integer getCalling() {
+        return Calling;
+    }
+
+    public void setCalling(Integer calling) {
+        Calling = calling;
+    }
+
+    public String getPlateReliability() {
+        return PlateReliability;
+    }
+
+    public void setPlateReliability(String plateReliability) {
+        PlateReliability = plateReliability;
+    }
+
+    public String getPlateCharReliability() {
+        return PlateCharReliability;
+    }
+
+    public void setPlateCharReliability(String plateCharReliability) {
+        PlateCharReliability = plateCharReliability;
+    }
+
+    public String getBrandReliability() {
+        return BrandReliability;
+    }
+
+    public void setBrandReliability(String brandReliability) {
+        BrandReliability = brandReliability;
+    }
+
+    public List<SubImageInfo> getSubImageList() {
+        return SubImageList;
+    }
+
+    public void setSubImageList(List<SubImageInfo> subImageList) {
+        SubImageList = subImageList;
+    }
+
+    public List<FeatureInfo> getFeatureList() {
+        return FeatureList;
+    }
+
+    public void setFeatureList(List<FeatureInfo> featureList) {
+        FeatureList = featureList;
+    }
+
+    public String getNationalityCode() {
+        return NationalityCode;
+    }
+
+    public void setNationalityCode(String nationalityCode) {
+        NationalityCode = nationalityCode;
+    }
+
+    public String getTabID() {
+        return TabID;
+    }
+
+    public void setTabID(String tabID) {
+        TabID = tabID;
+    }
 }

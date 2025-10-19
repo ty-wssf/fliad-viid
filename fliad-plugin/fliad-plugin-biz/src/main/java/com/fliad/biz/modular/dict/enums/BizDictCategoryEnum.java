@@ -12,7 +12,6 @@
  */
 package com.fliad.biz.modular.dict.enums;
 
-import lombok.Getter;
 import com.fliad.common.exception.CommonException;
 
 /**
@@ -21,7 +20,6 @@ import com.fliad.common.exception.CommonException;
  * @author xuyuxiang
  * @date 2022/7/6 22:21
  */
-@Getter
 public enum BizDictCategoryEnum {
 
     /**
@@ -33,6 +31,10 @@ public enum BizDictCategoryEnum {
 
     BizDictCategoryEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public static void validate(String value) {

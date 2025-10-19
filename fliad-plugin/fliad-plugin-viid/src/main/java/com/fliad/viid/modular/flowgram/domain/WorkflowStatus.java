@@ -1,11 +1,8 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
 /**
  * 工作流整体状态
  */
-@Data
 public class WorkflowStatus {
 
     private StatusEnum status;
@@ -36,4 +33,43 @@ public class WorkflowStatus {
         this.timeCost = this.endTime - this.startTime;
     }
 
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
+
+    public boolean isTerminated() {
+        return terminated;
+    }
+
+    public void setTerminated(boolean terminated) {
+        this.terminated = terminated;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public long getTimeCost() {
+        return timeCost;
+    }
+
+    public void setTimeCost(long timeCost) {
+        this.timeCost = timeCost;
+    }
 }

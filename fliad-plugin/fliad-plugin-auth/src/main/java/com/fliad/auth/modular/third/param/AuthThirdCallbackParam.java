@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.third.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
@@ -23,8 +21,6 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author xuyuxiang
  * @date 2022/7/8 20:38
  */
-@Getter
-@Setter
 public class AuthThirdCallbackParam {
 
     /** 第三方平台标识 */
@@ -41,4 +37,28 @@ public class AuthThirdCallbackParam {
     @ApiModelProperty(value = "第三方回调state", required = true, position = 3)
     @NotBlank(message = "state不能为空")
     private String state;
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }

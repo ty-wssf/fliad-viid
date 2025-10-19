@@ -13,8 +13,7 @@
 package com.fliad.sys.modular.index.result;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  * 日程列表结果
@@ -22,8 +21,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/9/2 11:21
  */
-@Getter
-@Setter
 public class SysIndexScheduleListResult {
 
     /** id */
@@ -49,4 +46,52 @@ public class SysIndexScheduleListResult {
     /** 日程内容 */
     @ApiModelProperty(value = "日程内容", position = 6)
     private String scheduleContent;
+    
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getScheduleUserId() {
+        return scheduleUserId;
+    }
+
+    public void setScheduleUserId(String scheduleUserId) {
+        this.scheduleUserId = scheduleUserId;
+    }
+
+    public String getScheduleUserName() {
+        return scheduleUserName;
+    }
+
+    public void setScheduleUserName(String scheduleUserName) {
+        this.scheduleUserName = scheduleUserName;
+    }
+
+    public String getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setScheduleDate(String scheduleDate) {
+        this.scheduleDate = scheduleDate;
+    }
+
+    public String getScheduleTime() {
+        return scheduleTime;
+    }
+
+    public void setScheduleTime(String scheduleTime) {
+        this.scheduleTime = scheduleTime;
+    }
+
+    public String getScheduleContent() {
+        return scheduleContent;
+    }
+
+    public void setScheduleContent(String scheduleContent) {
+        this.scheduleContent = scheduleContent;
+    }
 }

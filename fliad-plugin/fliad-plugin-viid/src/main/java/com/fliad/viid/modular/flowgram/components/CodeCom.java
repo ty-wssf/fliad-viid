@@ -1,7 +1,6 @@
 package com.fliad.viid.modular.flowgram.components;
 
 import com.fliad.viid.modular.flowgram.domain.TaskReportOutput;
-import lombok.extern.slf4j.Slf4j;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
@@ -11,13 +10,15 @@ import org.noear.solon.expression.snel.SnEL;
 import org.noear.solon.flow.FlowContext;
 import org.noear.solon.flow.Node;
 import org.noear.solon.flow.TaskComponent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @Component("code")
 public class CodeCom implements TaskComponent {
+    private static final Logger log = LoggerFactory.getLogger(CodeCom.class);
 
     @Override
     public void run(FlowContext context, Node node) throws Throwable {

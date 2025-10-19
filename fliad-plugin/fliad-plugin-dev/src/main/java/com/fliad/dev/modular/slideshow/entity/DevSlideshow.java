@@ -15,8 +15,6 @@ package com.fliad.dev.modular.slideshow.entity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 import com.fliad.common.pojo.CommonEntity;
 
 /**
@@ -25,8 +23,6 @@ import com.fliad.common.pojo.CommonEntity;
  * @author yubaoshan
  * @date  2024/07/13 00:31
  **/
-@Getter
-@Setter
 @Table(value = "DEV_SLIDESHOW")
 public class DevSlideshow extends CommonEntity {
 
@@ -62,4 +58,68 @@ public class DevSlideshow extends CommonEntity {
     /** 扩展信息 */
     @ApiModelProperty(value = "扩展信息", position = 8)
     private String extJson;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getPathDetails() {
+        return pathDetails;
+    }
+
+    public void setPathDetails(String pathDetails) {
+        this.pathDetails = pathDetails;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Integer getSortCode() {
+        return sortCode;
+    }
+
+    public void setSortCode(Integer sortCode) {
+        this.sortCode = sortCode;
+    }
+
+    public String getExtJson() {
+        return extJson;
+    }
+
+    public void setExtJson(String extJson) {
+        this.extJson = extJson;
+    }
 }

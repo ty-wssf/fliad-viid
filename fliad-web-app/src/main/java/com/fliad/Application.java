@@ -12,12 +12,13 @@
  */
 package com.fliad;
 
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.*;
 import com.fliad.common.annotation.CommonWrapper;
 import com.fliad.core.config.CommonWrapperInterceptor;
 import org.noear.solon.annotation.SolonMain;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Solon 方式启动类
@@ -25,14 +26,15 @@ import org.noear.solon.annotation.SolonMain;
  * @author xuyuxiang
  * @date 2021/12/18 16:57
  */
-@Slf4j
 @SolonMain
 @Controller
 public class Application {
 
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     /* 解决druid 日志报错：discard long time none received connection:xxx */
     static {
-        System.setProperty("druid.mysql.usePingMethod","false");
+        System.setProperty("druid.mysql.usePingMethod", "false");
     }
 
     /**
@@ -42,7 +44,7 @@ public class Application {
      * @date 2022/7/30 21:42
      */
     public static void main(String[] args) {
-        Solon.start(Application.class, args, app->{
+        Solon.start(Application.class, args, app -> {
             app.context().beanInterceptorAdd(CommonWrapper.class, new CommonWrapperInterceptor());
         });
         log.info(">>> {}", Application.class.getSimpleName().toUpperCase() + " STARTING SUCCESS");

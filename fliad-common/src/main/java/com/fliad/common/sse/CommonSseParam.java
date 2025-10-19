@@ -12,8 +12,7 @@
  */
 package com.fliad.common.sse;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.util.Objects;
 
 /**
  * 通用SSE参数
@@ -21,11 +20,38 @@ import lombok.Setter;
  * @author diantu
  * @date 2023/7/10
  */
-@Getter
-@Setter
 public class CommonSseParam {
 
     private String clientId;
 
     private String loginId;
+    
+    public String getClientId() {
+        return clientId;
+    }
+    
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+    
+    public String getLoginId() {
+        return loginId;
+    }
+    
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonSseParam that = (CommonSseParam) o;
+        return Objects.equals(clientId, that.clientId) && Objects.equals(loginId, that.loginId);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(clientId, loginId);
+    }
 }

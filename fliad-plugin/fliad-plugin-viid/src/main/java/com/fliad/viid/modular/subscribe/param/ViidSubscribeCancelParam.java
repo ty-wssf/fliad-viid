@@ -3,11 +3,9 @@ package com.fliad.viid.modular.subscribe.param;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mybatisflex.annotation.Column;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 import java.util.Date;
 
-@Data
 public class ViidSubscribeCancelParam extends ViidSubscribeIdParam {
 
     /**
@@ -42,4 +40,35 @@ public class ViidSubscribeCancelParam extends ViidSubscribeIdParam {
     @Column("CancelReason")
     private String CancelReason;
 
+    public String getSubscribeCancelOrg() {
+        return SubscribeCancelOrg;
+    }
+
+    public void setSubscribeCancelOrg(String SubscribeCancelOrg) {
+        this.SubscribeCancelOrg = SubscribeCancelOrg;
+    }
+
+    public String getSubscribeCancelPerson() {
+        return SubscribeCancelPerson;
+    }
+
+    public void setSubscribeCancelPerson(String SubscribeCancelPerson) {
+        this.SubscribeCancelPerson = SubscribeCancelPerson;
+    }
+
+    public Date getCancelTime() {
+        return CancelTime;
+    }
+
+    public void setCancelTime(Date CancelTime) {
+        this.CancelTime = CancelTime;
+    }
+
+    public String getCancelReason() {
+        return CancelReason;
+    }
+
+    public void setCancelReason(String CancelReason) {
+        this.CancelReason = CancelReason;
+    }
 }

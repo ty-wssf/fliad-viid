@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.resource.param.menu;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 菜单树查询参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/27 18:40
  **/
-@Getter
-@Setter
 public class SysMenuTreeParam {
 
     /** 模块 */
@@ -33,4 +29,20 @@ public class SysMenuTreeParam {
     /** 名称关键词 */
     @ApiModelProperty(value = "名称关键词")
     private String searchKey;
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
 }

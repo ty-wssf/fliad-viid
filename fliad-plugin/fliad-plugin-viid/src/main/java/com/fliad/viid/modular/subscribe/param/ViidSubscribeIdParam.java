@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.subscribe.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 import org.noear.solon.validation.annotation.NotBlank;
 
@@ -24,12 +22,18 @@ import org.noear.solon.validation.annotation.NotBlank;
  * @author wyl
  * @date  2025/08/22 15:00
  **/
-@Getter
-@Setter
 public class ViidSubscribeIdParam {
 
     /** 订阅标识符 */
     @ApiModelProperty(value = "订阅标识符", required = true)
     @NotBlank(message = "subscribeid不能为空")
     private String SubscribeID;
+
+    public String getSubscribeID() {
+        return SubscribeID;
+    }
+
+    public void setSubscribeID(String SubscribeID) {
+        this.SubscribeID = SubscribeID;
+    }
 }

@@ -12,15 +12,12 @@
  */
 package com.fliad.viid.modular.subscribe.enums;
 
-import lombok.Getter;
-
 /**
  * 订阅下发枚举
  *
  * @author wyl
  * @date  2025/08/22 15:00
- **/
-@Getter
+ */
 public enum ViidSubscribeEnum {
 
     /** 测试 */
@@ -30,5 +27,9 @@ public enum ViidSubscribeEnum {
 
     ViidSubscribeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

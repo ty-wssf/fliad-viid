@@ -13,8 +13,6 @@
 package com.fliad.auth.modular.monitor.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 会话查询参数
@@ -22,11 +20,17 @@ import lombok.Setter;
  * @author xuyuxiang
  * @date 2022/7/28 14:48
  **/
-@Getter
-@Setter
 public class AuthSessionPageParam {
 
     /** 用户id */
     @ApiModelProperty(value = "用户id")
     private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

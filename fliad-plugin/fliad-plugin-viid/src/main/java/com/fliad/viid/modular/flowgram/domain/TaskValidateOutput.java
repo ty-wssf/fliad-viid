@@ -1,8 +1,5 @@
 package com.fliad.viid.modular.flowgram.domain;
 
-import lombok.Data;
-
-@Data
 public class TaskValidateOutput {
 
     /**
@@ -18,4 +15,19 @@ public class TaskValidateOutput {
         this.valid = valid;
     }
 
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
+    public String[] getErrors() {
+        return errors;
+    }
+
+    public void setErrors(String[] errors) {
+        this.errors = errors;
+    }
 }

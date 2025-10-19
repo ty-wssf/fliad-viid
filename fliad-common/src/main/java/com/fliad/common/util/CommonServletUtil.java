@@ -13,7 +13,6 @@
 package com.fliad.common.util;
 
 import cn.hutool.core.util.ObjectUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.core.handle.Context;
 import com.fliad.common.exception.CommonException;
 import org.slf4j.Logger;
@@ -27,7 +26,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CommonServletUtil {
 
-    private static Logger log = LoggerFactory.getLogger(CommonNetWorkInfoUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(CommonServletUtil.class);
 
     /**
      * 从请求中中获取参数

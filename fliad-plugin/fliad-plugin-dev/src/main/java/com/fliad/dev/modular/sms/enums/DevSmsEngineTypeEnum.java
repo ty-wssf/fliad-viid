@@ -12,15 +12,12 @@
  */
 package com.fliad.dev.modular.sms.enums;
 
-import lombok.Getter;
-
 /**
  * 短信发送引擎类型枚举
  *
  * @author xuyuxiang
  * @date 2022/6/16 16:14
  **/
-@Getter
 public enum DevSmsEngineTypeEnum {
 
     /** 阿里云 */
@@ -36,5 +33,9 @@ public enum DevSmsEngineTypeEnum {
 
     DevSmsEngineTypeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
     }
 }

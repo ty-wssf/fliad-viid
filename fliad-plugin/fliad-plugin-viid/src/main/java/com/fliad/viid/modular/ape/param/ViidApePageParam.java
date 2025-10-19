@@ -13,8 +13,6 @@
 package com.fliad.viid.modular.ape.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * 采集设备查询参数
@@ -22,8 +20,6 @@ import lombok.Setter;
  * @author wyl
  * @date  2025/09/19
  **/
-@Getter
-@Setter
 public class ViidApePageParam {
 
     /** 当前页 */
@@ -54,4 +50,59 @@ public class ViidApePageParam {
     @ApiModelProperty(value = "IP地址")
     private String IPAddr;
 
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
+
+    public Integer getSize() {
+        return size;
+    }
+
+    public void setSize(Integer size) {
+        this.size = size;
+    }
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(String sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public String getSearchKey() {
+        return searchKey;
+    }
+
+    public void setSearchKey(String searchKey) {
+        this.searchKey = searchKey;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getIPAddr() {
+        return IPAddr;
+    }
+
+    public void setIPAddr(String IPAddr) {
+        this.IPAddr = IPAddr;
+    }
 }

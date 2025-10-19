@@ -12,9 +12,10 @@
  */
 package com.fliad.dev.modular.job.task;
 
-import lombok.extern.slf4j.Slf4j;
 import org.noear.solon.annotation.Component;
 import com.fliad.common.timer.CommonTimerTaskRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 定时器的一个示例
@@ -22,9 +23,10 @@ import com.fliad.common.timer.CommonTimerTaskRunner;
  * @author xuyuxiang
  * @date 2022/8/5 15:52
  **/
-@Slf4j
 @Component
 public class DevJobTimerTaskRunner implements CommonTimerTaskRunner {
+
+    private static final Logger log = LoggerFactory.getLogger(DevJobTimerTaskRunner.class);
 
     private int n = 1;
 

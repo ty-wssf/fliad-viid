@@ -1,15 +1,12 @@
 package com.fliad.viid.modular.cascadeplatform.domain;
 
-import lombok.Data;
-
 /**
  * 图像子对象（参照《视图库对接技术要求》附录A.8）
  * 说明：用于存储车辆相关子图像信息，去除部分必选属性以支持简单图片交互
  */
-@Data
 public class SubImageInfo {
 
-    // 1. 事件类型（关联图像采集的事件场景，如“卡口抓拍”“案事件标注”，可选）
+    // 1. 事件类型（关联图像采集的事件场景，如"卡口抓拍""案事件标注"，可选）
     private String EventSort;
     // 2. 图像标识（子图像唯一ID，可选，支持简单图片交互场景）
     private String ImageID;
@@ -32,4 +29,91 @@ public class SubImageInfo {
     // 11. 特征值信息（该子图像对应的特征值数据，可选）
     private FeatureInfo FeatureInfoObject;
 
+    public String getEventSort() {
+        return EventSort;
+    }
+
+    public void setEventSort(String eventSort) {
+        EventSort = eventSort;
+    }
+
+    public String getImageID() {
+        return ImageID;
+    }
+
+    public void setImageID(String imageID) {
+        ImageID = imageID;
+    }
+
+    public String getDeviceID() {
+        return DeviceID;
+    }
+
+    public void setDeviceID(String deviceID) {
+        DeviceID = deviceID;
+    }
+
+    public String getStoragePath() {
+        return StoragePath;
+    }
+
+    public void setStoragePath(String storagePath) {
+        StoragePath = storagePath;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public String getFileFormat() {
+        return FileFormat;
+    }
+
+    public void setFileFormat(String fileFormat) {
+        FileFormat = fileFormat;
+    }
+
+    public String getShotTime() {
+        return ShotTime;
+    }
+
+    public void setShotTime(String shotTime) {
+        ShotTime = shotTime;
+    }
+
+    public String getData() {
+        return Data;
+    }
+
+    public void setData(String data) {
+        Data = data;
+    }
+
+    public Integer getWidth() {
+        return Width;
+    }
+
+    public void setWidth(Integer width) {
+        Width = width;
+    }
+
+    public Integer getHeight() {
+        return Height;
+    }
+
+    public void setHeight(Integer height) {
+        Height = height;
+    }
+
+    public FeatureInfo getFeatureInfoObject() {
+        return FeatureInfoObject;
+    }
+
+    public void setFeatureInfoObject(FeatureInfo featureInfoObject) {
+        FeatureInfoObject = featureInfoObject;
+    }
 }
