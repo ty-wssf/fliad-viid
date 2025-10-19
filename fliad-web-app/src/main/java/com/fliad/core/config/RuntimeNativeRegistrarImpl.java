@@ -87,10 +87,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("--initialize-at-run-time=org.noear.solon.core.handle.MethodType,org.apache.ibatis.type.JdbcType");
         metadata.registerArg("--initialize-at-run-time=org.graalvm.js.runtime.JSContext");
         metadata.registerArg("--initialize-at-build-time=org.graalvm.js,com.oracle.truffle");
+        metadata.registerArg("--trace-class-initialization=org.apache.ibatis.type.JdbcType,org.noear.solon.core.handle.MethodType");
 
-        /*metadata.registerArg("-H:IncludeResourceBundles=org.graalvm.js.resources");
-        metadata.registerArg("-H:Features=org.graalvm.home.HomeFinderFeature");
-        metadata.registerArg("--initialize-at-build-time=org.graalvm.polyglot");*/
     }
 
     /**
