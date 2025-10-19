@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
  * @author ChengChuanYao
  * @date 2024/06/22 11:20
  */
-@NoArgsConstructor
-@AllArgsConstructor
 public class CommonPageOrderItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +27,14 @@ public class CommonPageOrderItem implements Serializable {
      * 是否正序排列，默认 true
      */
     private boolean asc = true;
+
+    public CommonPageOrderItem() {
+    }
+
+    public CommonPageOrderItem(String column, boolean asc) {
+        Column = column;
+        this.asc = asc;
+    }
 
     public static CommonPageOrderItem asc(String Column) {
         return build(Column, true);
