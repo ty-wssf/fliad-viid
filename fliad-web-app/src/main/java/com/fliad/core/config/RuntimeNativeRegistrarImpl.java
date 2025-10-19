@@ -79,7 +79,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerArg("-march=compatibility");
 
         metadata.registerArg("-Ob");
-        metadata.registerArg("--language:js");
+        // 注意：移除了直接在这里添加--language:js参数，改为在pom.xml中配置
     }
 
     /**

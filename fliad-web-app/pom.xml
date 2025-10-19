@@ -246,6 +246,14 @@
             <!-- 标记为构建时依赖，不包含在运行时类路径 -->
             <scope>provided</scope>
         </dependency>
+        
+        <!-- GraalVM JavaScript ScriptEngine -->
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js-scriptengine</artifactId>
+            <version>21.3.15</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- 代码生成插件 -->
         <!--<dependency>
