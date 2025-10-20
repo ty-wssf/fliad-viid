@@ -52,6 +52,13 @@ jobs:
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
         with:
+          name: fliad-web-app
+          path: fliad-web-app/target
+          if-no-files-found: error # 如果未找到文件，则报错
+
+      - name: Upload artifacts app exe
+        uses: actions/upload-artifact@v4
+        with:
           name: fliad-web-app.exe
           path: fliad-web-app/target/fliad-web-app.exe
           if-no-files-found: error # 如果未找到文件，则报错

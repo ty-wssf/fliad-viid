@@ -35,32 +35,43 @@ public class CodeCom implements TaskComponent {
         });
 
         // 使用GraalVM Polyglot API执行JavaScript代码
-        log.info("执行JavaScript代码：{}", ONode.load(node.getMetas()).select("data.script.content").getString());
+        log.debug("执行JavaScript代码：{}", ONode.load(node.getMetas()).select("data.script.content").getString());
         try (Context polyglotContext = Context.newBuilder("js")
                 .allowHostAccess(HostAccess.ALL)  // 允许JavaScript访问Java对象的所有公共成员
                 .allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)
                 .build()) {
-            
+
             // 将输入数据绑定到JavaScript上下文
             for (Map.Entry<String, Object> entry : inputsData.entrySet()) {
                 polyglotContext.getBindings("js").putMember(entry.getKey(), entry.getValue());
             }
-            
+
             // 添加日志支持
             polyglotContext.getBindings("js").putMember("log", log);
-            
+
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
             Value result = polyglotContext.eval("js", scriptContent);
-            
+
             // 处理结果
-            if (result.isHostObject() && result.asHostObject() instanceof Map) {
-                context.put("output", result.asHostObject());
+            Map<String, Object> resultMap;
+            if (result.hasMembers()) {
+                // 如果是JS对象(有成员属性)，直接放入上下文
+                resultMap = new HashMap<>(result.as(Map.class));
             } else {
-                Map<String, Object> resultMap = new HashMap<>();
-                resultMap.put("result", result.isHostObject() ? result.asHostObject() : result.toString());
-                context.put("output", resultMap);
+                // 否则包装一层
+                resultMap = new HashMap<>();
+                if (result.isHostObject()) {
+                    resultMap.put("result", result.asHostObject());
+                } else if (result.isNumber()) {
+                    resultMap.put("result", result.as(Number.class));
+                } else if (result.isBoolean()) {
+                    resultMap.put("result", result.as(Boolean.class));
+                } else {
+                    resultMap.put("result", result.asString());
+                }
             }
+            context.put("output", resultMap);
         } catch (Throwable e) {
             log.error("Error executing JavaScript code with GraalVM Polyglot", e);
             throw e;

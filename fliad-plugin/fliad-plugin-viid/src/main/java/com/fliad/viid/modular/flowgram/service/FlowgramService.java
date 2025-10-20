@@ -109,10 +109,7 @@ public class FlowgramService implements LifecycleBean {
                             nodeStatus.success();
                         } catch (Throwable e) {
                             nodeStatus.fail();
-                            String errorMessage = e.getMessage();
-                            if (e.getCause() != null) {
-                                errorMessage += "; Cause: " + e.getCause().getMessage();
-                            }
+                            String errorMessage = getStackTraceAsString(e);
                             nodeStatus.getLastSnapshot().setError(errorMessage);
                             report.getWorkflowStatus().fail();
                             throw e;
@@ -175,7 +172,11 @@ public class FlowgramService implements LifecycleBean {
             chainCache.put(schemaKey, chain);
         }
 
-        flowEngine.eval(chain, context);
+        try {
+            flowEngine.eval(chain, context);
+        } catch (Throwable e) {
+            log.error("任务执行失败：", e);
+        }
     }
 
     public TaskReportOutput taskReport(TaskReportInput request) {
@@ -213,4 +214,16 @@ public class FlowgramService implements LifecycleBean {
         return new TaskValidateOutput(true);
     }
 
+    /**
+     * 将异常堆栈信息转换为字符串
+     *
+     * @param throwable 异常对象
+     * @return 堆栈信息字符串
+     */
+    private String getStackTraceAsString(Throwable throwable) {
+        java.io.StringWriter sw = new java.io.StringWriter();
+        java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        return sw.toString();
+    }
 }
