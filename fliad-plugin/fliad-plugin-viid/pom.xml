@@ -62,14 +62,6 @@
             <artifactId>amqp-client</artifactId>
             <version>${rabbitmq.version}</version>
         </dependency>
-
-        <!-- JavaScript 语言实现（必须添加） -->
-        <dependency>
-            <groupId>org.graalvm.polyglot</groupId>
-            <artifactId>polyglot</artifactId>
-            <version>25.0.0</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
 </project>

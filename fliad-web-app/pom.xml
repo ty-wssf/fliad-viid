@@ -237,21 +237,6 @@
             </exclusions>
         </dependency>
 
-        <!-- GraalVM JS引擎 -->
-        <!-- 核心多语言交互 API（已添加） -->
-        <dependency>
-            <groupId>org.graalvm.polyglot</groupId>
-            <artifactId>polyglot</artifactId>
-            <version>25.0.0</version>
-        </dependency>
-
-        <!-- JavaScript 语言实现（必须添加） -->
-        <dependency>
-            <groupId>org.graalvm.js</groupId>
-            <artifactId>js-language</artifactId>
-            <version>25.0.0</version>
-        </dependency>
-
         <!-- 代码生成插件 -->
         <!--<dependency>
             <groupId>com.fliad</groupId>
@@ -282,6 +267,47 @@
             <artifactId>fliad-plugin-viid</artifactId>
         </dependency>
     </dependencies>
+
+    <!-- GraalVM JS引擎 -->
+    <!-- 核心多语言交互 API（已添加） -->
+    <profiles>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <dependencies>
+
+            </dependencies>
+        </profile>
+        
+        <!-- 非JDK 8环境下的GraalVM依赖 -->
+        <profile>
+            <id>non-jdk8</id>
+            <activation>
+                <jdk>(1.8,]</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.graalvm.polyglot</groupId>
+                    <artifactId>polyglot</artifactId>
+                    <version>25.0.0</version>
+                </dependency>
+
+                <!-- JavaScript 语言实现（必须添加） -->
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js-language</artifactId>
+                    <version>25.0.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js-scriptengine</artifactId>
+                    <version>25.0.0</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
     <build>
         <plugins>

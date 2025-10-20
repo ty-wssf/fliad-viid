@@ -1,9 +1,6 @@
 package com.fliad.viid.modular.flowgram.components;
 
 import com.fliad.viid.modular.flowgram.domain.TaskReportOutput;
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.HostAccess;
-import org.graalvm.polyglot.Value;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.expression.snel.SnEL;
@@ -11,17 +8,23 @@ import org.noear.solon.flow.FlowContext;
 import org.noear.solon.flow.Node;
 import org.noear.solon.flow.TaskComponent;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component("code")
 public class CodeCom implements TaskComponent {
-    private static final Logger log = LoggerFactory.getLogger(CodeCom.class);
+
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(CodeCom.class);
 
     @Override
     public void run(FlowContext context, Node node) throws Throwable {
+        System.setProperty("graaljs.insecure-scriptengine-access", "true");
+        // ScriptUtil.eval("print('Script test!');");
+        // ScriptUtil.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
+        // ScriptUtil.invoke()
         TaskReportOutput report = context.getAs("report");
         Map<String, Object> inputsData = new HashMap<>();
         ONode.load(node.getMetas()).select("data.inputsValues").forEach((key, value) -> {
@@ -33,48 +36,23 @@ public class CodeCom implements TaskComponent {
                 inputsData.put(key, value.get("content").getString());
             }
         });
+        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
 
-        // 使用GraalVM Polyglot API执行JavaScript代码
-        log.debug("执行JavaScript代码：{}", ONode.load(node.getMetas()).select("data.script.content").getString());
-        try (Context polyglotContext = Context.newBuilder("js")
-                .allowHostAccess(HostAccess.ALL)  // 允许JavaScript访问Java对象的所有公共成员
-                .allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)
-                .build()) {
+        // 将输入数据放入脚本引擎上下文中
+        inputsData.forEach(scriptEngine::put);
+        // scriptEngine.put("params", inputsData);
+        scriptEngine.put("log", log);
 
-            // 将输入数据绑定到JavaScript上下文
-            for (Map.Entry<String, Object> entry : inputsData.entrySet()) {
-                polyglotContext.getBindings("js").putMember(entry.getKey(), entry.getValue());
-            }
+        Object result = scriptEngine.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
 
-            // 添加日志支持
-            polyglotContext.getBindings("js").putMember("log", log);
-
-            // 执行脚本
-            String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
-            Value result = polyglotContext.eval("js", scriptContent);
-
-            // 处理结果
-            Map<String, Object> resultMap;
-            if (result.hasMembers()) {
-                // 如果是JS对象(有成员属性)，直接放入上下文
-                resultMap = new HashMap<>(result.as(Map.class));
-            } else {
-                // 否则包装一层
-                resultMap = new HashMap<>();
-                if (result.isHostObject()) {
-                    resultMap.put("result", result.asHostObject());
-                } else if (result.isNumber()) {
-                    resultMap.put("result", result.as(Number.class));
-                } else if (result.isBoolean()) {
-                    resultMap.put("result", result.as(Boolean.class));
-                } else {
-                    resultMap.put("result", result.asString());
-                }
-            }
+        // 根据result类型决定如何放入context
+        if (result instanceof Map) {
+            context.put("output", result);
+        } else {
+            Map<String, Object> resultMap = new HashMap<>();
+            resultMap.put("result", result);
             context.put("output", resultMap);
-        } catch (Throwable e) {
-            log.error("Error executing JavaScript code with GraalVM Polyglot", e);
-            throw e;
         }
     }
 }
