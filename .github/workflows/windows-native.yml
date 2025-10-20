@@ -47,7 +47,7 @@ jobs:
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
           cd fliad-web-app
-          mvn clean native:compile -P native -DskipTests
+          mvn clean native:compile -P native,non-jdk8 -DskipTests
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
