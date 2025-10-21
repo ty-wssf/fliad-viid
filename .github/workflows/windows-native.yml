@@ -38,6 +38,18 @@ jobs:
           distribution: 'graalvm' # New 'distribution' option
           cache: maven
 
+      - name: setup node v22.17.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.17.0
+
+      - name: build fliad-admin-web
+        run: |
+          cd fliad-admin-web
+          npm install
+          npm run build
+          cp -r ./dist/ ./../fliad-web-app/fliad-admin-web/dist
+
       - name: Build with Maven
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
@@ -63,11 +75,16 @@ jobs:
           path: fliad-web-app/target/fliad-web-app.exe
           if-no-files-found: error # 如果未找到文件，则报错
 
+      - name: Compress target directory
+        if: startsWith(github.ref, 'refs/tags/')  # 仅在标签推送时执行
+        run: |
+          Compress-Archive -Path "fliad-web-app/target/*" -DestinationPath "fliad-web-app.zip" -Force
+
       - name: Create Release and Attach Artifact
         if: startsWith(github.ref, 'refs/tags/')  # 仅在标签推送时执行
         uses: softprops/action-gh-release@v2
         with:
-          files: fliad-web-app/target/fliad-web-app.exe
+          files: fliad-web-app.zip
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
 
