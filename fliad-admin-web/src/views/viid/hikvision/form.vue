@@ -90,6 +90,7 @@
 	}
 	// 默认要校验的
 	const formRules = {
+		deviceId: [required('请输入设备编号')],
 		name: [required('请输入设备名称')],
 		ipAddr: [required('请输入IP地址')],
 		port: [required('请输入端口')],
