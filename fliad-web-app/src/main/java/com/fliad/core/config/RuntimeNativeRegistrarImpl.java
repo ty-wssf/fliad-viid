@@ -3,6 +3,7 @@ package com.fliad.core.config;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.json.JSONConverter;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
+import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiBasicAuth;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiExtendSetting;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiSetting;
@@ -50,6 +51,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection("org.graalvm.polyglot.PolyglotAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.HostAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.Language", MemberCategory.values());
+        metadata.registerReflection(HCNetSDK.class, MemberCategory.values());
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))
