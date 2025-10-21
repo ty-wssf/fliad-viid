@@ -104,11 +104,20 @@ public class RabbitmqCom implements TaskComponent {
             // log.info("准备发送消息到RabbitMQ, exchange: {}, routingKey: {}", exchange, routingKey);
             try {
                 // 发送消息
+                byte[] messageBytes;
+                if (msg instanceof String) {
+                    // 如果消息已经是字符串，则直接转换为字节数组
+                    messageBytes = ((String) msg).getBytes(StandardCharsets.UTF_8);
+                } else {
+                    // 否则序列化为JSON字符串后再转换为字节数组
+                    messageBytes = ONode.stringify(msg).getBytes(StandardCharsets.UTF_8);
+                }
+                
                 channel.basicPublish(
                         exchange != null ? exchange : "",
                         routingKey != null ? routingKey : "",
                         null,
-                        ONode.stringify(msg).getBytes(StandardCharsets.UTF_8)
+                        messageBytes
                 );
 
                 // 创建结果对象
