@@ -5013,7 +5013,7 @@ DVR实现巡航数据结构
         public byte[] byRes = new byte[12];
     }
 
-    public static class NET_DVR_ALARMHOST_DATA_UNION extends HIKSDKStructure {
+    public static class NET_DVR_ALARMHOST_DATA_UNION extends Union {
         public byte[] byLength = new byte[40];
         public NET_DVR_ALARMHOST_POINT_VALUE struPointValue;    //监测点实时数据
     }

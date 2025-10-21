@@ -3,6 +3,11 @@
 		<a-form ref="searchFormRef" name="advanced_search" :model="searchFormState" class="ant-advanced-search-form mb-4">
 			<a-row :gutter="24">
 				<a-col :span="6">
+					<a-form-item label="设备编号" name="deviceId">
+						<a-input v-model:value="searchFormState.deviceId" placeholder="请输入设备编号" />
+					</a-form-item>
+				</a-col>
+				<a-col :span="6">
 					<a-form-item label="设备名称" name="name">
 						<a-input v-model:value="searchFormState.name" placeholder="请输入设备名称" />
 					</a-form-item>
@@ -77,6 +82,10 @@
 	const formRef = ref()
 	const toolConfig = { refresh: true, height: true, columnSetting: true, striped: false }
 	const columns = [
+		{
+			title: '设备编号',
+			dataIndex: 'deviceId'
+		},
 		{
 			title: '设备名称',
 			dataIndex: 'name'

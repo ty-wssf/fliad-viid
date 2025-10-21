@@ -33,8 +33,12 @@ public class ViidHikvisionCamera {
     @ApiModelProperty(value = "ID", position = 1)
     private String id;
 
+    /** 设备编号 */
+    @ApiModelProperty(value = "设备编号", position = 2)
+    private String deviceId;
+
     /** 设备名称 */
-    @ApiModelProperty(value = "设备名称", required = true, position = 2)
+    @ApiModelProperty(value = "设备名称", required = true, position = 3)
     @NotBlank(message = "设备名称不能为空")
     private String name;
 
@@ -79,6 +83,14 @@ public class ViidHikvisionCamera {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getName() {

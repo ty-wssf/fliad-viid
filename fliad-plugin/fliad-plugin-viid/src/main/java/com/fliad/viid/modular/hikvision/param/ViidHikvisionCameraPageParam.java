@@ -46,6 +46,10 @@ public class ViidHikvisionCameraPageParam {
     @ApiModelProperty(value = "设备名称")
     private String name;
 
+    /** 设备编号 */
+    @ApiModelProperty(value = "设备编号")
+    private String deviceId;
+
     /** IP地址 */
     @ApiModelProperty(value = "IP地址")
     private String ipAddr;
@@ -96,6 +100,14 @@ public class ViidHikvisionCameraPageParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getIpAddr() {

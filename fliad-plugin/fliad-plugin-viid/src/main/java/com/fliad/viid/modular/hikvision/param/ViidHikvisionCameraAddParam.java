@@ -23,8 +23,12 @@ import org.noear.solon.validation.annotation.NotBlank;
  */
 public class ViidHikvisionCameraAddParam {
 
+    /** 设备编号 */
+    @ApiModelProperty(value = "设备编号", position = 1)
+    private String deviceId;
+
     /** 设备名称 */
-    @ApiModelProperty(value = "设备名称", required = true, position = 1)
+    @ApiModelProperty(value = "设备名称", required = true, position = 2)
     @NotBlank(message = "设备名称不能为空")
     private String name;
 
@@ -50,6 +54,14 @@ public class ViidHikvisionCameraAddParam {
     /** 启用状态：1=启用，0=禁用 */
     @ApiModelProperty(value = "启用状态：1=启用，0=禁用", position = 6)
     private Integer enableStatus = 1;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public String getName() {
         return name;

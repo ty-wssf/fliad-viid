@@ -163,6 +163,7 @@ CREATE TABLE VIID_DATASOURCE
 CREATE TABLE VIID_HIKVISION_CAMERA
 (
     ID               varchar(20) NOT NULL,
+    DEVICE_ID        varchar(64) DEFAULT NULL COMMENT '设备编号',
     NAME             varchar(128) NOT NULL,
     IP_ADDR          varchar(64) NOT NULL,
     PORT             int NOT NULL,

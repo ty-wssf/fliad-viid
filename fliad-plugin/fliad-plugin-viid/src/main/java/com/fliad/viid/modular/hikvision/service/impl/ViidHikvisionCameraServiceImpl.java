@@ -46,6 +46,9 @@ public class ViidHikvisionCameraServiceImpl extends ServiceImpl<ViidHikvisionCam
     @Override
     public Page<ViidHikvisionCamera> page(ViidHikvisionCameraPageParam viidHikvisionCameraPageParam) {
         QueryWrapper queryWrapper = new QueryWrapper();
+        if (ObjectUtil.isNotEmpty(viidHikvisionCameraPageParam.getDeviceId())) {
+            queryWrapper.like("DEVICE_ID", viidHikvisionCameraPageParam.getDeviceId());
+        }
         if (ObjectUtil.isNotEmpty(viidHikvisionCameraPageParam.getName())) {
             queryWrapper.like("NAME", viidHikvisionCameraPageParam.getName());
         }

@@ -189,6 +189,7 @@ DROP TABLE IF EXISTS `VIID_HIKVISION_CAMERA`;
 CREATE TABLE `VIID_HIKVISION_CAMERA`
 (
     `ID`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '主键',
+    `DEVICE_ID`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  DEFAULT NULL COMMENT '设备编号',
     `NAME`             varchar(128)                                                 NOT NULL COMMENT '设备名称',
     `IP_ADDR`          varchar(64)                                                  NOT NULL COMMENT '设备IP地址',
     `PORT`             int(5)                                                       NOT NULL COMMENT '端口号',

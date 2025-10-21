@@ -11,6 +11,11 @@ public class HikvisionDevice {
     private String deviceId;
     
     /**
+     * 设备编号
+     */
+    private String deviceNumber;
+    
+    /**
      * 设备IP地址
      */
     private String ip;
@@ -50,6 +55,24 @@ public class HikvisionDevice {
         this.username = username;
         this.password = password;
     }
+    
+    /**
+     * 构造函数
+     * @param deviceId 设备唯一标识
+     * @param deviceNumber 设备编号
+     * @param ip 设备IP地址
+     * @param port 设备端口
+     * @param username 用户名
+     * @param password 密码
+     */
+    public HikvisionDevice(String deviceId, String deviceNumber, String ip, int port, String username, String password) {
+        this.deviceId = deviceId;
+        this.deviceNumber = deviceNumber;
+        this.ip = ip;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+    }
 
     public String getDeviceId() {
         return deviceId;
@@ -57,6 +80,14 @@ public class HikvisionDevice {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+    
+    public String getDeviceNumber() {
+        return deviceNumber;
+    }
+    
+    public void setDeviceNumber(String deviceNumber) {
+        this.deviceNumber = deviceNumber;
     }
 
     public String getIp() {

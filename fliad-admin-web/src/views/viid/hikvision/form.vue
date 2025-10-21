@@ -10,6 +10,11 @@
 		<a-form ref="formRef" :model="formData" :rules="formRules" layout="vertical">
 			<a-row :gutter="16">
 				<a-col :span="12">
+					<a-form-item label="设备编号：" name="deviceId">
+						<a-input v-model:value="formData.deviceId" placeholder="请输入设备编号" allow-clear />
+					</a-form-item>
+				</a-col>
+				<a-col :span="12">
 					<a-form-item label="设备名称：" name="name">
 						<a-input v-model:value="formData.name" placeholder="请输入设备名称" :disabled="!!formData.id" allow-clear />
 					</a-form-item>

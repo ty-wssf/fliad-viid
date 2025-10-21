@@ -1,99 +1,229 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
+import com.fliad.viid.modular.flowgram.domain.TaskRunInput;
+import com.fliad.viid.modular.flowgram.service.FlowgramService;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.fliad.viid.modular.hikvision.acl.CommonMethod.CommonUtil;
+import com.fliad.viid.modular.hikvision.acl.domain.DsWeather;
+import com.fliad.viid.modular.workflow.entity.ViidWorkflow;
 import com.sun.jna.Pointer;
+import org.noear.snack.ONode;
+import org.noear.snack.core.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 海康威视报警数据解析类
  */
 public class HikvisionAlarmDataParser {
-    
+
+    static DsWeather dsWeather = new DsWeather();
     private static final Logger log = LoggerFactory.getLogger(HikvisionAlarmDataParser.class);
-    
+
     /**
      * 解析报警数据
-     * @param lCommand 报警类型
-     * @param pAlarmer 报警设备信息
+     *
+     * @param lCommand   报警类型
+     * @param pAlarmer   报警设备信息
      * @param pAlarmInfo 报警信息
-     * @param dwBufLen 报警信息缓存大小
-     * @param pUser 用户数据
+     * @param dwBufLen   报警信息缓存大小
+     * @param pUser      用户数据
      */
-    public static void parseAlarmData(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
+    public static void parseAlarmData(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser, HikvisionAlarmManager alarmManager) {
         String sbip = "";
         try {
             sbip = new String(pAlarmer.sDeviceIP, "GBK").trim();
         } catch (Exception e) {
             log.error("获取设备IP失败", e);
         }
-        
+
         log.info("收到报警事件，设备IP: {}，类型: 0x{}", sbip, Integer.toHexString(lCommand));
-        
+
         // 根据报警类型解析数据
         switch (lCommand) {
             case HCNetSDK.COMM_ITS_PLATE_RESULT: // 交通抓拍结果(新报警信息)
                 log.info("设备IP: {}，报警类型: 交通抓拍结果", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ALARM_AID_V41: // 道路事件检测
                 log.info("设备IP: {}，报警类型: 道路事件检测", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ALARM_TPS_V41: // 交通数据统计的报警
                 log.info("设备IP: {}，报警类型: 交通数据统计", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ISAPI_ALARM: // ISAPI协议报警信息
                 log.info("设备IP: {}，报警类型: ISAPI协议报警信息", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_VCA_ALARM: // 智能检测通用报警(Json或者XML数据结构)
                 log.info("设备IP: {}，报警类型: 智能检测通用报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ALARMHOST_CID_ALARM: // 报警主机CID报告报警上传
                 log.info("设备IP: {}，报警类型: 报警主机CID报告", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_IPC_AUXALARM_RESULT: // PIR报警、无线报警、呼救报警信息
                 log.info("设备IP: {}，报警类型: PIR/无线/呼救报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ALARM_V30: // 移动侦测、视频丢失、遮挡、IO信号量等报警信息
                 log.info("设备IP: {}，报警类型: 移动侦测/视频丢失/遮挡/IO信号量报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_ALARM_V40: // 移动侦测、视频丢失、遮挡、IO信号量等报警信息，报警数据为可变长
                 log.info("设备IP: {}，报警类型: 移动侦测/视频丢失/遮挡/IO信号量报警(V40)", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_THERMOMETRY_ALARM: // 温度报警信息
                 log.info("设备IP: {}，报警类型: 温度报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_THERMOMETRY_DIFF_ALARM: // 温差检测报警
                 log.info("设备IP: {}，报警类型: 温差检测报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_UPLOAD_AIOP_PICTURE: // AI开放平台接入图片检测报警信息
                 log.info("设备IP: {}，报警类型: AI开放平台图片检测报警", sbip);
                 break;
-                
+
             case HCNetSDK.COMM_FIREDETECTION_ALARM: // 烟火检测
                 log.info("设备IP: {}，报警类型: 烟火检测", sbip);
                 break;
-                
+
+            case HCNetSDK.COMM_ALARMHOST_DATA_UPLOAD: // 烟火检测
+                log.info("设备IP: {}，报警类型: 报警", sbip);
+                HCNetSDK.NET_DVR_ALARMHOST_DATA_UPLOAD struDVRala = new HCNetSDK.NET_DVR_ALARMHOST_DATA_UPLOAD();
+                struDVRala.write();
+                Pointer alaPointer = struDVRala.getPointer();
+                alaPointer.write(0, pAlarmInfo.getByteArray(0, struDVRala.size()), 0, struDVRala.size());
+                struDVRala.read();
+                struDVRala.struAlarmData.setType(HCNetSDK.NET_DVR_ALARMHOST_POINT_VALUE.class);
+                struDVRala.read();
+
+                int dwChanNo = struDVRala.struAlarmData.struPointValue.dwChanNo;
+                int dwVariableNo = struDVRala.struAlarmData.struPointValue.dwVariableNo;
+                long dwVariableValue = combineHighLowBits(struDVRala.struAlarmData.struPointValue.iValueEx, struDVRala.struAlarmData.struPointValue.iValue);
+                // 存在负数，单独处理
+                if (struDVRala.struAlarmData.struPointValue.iValueEx == 0 && struDVRala.struAlarmData.struPointValue.iValue < 0) {
+                    dwVariableValue = struDVRala.struAlarmData.struPointValue.iValue;
+                }
+
+                log.info("========接入类型=======" + struDVRala.struAlarmData.struPointValue.byChanType);
+                log.info("========点类型=======" + struDVRala.struAlarmData.struPointValue.byPointType);
+                log.info("========485通道号=======" + struDVRala.struAlarmData.struPointValue.dwChanNo);
+                log.info("========槽位号=======" + struDVRala.struAlarmData.struPointValue.dwSubChanNo);
+                log.info("========变量编号=======" + struDVRala.struAlarmData.struPointValue.dwVariableNo);
+                log.info("========点号=======" + struDVRala.struAlarmData.struPointValue.dwPointNo);
+                log.info("========监测点的值，表示低32位=======" + struDVRala.struAlarmData.struPointValue.iValue);
+                log.info("========监测点的值，表示高32位=======" + struDVRala.struAlarmData.struPointValue.iValueEx);
+
+                HikvisionDevice device = alarmManager.getDeviceByIp(sbip);
+
+                dsWeather.setSbxh(device.getDeviceNumber());
+                dsWeather.setSbbh(device.getDeviceNumber());
+
+                // 使用BigDecimal处理数值，保留3位小数
+                BigDecimal value = new BigDecimal(dwVariableValue);
+                BigDecimal divisor1000 = new BigDecimal(1000);
+                String valueStr = value.divide(divisor1000, 3, RoundingMode.HALF_UP).toString();
+
+                if (dwChanNo == 1) {
+                    if (dwVariableNo == 1) {
+                        // valueStr
+                        dsWeather.setNjd(valueStr);
+                        dsWeather.setNjdpjz(valueStr);
+                        dsWeather.setNjdssz(valueStr);
+                    }
+                } else if (dwChanNo == 2) {
+                    if (dwVariableNo == 1) {
+                        // 路面温度
+                        dsWeather.setLmwd(valueStr);
+                    } else if (dwVariableNo == 2) {
+                        // 水膜厚度
+                        dsWeather.setSmhd(valueStr);
+                    } else if (dwVariableNo == 3) {
+                        // 冰厚度
+                        dsWeather.setBhd(valueStr);
+                    } else if (dwVariableNo == 4) {
+                        // 雪厚度
+                        dsWeather.setXshd(valueStr);
+                    } else if (dwVariableNo == 5) {
+                        // 湿滑系数
+                        dsWeather.setShxs(valueStr);
+                    } else if (dwVariableNo == 6) {
+                        // 路面状态
+                        dsWeather.setLmzk(valueStr);
+                    }
+                } else if (dwChanNo == 3) {
+                    if (dwVariableNo == 1) {
+                        // 空气温度
+                        dsWeather.setWdu(valueStr);
+                        dsWeather.setHjwd(valueStr);
+                    } else if (dwVariableNo == 2) {
+                        // 空气湿度
+                        dsWeather.setHjsd(valueStr);
+                    } else if (dwVariableNo == 3) {
+                        // 风速
+                        dsWeather.setFs(valueStr);
+                        dsWeather.setFspjz(valueStr);
+                        dsWeather.setFsssz(valueStr);
+                    } else if (dwVariableNo == 4) {
+                        // 风向
+                        dsWeather.setSjfx(valueStr);
+                        dsWeather.setXdfx(valueStr);
+                    } else if (dwVariableNo == 8) {
+                        // 大气压力
+                        dsWeather.setQy(valueStr);
+                    } else if (dwVariableNo == 11) {
+                        // 降雨量
+                        dsWeather.setJyl(valueStr);
+                    }
+                }
+                dsWeather.setLsh(IdUtil.simpleUUID());
+                dsWeather.setAcceptTime(new Date());
+
+                List<ViidWorkflow> workflowList = alarmManager.getViidWorkflowService().findBySubscribeDetail("103");
+
+                // 配置ONode日期格式
+                Options options = Options.def();
+                options.addEncoder(Date.class, (data, node) -> {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    node.val().setString(sdf.format(data));
+                });
+                log.info("气象数据：{}", ONode.stringify(dsWeather, options));
+                for (ViidWorkflow workflow : workflowList) {
+                    TaskRunInput taskRunInput = new TaskRunInput();
+                    taskRunInput.setSchema(workflow.getContent());
+                    taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(dsWeather, options)));
+                    alarmManager.getFlowgramService().taskRun(false, taskRunInput, IdUtil.getSnowflakeNextIdStr());
+                }
+
+                break;
+
             default:
                 log.warn("设备IP: {}，未知的报警类型: 0x{}", sbip, Integer.toHexString(lCommand));
                 break;
         }
+
     }
+
+    public static long combineHighLowBits(int high32bits, int low32bits) {
+        // 将高32位左移32位，然后与低32位进行或操作
+        return ((long) high32bits << 32) | (low32bits & 0xFFFFFFFFL);
+    }
+
 }

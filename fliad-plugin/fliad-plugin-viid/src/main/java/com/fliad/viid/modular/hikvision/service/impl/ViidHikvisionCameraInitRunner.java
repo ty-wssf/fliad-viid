@@ -89,15 +89,16 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
             for (ViidHikvisionCamera camera : enabledCameras) {
                 try {
                     String deviceId = camera.getId();
+                    String deviceNumber = camera.getDeviceId(); // 设备编号
                     String ip = camera.getIpAddr();
                     int port = camera.getPort();
                     String username = camera.getUsername();
                     String password = camera.getPassword();
 
-                    log.info("开始初始化设备: {} (IP: {})", deviceId, ip);
+                    log.info("开始初始化设备: {} (设备编号: {}, IP: {})", deviceId, deviceNumber, ip);
 
                     // 添加设备到报警管理器
-                    boolean added = hikvisionAlarmManager.addDevice(deviceId, ip, port, username, password);
+                    boolean added = hikvisionAlarmManager.addDevice(deviceId, deviceNumber, ip, port, username, password);
                     if (!added) {
                         log.warn("设备 {} 添加失败", deviceId);
                         continue;

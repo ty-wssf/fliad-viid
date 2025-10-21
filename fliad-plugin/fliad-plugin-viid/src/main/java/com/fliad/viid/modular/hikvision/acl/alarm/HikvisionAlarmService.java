@@ -21,14 +21,15 @@ public class HikvisionAlarmService {
     /**
      * 添加并登录设备
      * @param deviceId 设备唯一标识
+     * @param deviceNumber 设备编号
      * @param ip 设备IP地址
      * @param port 设备端口
      * @param username 用户名
      * @param password 密码
      * @return 是否成功
      */
-    public boolean addAndLoginDevice(String deviceId, String ip, int port, String username, String password) {
-        boolean added = alarmManager.addDevice(deviceId, ip, port, username, password);
+    public boolean addAndLoginDevice(String deviceId, String deviceNumber, String ip, int port, String username, String password) {
+        boolean added = alarmManager.addDevice(deviceId, deviceNumber, ip, port, username, password);
         if (!added) {
             return false;
         }
