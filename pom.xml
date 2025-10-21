@@ -6,7 +6,7 @@
     <groupId>com.fliad</groupId>
     <artifactId>fliad-viid</artifactId>
     <name>fliad-viid</name>
-    <version>3.5.0</version>
+    <version>0.1.0</version>
     <description>snowy快速开发平台lite版</description>
     <packaging>pom</packaging>
 
@@ -19,7 +19,7 @@
 
     <properties>
         <java.version>8</java.version>
-        <snowy.version>3.5.0</snowy.version>
+        <viid.version>0.1.0</viid.version>
         <solon.version>3.6.0</solon.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -94,111 +94,111 @@
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-common</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-auth-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-auth-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-biz-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-biz-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-client-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-client-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-dev-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-dev-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-gen-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-gen-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-mobile-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-mobile-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-sys-api -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-sys-api</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-auth -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-auth</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-biz -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-biz</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-client -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-client</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-dev -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-dev</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-gen -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-gen</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-mobile -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-mobile</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-sys -->
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-sys</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-viid</artifactId>
-                <version>${snowy.version}</version>
+                <version>${viid.version}</version>
             </dependency>
 
             <!-- lombok -->
