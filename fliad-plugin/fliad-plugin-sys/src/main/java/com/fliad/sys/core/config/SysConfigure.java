@@ -54,4 +54,5 @@ public class SysConfigure {
                 .basicAuth(openApiExtensionResolver.getSetting().getBasic())
                 .vendorExtensions(openApiExtensionResolver.buildExtensions());
     }
+    
 }

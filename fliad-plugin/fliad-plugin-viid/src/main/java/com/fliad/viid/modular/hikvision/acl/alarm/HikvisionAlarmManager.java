@@ -1,14 +1,12 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
-import com.fliad.dev.api.DevConfigApi;
-import com.fliad.viid.modular.flowgram.service.FlowgramService;
+import com.fliad.resource.modular.flowgram.service.FlowgramService;
+import com.fliad.resource.modular.workflow.service.ViidWorkflowService;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
-import com.fliad.viid.modular.workflow.service.ViidWorkflowService;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
-import org.noear.solon.annotation.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

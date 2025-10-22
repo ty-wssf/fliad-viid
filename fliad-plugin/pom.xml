@@ -38,5 +38,8 @@
 
         <!-- 视图库 -->
         <module>fliad-plugin-viid</module>
+
+        <!-- 资源管理插件 -->
+        <module>fliad-plugin-resource</module>
     </modules>
 </project>

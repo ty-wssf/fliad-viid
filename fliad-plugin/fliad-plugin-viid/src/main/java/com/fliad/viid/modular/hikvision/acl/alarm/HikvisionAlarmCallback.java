@@ -1,6 +1,5 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
-import com.fliad.viid.modular.flowgram.service.FlowgramService;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.sun.jna.Pointer;
 import org.slf4j.Logger;

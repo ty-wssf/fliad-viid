@@ -266,6 +266,12 @@
             <groupId>com.fliad</groupId>
             <artifactId>fliad-plugin-viid</artifactId>
         </dependency>
+
+        <!-- 资源管理功能插件 -->
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-resource</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- GraalVM JS引擎 -->

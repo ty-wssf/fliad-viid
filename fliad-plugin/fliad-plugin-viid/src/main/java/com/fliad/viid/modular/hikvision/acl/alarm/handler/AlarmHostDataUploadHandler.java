@@ -2,13 +2,12 @@ package com.fliad.viid.modular.hikvision.acl.alarm.handler;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
-import com.fliad.viid.modular.flowgram.domain.TaskRunInput;
-import com.fliad.viid.modular.flowgram.service.FlowgramService;
+import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
+import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionAlarmManager;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionDevice;
 import com.fliad.viid.modular.hikvision.acl.domain.DsWeather;
-import com.fliad.viid.modular.workflow.entity.ViidWorkflow;
 import com.sun.jna.Pointer;
 import org.noear.snack.ONode;
 import org.noear.snack.core.Options;
@@ -26,9 +25,9 @@ import java.util.List;
  */
 public class AlarmHostDataUploadHandler implements AlarmHandler {
     private static final Logger log = LoggerFactory.getLogger(AlarmHostDataUploadHandler.class);
-    
+
     private final HikvisionAlarmManager alarmManager;
-    
+
     public AlarmHostDataUploadHandler(HikvisionAlarmManager alarmManager) {
         this.alarmManager = alarmManager;
     }
@@ -41,9 +40,9 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
         } catch (Exception e) {
             log.error("获取设备IP失败", e);
         }
-        
+
         log.info("设备IP: {}，报警类型: 报警", sbip);
-        
+
         HCNetSDK.NET_DVR_ALARMHOST_DATA_UPLOAD struDVRala = new HCNetSDK.NET_DVR_ALARMHOST_DATA_UPLOAD();
         struDVRala.write();
         Pointer alaPointer = struDVRala.getPointer();
@@ -151,7 +150,7 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
             alarmManager.getFlowgramService().taskRun(false, taskRunInput, IdUtil.getSnowflakeNextIdStr());
         }
     }
-    
+
     public static long combineHighLowBits(int high32bits, int low32bits) {
         // 将高32位左移32位，然后与低32位进行或操作
         return ((long) high32bits << 32) | (low32bits & 0xFFFFFFFFL);

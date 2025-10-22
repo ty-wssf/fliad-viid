@@ -146,6 +146,13 @@
                 <version>${viid.version}</version>
             </dependency>
 
+            <!-- fliad-plugin-resource-api -->
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-resource-api</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
+
             <!-- fliad-plugin-auth -->
             <dependency>
                 <groupId>com.fliad</groupId>
@@ -192,6 +199,13 @@
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-sys</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
+
+            <!-- fliad-plugin-resource -->
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-resource</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 

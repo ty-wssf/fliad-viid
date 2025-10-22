@@ -9,3 +9,5 @@
 ####开发工具插件: fliad-plugin-dev
 
 ####系统功能插件: fliad-plugin-sys
+
+####资源管理插件: fliad-plugin-resource

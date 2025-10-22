@@ -39,6 +39,10 @@
             <groupId>com.fliad</groupId>
             <artifactId>fliad-plugin-dev</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-resource</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.fliad</groupId>
