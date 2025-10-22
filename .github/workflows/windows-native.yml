@@ -48,7 +48,6 @@ jobs:
           cd fliad-admin-web
           npm install
           npm run build
-          cp -r ./dist/ ./../fliad-web-app/fliad-admin-web/dist
 
       - name: Build with Maven
         run: |
@@ -68,31 +67,42 @@ jobs:
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
           cp ./fliad-web-app/target/classes/logback-solon.xml ./package/fliad-web-app-native/logback-solon.xml
           cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
+          
+          cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app/fliad-admin-web/dist
+          cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
+          cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app/app-local.yml
+          cp ./fliad-web-app/target/classes/logback-solon.xml ./package/fliad-web-app/logback-solon.xml
+          cp -r ./fliad-web-app/target/classes/_sql/ ./package/fliad-web-app/_sql
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
         with:
           name: fliad-web-app
-          path: fliad-web-app/target
+          path: package/fliad-web-app
           if-no-files-found: error # 如果未找到文件，则报错
 
       - name: Upload artifacts app native
         uses: actions/upload-artifact@v4
         with:
-          name: fliad-web-app-native
+          name: fliad-web-app-windows-native
           path: package/fliad-web-app-native
           if-no-files-found: error # 如果未找到文件，则报错
 
       - name: Compress target directory
         if: startsWith(github.ref, 'refs/tags/')  # 仅在标签推送时执行
         run: |
-          Compress-Archive -Path "fliad-web-app/target/*" -DestinationPath "fliad-web-app.zip" -Force
+          Compress-Archive -Path "package/fliad-web-app/*" -DestinationPath "fliad-web-app.zip" -Force
+          Compress-Archive -Path "package/fliad-web-app-native/*" -DestinationPath "fliad-web-app-windows-native.zip" -Force
 
       - name: Create Release and Attach Artifact
         if: startsWith(github.ref, 'refs/tags/')  # 仅在标签推送时执行
         uses: softprops/action-gh-release@v2
         with:
-          files: fliad-web-app.zip
+          files: |
+            fliad-web-app.zip
+            fliad-web-app-windows-native.zip
+          draft: false
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}
 

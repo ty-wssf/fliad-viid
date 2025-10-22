@@ -53,6 +53,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection("org.graalvm.polyglot.Language", MemberCategory.values());
         metadata.registerReflection(HCNetSDK.class, MemberCategory.values());
 
+        metadata.registerJdkProxy(HCNetSDK.class);
+
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))
                 .forEach(name -> {
