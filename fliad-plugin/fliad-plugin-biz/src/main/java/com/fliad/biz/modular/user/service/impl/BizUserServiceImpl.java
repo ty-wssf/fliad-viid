@@ -22,7 +22,6 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
@@ -79,10 +78,8 @@ import com.fliad.sys.api.SysRoleApi;
 import com.fliad.sys.api.SysUserApi;
 import com.fliad.biz.modular.user.result.BizUserExportResult;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -120,13 +117,35 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
     @Inject
     private BizPositionService bizPositionService;
 
+    /**
+     * 将base64字符串转换为图片字节数组
+     *
+     * @param base64String base64编码的图片字符串
+     * @return 图片字节数组
+     */
+    private byte[] base64ToByteArray(String base64String) {
+        try {
+            // 移除可能存在的data:image/png;base64,前缀
+            String base64Data = base64String;
+            if (base64String.contains(",")) {
+                base64Data = base64String.substring(base64String.indexOf(",") + 1);
+            }
+
+            // 使用Java内置Base64解码器解码
+            return Base64.getDecoder().decode(base64Data);
+        } catch (Exception e) {
+            log.error("Base64图片转换失败: {}", e.getMessage(), e);
+            return new byte[0]; // 返回空字节数组
+        }
+    }
+
     @Override
     public Page<BizUser> page(BizUserPageParam bizUserPageParam) {
         QueryWrapper queryWrapper = new QueryWrapper();
         if (ObjectUtil.isNotEmpty(bizUserPageParam.getSearchKey())) {
-            queryWrapper.and(q->{
+            queryWrapper.and(q -> {
                 q.like(BizUser::getAccount, bizUserPageParam.getSearchKey());
-            }).or(q->{
+            }).or(q -> {
                 q.like(BizUser::getName, bizUserPageParam.getSearchKey());
             });
         }
@@ -450,8 +469,7 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
                                 .equalsIgnoreCase(BizUserStatusEnum.ENABLE.getValue()) ? "正常" : "停用");
                         // 将base64转为byte数组
                         if (ObjectUtil.isNotEmpty(bizUser.getAvatar())) {
-                            bizUserExportResult.setAvatar(ImgUtil.toBytes(ImgUtil.toImage(StrUtil
-                                    .split(bizUser.getAvatar(), StrUtil.COMMA).get(1)), ImgUtil.IMAGE_TYPE_PNG));
+                            bizUserExportResult.setAvatar(base64ToByteArray(bizUser.getAvatar()));
                         }
                         return bizUserExportResult;
                     }).collect(Collectors.toList());
@@ -569,8 +587,7 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
                 avatarBase64 = CommonAvatarUtil.generateImg(bizUser.getName());
             }
             // 头像
-            ImageEntity imageEntity = new ImageEntity(ImgUtil.toBytes(ImgUtil.toImage(StrUtil
-                    .split(avatarBase64, StrUtil.COMMA).get(1)), ImgUtil.IMAGE_TYPE_PNG), 120, 160);
+            ImageEntity imageEntity = new ImageEntity(base64ToByteArray(avatarBase64), 120, 160);
             map.put("avatar", imageEntity);
             if (ObjectUtil.isNotEmpty(bizUser.getBirthday())) {
                 try {
