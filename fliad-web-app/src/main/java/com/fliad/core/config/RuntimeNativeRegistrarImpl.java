@@ -1,6 +1,7 @@
 package com.fliad.core.config;
 
 import cn.hutool.core.lang.Snowflake;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONConverter;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
@@ -11,6 +12,10 @@ import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.provider.EntitySqlProvider;
 import com.mybatisflex.core.provider.RowSqlProvider;
 import com.mybatisflex.solon.MybatisFlexProperties;
+import org.apache.poi.sl.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.h2.server.TcpServer;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.aot.RuntimeNativeMetadata;
@@ -52,6 +57,12 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection("org.graalvm.polyglot.HostAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.Language", MemberCategory.values());
         metadata.registerReflection(HCNetSDK.class, MemberCategory.values());
+
+        metadata.registerReflection(HttpUtil.class, MemberCategory.values());
+        metadata.registerReflection(XSSFWorkbook.class, MemberCategory.values());
+        metadata.registerReflection(Sheet.class, MemberCategory.values());
+        metadata.registerReflection(Row.class, MemberCategory.values());
+        metadata.registerReflection(Cell.class, MemberCategory.values());
 
         metadata.registerJdkProxy(HCNetSDK.class);
 
