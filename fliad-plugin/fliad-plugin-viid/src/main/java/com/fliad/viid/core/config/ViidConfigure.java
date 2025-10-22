@@ -22,7 +22,7 @@ public class ViidConfigure {
                         .description("1400视图库功能VIID")
                         // .termsOfService("https://www.xiaonuo.vip")
                         // .contact("SNOWY_TEAM", "https://www.xiaonuo.vip", "xuyuxiang29@foxmail.com")
-                        .version("3.5.0"))
+                        .version("0.1.0"))
                 .globalResponseCodes(new CommonHttpCodes())
                 .groupName("1400视图库功能VIID")
                 .apis("com.fliad.viid")
