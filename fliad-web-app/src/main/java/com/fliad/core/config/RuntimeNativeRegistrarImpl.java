@@ -26,6 +26,7 @@ import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.serialization.prop.JsonProps;
 
+import java.awt.*;
 import java.lang.reflect.Method;
 
 @Component
@@ -63,6 +64,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(Sheet.class, MemberCategory.values());
         metadata.registerReflection(Row.class, MemberCategory.values());
         metadata.registerReflection(Cell.class, MemberCategory.values());
+        metadata.registerReflection(Toolkit.class, MemberCategory.values());
 
         metadata.registerJdkProxy(HCNetSDK.class);
 
