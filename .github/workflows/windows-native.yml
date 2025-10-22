@@ -61,6 +61,14 @@ jobs:
           cd fliad-web-app
           mvn clean native:compile -P native,non-jdk8 -DskipTests
 
+      - name: copy resource
+        run: |
+          cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app-native/fliad-admin-web/dist
+          cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
+          cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
+          cp ./fliad-web-app/target/classes/logback-solon.xml ./package/fliad-web-app-native/logback-solon.xml
+          cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
+
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
         with:
@@ -68,11 +76,11 @@ jobs:
           path: fliad-web-app/target
           if-no-files-found: error # 如果未找到文件，则报错
 
-      - name: Upload artifacts app exe
+      - name: Upload artifacts app native
         uses: actions/upload-artifact@v4
         with:
-          name: fliad-web-app.exe
-          path: fliad-web-app/target/fliad-web-app.exe
+          name: fliad-web-app-native
+          path: package/fliad-web-app-native
           if-no-files-found: error # 如果未找到文件，则报错
 
       - name: Compress target directory
