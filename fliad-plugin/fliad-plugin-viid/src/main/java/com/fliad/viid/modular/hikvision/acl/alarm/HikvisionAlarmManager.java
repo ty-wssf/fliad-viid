@@ -101,7 +101,7 @@ public class HikvisionAlarmManager {
             String osName = System.getProperty("os.name");
             if (osName.toLowerCase().contains("windows")) {
                 // Windows系统加载库路径
-                String dllPath = System.getProperty("user.dir") + "\\lib\\HCNetSDK.dll";
+                String dllPath = System.getProperty("user.dir") + "\\dll_lib\\hk\\HCNetSDK.dll";
                 log.info("Loading Windows SDK from path: {}", dllPath);
                 hCNetSDK = (HCNetSDK) Native.load(dllPath, HCNetSDK.class);
             } else {
