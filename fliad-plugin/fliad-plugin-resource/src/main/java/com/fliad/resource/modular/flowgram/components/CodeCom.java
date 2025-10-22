@@ -19,12 +19,12 @@ public class CodeCom implements TaskComponent {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(CodeCom.class);
 
+    static {
+        System.setProperty("polyglot.js.nashorn-compat", "true");
+    }
+
     @Override
     public void run(FlowContext context, Node node) throws Throwable {
-        System.setProperty("graaljs.insecure-scriptengine-access", "true");
-        // ScriptUtil.eval("print('Script test!');");
-        // ScriptUtil.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
-        // ScriptUtil.invoke()
         TaskReportOutput report = context.getAs("report");
         Map<String, Object> inputsData = new HashMap<>();
         ONode.load(node.getMetas()).select("data.inputsValues").forEach((key, value) -> {
