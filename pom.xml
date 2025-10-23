@@ -34,7 +34,7 @@
         <checker.qual.version>3.31.0</checker.qual.version>
         <commons.compress.version>1.22</commons.compress.version>
         <commons.pool2.version>2.11.1</commons.pool2.version>
-        <easyexcel.version>3.2.1</easyexcel.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
         <hutool.version>5.8.32</hutool.version>
         <ip2region.version>2.6.3</ip2region.version>
         <javax.mail.version>1.6.2</javax.mail.version>
