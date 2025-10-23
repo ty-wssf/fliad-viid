@@ -39,6 +39,12 @@ public class CodeCom1 implements TaskComponent {
         try (Context polyglotContext = Context.newBuilder("js")
                 .allowHostAccess(HostAccess.ALL)  // 允许JavaScript访问Java对象的所有公共成员
                 .allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)
+                .allowExperimentalOptions(true)
+                .option("js.syntax-extensions", "true")
+                .option("js.load", "true")
+                .option("js.print", "true")
+                .option("js.global-arguments", "true")
+                .option("js.charset", "UTF-8")
                 .build()) {
 
             // 将输入数据绑定到JavaScript上下文
@@ -48,6 +54,9 @@ public class CodeCom1 implements TaskComponent {
 
             // 添加日志支持
             polyglotContext.getBindings("js").putMember("log", log);
+
+            // 添加Hutool HttpUtil支持
+            polyglotContext.getBindings("js").putMember("HttpUtil", cn.hutool.http.HttpUtil.class);
 
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
