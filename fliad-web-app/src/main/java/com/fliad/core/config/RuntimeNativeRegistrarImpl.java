@@ -25,6 +25,7 @@ import org.noear.solon.aot.hint.MemberCategory;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.util.ClassUtil;
 import org.noear.solon.core.util.ScanUtil;
+import org.noear.solon.net.http.HttpUtils;
 import org.noear.solon.serialization.prop.JsonProps;
 
 import java.awt.*;
@@ -59,6 +60,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection("org.graalvm.polyglot.HostAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.Language", MemberCategory.values());
         metadata.registerReflection(HCNetSDK.class, MemberCategory.values());
+        metadata.registerReflection(HttpUtils.class, MemberCategory.values());
 
         metadata.registerReflection(HttpUtil.class, MemberCategory.values());
         metadata.registerReflection(XSSFWorkbook.class, MemberCategory.values());
@@ -71,6 +73,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(ch.qos.logback.classic.Logger.class, MemberCategory.values());
 
         metadata.registerJdkProxy(HCNetSDK.class);
+        metadata.registerJdkProxy(HttpUtils.class);
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
         ScanUtil.scan(context.getClassLoader(), "com/fliad", n -> n.endsWith(".class"))

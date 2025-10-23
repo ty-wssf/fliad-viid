@@ -1,6 +1,5 @@
 package com.fliad.resource.modular.flowgram.components;
 
-import com.fliad.viid.modular.flowgram.components.CodeCom1;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.runtime.NativeDetector;
 import org.noear.solon.flow.FlowContext;

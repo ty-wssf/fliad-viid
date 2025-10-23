@@ -1,15 +1,15 @@
-package com.fliad.viid.modular.flowgram.components;
+package com.fliad.resource.modular.flowgram.components;
 
 import com.fliad.resource.modular.flowgram.domain.TaskReportOutput;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
 import org.noear.snack.ONode;
-import org.noear.solon.annotation.Component;
 import org.noear.solon.expression.snel.SnEL;
 import org.noear.solon.flow.FlowContext;
 import org.noear.solon.flow.Node;
 import org.noear.solon.flow.TaskComponent;
+import org.noear.solon.net.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,9 +54,7 @@ public class CodeCom1 implements TaskComponent {
 
             // 添加日志支持
             polyglotContext.getBindings("js").putMember("log", log);
-
-            // 添加Hutool HttpUtil支持
-            polyglotContext.getBindings("js").putMember("HttpUtil", new cn.hutool.http.HttpUtil());
+            polyglotContext.getBindings("js").putMember("httpUtil", HttpUtils.class);
 
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
