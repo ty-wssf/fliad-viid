@@ -16,6 +16,7 @@ import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.XmlBeans;
 import org.h2.server.TcpServer;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.aot.RuntimeNativeMetadata;
@@ -64,7 +65,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(Sheet.class, MemberCategory.values());
         metadata.registerReflection(Row.class, MemberCategory.values());
         metadata.registerReflection(Cell.class, MemberCategory.values());
-        metadata.registerReflection(Toolkit.class, MemberCategory.values());
+        metadata.registerReflection(XmlBeans.class, MemberCategory.values());
 
         metadata.registerJdkProxy(HCNetSDK.class);
 
