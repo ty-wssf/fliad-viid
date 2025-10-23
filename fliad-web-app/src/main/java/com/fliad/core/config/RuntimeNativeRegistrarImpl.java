@@ -68,6 +68,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(XmlBeans.class, MemberCategory.values());
         metadata.registerReflection(org.apache.xmlbeans.impl.store.Locale.class, MemberCategory.values());
 
+        metadata.registerReflection(ch.qos.logback.classic.Logger.class, MemberCategory.values());
+
         metadata.registerJdkProxy(HCNetSDK.class);
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）
