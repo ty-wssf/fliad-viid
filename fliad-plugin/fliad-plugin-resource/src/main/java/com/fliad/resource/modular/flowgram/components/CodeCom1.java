@@ -56,7 +56,7 @@ public class CodeCom1 implements TaskComponent {
             polyglotContext.getBindings("js").putMember("log", log);
 
             // 添加Hutool HttpUtil支持
-            polyglotContext.getBindings("js").putMember("HttpUtil", cn.hutool.http.HttpUtil.class);
+            polyglotContext.getBindings("js").putMember("HttpUtil", new cn.hutool.http.HttpUtil());
 
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
