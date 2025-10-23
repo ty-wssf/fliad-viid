@@ -41,6 +41,7 @@ public class CodeCom implements TaskComponent {
         inputsData.forEach(scriptEngine::put);
         // scriptEngine.put("params", inputsData);
         scriptEngine.put("log", log);
+        scriptEngine.put("facade", new Facade());
 
         Object result = scriptEngine.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
 

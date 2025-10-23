@@ -9,6 +9,7 @@ import org.noear.solon.expression.snel.SnEL;
 import org.noear.solon.flow.FlowContext;
 import org.noear.solon.flow.Node;
 import org.noear.solon.flow.TaskComponent;
+import org.noear.solon.net.http.HttpConfiguration;
 import org.noear.solon.net.http.HttpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class CodeCom1 implements TaskComponent {
         log.debug("执行JavaScript代码：{}", ONode.load(node.getMetas()).select("data.script.content").getString());
         try (Context polyglotContext = Context.newBuilder("js")
                 .allowHostAccess(HostAccess.ALL)  // 允许JavaScript访问Java对象的所有公共成员
-                .allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)
+                /*.allowPolyglotAccess(org.graalvm.polyglot.PolyglotAccess.NONE)*/
                 .allowExperimentalOptions(true)
                 .option("js.syntax-extensions", "true")
                 .option("js.load", "true")
@@ -54,7 +55,7 @@ public class CodeCom1 implements TaskComponent {
 
             // 添加日志支持
             polyglotContext.getBindings("js").putMember("log", log);
-            polyglotContext.getBindings("js").putMember("httpUtil", HttpUtils.class);
+            polyglotContext.getBindings("js").putMember("facade", new Facade());
 
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
