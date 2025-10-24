@@ -10,6 +10,7 @@ import javax.sip.message.MessageFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.function.Consumer;
 
 /**
  * GB28181 SIP服务器核心类
@@ -29,6 +30,14 @@ public class SipServer {
     private String host;
     private int port;
     private List<String> transports = new ArrayList<>();
+    
+    // 添加SIP日志配置属性
+    private String stackName = "GB28181_SIP_Server";
+    private String debugLog = "sipserver_debug.log";
+    private String serverLog = "sipserver_messages.log";
+    
+    // 添加配置处理器回调函数
+    private Consumer<SipConfig> configCallback;
 
     private SipServer() {
         // 私有构造函数
@@ -68,6 +77,30 @@ public class SipServer {
         this.transports = new ArrayList<>(transports); // 创建副本以防止外部修改
         log.info("SIP Stack configured with host: {}, port: {}, transports: {}", host, port, transports);
     }
+    
+    /**
+     * 设置配置处理器回调函数
+     * 
+     * @param configCallback 配置处理器回调函数
+     */
+    public void setConfigCallback(Consumer<SipConfig> configCallback) {
+        this.configCallback = configCallback;
+    }
+    
+    /**
+     * 应用配置回调函数
+     */
+    private void applyConfigCallback() {
+        if (configCallback != null) {
+            SipConfig config = new SipConfig();
+            configCallback.accept(config);
+            
+            // 应用配置
+            this.stackName = config.getStackName();
+            this.debugLog = config.getDebugLog();
+            this.serverLog = config.getServerLog();
+        }
+    }
 
     /**
      * 启动SIP服务器
@@ -78,11 +111,14 @@ public class SipServer {
     public void start() throws SipException, InvalidArgumentException {
         log.info("Starting SIP Stack...");
         
+        // 应用配置回调函数
+        applyConfigCallback();
+        
         // 创建SIP堆栈
         Properties properties = new Properties();
-        properties.setProperty("javax.sip.STACK_NAME", "GB28181_SIP_Server");
-        properties.setProperty("gov.nist.javax.sip.DEBUG_LOG", "sipserver_debug.log");
-        properties.setProperty("gov.nist.javax.sip.SERVER_LOG", "sipserver_messages.log");
+        properties.setProperty("javax.sip.STACK_NAME", stackName);
+        properties.setProperty("gov.nist.javax.sip.DEBUG_LOG", debugLog);
+        properties.setProperty("gov.nist.javax.sip.SERVER_LOG", serverLog);
         
         SipFactory sipFactory = SipFactory.getInstance();
         sipFactory.setPathName("gov.nist");
@@ -133,5 +169,41 @@ public class SipServer {
     
     public MessageFactory getMessageFactory() {
         return messageFactory;
+    }
+    
+    /**
+     * SIP配置类，用于回调函数配置
+     */
+    public static class SipConfig {
+        private String stackName = "GB28181_SIP_Server";
+        private String debugLog = "sipserver_debug.log";
+        private String serverLog = "sipserver_messages.log";
+        
+        public String getStackName() {
+            return stackName;
+        }
+        
+        public SipConfig setStackName(String stackName) {
+            this.stackName = stackName;
+            return this;
+        }
+        
+        public String getDebugLog() {
+            return debugLog;
+        }
+        
+        public SipConfig setDebugLog(String debugLog) {
+            this.debugLog = debugLog;
+            return this;
+        }
+        
+        public String getServerLog() {
+            return serverLog;
+        }
+        
+        public SipConfig setServerLog(String serverLog) {
+            this.serverLog = serverLog;
+            return this;
+        }
     }
 }

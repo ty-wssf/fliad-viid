@@ -9,6 +9,7 @@ import javax.sip.message.Request;
 import javax.sip.message.Response;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * SIP服务主类
@@ -51,6 +52,15 @@ public class SipService implements SipListener {
         
         sipServer.configure(host, port, transports);
         log.info("SIP Service configured");
+    }
+    
+    /**
+     * 设置SIP服务器配置回调函数
+     * 
+     * @param configCallback 配置回调函数
+     */
+    public void setSipConfigCallback(Consumer<SipServer.SipConfig> configCallback) {
+        sipServer.setConfigCallback(configCallback);
     }
 
     /**

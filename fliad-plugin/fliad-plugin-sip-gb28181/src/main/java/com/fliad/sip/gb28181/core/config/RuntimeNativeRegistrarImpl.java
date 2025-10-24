@@ -13,7 +13,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
     @Override
     public void register(AppContext context, RuntimeNativeMetadata metadata) {
         metadata.registerReflection(SipStackImpl.class, MemberCategory.values());
-
+        metadata.registerReflection(gov.nist.core.LogWriter.class, MemberCategory.values());
+        metadata.registerReflection(gov.nist.javax.sip.stack.ServerLog.class, MemberCategory.values());
     }
 
 }

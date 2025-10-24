@@ -24,9 +24,9 @@ public class SipServerStarter implements LifecycleBean {
 
     @Inject
     private SipConfig sipConfig;
-    
+
     private SipService sipService;
-    
+
     /**
      * 是否已启动
      */
@@ -41,16 +41,16 @@ public class SipServerStarter implements LifecycleBean {
             log.warn("SIP GB28181 Server is already started");
             return;
         }
-        
+
         try {
             log.info("Starting SIP GB28181 Server...");
-            
+
             // 配置认证管理器
             AuthenticationManager authManager = AuthenticationManager.getInstance();
             authManager.setSipConfig(sipConfig);
-            
+
             sipService = new SipService();
-            
+
             // 解析传输协议配置，支持多个协议
             List<String> transports = new ArrayList<>();
             String transportConfig = sipConfig.getTransport();
@@ -63,21 +63,24 @@ public class SipServerStarter implements LifecycleBean {
                 // 默认使用UDP
                 transports.add("UDP");
             }
-            
+
             // 配置SIP服务
             sipService.configure(
-                sipConfig.getHost(),
-                sipConfig.getPort(),
-                transports
+                    sipConfig.getHost(),
+                    sipConfig.getPort(),
+                    transports
             );
-            
+            sipService.setSipConfigCallback(config -> {
+                config.setStackName(sipConfig.getDeviceName());
+            });
+
             // 初始化服务
             sipService.initialize();
-            
+
             // 启动服务
             sipService.start();
             started = true;
-            
+
             log.info("SIP GB28181 Server started successfully with transports: {}", transports);
         } catch (Exception e) {
             log.error("Failed to start SIP GB28181 Server", e);
@@ -94,26 +97,26 @@ public class SipServerStarter implements LifecycleBean {
             log.warn("SIP GB28181 Server is not started or already stopped");
             return;
         }
-        
+
         try {
             log.info("Stopping SIP GB28181 Server...");
-            
+
             if (sipService != null) {
                 sipService.stop();
             }
-            
+
             // 清理认证管理器中的nonce
             AuthenticationManager.getInstance().clearAllNonces();
-            
+
             // 清理媒体流管理器中的会话
             MediaStreamManager.getInstance().clearAllSessions();
-            
+
             // 清理设备注册表
             SipDeviceRegistry.getInstance().clearAllDevices();
-            
+
             // 清理媒体服务器状态缓存
             MediaServerIntegration.getInstance().clearAllStreamStatus();
-            
+
             started = false;
             log.info("SIP GB28181 Server stopped successfully");
         } catch (Exception e) {
@@ -121,19 +124,19 @@ public class SipServerStarter implements LifecycleBean {
             throw e;
         }
     }
-    
+
     /**
      * 获取SIP服务实例
-     * 
+     *
      * @return SIP服务实例
      */
     public SipService getSipService() {
         return sipService;
     }
-    
+
     /**
      * 检查服务是否已启动
-     * 
+     *
      * @return 是否已启动
      */
     public boolean isStarted() {
