@@ -71,6 +71,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection(org.apache.xmlbeans.impl.store.Locale.class, MemberCategory.values());
 
         metadata.registerReflection(ch.qos.logback.classic.Logger.class, MemberCategory.values());
+        metadata.registerReflection(gov.nist.core.LogWriter.class, MemberCategory.values());
 
         metadata.registerJdkProxy(HCNetSDK.class);
         metadata.registerJdkProxy(HttpUtils.class);
