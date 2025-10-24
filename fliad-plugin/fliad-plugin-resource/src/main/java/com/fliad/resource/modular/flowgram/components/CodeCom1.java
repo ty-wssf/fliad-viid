@@ -55,7 +55,7 @@ public class CodeCom1 implements TaskComponent {
 
             // 添加日志支持
             polyglotContext.getBindings("js").putMember("log", log);
-            polyglotContext.getBindings("js").putMember("facade", new Facade());
+            polyglotContext.getBindings("js").putMember("utils", new Facade());
 
             // 执行脚本
             String scriptContent = ONode.load(node.getMetas()).select("data.script.content").getString();
