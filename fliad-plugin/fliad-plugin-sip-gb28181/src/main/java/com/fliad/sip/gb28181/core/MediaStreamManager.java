@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * 媒体流管理器
@@ -19,6 +21,11 @@ public class MediaStreamManager {
      * 媒体流会话表，key为会话ID，value为会话信息
      */
     private final Map<String, StreamSession> streamSessions = new ConcurrentHashMap<>();
+    
+    /**
+     * 设备流映射，key为设备ID，value为会话ID列表
+     */
+    private final Map<String, List<String>> deviceStreams = new ConcurrentHashMap<>();
 
     /**
      * 单例实例
@@ -56,6 +63,10 @@ public class MediaStreamManager {
         String sessionId = generateSessionId();
         StreamSession session = new StreamSession(sessionId, deviceId, channelId, StreamType.REAL_TIME);
         streamSessions.put(sessionId, session);
+        
+        // 添加到设备流映射
+        deviceStreams.computeIfAbsent(deviceId, k -> new ArrayList<>()).add(sessionId);
+        
         // TODO: 实现点播流创建逻辑
         log.info("Creating real-time stream for device: {}, channel: {}, session: {}", deviceId, channelId, sessionId);
         return sessionId;
@@ -76,6 +87,10 @@ public class MediaStreamManager {
         session.setStartTime(startTime);
         session.setEndTime(endTime);
         streamSessions.put(sessionId, session);
+        
+        // 添加到设备流映射
+        deviceStreams.computeIfAbsent(deviceId, k -> new ArrayList<>()).add(sessionId);
+        
         // TODO: 实现回放流创建逻辑
         log.info("Creating playback stream for device: {}, channel: {}, session: {}", deviceId, channelId, sessionId);
         return sessionId;
@@ -89,10 +104,35 @@ public class MediaStreamManager {
     public void stopStream(String sessionId) {
         StreamSession session = streamSessions.remove(sessionId);
         if (session != null) {
+            // 从设备流映射中移除
+            List<String> sessions = deviceStreams.get(session.getDeviceId());
+            if (sessions != null) {
+                sessions.remove(sessionId);
+                if (sessions.isEmpty()) {
+                    deviceStreams.remove(session.getDeviceId());
+                }
+            }
+            
             // TODO: 实现停止媒体流逻辑
             log.info("Stopping stream session: {}", sessionId);
         } else {
             log.warn("Stream session not found: {}", sessionId);
+        }
+    }
+    
+    /**
+     * 停止设备的所有流
+     *
+     * @param deviceId 设备ID
+     */
+    public void stopAllStreamsForDevice(String deviceId) {
+        List<String> sessionIds = deviceStreams.get(deviceId);
+        if (sessionIds != null) {
+            // 创建副本以避免并发修改异常
+            List<String> sessionsToStop = new ArrayList<>(sessionIds);
+            for (String sessionId : sessionsToStop) {
+                stopStream(sessionId);
+            }
         }
     }
 
@@ -113,6 +153,43 @@ public class MediaStreamManager {
      */
     public StreamSession getStreamSession(String sessionId) {
         return streamSessions.get(sessionId);
+    }
+    
+    /**
+     * 获取设备的所有会话
+     *
+     * @param deviceId 设备ID
+     * @return 会话列表
+     */
+    public List<StreamSession> getStreamsForDevice(String deviceId) {
+        List<StreamSession> sessions = new ArrayList<>();
+        List<String> sessionIds = deviceStreams.get(deviceId);
+        if (sessionIds != null) {
+            for (String sessionId : sessionIds) {
+                StreamSession session = streamSessions.get(sessionId);
+                if (session != null) {
+                    sessions.add(session);
+                }
+            }
+        }
+        return sessions;
+    }
+    
+    /**
+     * 获取所有活动会话
+     *
+     * @return 所有活动会话列表
+     */
+    public List<StreamSession> getAllActiveSessions() {
+        return new ArrayList<>(streamSessions.values());
+    }
+    
+    /**
+     * 清理所有会话（用于系统关闭时）
+     */
+    public void clearAllSessions() {
+        streamSessions.clear();
+        deviceStreams.clear();
     }
     
     /**

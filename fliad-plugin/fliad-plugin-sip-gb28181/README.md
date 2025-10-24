@@ -24,9 +24,6 @@ SIP服务器核心类，负责初始化和管理SIP协议栈。
 ### MediaStreamManager
 媒体流管理器，处理视频流的创建、管理和销毁。
 
-### SipTransportManager
-SIP传输管理器，支持多种传输协议（UDP/TCP）。
-
 ### MediaServerIntegration
 媒体服务器集成接口，与第三方媒体服务器（如ZLMediaKit）进行交互。
 
@@ -63,7 +60,7 @@ SIP服务器启动器，负责系统启动时自动初始化SIP服务。
 插件会通过 [SipServerStarter](src/main/java/com/fliad/sip/gb28181/core/SipServerStarter.java) 类在系统启动时自动初始化和启动SIP服务。
 
 ### 手动启动
-```java
+``java
 SipService sipService = new SipService();
 sipService.configure("192.168.1.100", 5060, "UDP");
 sipService.initialize();

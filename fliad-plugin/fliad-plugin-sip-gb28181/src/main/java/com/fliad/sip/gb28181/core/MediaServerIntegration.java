@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /**
  * 媒体服务器集成接口
@@ -33,6 +35,11 @@ public class MediaServerIntegration {
      * 单例实例
      */
     private static MediaServerIntegration instance;
+    
+    /**
+     * 流状态缓存
+     */
+    private final Map<String, String> streamStatusCache = new ConcurrentHashMap<>();
 
     private MediaServerIntegration() {
         // 私有构造函数
@@ -84,9 +91,11 @@ public class MediaServerIntegration {
             String response = sendPostRequest(apiUrl, sdp, "application/sdp");
             
             log.info("Created stream {} with SDP, response: {}", streamId, response);
+            streamStatusCache.put(streamId, "active");
             return mediaServerUrl + "/streams/" + streamId + "/play";
         } catch (Exception e) {
             log.error("Error creating stream: " + streamId, e);
+            streamStatusCache.put(streamId, "error");
             return null;
         }
     }
@@ -107,8 +116,10 @@ public class MediaServerIntegration {
             sendDeleteRequest(apiUrl);
             
             log.info("Deleted stream: {}", streamId);
+            streamStatusCache.remove(streamId);
         } catch (Exception e) {
             log.error("Error deleting stream: " + streamId, e);
+            streamStatusCache.put(streamId, "error");
         }
     }
 
@@ -125,15 +136,50 @@ public class MediaServerIntegration {
                 return "unknown";
             }
             
+            // 先检查缓存
+            String cachedStatus = streamStatusCache.get(streamId);
+            if (cachedStatus != null) {
+                return cachedStatus;
+            }
+            
             String apiUrl = mediaServerUrl + "/streams/" + streamId + "/status";
             String response = sendGetRequest(apiUrl);
             
             log.info("Got status for stream: {}, response: {}", streamId, response);
-            return response != null ? response : "unknown";
+            String status = response != null ? response : "unknown";
+            streamStatusCache.put(streamId, status);
+            return status;
         } catch (Exception e) {
             log.error("Error getting stream status: " + streamId, e);
+            streamStatusCache.put(streamId, "error");
             return "error";
         }
+    }
+    
+    /**
+     * 更新流状态缓存
+     *
+     * @param streamId 流ID
+     * @param status 状态
+     */
+    public void updateStreamStatus(String streamId, String status) {
+        streamStatusCache.put(streamId, status);
+    }
+    
+    /**
+     * 清除流状态缓存
+     *
+     * @param streamId 流ID
+     */
+    public void clearStreamStatus(String streamId) {
+        streamStatusCache.remove(streamId);
+    }
+    
+    /**
+     * 清除所有流状态缓存
+     */
+    public void clearAllStreamStatus() {
+        streamStatusCache.clear();
     }
     
     /**

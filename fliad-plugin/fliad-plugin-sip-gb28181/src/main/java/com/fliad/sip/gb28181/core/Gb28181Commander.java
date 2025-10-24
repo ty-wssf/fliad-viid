@@ -3,9 +3,16 @@ package com.fliad.sip.gb28181.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sip.address.Address;
+import javax.sip.address.AddressFactory;
 import javax.sip.header.*;
 import javax.sip.message.MessageFactory;
 import javax.sip.message.Request;
+import javax.sip.SipProvider;
+import javax.sip.ListeningPoint;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GB28181命令发送器
@@ -18,21 +25,17 @@ public class Gb28181Commander {
     private static final Logger log = LoggerFactory.getLogger(Gb28181Commander.class);
 
     private SipServer sipServer;
-    private static Gb28181Commander instance;
 
     private Gb28181Commander() {
         // 私有构造函数
     }
 
     public static Gb28181Commander getInstance() {
-        if (instance == null) {
-            synchronized (Gb28181Commander.class) {
-                if (instance == null) {
-                    instance = new Gb28181Commander();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.INSTANCE;
+    }
+    
+    private static class InstanceHolder {
+        private static final Gb28181Commander INSTANCE = new Gb28181Commander();
     }
 
     /**
@@ -140,12 +143,14 @@ public class Gb28181Commander {
      * @param deviceId 设备ID
      * @param channelId 通道ID
      * @param ssrc SSRC
+     * @param fromURI 发送方URI
+     * @param toURI 接收方URI
      * @return 是否发送成功
      */
-    public boolean sendRealTimeVideoRequest(String deviceId, String channelId, String ssrc) {
+    public boolean sendRealTimeVideoRequest(String deviceId, String channelId, String ssrc, String fromURI, String toURI) {
         try {
             // 创建INVITE请求
-            Request inviteRequest = createInviteRequest(deviceId, channelId, ssrc);
+            Request inviteRequest = createInviteRequest(deviceId, channelId, ssrc, fromURI, toURI);
             // TODO: 发送INVITE请求
             log.info("Sending real-time video request to device: {}, channel: {}, ssrc: {}", deviceId, channelId, ssrc);
             return true;
@@ -280,13 +285,108 @@ public class Gb28181Commander {
      * @param deviceId 设备ID
      * @param channelId 通道ID
      * @param ssrc SSRC
+     * @param fromURI 发送方URI
+     * @param toURI 接收方URI
      * @return INVITE请求
      */
-    private Request createInviteRequest(String deviceId, String channelId, String ssrc) throws Exception {
+    private Request createInviteRequest(String deviceId, String channelId, String ssrc, String fromURI, String toURI) throws Exception {
+        if (sipServer == null) {
+            throw new IllegalStateException("SIP server not initialized");
+        }
+        
         MessageFactory messageFactory = sipServer.getMessageFactory();
         HeaderFactory headerFactory = sipServer.getHeaderFactory();
-        // TODO: 实现INVITE请求创建逻辑
+        AddressFactory addressFactory = sipServer.getAddressFactory();
+        
+        // 创建From头
+        Address fromAddress = addressFactory.createAddress(fromURI);
+        FromHeader fromHeader = headerFactory.createFromHeader(fromAddress, "calltag");
+
+        // 创建To头
+        Address toAddress = addressFactory.createAddress(toURI);
+        ToHeader toHeader = headerFactory.createToHeader(toAddress, null);
+
+        // 创建Call-ID头
+        CallIdHeader callIdHeader = sipServer.getSipProviders().get(0).getNewCallId();
+
+        // 创建CSeq头
+        CSeqHeader cSeqHeader = headerFactory.createCSeqHeader(1L, Request.INVITE);
+
+        // 创建Max-Forwards头
+        MaxForwardsHeader maxForwards = headerFactory.createMaxForwardsHeader(70);
+
+        // 创建Contact头
+        Address contactAddress = addressFactory.createAddress(fromURI);
+        ContactHeader contactHeader = headerFactory.createContactHeader(contactAddress);
+
+        // 创建Via头
+        List<ViaHeader> viaHeaders = new ArrayList<>();
+        SipProvider sipProvider = sipServer.getSipProviders().get(0);
+        ListeningPoint listeningPoint = sipProvider.getListeningPoint();
+        ViaHeader viaHeader = headerFactory.createViaHeader(
+            listeningPoint.getIPAddress(),
+            listeningPoint.getPort(),
+            listeningPoint.getTransport(),
+            null
+        );
+        viaHeaders.add(viaHeader);
+
+        // 构建请求URI
+        javax.sip.address.URI requestURI = addressFactory.createURI(toURI);
+
+        // 创建请求
+        Request request = messageFactory.createRequest(
+            requestURI,
+            Request.INVITE,
+            callIdHeader,
+            cSeqHeader,
+            fromHeader,
+            toHeader,
+            viaHeaders,
+            maxForwards
+        );
+
+        // 添加Contact头
+        request.addHeader(contactHeader);
+
+        // 添加Content-Type头
+        ContentTypeHeader contentTypeHeader = headerFactory.createContentTypeHeader("Application", "SDP");
+        request.setContent(createSdpContent(ssrc), contentTypeHeader);
+
         log.debug("Creating INVITE request for device: {}, channel: {}, ssrc: {}", deviceId, channelId, ssrc);
-        return null;
+        return request;
+    }
+    
+    /**
+     * 创建SDP内容
+     * 
+     * @param ssrc SSRC值
+     * @return SDP内容
+     */
+    private String createSdpContent(String ssrc) {
+        StringBuilder sdp = new StringBuilder();
+        sdp.append("v=0\r\n");
+        sdp.append("o=GB28181_SIP_Server 0 0 IN IP4 ").append(getLocalIpAddress()).append("\r\n");
+        sdp.append("s=Play\r\n");
+        sdp.append("c=IN IP4 ").append(getLocalIpAddress()).append("\r\n");
+        sdp.append("t=0 0\r\n");
+        sdp.append("m=video 9000 RTP/AVP 96 98 97\r\n");
+        sdp.append("a=sendonly\r\n");
+        sdp.append("a=rtpmap:96 PS/90000\r\n");
+        sdp.append("a=rtpmap:98 H264/90000\r\n");
+        sdp.append("a=rtpmap:97 MPEG4/90000\r\n");
+        sdp.append("y=").append(ssrc).append("\r\n");
+        sdp.append("f=\r\n");
+        return sdp.toString();
+    }
+    
+    /**
+     * 获取本地IP地址
+     * 
+     * @return 本地IP地址
+     */
+    private String getLocalIpAddress() {
+        // 这里应该获取实际的本地IP地址
+        return "127.0.0.1";
     }
 }

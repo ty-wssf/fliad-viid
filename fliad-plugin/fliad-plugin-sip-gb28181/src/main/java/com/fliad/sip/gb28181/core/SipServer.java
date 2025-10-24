@@ -20,11 +20,6 @@ import java.util.Properties;
 public class SipServer {
     private static final Logger log = LoggerFactory.getLogger(SipServer.class);
 
-    /**
-     * SIP服务器实例
-     */
-    private static SipServer instance;
-
     private SipStack sipStack;
     private List<SipProvider> sipProviders = new ArrayList<>();
     private AddressFactory addressFactory;
@@ -45,21 +40,18 @@ public class SipServer {
      * @return SipServer实例
      */
     public static SipServer getInstance() {
-        if (instance == null) {
-            synchronized (SipServer.class) {
-                if (instance == null) {
-                    instance = new SipServer();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.INSTANCE;
+    }
+    
+    private static class InstanceHolder {
+        private static final SipServer INSTANCE = new SipServer();
     }
 
     /**
      * 初始化SIP服务器
      */
     public void initialize() {
-        log.info("Initializing GB28181 SIP Server...");
+        log.info("Initializing SIP Stack...");
         // TODO: 实现SIP服务器初始化逻辑
     }
     
@@ -73,62 +65,62 @@ public class SipServer {
     public void configure(String host, int port, List<String> transports) {
         this.host = host;
         this.port = port;
-        this.transports = transports;
-        log.info("SIP Server configured with host: {}, port: {}, transports: {}", host, port, transports);
+        this.transports = new ArrayList<>(transports); // 创建副本以防止外部修改
+        log.info("SIP Stack configured with host: {}, port: {}, transports: {}", host, port, transports);
     }
 
     /**
      * 启动SIP服务器
+     *
+     * @throws SipException SIP异常
+     * @throws InvalidArgumentException 无效参数异常
      */
-    public void start() {
-        log.info("Starting GB28181 SIP Server...");
-        try {
-            // 创建SIP堆栈
-            Properties properties = new Properties();
-            properties.setProperty("javax.sip.STACK_NAME", "GB28181_SIP_Server");
-            properties.setProperty("gov.nist.javax.sip.DEBUG_LOG", "sipserver_debug.log");
-            properties.setProperty("gov.nist.javax.sip.SERVER_LOG", "sipserver_messages.log");
-            
-            SipFactory sipFactory = SipFactory.getInstance();
-            sipFactory.setPathName("gov.nist");
-            sipStack = sipFactory.createSipStack(properties);
-            
-            headerFactory = sipFactory.createHeaderFactory();
-            addressFactory = sipFactory.createAddressFactory();
-            messageFactory = sipFactory.createMessageFactory();
-            
-            // 为每个传输协议创建监听器
-            for (String transport : transports) {
-                ListeningPoint listeningPoint = sipStack.createListeningPoint(host, port, transport);
-                SipProvider sipProvider = sipStack.createSipProvider(listeningPoint);
-                sipProviders.add(sipProvider);
-                log.info("Created SIP provider for transport: {}", transport);
-            }
-            
-            log.info("GB28181 SIP Server started successfully on {}:{} with transports: {}", host, port, transports);
-        } catch (Exception e) {
-            log.error("Failed to start GB28181 SIP Server", e);
+    public void start() throws SipException, InvalidArgumentException {
+        log.info("Starting SIP Stack...");
+        
+        // 创建SIP堆栈
+        Properties properties = new Properties();
+        properties.setProperty("javax.sip.STACK_NAME", "GB28181_SIP_Server");
+        properties.setProperty("gov.nist.javax.sip.DEBUG_LOG", "sipserver_debug.log");
+        properties.setProperty("gov.nist.javax.sip.SERVER_LOG", "sipserver_messages.log");
+        
+        SipFactory sipFactory = SipFactory.getInstance();
+        sipFactory.setPathName("gov.nist");
+        sipStack = sipFactory.createSipStack(properties);
+        
+        headerFactory = sipFactory.createHeaderFactory();
+        addressFactory = sipFactory.createAddressFactory();
+        messageFactory = sipFactory.createMessageFactory();
+        
+        // 为每个传输协议创建监听器
+        for (String transport : transports) {
+            ListeningPoint listeningPoint = sipStack.createListeningPoint(host, port, transport);
+            SipProvider sipProvider = sipStack.createSipProvider(listeningPoint);
+            sipProviders.add(sipProvider);
+            log.debug("Created SIP provider for transport: {}", transport);
         }
+        
+        log.info("SIP Stack started successfully on {}:{} with transports: {}", host, port, transports);
     }
 
     /**
      * 停止SIP服务器
      */
     public void stop() {
-        log.info("Stopping GB28181 SIP Server...");
+        log.info("Stopping SIP Stack...");
         try {
             if (sipStack != null) {
                 sipStack.stop();
             }
             sipProviders.clear();
-            log.info("GB28181 SIP Server stopped successfully");
+            log.info("SIP Stack stopped successfully");
         } catch (Exception e) {
             log.error("Failed to stop GB28181 SIP Server", e);
         }
     }
     
     public List<SipProvider> getSipProviders() {
-        return sipProviders;
+        return new ArrayList<>(sipProviders); // 返回副本以防止外部修改
     }
     
     public AddressFactory getAddressFactory() {

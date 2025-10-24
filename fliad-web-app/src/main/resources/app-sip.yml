@@ -1,0 +1,28 @@
+# GB28181 SIP配置
+sip:
+  # SIP服务器监听地址
+  host: 0.0.0.0
+  
+  # SIP服务器端口
+  port: 5060
+  
+  # 传输协议，支持UDP、TCP，多个协议用逗号分隔
+  transport: UDP,TCP
+  
+  # 设备ID
+  deviceId: 34020000002000000001
+  
+  # 设备名称
+  deviceName: GB28181 Server
+  
+  # 认证密码
+  password: admin123
+  
+  # 心跳间隔时间(秒)
+  keepaliveTime: 60
+  
+  # 媒体服务器URL
+  mediaServerUrl: http://127.0.0.1:8080
+  
+  # 媒体服务器API密钥
+  mediaServerApiKey:

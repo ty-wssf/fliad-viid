@@ -22,21 +22,16 @@ import java.util.List;
 public class Gb28181MessageProcessor {
     private static final Logger log = LoggerFactory.getLogger(Gb28181MessageProcessor.class);
 
-    private static Gb28181MessageProcessor instance;
-
     private Gb28181MessageProcessor() {
         // 私有构造函数
     }
 
     public static Gb28181MessageProcessor getInstance() {
-        if (instance == null) {
-            synchronized (Gb28181MessageProcessor.class) {
-                if (instance == null) {
-                    instance = new Gb28181MessageProcessor();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.INSTANCE;
+    }
+    
+    private static class InstanceHolder {
+        private static final Gb28181MessageProcessor INSTANCE = new Gb28181MessageProcessor();
     }
 
     /**
@@ -152,6 +147,74 @@ public class Gb28181MessageProcessor {
             log.error("Failed to parse device status message", e);
             return null;
         }
+    }
+    
+    /**
+     * 解析设备信息查询响应
+     *
+     * @param xmlContent XML内容
+     * @return 设备信息
+     */
+    public DeviceInfo parseDeviceInfo(String xmlContent) {
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new ByteArrayInputStream(xmlContent.getBytes("UTF-8")));
+
+            DeviceInfo deviceInfo = new DeviceInfo();
+            Element root = document.getDocumentElement();
+            
+            deviceInfo.setCmdType(getElementText(root, "CmdType"));
+            deviceInfo.setSN(getElementText(root, "SN"));
+            deviceInfo.setDeviceID(getElementText(root, "DeviceID"));
+            deviceInfo.setResult(getElementText(root, "Result"));
+            deviceInfo.setDeviceName(getElementText(root, "DeviceName"));
+            deviceInfo.setManufacturer(getElementText(root, "Manufacturer"));
+            deviceInfo.setModel(getElementText(root, "Model"));
+            deviceInfo.setFirmware(getElementText(root, "Firmware"));
+            deviceInfo.setChannel(getElementText(root, "Channel"));
+            
+            return deviceInfo;
+        } catch (Exception e) {
+            log.error("Failed to parse device info message", e);
+            return null;
+        }
+    }
+    
+    /**
+     * 解析录像信息查询响应
+     *
+     * @param xmlContent XML内容
+     * @return 录像文件列表
+     */
+    public List<RecordItem> parseRecordInfo(String xmlContent) {
+        List<RecordItem> recordItems = new ArrayList<>();
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(new ByteArrayInputStream(xmlContent.getBytes("UTF-8")));
+
+            NodeList itemNodes = document.getElementsByTagName("Item");
+            for (int i = 0; i < itemNodes.getLength(); i++) {
+                Element itemElement = (Element) itemNodes.item(i);
+                RecordItem recordItem = new RecordItem();
+                
+                recordItem.setDeviceID(getElementText(itemElement, "DeviceID"));
+                recordItem.setName(getElementText(itemElement, "Name"));
+                recordItem.setFilePath(getElementText(itemElement, "FilePath"));
+                recordItem.setAddress(getElementText(itemElement, "Address"));
+                recordItem.setStartTime(getElementText(itemElement, "StartTime"));
+                recordItem.setEndTime(getElementText(itemElement, "EndTime"));
+                recordItem.setSecrecy(getElementText(itemElement, "Secrecy"));
+                recordItem.setType(getElementText(itemElement, "Type"));
+                recordItem.setRecorderID(getElementText(itemElement, "RecorderID"));
+                
+                recordItems.add(recordItem);
+            }
+        } catch (Exception e) {
+            log.error("Failed to parse record info response", e);
+        }
+        return recordItems;
     }
 
     /**
@@ -484,6 +547,182 @@ public class Gb28181MessageProcessor {
 
         public void setStatus(String status) {
             this.status = status;
+        }
+    }
+    
+    /**
+     * 设备信息
+     */
+    public static class DeviceInfo {
+        private String cmdType;
+        private String SN;
+        private String deviceID;
+        private String result;
+        private String deviceName;
+        private String manufacturer;
+        private String model;
+        private String firmware;
+        private String channel;
+
+        // Getters and Setters
+        public String getCmdType() {
+            return cmdType;
+        }
+
+        public void setCmdType(String cmdType) {
+            this.cmdType = cmdType;
+        }
+
+        public String getSN() {
+            return SN;
+        }
+
+        public void setSN(String SN) {
+            this.SN = SN;
+        }
+
+        public String getDeviceID() {
+            return deviceID;
+        }
+
+        public void setDeviceID(String deviceID) {
+            this.deviceID = deviceID;
+        }
+
+        public String getResult() {
+            return result;
+        }
+
+        public void setResult(String result) {
+            this.result = result;
+        }
+
+        public String getDeviceName() {
+            return deviceName;
+        }
+
+        public void setDeviceName(String deviceName) {
+            this.deviceName = deviceName;
+        }
+
+        public String getManufacturer() {
+            return manufacturer;
+        }
+
+        public void setManufacturer(String manufacturer) {
+            this.manufacturer = manufacturer;
+        }
+
+        public String getModel() {
+            return model;
+        }
+
+        public void setModel(String model) {
+            this.model = model;
+        }
+
+        public String getFirmware() {
+            return firmware;
+        }
+
+        public void setFirmware(String firmware) {
+            this.firmware = firmware;
+        }
+
+        public String getChannel() {
+            return channel;
+        }
+
+        public void setChannel(String channel) {
+            this.channel = channel;
+        }
+    }
+    
+    /**
+     * 录像文件信息
+     */
+    public static class RecordItem {
+        private String deviceID;
+        private String name;
+        private String filePath;
+        private String address;
+        private String startTime;
+        private String endTime;
+        private String secrecy;
+        private String type;
+        private String recorderID;
+
+        // Getters and Setters
+        public String getDeviceID() {
+            return deviceID;
+        }
+
+        public void setDeviceID(String deviceID) {
+            this.deviceID = deviceID;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getFilePath() {
+            return filePath;
+        }
+
+        public void setFilePath(String filePath) {
+            this.filePath = filePath;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getStartTime() {
+            return startTime;
+        }
+
+        public void setStartTime(String startTime) {
+            this.startTime = startTime;
+        }
+
+        public String getEndTime() {
+            return endTime;
+        }
+
+        public void setEndTime(String endTime) {
+            this.endTime = endTime;
+        }
+
+        public String getSecrecy() {
+            return secrecy;
+        }
+
+        public void setSecrecy(String secrecy) {
+            this.secrecy = secrecy;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getRecorderID() {
+            return recorderID;
+        }
+
+        public void setRecorderID(String recorderID) {
+            this.recorderID = recorderID;
         }
     }
 }

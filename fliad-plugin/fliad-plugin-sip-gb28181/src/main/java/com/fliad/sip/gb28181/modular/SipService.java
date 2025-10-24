@@ -8,6 +8,7 @@ import javax.sip.*;
 import javax.sip.message.Request;
 import javax.sip.message.Response;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * SIP服务主类
@@ -25,7 +26,7 @@ public class SipService implements SipListener {
      * 初始化SIP服务
      */
     public void initialize() {
-        log.info("Initializing SIP GB28181 Service...");
+        log.info("Initializing SIP Service...");
         sipServer.initialize();
     }
 
@@ -37,15 +38,26 @@ public class SipService implements SipListener {
      * @param transports 传输协议列表(UDP/TCP)
      */
     public void configure(String host, int port, List<String> transports) {
+        Objects.requireNonNull(host, "Host must not be null");
+        Objects.requireNonNull(transports, "Transports must not be null");
+        
+        if (port <= 0 || port > 65535) {
+            throw new IllegalArgumentException("Port must be between 1 and 65535");
+        }
+        
+        if (transports.isEmpty()) {
+            throw new IllegalArgumentException("Transports must not be empty");
+        }
+        
         sipServer.configure(host, port, transports);
-        log.info("SIP Service configured with host: {}, port: {}, transports: {}", host, port, transports);
+        log.info("SIP Service configured");
     }
 
     /**
      * 启动SIP服务
      */
     public void start() {
-        log.info("Starting SIP GB28181 Service...");
+        log.info("Starting SIP Service...");
         try {
             sipServer.start();
             // 注册SIP事件监听器
@@ -54,9 +66,10 @@ public class SipService implements SipListener {
                     sipProvider.addSipListener(this);
                 }
             }
-            log.info("SIP GB28181 Service started successfully");
+            log.info("SIP Service started successfully");
         } catch (Exception e) {
-            log.error("Failed to start SIP GB28181 Service", e);
+            log.error("Failed to start SIP Service", e);
+            throw new RuntimeException("Failed to start SIP service", e);
         }
     }
 
@@ -64,7 +77,7 @@ public class SipService implements SipListener {
      * 停止SIP服务
      */
     public void stop() {
-        log.info("Stopping SIP GB28181 Service...");
+        log.info("Stopping SIP Service...");
         try {
             for (SipProvider sipProvider : sipServer.getSipProviders()) {
                 if (sipProvider != null) {
@@ -72,9 +85,9 @@ public class SipService implements SipListener {
                 }
             }
             sipServer.stop();
-            log.info("SIP GB28181 Service stopped successfully");
+            log.info("SIP Service stopped successfully");
         } catch (Exception e) {
-            log.error("Failed to stop SIP GB28181 Service", e);
+            log.error("Failed to stop SIP Service", e);
         }
     }
 
@@ -84,14 +97,22 @@ public class SipService implements SipListener {
     public void processRequest(RequestEvent requestEvent) {
         Request request = requestEvent.getRequest();
         log.debug("Processing SIP request: {}", request.getMethod());
-        messageHandler.handleRequest(requestEvent);
+        try {
+            messageHandler.handleRequest(requestEvent);
+        } catch (Exception e) {
+            log.error("Error processing SIP request: {}", request.getMethod(), e);
+        }
     }
 
     @Override
     public void processResponse(ResponseEvent responseEvent) {
         Response response = responseEvent.getResponse();
         log.debug("Processing SIP response: {}", response.getStatusCode());
-        messageHandler.handleResponse(responseEvent);
+        try {
+            messageHandler.handleResponse(responseEvent);
+        } catch (Exception e) {
+            log.error("Error processing SIP response: {}", response.getStatusCode(), e);
+        }
     }
 
     @Override
@@ -114,7 +135,7 @@ public class SipService implements SipListener {
 
     @Override
     public void processDialogTerminated(DialogTerminatedEvent dialogTerminatedEvent) {
-        log.debug("SIP dialog terminated");
+        log.debug("SIP dialog terminated: {}", dialogTerminatedEvent.getDialog().getDialogId());
         // TODO: 实现对话终止处理逻辑
     }
 }
