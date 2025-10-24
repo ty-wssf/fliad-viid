@@ -272,6 +272,11 @@
             <groupId>com.fliad</groupId>
             <artifactId>fliad-plugin-resource</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-sip-gb28181</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- GraalVM JS引擎 -->
@@ -286,7 +291,7 @@
 
             </dependencies>
         </profile>
-        
+
         <!-- 非JDK 8环境下的GraalVM依赖 -->
         <profile>
             <id>non-jdk8</id>

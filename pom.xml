@@ -153,6 +153,12 @@
                 <version>${viid.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-sip-gb28181-api</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
+
             <!-- fliad-plugin-auth -->
             <dependency>
                 <groupId>com.fliad</groupId>
@@ -212,6 +218,12 @@
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-viid</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-sip-gb28181</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
