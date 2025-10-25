@@ -21,7 +21,7 @@
         <!-- 业务功能插件 -->
         <module>fliad-plugin-biz</module>
 
-         <!-- C端功能插件 -->
+        <!-- C端功能插件 -->
         <module>fliad-plugin-client</module>
 
         <!-- 开发工具插件 -->
@@ -44,6 +44,18 @@
 
         <!-- SIP GB28181协议插件 -->
         <module>fliad-plugin-sip-gb28181</module>
-        <module>fliad-plugin-report</module>
     </modules>
+
+    <!-- 非JDK 8环境下的GraalVM依赖 -->
+    <profiles>
+        <profile>
+            <id>non-jdk8</id>
+            <activation>
+                <jdk>(1.8,]</jdk>
+            </activation>
+            <modules>
+                <module>fliad-plugin-report</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

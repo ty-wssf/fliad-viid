@@ -227,6 +227,11 @@
                 <version>${viid.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-report</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
             <!-- lombok -->
             <!--<dependency>
                 <groupId>org.projectlombok</groupId>

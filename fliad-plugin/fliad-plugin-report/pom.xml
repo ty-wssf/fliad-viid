@@ -13,6 +13,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-report-core</artifactId>
             <version>${nop.version}</version>
