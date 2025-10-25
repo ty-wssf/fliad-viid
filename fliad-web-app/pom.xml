@@ -317,10 +317,10 @@
                     <version>25.0.1</version>
                 </dependency>
 
-                <!--<dependency>
+                <dependency>
                     <groupId>com.fliad</groupId>
                     <artifactId>fliad-plugin-report</artifactId>
-                </dependency>-->
+                </dependency>
             </dependencies>
         </profile>
     </profiles>
