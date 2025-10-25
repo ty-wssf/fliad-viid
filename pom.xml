@@ -63,7 +63,7 @@
         <nashorn.version>15.0</nashorn.version>
         <mybatis-flex.version>1.10.4</mybatis-flex.version>
         <protobuf.java.version>3.21.12</protobuf.java.version>
-
+        <nop.version>2.0.0-SNAPSHOT</nop.version>
     </properties>
 
     <modules>
@@ -506,6 +506,28 @@
             <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
             <snapshots>
                 <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- 中央仓库 -->
+        <repository>
+            <id>central</id>
+            <url>https://repo1.maven.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- 自定义仓库1 -->
+        <repository>
+            <id>nop-snapshot-repo</id>
+            <url>https://nop.repo.crazydan.io/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>

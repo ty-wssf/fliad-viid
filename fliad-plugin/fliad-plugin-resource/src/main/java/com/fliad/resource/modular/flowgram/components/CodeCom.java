@@ -2,6 +2,7 @@ package com.fliad.resource.modular.flowgram.components;
 
 import com.fliad.resource.modular.flowgram.domain.TaskReportOutput;
 import org.noear.snack.ONode;
+import org.noear.solon.annotation.Component;
 import org.noear.solon.expression.snel.SnEL;
 import org.noear.solon.flow.FlowContext;
 import org.noear.solon.flow.Node;
@@ -13,7 +14,7 @@ import javax.script.ScriptEngineManager;
 import java.util.HashMap;
 import java.util.Map;
 
-// @Component("code")
+@Component("code")
 public class CodeCom implements TaskComponent {
 
     private static final Logger log = org.slf4j.LoggerFactory.getLogger(CodeCom.class);

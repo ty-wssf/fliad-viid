@@ -19,6 +19,8 @@ import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 /**
  * 报警主机数据上传处理器
@@ -27,6 +29,9 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
     private static final Logger log = LoggerFactory.getLogger(AlarmHostDataUploadHandler.class);
 
     private final HikvisionAlarmManager alarmManager;
+
+    // 用于存储每个设备的气象数据缓存，key为设备IP，value为该设备的气象数据
+    private static final Map<String, DsWeather> deviceWeatherCache = new ConcurrentHashMap<>();
 
     public AlarmHostDataUploadHandler(HikvisionAlarmManager alarmManager) {
         this.alarmManager = alarmManager;
@@ -53,10 +58,12 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
 
         int dwChanNo = struDVRala.struAlarmData.struPointValue.dwChanNo;
         int dwVariableNo = struDVRala.struAlarmData.struPointValue.dwVariableNo;
-        long dwVariableValue = combineHighLowBits(struDVRala.struAlarmData.struPointValue.iValueEx, struDVRala.struAlarmData.struPointValue.iValue);
+        long dwVariableValue;
         // 存在负数，单独处理
         if (struDVRala.struAlarmData.struPointValue.iValueEx == 0 && struDVRala.struAlarmData.struPointValue.iValue < 0) {
             dwVariableValue = struDVRala.struAlarmData.struPointValue.iValue;
+        } else {
+            dwVariableValue = combineHighLowBits(struDVRala.struAlarmData.struPointValue.iValueEx, struDVRala.struAlarmData.struPointValue.iValue);
         }
 
         log.info("========接入类型=======" + struDVRala.struAlarmData.struPointValue.byChanType);
@@ -70,7 +77,15 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
 
         HikvisionDevice device = alarmManager.getDeviceByIp(sbip);
 
-        DsWeather dsWeather = new DsWeather();
+        // 从缓存中获取设备的气象数据对象，如果不存在则创建新的
+        DsWeather dsWeather = deviceWeatherCache.computeIfAbsent(sbip, ip -> {
+            DsWeather weather = new DsWeather();
+            weather.setSbxh(device.getDeviceNumber());
+            weather.setSbbh(device.getDeviceNumber());
+            return weather;
+        });
+
+        // 更新设备编号信息（确保是最新的）
         dsWeather.setSbxh(device.getDeviceNumber());
         dsWeather.setSbbh(device.getDeviceNumber());
 
@@ -155,4 +170,33 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
         // 将高32位左移32位，然后与低32位进行或操作
         return ((long) high32bits << 32) | (low32bits & 0xFFFFFFFFL);
     }
+
+    /**
+     * 获取指定设备的气象数据缓存
+     *
+     * @param deviceIp 设备IP地址
+     * @return 该设备的气象数据，如果不存在则返回null
+     */
+    public static DsWeather getDeviceWeatherCache(String deviceIp) {
+        return deviceWeatherCache.get(deviceIp);
+    }
+
+    /**
+     * 清除指定设备的气象数据缓存
+     *
+     * @param deviceIp 设备IP地址
+     */
+    public static void clearDeviceWeatherCache(String deviceIp) {
+        deviceWeatherCache.remove(deviceIp);
+    }
+
+    /**
+     * 获取所有设备的气象数据缓存
+     *
+     * @return 所有设备的气象数据映射
+     */
+    public static Map<String, DsWeather> getAllDeviceWeatherCache() {
+        return new ConcurrentHashMap<>(deviceWeatherCache);
+    }
+
 }
