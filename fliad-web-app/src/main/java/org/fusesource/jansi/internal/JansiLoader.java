@@ -71,9 +71,17 @@ public class JansiLoader {
      * otherwise.
      */
     public static synchronized boolean initialize() {
-        System.out.println("JansiLoader.initialize()");
+        // 打印调用的类的路径
+        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+        // 获取调用initialize()方法的类信息（索引为2，因为0是getStackTrace，1是当前方法）
+        if (stackTrace.length > 2) {
+            StackTraceElement caller = stackTrace[2];
+            System.out.println("JansiLoader called by: " + caller.getClassName() + "." + caller.getMethodName() + "() at line " + caller.getLineNumber());
+        } else {
+            System.out.println("JansiLoader.initialize()");
+        }
         // only cleanup before the first extract
-        /*if (!loaded) {
+        if (!loaded) {
             Thread cleanup = new Thread(JansiLoader::cleanup, "cleanup");
             cleanup.setPriority(Thread.MIN_PRIORITY);
             cleanup.setDaemon(true);
@@ -87,7 +95,7 @@ public class JansiLoader {
                         "Unable to load jansi native library. You may want set the `jansi.graceful` system property to true to be able to use Jansi on your platform",
                         e);
             }
-        }*/
+        }
         return loaded;
     }
 
