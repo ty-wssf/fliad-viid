@@ -20,6 +20,12 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-report-core</artifactId>
             <version>${nop.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.fusesource.jansi</groupId>
+                    <artifactId>jansi</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
