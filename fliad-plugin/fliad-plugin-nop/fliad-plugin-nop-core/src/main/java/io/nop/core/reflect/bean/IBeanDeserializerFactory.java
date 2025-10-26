@@ -7,7 +7,8 @@
  */
 package io.nop.core.reflect.bean;
 
-import jakarta.annotation.Nullable;
+
+import org.noear.solon.lang.Nullable;
 
 public interface IBeanDeserializerFactory {
     @Nullable

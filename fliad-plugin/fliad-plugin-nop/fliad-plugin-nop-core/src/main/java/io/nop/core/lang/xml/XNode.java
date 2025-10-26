@@ -47,7 +47,7 @@ import io.nop.core.model.tree.ITreeVisitor;
 import io.nop.core.model.tree.TreeVisitResult;
 import io.nop.core.model.tree.TreeVisitors;
 import io.nop.core.resource.IResource;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1025,7 +1025,7 @@ public class XNode implements Serializable, ISourceLocationGetter, ISourceLocati
      * @param tagName 子节点标签名
      * @return 匹配的子节点集合。调用者不应修改返回的集合
      */
-    public @Nonnull List<XNode> childrenByTag(String tagName) {
+    public @NonNull List<XNode> childrenByTag(String tagName) {
         if (children.isEmpty())
             return Collections.emptyList();
         List<XNode> ret = new ArrayList<>();

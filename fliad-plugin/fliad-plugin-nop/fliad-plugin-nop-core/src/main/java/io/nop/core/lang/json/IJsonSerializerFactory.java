@@ -7,7 +7,8 @@
  */
 package io.nop.core.lang.json;
 
-import jakarta.annotation.Nullable;
+
+import org.noear.solon.lang.Nullable;
 
 public interface IJsonSerializerFactory {
     @Nullable

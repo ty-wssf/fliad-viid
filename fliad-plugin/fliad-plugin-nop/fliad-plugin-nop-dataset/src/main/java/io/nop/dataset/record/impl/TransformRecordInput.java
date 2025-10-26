@@ -3,7 +3,7 @@ package io.nop.dataset.record.impl;
 import io.nop.api.core.util.Guard;
 import io.nop.dataset.record.IRecordInput;
 import io.nop.dataset.record.IRecordResourceMeta;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -50,7 +50,7 @@ public class TransformRecordInput<S, T> implements IRecordInput<T> {
         return new TransformRecordInput<>(source.limit(maxCount), transformer, meta);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readBatch(int maxCount) {
         return source.readBatchWithTransformer(maxCount, transformer);
@@ -61,7 +61,7 @@ public class TransformRecordInput<S, T> implements IRecordInput<T> {
         source.readBatchWithTransformer(maxCount, transformer, ret);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readAll() {
         return source.readAllWithTransformer(transformer);

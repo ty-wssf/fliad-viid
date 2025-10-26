@@ -15,7 +15,7 @@ import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.reflect.hook.IPropGetMissingHook;
 import io.nop.core.type.IGenericType;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
@@ -138,18 +138,18 @@ public class BeanToolImpl implements IBeanTool {
     }
 
     @Override
-    public Object buildBean(@Nonnull Object src, @Nonnull IGenericType targetType, BeanCopyOptions options) {
+    public Object buildBean(@NonNull Object src, @NonNull IGenericType targetType, BeanCopyOptions options) {
         return BeanCopier.INSTANCE.buildBean(src, targetType, options);
     }
 
     @Override
-    public void copyBean(@Nonnull Object src, @Nonnull Object target, @Nonnull IGenericType targetType, boolean deep,
+    public void copyBean(@NonNull Object src, @NonNull Object target, @NonNull IGenericType targetType, boolean deep,
                          BeanCopyOptions options) {
         BeanCopier.INSTANCE.copyBean(src, target, targetType, deep, options);
     }
 
     @Override
-    public Object castBeanToType(@Nonnull Object src, @Nonnull IGenericType targetType, BeanCopyOptions options) {
+    public Object castBeanToType(@NonNull Object src, @NonNull IGenericType targetType, BeanCopyOptions options) {
         return BeanCopier.INSTANCE.castBeanToType(src, targetType, options);
     }
 

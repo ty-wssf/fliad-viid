@@ -11,8 +11,8 @@ import io.nop.commons.mutable.MutableLong;
 import io.nop.dataset.record.IRecordInput;
 import io.nop.dataset.record.IRowNumberRecord;
 import io.nop.dataset.record.SimpleRowNumberRecord;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -34,7 +34,7 @@ public class RowNumberRecordInput<T> extends DelegateRecordInput<T> {
         return adapt(record, getReadCount());
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readBatch(int maxCount) {
         long readCount = getReadCount();
@@ -49,7 +49,7 @@ public class RowNumberRecordInput<T> extends DelegateRecordInput<T> {
         input.readBatch(maxCount, item -> ret.accept(adapt(item, readCount.incrementAndGet())));
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readAll() {
         long readCount = getReadCount();

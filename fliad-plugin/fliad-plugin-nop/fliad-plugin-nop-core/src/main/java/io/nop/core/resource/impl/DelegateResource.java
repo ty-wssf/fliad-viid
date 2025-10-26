@@ -11,8 +11,8 @@ import io.nop.api.core.beans.LongRangeBean;
 import io.nop.api.core.util.progress.IStepProgressListener;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.IResourceRegion;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -85,7 +85,7 @@ public class DelegateResource extends AbstractResource {
     }
 
     @Override
-    public void saveToFile(@Nonnull File file) {
+    public void saveToFile(@NonNull File file) {
         resource.saveToFile(file);
     }
 

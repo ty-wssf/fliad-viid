@@ -13,8 +13,6 @@ import io.nop.commons.concurrent.executor.DefaultThreadPoolExecutor;
 import io.nop.commons.concurrent.executor.IThreadPoolExecutor;
 import io.nop.commons.concurrent.impl.OverflowBlockingQueue;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import java.util.List;
 
 public abstract class AbstractBatchProcessService<T> {
@@ -45,7 +43,6 @@ public abstract class AbstractBatchProcessService<T> {
         return queue.size();
     }
 
-    @PostConstruct
     public void start() {
         if (queueConfig == null)
             queueConfig = new BatchQueueConfig();
@@ -68,7 +65,6 @@ public abstract class AbstractBatchProcessService<T> {
         return getQueueSize() == 0 && getProcessingCount() == 0;
     }
 
-    @PreDestroy
     public void destroy() {
         if (task != null)
             task.cancel();

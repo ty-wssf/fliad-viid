@@ -8,8 +8,8 @@
 package io.nop.core.lang.sql;
 
 import io.nop.commons.type.StdSqlType;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public final class SqlExprList implements ISqlExpr {
 
     private final List<ISqlExpr> exprs;
 
-    public SqlExprList(@Nonnull String name, StdSqlType sqlType, @Nonnull List<? extends ISqlExpr> exprs) {
+    public SqlExprList(@NonNull String name, StdSqlType sqlType, @NonNull List<? extends ISqlExpr> exprs) {
         this.name = name;
         this.sqlType = sqlType;
         this.exprs = new ArrayList<ISqlExpr>(exprs);

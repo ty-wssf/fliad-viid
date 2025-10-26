@@ -18,7 +18,7 @@ package io.nop.commons.path;
 
 import io.nop.api.core.util.Guard;
 import io.nop.commons.util.StringHelper;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -3,7 +3,7 @@ package io.nop.core.resource.cache;
 import io.nop.commons.cache.CacheStats;
 import io.nop.commons.cache.ICacheManagement;
 import io.nop.core.resource.IResourceObjectLoader;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.time.Duration;
 
@@ -22,7 +22,7 @@ public class CacheEntryManagement<V> implements ICacheManagement<V>, IResourceCa
     }
 
     @Override
-    public void remove(@Nonnull V key) {
+    public void remove(@NonNull V key) {
         clear();
     }
 

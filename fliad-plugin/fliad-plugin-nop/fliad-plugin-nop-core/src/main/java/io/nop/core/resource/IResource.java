@@ -12,7 +12,7 @@ import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.resource.IResourceReference;
 import io.nop.api.core.util.progress.IStepProgressListener;
 import io.nop.commons.util.IoHelper;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -170,7 +170,7 @@ public interface IResource extends IResourceReference {
     /**
      * 将资源文件内容转存到本地文件中
      */
-    void saveToFile(@Nonnull File file);
+    void saveToFile(@NonNull File file);
 
     /**
      * 特殊的资源文件可能具有内部优化，避免流拷贝。

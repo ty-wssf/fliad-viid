@@ -12,8 +12,8 @@ import com.google.common.hash.Hashing;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.util.MathHelper;
 import io.nop.commons.util.StringHelper;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
@@ -67,31 +67,31 @@ public class HashHelper {
     /**
      * 对输入字符串进行sha1散列，带salt达到更高的安全性.
      */
-    public static byte[] md5(@Nonnull byte[] input) {
+    public static byte[] md5(@NonNull byte[] input) {
         return digest(input, get(MD5_DIGEST), null, 1);
     }
 
     ////////////////// SHA1 ///////////////////
-    public static byte[] sha1(@Nonnull byte[] input) {
+    public static byte[] sha1(@NonNull byte[] input) {
         return digest(input, get(SHA_1_DIGEST), null, 1);
     }
 
     /**
      * 对输入字符串进行sha1散列，带salt达到更高的安全性.
      */
-    public static byte[] sha1(@Nonnull byte[] input, byte[] salt) {
+    public static byte[] sha1(@NonNull byte[] input, byte[] salt) {
         return digest(input, get(SHA_1_DIGEST), salt, 1);
     }
 
-    public static byte[] sha256(@Nonnull byte[] input, byte[] salt) {
+    public static byte[] sha256(@NonNull byte[] input, byte[] salt) {
         return digest(input, get(SHA_256_DIGEST), salt, 1);
     }
 
-    public static byte[] hmacSha256(@Nonnull byte[] input, byte[] key) {
+    public static byte[] hmacSha256(@NonNull byte[] input, byte[] key) {
         return hmac("HmacSHA256", input, key);
     }
 
-    public static byte[] sha512(@Nonnull byte[] input, byte[] salt) {
+    public static byte[] sha512(@NonNull byte[] input, byte[] salt) {
         return digest(input, get(SHA_512_DIGEST), salt, 1);
     }
 
@@ -100,7 +100,7 @@ public class HashHelper {
      *
      * @see #generateSalt(int)
      */
-    public static byte[] sha1(@Nonnull byte[] input, byte[] salt, int iterations) {
+    public static byte[] sha1(@NonNull byte[] input, byte[] salt, int iterations) {
         return digest(input, get(SHA_1_DIGEST), salt, iterations);
     }
 
@@ -113,7 +113,7 @@ public class HashHelper {
     /**
      * 对字符串进行散列, 支持md5与sha1算法.
      */
-    private static byte[] digest(@Nonnull byte[] input, MessageDigest digest, byte[] salt, int iterations) {
+    private static byte[] digest(@NonNull byte[] input, MessageDigest digest, byte[] salt, int iterations) {
         // 带盐
         if (salt != null) {
             digest.update(salt);

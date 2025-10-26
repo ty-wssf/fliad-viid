@@ -8,7 +8,7 @@
 package io.nop.commons.concurrent.lock;
 
 import io.nop.commons.concurrent.lock.impl.ResourceMultiLock;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.Set;
 import java.util.function.Consumer;
@@ -22,9 +22,9 @@ public interface IResourceLockManager {
 
     long getDefaultLeaseTime();
 
-    IResourceLock getLock(@Nonnull String resourceId, String holderId);
+    IResourceLock getLock(@NonNull String resourceId, String holderId);
 
-    default IResourceLock getMultiLock(@Nonnull Set<String> resourceIds, String holderId) {
+    default IResourceLock getMultiLock(@NonNull Set<String> resourceIds, String holderId) {
         return new ResourceMultiLock(this, resourceIds, holderId, getDefaultWaitTime(), getDefaultLeaseTime());
     }
 
@@ -33,7 +33,7 @@ public interface IResourceLockManager {
      *
      * @return 返回null如果资源没有被锁定
      */
-    IResourceLockState getLockState(@Nonnull String resourceId);
+    IResourceLockState getLockState(@NonNull String resourceId);
 
     boolean forceUnlock(String resourceId);
 

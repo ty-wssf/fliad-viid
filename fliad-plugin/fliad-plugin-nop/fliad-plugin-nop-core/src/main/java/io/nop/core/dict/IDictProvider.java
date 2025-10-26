@@ -11,9 +11,8 @@ import io.nop.api.core.beans.DictBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.cache.ICache;
 import io.nop.core.context.IEvalContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.NonNull;
+import org.noear.solon.lang.Nullable;
 
 import static io.nop.core.CoreErrors.ARG_DICT_NAME;
 import static io.nop.core.CoreErrors.ERR_DICT_UNKNOWN_DICT;
@@ -23,7 +22,7 @@ public interface IDictProvider {
     @Nullable
     DictBean getDict(String locale, String dictName, ICache<Object, Object> cache, IEvalContext ctx);
 
-    @Nonnull
+    @NonNull
     default DictBean requireDict(String locale, String dictName, ICache<Object, Object> cache, IEvalContext ctx) {
         DictBean dict = getDict(locale, dictName, cache, ctx);
         if (dict == null)

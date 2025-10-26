@@ -1,8 +1,8 @@
 package io.nop.commons.cache;
 
 import io.nop.api.core.util.FutureHelper;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.NonNull;
+import org.noear.solon.lang.Nullable;
 
 import java.util.Collection;
 import java.util.Map;
@@ -62,19 +62,19 @@ public interface ISyncCache<K, V> extends ICache<K, V> {
         return FutureHelper.futureRun(() -> forEachEntry(consumer));
     }
 
-    @Nonnull
+    @NonNull
     @Override
-    default CompletionStage<V> computeIfAbsentAsync(@Nonnull K key, @Nonnull Function<? super K, ? extends V> mappingFunction) {
+    default CompletionStage<V> computeIfAbsentAsync(@NonNull K key, @NonNull Function<? super K, ? extends V> mappingFunction) {
         return FutureHelper.futureCall(() -> computeIfAbsent(key, mappingFunction));
     }
 
     @Nullable
     @Override
-    default CompletionStage<V> getAsync(@Nonnull K key) {
+    default CompletionStage<V> getAsync(@NonNull K key) {
         return FutureHelper.futureCall(() -> get(key));
     }
 
-    @Nonnull
+    @NonNull
     @Override
     default CompletionStage<Map<K, V>> getAllAsync(Collection<? extends K> keys) {
         return FutureHelper.futureCall(() -> getAll(keys));

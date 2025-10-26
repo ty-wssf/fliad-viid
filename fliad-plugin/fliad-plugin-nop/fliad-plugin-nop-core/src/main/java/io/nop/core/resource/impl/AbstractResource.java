@@ -16,7 +16,7 @@ import io.nop.commons.util.URLHelper;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.IResourceRegion;
 import io.nop.core.resource.ResourceHelper;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -157,7 +157,7 @@ public abstract class AbstractResource implements IResource {
     }
 
     @Override
-    public void saveToFile(@Nonnull File file) {
+    public void saveToFile(@NonNull File file) {
         saveToResource(new FileResource(file));
     }
 

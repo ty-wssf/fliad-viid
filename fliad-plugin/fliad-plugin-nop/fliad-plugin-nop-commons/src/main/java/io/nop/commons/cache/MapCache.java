@@ -8,8 +8,8 @@
 package io.nop.commons.cache;
 
 import io.nop.api.core.util.FutureHelper;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
+import org.noear.solon.lang.NonNull;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -50,18 +50,18 @@ public class MapCache<K, V> implements ICache<K, V> {
 
     @Nullable
     @Override
-    public CompletionStage<V> getAsync(@Nonnull K key) {
+    public CompletionStage<V> getAsync(@NonNull K key) {
         return FutureHelper.futureCall(() -> get(key));
     }
 
-    @Nonnull
+    @NonNull
     @Override
-    public CompletionStage<V> computeIfAbsentAsync(@Nonnull K key,
-                                                   @Nonnull Function<? super K, ? extends V> mappingFunction) {
+    public CompletionStage<V> computeIfAbsentAsync(@NonNull K key,
+                                                   @NonNull Function<? super K, ? extends V> mappingFunction) {
         return FutureHelper.futureCall(() -> computeIfAbsent(key, mappingFunction));
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public CompletionStage<Map<K, V>> getAllAsync(Collection<? extends K> keys) {
         return FutureHelper.futureCall(() -> getAll(keys));

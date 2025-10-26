@@ -7,9 +7,10 @@
  */
 package io.nop.core.reflect;
 
-import jakarta.annotation.Nonnull;
+
+import org.noear.solon.lang.NonNull;
 
 public interface IClassModelLoader {
-    @Nonnull
+    @NonNull
     IClassModel loadClassModel(String className);
 }

@@ -7,7 +7,8 @@
  */
 package io.nop.commons.util;
 
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class ArrayHelper {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] assign(@Nonnull T[] array, int i, T o) {
+    public static <T> T[] assign(@NonNull T[] array, int i, T o) {
         if (array.length <= i) {
             T[] newArray = (T[]) Array.newInstance(array.getClass().getComponentType(), i + 1);
             System.arraycopy(array, 0, newArray, 0, array.length);

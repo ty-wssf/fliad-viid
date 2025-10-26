@@ -12,8 +12,8 @@ import io.nop.core.type.GenericTypeKind;
 import io.nop.core.type.IGenericType;
 import io.nop.core.type.IWildcardType;
 import io.nop.core.type.PredefinedGenericTypes;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 
 public class PredefinedWildcardType extends PredefinedGenericType implements IWildcardType {
     public static final PredefinedWildcardType NO_BOUND_WILDCARD_TYPE = new PredefinedWildcardType();
@@ -30,7 +30,7 @@ public class PredefinedWildcardType extends PredefinedGenericType implements IWi
         return GenericTypeKind.WILDCARD;
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public IGenericType getUpperBound() {
         return PredefinedGenericTypes.ANY_TYPE;

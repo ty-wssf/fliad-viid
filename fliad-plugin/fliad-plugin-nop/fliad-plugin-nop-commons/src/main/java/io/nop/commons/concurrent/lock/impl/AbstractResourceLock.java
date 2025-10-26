@@ -9,7 +9,7 @@ package io.nop.commons.concurrent.lock.impl;
 
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.concurrent.lock.IResourceLock;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -69,7 +69,7 @@ public abstract class AbstractResourceLock implements IResourceLock {
     }
 
     @Override
-    public @Nonnull Condition newCondition() {
+    public @NonNull Condition newCondition() {
         throw new UnsupportedOperationException("Lock.newCondition");
     }
 }

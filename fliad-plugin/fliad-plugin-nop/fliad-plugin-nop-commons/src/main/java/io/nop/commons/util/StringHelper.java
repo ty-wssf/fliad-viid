@@ -25,7 +25,7 @@ import io.nop.commons.text.regex.RegexHelper;
 import io.nop.commons.text.tokenizer.SimpleTextReader;
 import io.nop.commons.type.StdDataType;
 import io.nop.commons.util.random.IRandom;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

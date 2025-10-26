@@ -11,7 +11,7 @@ import io.nop.core.resource.IResourceObjectLoader;
 import io.nop.core.resource.cache.IResourceLoadingCache;
 import io.nop.core.resource.cache.ResourceLoadingCache;
 import io.nop.core.resource.deps.ResourceDependencySet;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -65,7 +65,7 @@ public class TenantAwareResourceLoadingCache<V> implements IResourceLoadingCache
     }
 
     @Override
-    public void remove(@Nonnull String path) {
+    public void remove(@NonNull String path) {
         getCache(path).remove(path);
     }
 

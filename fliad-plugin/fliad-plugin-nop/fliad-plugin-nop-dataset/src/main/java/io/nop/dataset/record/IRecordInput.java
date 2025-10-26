@@ -11,7 +11,7 @@ import io.nop.dataset.record.impl.LimitRecordInput;
 import io.nop.dataset.record.impl.RecordInputImpls;
 import io.nop.dataset.record.impl.TransformRecordInput;
 import io.nop.dataset.record.support.BatchChunkIterator;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.Closeable;
 import java.util.Iterator;
@@ -34,7 +34,7 @@ public interface IRecordInput<T> extends Closeable, Iterator<T>, Iterable<T> {
 
     }
 
-    default @Nonnull Iterator<T> iterator() {
+    default @NonNull Iterator<T> iterator() {
         return this;
     }
 
@@ -94,11 +94,11 @@ public interface IRecordInput<T> extends Closeable, Iterator<T>, Iterable<T> {
         return map(transformer, null);
     }
 
-    default @Nonnull List<T> readBatch(int maxCount) {
+    default @NonNull List<T> readBatch(int maxCount) {
         return readBatchWithTransformer(maxCount, Function.identity());
     }
 
-    default @Nonnull List<T> readFiltered(int maxCount, Predicate<T> filter) {
+    default @NonNull List<T> readFiltered(int maxCount, Predicate<T> filter) {
         return readFilteredWithTransformer(maxCount, filter, Function.identity());
     }
 
@@ -106,19 +106,19 @@ public interface IRecordInput<T> extends Closeable, Iterator<T>, Iterable<T> {
         readBatchWithTransformer(maxCount, Function.identity(), ret);
     }
 
-    default @Nonnull List<T> readAll() {
+    default @NonNull List<T> readAll() {
         return readAllWithTransformer(Function.identity());
     }
 
-    default @Nonnull <R> List<R> readAllWithTransformer(Function<T, R> transformer) {
+    default @NonNull <R> List<R> readAllWithTransformer(Function<T, R> transformer) {
         return RecordInputImpls.defaultReadAll(this, transformer);
     }
 
-    default @Nonnull <R> List<R> readBatchWithTransformer(int maxCount, Function<T, R> transformer) {
+    default @NonNull <R> List<R> readBatchWithTransformer(int maxCount, Function<T, R> transformer) {
         return RecordInputImpls.defaultReadBatch(this, maxCount, transformer);
     }
 
-    default @Nonnull <R> List<R> readFilteredWithTransformer(int maxCount, Predicate<T> filter,
+    default @NonNull <R> List<R> readFilteredWithTransformer(int maxCount, Predicate<T> filter,
                                                              Function<T, R> transformer) {
         return RecordInputImpls.defaultReadBatch(this, maxCount, filter, transformer);
     }

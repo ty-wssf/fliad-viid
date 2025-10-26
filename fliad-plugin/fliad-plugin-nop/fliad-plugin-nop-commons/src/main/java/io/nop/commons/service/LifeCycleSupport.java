@@ -8,8 +8,6 @@
 package io.nop.commons.service;
 
 import io.nop.api.core.exceptions.NopException;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,7 +62,6 @@ public abstract class LifeCycleSupport implements ILifeCycle {
             throw new NopException(ERR_SERVICE_NOT_ACTIVE).param(ARG_SERVICE, this);
     }
 
-    @PostConstruct
     @Override
     public void start() {
         if (!isAllowRestart()) {
@@ -94,7 +91,6 @@ public abstract class LifeCycleSupport implements ILifeCycle {
         return false;
     }
 
-    @PreDestroy
     @Override
     public void stop() {
         if (beginStop()) {

@@ -12,7 +12,7 @@ import io.nop.commons.util.CollectionHelper;
 import io.nop.core.model.table.impl.SubTableView;
 import io.nop.core.model.table.impl.TableImpls;
 import io.nop.core.reflect.hook.IExtensibleObject;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -188,7 +188,7 @@ public interface ITableView extends IExtensibleObject {
         return TableImpls.isSomeRowCellSatisfy(this, rowIndex, predicate);
     }
 
-    default <T> List<List<T>> getMatrixValues(@Nonnull Function<ICellView, T> fn) {
+    default <T> List<List<T>> getMatrixValues(@NonNull Function<ICellView, T> fn) {
         return TableImpls.getMatrixValues(this, fn);
     }
 

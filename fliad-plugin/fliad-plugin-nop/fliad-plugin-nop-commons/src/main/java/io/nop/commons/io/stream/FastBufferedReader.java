@@ -12,8 +12,8 @@ import io.nop.api.core.util.Guard;
 import io.nop.commons.text.MutableString;
 import io.nop.commons.util.IoHelper;
 import io.nop.commons.util.StringHelper;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -89,7 +89,7 @@ public class FastBufferedReader extends Reader implements ICharReader, IBuffered
     }
 
     @Override
-    public int read(@Nonnull char[] cbuf, int offset, int length) throws IOException {
+    public int read(@NonNull char[] cbuf, int offset, int length) throws IOException {
         Guard.checkOffsetLength(cbuf.length, offset, length);
 
         if (!hasNext())

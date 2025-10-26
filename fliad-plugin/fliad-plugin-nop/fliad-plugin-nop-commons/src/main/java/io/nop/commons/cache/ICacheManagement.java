@@ -8,12 +8,12 @@
 package io.nop.commons.cache;
 
 import io.nop.commons.metrics.IWithStats;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 public interface ICacheManagement<K> extends IWithStats<CacheStats> {
     String getName();
 
-    void remove(@Nonnull K key);
+    void remove(@NonNull K key);
 
     void clear();
 

@@ -16,8 +16,8 @@ import io.nop.core.type.IRawTypeResolver;
 import io.nop.core.type.ITypeScope;
 import io.nop.core.type.ITypeVariableBound;
 import io.nop.core.type.PredefinedGenericTypes;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 
 public class GenericTypeVariableBoundImpl extends AbstractGenericType implements ITypeVariableBound {
     private final String name;
@@ -93,7 +93,7 @@ public class GenericTypeVariableBoundImpl extends AbstractGenericType implements
         return upperBound.getStdDataType();
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public IGenericType getUpperBound() {
         return upperBound;

@@ -15,9 +15,7 @@ import io.nop.commons.concurrent.executor.IScheduledExecutor;
 import io.nop.commons.concurrent.lock.IResourceLock;
 import io.nop.commons.concurrent.lock.IResourceLockManager;
 import io.nop.commons.concurrent.lock.IResourceLockState;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,7 +95,6 @@ public class LocalResourceLockManager implements IResourceLockManager, IResource
         return lock;
     }
 
-    @PostConstruct
     public void init() {
         Guard.checkArgument(schedulePromise == null, "nop.lock.lock-manager-already-inited");
         if (timer == null)
@@ -106,7 +103,6 @@ public class LocalResourceLockManager implements IResourceLockManager, IResource
                 TimeUnit.MILLISECONDS);
     }
 
-    @PreDestroy
     public void destroy() {
         if (schedulePromise != null) {
             schedulePromise.cancel(false);
@@ -134,7 +130,7 @@ public class LocalResourceLockManager implements IResourceLockManager, IResource
     }
 
     @Override
-    public IResourceLockState getLockState(@Nonnull String resourceId) {
+    public IResourceLockState getLockState(@NonNull String resourceId) {
         return locks.get(resourceId);
     }
 
@@ -206,7 +202,7 @@ public class LocalResourceLockManager implements IResourceLockManager, IResource
     }
 
     @Override
-    public IResourceLock getLock(@Nonnull String resourceId, String holderId) {
+    public IResourceLock getLock(@NonNull String resourceId, String holderId) {
         return new ResourceLock(this, resourceId, holderId, getDefaultWaitTime(), getDefaultLeaseTime());
     }
 

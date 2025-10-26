@@ -10,7 +10,7 @@ package io.nop.commons.util;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.path.AntPathMatcher;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -167,7 +167,7 @@ public class FileHelper {
         writeText(file, text, encoding);
     }
 
-    public static Properties readProperties(@Nonnull File file) {
+    public static Properties readProperties(@NonNull File file) {
         InputStream is = null;
         try {
             is = new FileInputStream(file);
@@ -182,7 +182,7 @@ public class FileHelper {
         }
     }
 
-    public static void copyFile(@Nonnull File srcFile, @Nonnull File dstFile) {
+    public static void copyFile(@NonNull File srcFile, @NonNull File dstFile) {
         if (srcFile.equals(dstFile))
             return;
         prepareCopy(srcFile, dstFile, true, false);
@@ -195,7 +195,7 @@ public class FileHelper {
         }
     }
 
-    public static boolean moveFile(@Nonnull File srcFile, @Nonnull File dstFile) {
+    public static boolean moveFile(@NonNull File srcFile, @NonNull File dstFile) {
         try {
             Files.move(srcFile.toPath(), dstFile.toPath());
             return true;

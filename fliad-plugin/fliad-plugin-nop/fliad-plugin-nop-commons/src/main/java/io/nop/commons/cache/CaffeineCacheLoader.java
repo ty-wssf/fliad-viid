@@ -8,8 +8,8 @@
 package io.nop.commons.cache;
 
 import com.github.benmanes.caffeine.cache.CacheLoader;
-import jakarta.annotation.Nullable;
 import org.jspecify.annotations.NonNull;
+import org.noear.solon.lang.Nullable;
 
 import java.util.Map;
 import java.util.Set;

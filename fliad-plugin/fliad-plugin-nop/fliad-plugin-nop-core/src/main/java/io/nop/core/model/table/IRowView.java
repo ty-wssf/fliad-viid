@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nop.api.core.util.ProcessResult;
 import io.nop.core.model.table.impl.TableImpls;
 import io.nop.core.reflect.hook.IExtensibleObject;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -157,7 +157,7 @@ public interface IRowView extends IExtensibleObject {
     /**
      * 这里返回的cells集合的下标就是colIndex, 当行中包含合并单元格时，合并单元格对应的colIndex位置就会放置ProxyCell。
      */
-    @Nonnull
+    @NonNull
     List<? extends ICellView> getCells();
 
     @JsonIgnore

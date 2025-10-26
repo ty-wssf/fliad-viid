@@ -17,7 +17,7 @@
 package io.nop.commons.util;
 
 import io.nop.api.core.annotations.core.Name;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

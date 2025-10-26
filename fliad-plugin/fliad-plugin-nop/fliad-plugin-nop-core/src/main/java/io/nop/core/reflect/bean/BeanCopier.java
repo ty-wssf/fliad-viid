@@ -28,7 +28,7 @@ import io.nop.core.model.object.DynamicObject;
 import io.nop.core.reflect.ReflectionManager;
 import io.nop.core.type.IGenericType;
 import io.nop.core.type.PredefinedGenericTypes;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class BeanCopier implements IBeanCopier {
 
     public static final BeanCopier INSTANCE = new BeanCopier();
 
-    public void copyBean(@Nonnull Object src, @Nonnull Object target, @Nonnull IGenericType targetType, boolean deep,
+    public void copyBean(@NonNull Object src, @NonNull Object target, @NonNull IGenericType targetType, boolean deep,
                          BeanCopyOptions options) {
         Guard.notNull(src, "src");
         Guard.notNull(target, "target");
@@ -271,7 +271,7 @@ public class BeanCopier implements IBeanCopier {
         return clazz.isEnum() || StdDataType.fromJavaClass(clazz).isSimpleType();
     }
 
-    public Object buildBean(@Nonnull Object src, @Nonnull IGenericType targetType, BeanCopyOptions options) {
+    public Object buildBean(@NonNull Object src, @NonNull IGenericType targetType, BeanCopyOptions options) {
         Guard.notNull(src, "src");
         Guard.notNull(targetType, "targetType");
         if (options == null)
@@ -593,7 +593,7 @@ public class BeanCopier implements IBeanCopier {
     }
 
     @Override
-    public Object castBeanToType(@Nonnull Object src, @Nonnull IGenericType targetType, BeanCopyOptions options) {
+    public Object castBeanToType(@NonNull Object src, @NonNull IGenericType targetType, BeanCopyOptions options) {
         Guard.notNull(src, "src");
         Guard.notNull(targetType, "targetType");
         if (options == null) {

@@ -7,13 +7,14 @@
  */
 package io.nop.core.type;
 
-import jakarta.annotation.Nonnull;
+
+import org.noear.solon.lang.NonNull;
 
 public interface IWildcardType extends ITypeWithBound {
     /**
      * 对应 ? extends upperBound。如果没有明确声明，则UpperBound为Object类型
      */
-    @Nonnull
+    @NonNull
     IGenericType getUpperBound();
 
     /**

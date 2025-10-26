@@ -9,10 +9,10 @@ package io.nop.commons.cache;
 
 import io.nop.api.core.annotations.core.GlobalInstance;
 import io.nop.api.core.exceptions.NopException;
+import org.noear.solon.lang.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.annotation.Nonnull;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -34,7 +34,7 @@ public class GlobalCacheRegistry {
 
     private final ConcurrentMap<String, ICacheManagement<?>> caches = new ConcurrentHashMap<>();
 
-    public void removeCacheEntry(@Nonnull CacheRef ref) {
+    public void removeCacheEntry(@NonNull CacheRef ref) {
         ICacheManagement<?> cache = caches.get(ref.getCacheName());
         if (cache != null) {
             Object cacheKey = ref.getCacheKey();
@@ -58,11 +58,11 @@ public class GlobalCacheRegistry {
         }
     }
 
-    public ICacheManagement<?> getCache(@Nonnull String name) {
+    public ICacheManagement<?> getCache(@NonNull String name) {
         return caches.get(name);
     }
 
-    public void register(@Nonnull ICacheManagement<?> cache) {
+    public void register(@NonNull ICacheManagement<?> cache) {
         ICacheManagement<?> oldCache = caches.put(cache.getName(), cache);
         if (oldCache != null)
             throw new NopException(ERR_CACHE_DUPLICATE_REGISTRATION).param(ARG_CACHE_NAME, cache.getName());

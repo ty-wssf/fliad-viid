@@ -18,6 +18,10 @@
             <artifactId>solon-serialization-jackson</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon.validation</artifactId>
+        </dependency>
+        <!--<dependency>
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
             <version>3.1.0</version>
@@ -26,6 +30,6 @@
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
             <version>2.1.1</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 </project>

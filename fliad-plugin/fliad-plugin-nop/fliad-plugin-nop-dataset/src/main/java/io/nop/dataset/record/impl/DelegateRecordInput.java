@@ -10,7 +10,7 @@ package io.nop.dataset.record.impl;
 import io.nop.api.core.util.Guard;
 import io.nop.dataset.record.IRecordInput;
 import io.nop.dataset.record.IRecordResourceMeta;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.IOException;
 import java.util.List;
@@ -63,7 +63,7 @@ public class DelegateRecordInput<T> implements IRecordInput<T> {
         return input.limit(maxCount);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readBatch(int maxCount) {
         return input.readBatch(maxCount);
@@ -74,7 +74,7 @@ public class DelegateRecordInput<T> implements IRecordInput<T> {
         input.readBatch(maxCount, ret);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public List<T> readAll() {
         return input.readAll();

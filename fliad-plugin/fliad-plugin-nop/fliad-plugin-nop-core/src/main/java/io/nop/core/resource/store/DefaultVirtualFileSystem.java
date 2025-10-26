@@ -20,7 +20,7 @@ import io.nop.core.resource.IResourceStore;
 import io.nop.core.resource.IVirtualFileSystem;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.ResourceHelper;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.List;
 import java.util.Map;
@@ -122,12 +122,12 @@ public class DefaultVirtualFileSystem implements IVirtualFileSystem, IRefreshabl
     }
 
     @Override
-    public void registerNamespaceHandler(@Nonnull IResourceNamespaceHandler handler) {
+    public void registerNamespaceHandler(@NonNull IResourceNamespaceHandler handler) {
         namespaceHandlers.put(handler.getNamespace(), handler);
     }
 
     @Override
-    public void unregisterNamespaceHandler(@Nonnull IResourceNamespaceHandler handler) {
+    public void unregisterNamespaceHandler(@NonNull IResourceNamespaceHandler handler) {
         namespaceHandlers.remove(handler.getNamespace(), handler);
     }
 

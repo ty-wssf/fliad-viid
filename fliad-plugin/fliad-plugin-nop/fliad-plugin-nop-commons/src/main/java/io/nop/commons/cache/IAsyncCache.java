@@ -15,8 +15,9 @@
  */
 package io.nop.commons.cache;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.NonNull;
+import org.noear.solon.lang.Nullable;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -46,7 +47,7 @@ public interface IAsyncCache<K, V> extends ICacheManagement<K> {
      * @throws NullPointerException if the specified key is null
      */
     @Nullable
-    CompletionStage<V> getAsync(@Nonnull K key);
+    CompletionStage<V> getAsync(@NonNull K key);
 
     /**
      * Returns the future associated with {@code key} in this cache, obtaining that value from {@code mappingFunction}
@@ -66,8 +67,8 @@ public interface IAsyncCache<K, V> extends ICacheManagement<K> {
      * @return the current (existing or computed) future value associated with the specified key
      * @throws NullPointerException if the specified key or mappingFunction is null
      */
-    @Nonnull
-    CompletionStage<V> computeIfAbsentAsync(@Nonnull K key, @Nonnull Function<? super K, ? extends V> mappingFunction);
+    @NonNull
+    CompletionStage<V> computeIfAbsentAsync(@NonNull K key, @NonNull Function<? super K, ? extends V> mappingFunction);
 
     /**
      * Returns the future of a map of the values associated with {@code keys}, creating or retrieving those values if
@@ -89,6 +90,6 @@ public interface IAsyncCache<K, V> extends ICacheManagement<K> {
      * @throws RuntimeException     or Error if the {@link AsyncCacheLoader} does so, if {@link AsyncCacheLoader#asyncLoadAll} returns
      *                              {@code null}, or fails when constructing the future, in which case the mapping is left unestablished
      */
-    @Nonnull
+    @NonNull
     CompletionStage<Map<K, V>> getAllAsync(Collection<? extends K> keys);
 }

@@ -66,8 +66,8 @@ import io.nop.core.reflect.hook.IPropMakeMissingHook;
 import io.nop.core.reflect.hook.IPropSetMissingHook;
 import io.nop.core.type.IGenericType;
 import io.nop.core.type.PredefinedGenericTypes;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
+import org.noear.solon.lang.NonNull;
+import org.noear.solon.lang.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -309,7 +309,7 @@ public class BeanModelBuilder {
             prop.setGetter(candidate.field.getGetter());
             prop.setSetter(candidate.field.getSetter());
             prop.setType(candidate.field.getType());
-            if (candidate.field.isAnnotationPresent(Nonnull.class)) {
+            if (candidate.field.isAnnotationPresent(NonNull.class)) {
                 prop.setNullable(false);
             } else if (candidate.field.isAnnotationPresent(Nullable.class)) {
                 prop.setNullable(true);
@@ -322,7 +322,7 @@ public class BeanModelBuilder {
             prop.setType(argModel.getType());
 
             if (prop.getNullable() != null) {
-                if (argModel.isAnnotationPresent(Nonnull.class)) {
+                if (argModel.isAnnotationPresent(NonNull.class)) {
                     prop.setNullable(false);
                 } else if (argModel.isAnnotationPresent(Nullable.class)) {
                     prop.setNullable(true);
@@ -342,7 +342,7 @@ public class BeanModelBuilder {
             prop.setLazyLoad(candidate.getMethod.isAnnotationPresent(LazyLoad.class));
 
             if (prop.getNullable() != null) {
-                if (candidate.getMethod.isAnnotationPresent(Nonnull.class)) {
+                if (candidate.getMethod.isAnnotationPresent(NonNull.class)) {
                     prop.setNullable(false);
                 } else if (candidate.getMethod.isAnnotationPresent(Nullable.class)) {
                     prop.setNullable(true);

@@ -20,9 +20,9 @@ import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.reflect.IFunctionArgument;
 import io.nop.core.reflect.ReflectionManager;
 import io.nop.core.type.IGenericType;
+import org.noear.solon.lang.NonNull;
+import org.noear.solon.lang.Nullable;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
@@ -84,7 +84,7 @@ public class MethodModelBuilder {
         } else {
             Method m = (Method) method;
             mtd.setReturnType(buildGenericType(m.getGenericReturnType()));
-            if (m.isAnnotationPresent(Nonnull.class)) {
+            if (m.isAnnotationPresent(NonNull.class)) {
                 mtd.setReturnNullable(false);
             } else {
                 mtd.setReturnNullable(true);
@@ -118,7 +118,7 @@ public class MethodModelBuilder {
             arg.setConverter(buildConverter(type));
             if (param.isAnnotationPresent(Nullable.class)) {
                 arg.setNullable(true);
-            } else if (param.isAnnotationPresent(Nonnull.class)) {
+            } else if (param.isAnnotationPresent(NonNull.class)) {
                 arg.setNullable(false);
             }
             args.add(arg);

@@ -8,7 +8,6 @@
 package io.nop.commons.concurrent.executor;
 
 import io.nop.api.core.util.Guard;
-import jakarta.annotation.PostConstruct;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
@@ -56,7 +55,6 @@ public class DefaultScheduledExecutor implements IScheduledExecutor {
         }
     }
 
-    @PostConstruct
     public void init() {
         Guard.checkState(executor == null);
         if (config == null)

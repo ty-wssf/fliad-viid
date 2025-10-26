@@ -10,7 +10,7 @@ package io.nop.core.resource;
 import io.nop.commons.lang.IDestroyable;
 import io.nop.commons.lang.IRefreshable;
 import io.nop.core.resource.impl.VirtualFile;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.Set;
 
@@ -25,9 +25,9 @@ public interface IVirtualFileSystem extends IResourceStore, IDestroyable, IRefre
         return new VirtualFile(this, getResource(path));
     }
 
-    void registerNamespaceHandler(@Nonnull IResourceNamespaceHandler handler);
+    void registerNamespaceHandler(@NonNull IResourceNamespaceHandler handler);
 
-    void unregisterNamespaceHandler(@Nonnull IResourceNamespaceHandler handler);
+    void unregisterNamespaceHandler(@NonNull IResourceNamespaceHandler handler);
 
     /**
      * GraalVM生成native镜像时不支持类路径扫描，需要将事先收集类路径下资源文件

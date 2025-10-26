@@ -9,8 +9,8 @@ package io.nop.commons.cache;
 
 import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.util.Guard;
+import org.noear.solon.validation.annotation.NotNull;
 
-import jakarta.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class CacheRef implements Serializable {
     private final Serializable cacheKey;
     private final int hash;
 
-    public CacheRef(@Nonnull String cacheName, Serializable cacheKey) {
+    public CacheRef(@NotNull String cacheName, Serializable cacheKey) {
         this.cacheName = Guard.notNull(cacheName, "cacheName");
         this.cacheKey = cacheKey;
         this.hash = cacheName.hashCode() * 37 + (cacheKey == null ? 0 : cacheKey.hashCode());

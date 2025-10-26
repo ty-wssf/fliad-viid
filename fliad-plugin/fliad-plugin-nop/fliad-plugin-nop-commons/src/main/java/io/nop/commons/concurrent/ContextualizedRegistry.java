@@ -7,7 +7,8 @@
  */
 package io.nop.commons.concurrent;
 
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -22,24 +23,24 @@ public class ContextualizedRegistry<K, V> {
         return key;
     }
 
-    public V get(@Nonnull K key) {
+    public V get(@NonNull K key) {
         key = normalizeKey(key);
         return map.get(key);
     }
 
-    public V put(@Nonnull K key, V value) {
+    public V put(@NonNull K key, V value) {
         key = normalizeKey(key);
 
         V result = value == null ? map.remove(key) : map.put(key, value);
         return result;
     }
 
-    public V remove(@Nonnull K key) {
+    public V remove(@NonNull K key) {
         key = normalizeKey(key);
         return map.remove(key);
     }
 
-    public boolean remove(@Nonnull K key, V value) {
+    public boolean remove(@NonNull K key, V value) {
         key = normalizeKey(key);
         return map.remove(key, value);
     }

@@ -7,7 +7,8 @@
  */
 package io.nop.commons.functional.predicate;
 
-import jakarta.annotation.Nonnull;
+
+import org.noear.solon.lang.NonNull;
 
 import java.util.function.Predicate;
 
@@ -38,21 +39,21 @@ public class AndPredicate<T> implements Predicate<T> {
         return predicate.test(t) && other.test(t);
     }
 
-    @Nonnull
+    @NonNull
     @Override
-    public Predicate<T> and(@Nonnull Predicate<? super T> other) {
+    public Predicate<T> and(@NonNull Predicate<? super T> other) {
         return new AndPredicate<>(this, other);
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public Predicate<T> negate() {
         return new NotPredicate<>(this);
     }
 
-    @Nonnull
+    @NonNull
     @Override
-    public Predicate<T> or(@Nonnull Predicate<? super T> other) {
+    public Predicate<T> or(@NonNull Predicate<? super T> other) {
         return new OrPredicate<>(this, other);
     }
 }

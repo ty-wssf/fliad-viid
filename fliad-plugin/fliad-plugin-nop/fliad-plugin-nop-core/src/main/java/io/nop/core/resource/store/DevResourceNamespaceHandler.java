@@ -15,8 +15,6 @@ import io.nop.core.resource.IResourceNamespaceHandler;
 import io.nop.core.resource.IResourceStore;
 import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.impl.FileResource;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 
 import java.io.File;
 
@@ -26,12 +24,10 @@ import static io.nop.core.resource.ResourceConstants.RESOURCE_NS_DEV;
 public class DevResourceNamespaceHandler implements IResourceNamespaceHandler {
     public static DevResourceNamespaceHandler INSTANCE = new DevResourceNamespaceHandler();
 
-    @PostConstruct
     public void register() {
         VirtualFileSystem.instance().registerNamespaceHandler(INSTANCE);
     }
 
-    @PreDestroy
     public void unregister() {
         VirtualFileSystem.instance().unregisterNamespaceHandler(INSTANCE);
     }

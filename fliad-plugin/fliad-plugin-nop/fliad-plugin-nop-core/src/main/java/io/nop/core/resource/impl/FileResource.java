@@ -13,7 +13,7 @@ import io.nop.commons.util.StringHelper;
 import io.nop.core.resource.IFile;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.io.*;
 import java.net.URL;
@@ -126,7 +126,7 @@ public class FileResource extends AbstractFile implements IFile {
     }
 
     @Override
-    public void saveToFile(@Nonnull File file) {
+    public void saveToFile(@NonNull File file) {
         FileHelper.copyFile(this.file, file);
     }
 

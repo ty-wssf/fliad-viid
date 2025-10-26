@@ -18,7 +18,7 @@
     </parent>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>21</java.version>
         <viid.version>0.1.0</viid.version>
         <solon.version>3.6.0</solon.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

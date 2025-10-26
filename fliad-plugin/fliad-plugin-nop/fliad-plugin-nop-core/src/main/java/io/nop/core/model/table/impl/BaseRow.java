@@ -10,7 +10,7 @@ package io.nop.core.model.table.impl;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.model.table.ICell;
 import io.nop.core.model.table.IRow;
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +113,7 @@ public class BaseRow extends AbstractRow implements IRow {
     }
 
     @Override
-    public @Nonnull List<? extends ICell> getCells() {
+    public @NonNull List<? extends ICell> getCells() {
         return cells;
     }
 }

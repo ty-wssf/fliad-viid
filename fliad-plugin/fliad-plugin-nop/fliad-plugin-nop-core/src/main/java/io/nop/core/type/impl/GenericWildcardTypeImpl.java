@@ -13,8 +13,8 @@ import io.nop.core.type.IGenericType;
 import io.nop.core.type.IRawTypeResolver;
 import io.nop.core.type.IWildcardType;
 import io.nop.core.type.PredefinedGenericTypes;
+import org.noear.solon.lang.NonNull;
 
-import jakarta.annotation.Nonnull;
 
 public class GenericWildcardTypeImpl extends AbstractGenericType implements IWildcardType {
     private final IGenericType upperBound;
@@ -86,7 +86,7 @@ public class GenericWildcardTypeImpl extends AbstractGenericType implements IWil
         return upperBound.getStdDataType();
     }
 
-    @Nonnull
+    @NonNull
     @Override
     public IGenericType getUpperBound() {
         return upperBound;
