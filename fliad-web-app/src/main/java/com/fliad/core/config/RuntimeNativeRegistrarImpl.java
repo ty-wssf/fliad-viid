@@ -104,7 +104,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         metadata.registerArg("-Ob");
         metadata.registerArg("-H:+UnlockExperimentalVMOptions");
-        metadata.registerArg("-H:NativeLibraryPath=D:\\IdeaProjects\\services\\fliad-web-app-windows-native");
+
     }
 
     /**
