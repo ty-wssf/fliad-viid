@@ -1,3 +1,4 @@
+/*
 package com.fliad.report.service;
 
 import com.fliad.common.exception.CommonException;
@@ -24,45 +25,53 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * 报表服务类，封装NopReport的核心方法
  * 支持生成XLSX、HTML等不同格式的报表
- */
+ *//*
+
 @Component
 public class ReportService {
 
     private static final Logger log = LoggerFactory.getLogger(ReportService.class);
 
-    /**
+    */
+/**
      * 生成XLSX格式报表
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据
      * @param outputFile   输出文件路径
-     */
+     *//*
+
     public void generateXlsxReport(String templatePath, Map<String, Object> data, String outputFile) {
         generateReport(templatePath, "xlsx", data, outputFile);
     }
 
-    /**
+    */
+/**
      * 生成HTML格式报表
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据
      * @param outputFile   输出文件路径
-     */
+     *//*
+
     public void generateHtmlReport(String templatePath, Map<String, Object> data, String outputFile) {
         generateReport(templatePath, "html", data, outputFile);
     }
 
-    /**
+    */
+/**
      * 生成指定格式的报表
      *
      * @param templatePath 报表模板路径
      * @param format       报表格式 (xlsx, html等)
      * @param data         报表数据
      * @param outputFile   输出文件路径
-     */
+     *//*
+
     public void generateReport(String templatePath, String format, Map<String, Object> data, String outputFile) {
         try {
             // 创建报表引擎
@@ -95,36 +104,42 @@ public class ReportService {
         }
     }
 
-    /**
+    */
+/**
      * 生成XLSX格式报表并返回字节数组
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据
      * @return 报表字节数组
-     */
+     *//*
+
     public byte[] generateXlsxReportBytes(String templatePath, Map<String, Object> data) {
         return generateReportBytes(templatePath, "xlsx", data);
     }
 
-    /**
+    */
+/**
      * 生成HTML格式报表并返回字节数组
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据
      * @return 报表字节数组
-     */
+     *//*
+
     public byte[] generateHtmlReportBytes(String templatePath, Map<String, Object> data) {
         return generateReportBytes(templatePath, "html", data);
     }
 
-    /**
+    */
+/**
      * 生成指定格式的报表并返回字节数组
      *
      * @param templatePath 报表模板路径
      * @param format       报表格式 (xlsx, html等)
      * @param data         报表数据
      * @return 报表字节数组
-     */
+     *//*
+
     public byte[] generateReportBytes(String templatePath, String format, Map<String, Object> data) {
         try {
             // 创建临时文件
@@ -150,12 +165,14 @@ public class ReportService {
         }
     }
 
-    /**
+    */
+/**
      * 验证报表模板是否存在
      *
      * @param templatePath 报表模板路径
      * @return 模板是否存在
-     */
+     *//*
+
     public boolean isTemplateExists(String templatePath) {
         try {
             return ResourceUtil.getResource("_vfs" + templatePath) != null;
@@ -164,11 +181,13 @@ public class ReportService {
         }
     }
 
-    /**
+    */
+/**
      * 创建报表引擎
      *
      * @return 报表引擎实例
-     */
+     *//*
+
     IReportEngine newReportEngine() {
         ReportEngine reportEngine = new ReportEngine();
         Map<String, io.nop.report.core.engine.IReportRendererFactory> renderers = new HashMap<>();
@@ -177,4 +196,4 @@ public class ReportService {
         reportEngine.setRenderers(renderers);
         return reportEngine;
     }
-}
+}*/

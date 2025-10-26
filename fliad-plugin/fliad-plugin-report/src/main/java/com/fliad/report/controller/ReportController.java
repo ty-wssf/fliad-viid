@@ -1,3 +1,4 @@
+/*
 package com.fliad.report.controller;
 
 import com.fliad.common.util.CommonDownloadUtil;
@@ -17,9 +18,11 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * 报表控制器，提供生成报表的REST API接口
- */
+ *//*
+
 @Api(tags = "报表控制器")
 @Controller
 @Mapping("/report")
@@ -30,13 +33,15 @@ public class ReportController {
     @Inject
     private ReportService reportService;
 
-    /**
+    */
+/**
      * 生成XLSX格式报表
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据（JSON格式）
      * @return 报表文件
-     */
+     *//*
+
     @ApiOperation("生成XLSX格式报表")
     @Post
     @Mapping("/xlsx")
@@ -45,13 +50,15 @@ public class ReportController {
         generateReport(templatePath, "xlsx", data, context);
     }
 
-    /**
+    */
+/**
      * 生成HTML格式报表
      *
      * @param templatePath 报表模板路径
      * @param data         报表数据（JSON格式）
      * @return 报表文件
-     */
+     *//*
+
     @Post
     @Mapping("/html")
     public void generateHtmlReport(@Param("templatePath") String templatePath,
@@ -87,14 +94,16 @@ public class ReportController {
         }
     }
 
-    /**
+    */
+/**
      * 生成指定格式的报表
      *
      * @param templatePath 报表模板路径
      * @param format       报表格式 (xlsx, html等)
      * @param data         报表数据（JSON格式）
      * @return 报表文件
-     */
+     *//*
+
     private void generateReport(String templatePath, String format, Map<String, Object> data, Context context) {
         Path tempFile = null;
         try {
@@ -127,4 +136,4 @@ public class ReportController {
             }
         }
     }
-}
+}*/
