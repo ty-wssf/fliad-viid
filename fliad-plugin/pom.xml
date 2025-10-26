@@ -44,6 +44,7 @@
 
         <!-- SIP GB28181协议插件 -->
         <module>fliad-plugin-sip-gb28181</module>
+        <module>fliad-plugin-nop</module>
     </modules>
 
     <!-- 非JDK 8环境下的GraalVM依赖 -->

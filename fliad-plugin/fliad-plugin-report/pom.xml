@@ -27,9 +27,9 @@
             <version>${nop.version}</version>
         </dependency>-->
         <dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-core</artifactId>
-            <version>${nop.version}</version>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-nop-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

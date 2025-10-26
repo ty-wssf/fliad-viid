@@ -232,6 +232,31 @@
                 <artifactId>fliad-plugin-report</artifactId>
                 <version>${viid.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-nop-api-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-nop-commons</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-nop-dataset</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-nop-javac</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-nop-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- lombok -->
             <!--<dependency>
                 <groupId>org.projectlombok</groupId>
