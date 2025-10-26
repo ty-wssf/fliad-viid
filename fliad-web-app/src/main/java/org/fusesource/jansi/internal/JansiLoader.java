@@ -89,7 +89,7 @@ public class JansiLoader {
         }
         try {
             loadJansiNativeLibrary();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             if (!Boolean.parseBoolean(System.getProperty(AnsiConsole.JANSI_GRACEFUL, "true"))) {
                 throw new RuntimeException(
                         "Unable to load jansi native library. You may want set the `jansi.graceful` system property to true to be able to use Jansi on your platform",
