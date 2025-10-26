@@ -12,6 +12,7 @@
  */
 package com.fliad;
 
+import org.fusesource.jansi.internal.JansiLoader;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.*;
 import com.fliad.common.annotation.CommonWrapper;
@@ -44,6 +45,7 @@ public class Application {
      * @date 2022/7/30 21:42
      */
     public static void main(String[] args) {
+        System.out.println("111111111111");
         Solon.start(Application.class, args, app -> {
             app.context().beanInterceptorAdd(CommonWrapper.class, new CommonWrapperInterceptor());
         });

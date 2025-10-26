@@ -14,7 +14,7 @@
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
         <version>3.6.0</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <properties>
@@ -546,6 +546,7 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.dll</include>
                 </includes>
             </resource>
         </resources>

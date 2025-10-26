@@ -208,6 +208,12 @@ public class JansiLoader {
                 if (!extractedLckFile.exists()) {
                     new FileOutputStream(extractedLckFile).close();
                 }
+                System.out.printf("Extracting %s to %s%n", extractedLibFileName, targetFolder);
+                if (in != null) {
+                    System.out.printf("available %s", in.available());
+                } else {
+                    System.out.print("InputStream is null");
+                }
                 Files.copy(in, extractedLibFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             } finally {
                 // Delete the extracted lib file on JVM exit.
