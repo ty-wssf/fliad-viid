@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.beans.graphql;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 import java.io.Serializable;
 

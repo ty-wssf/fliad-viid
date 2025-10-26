@@ -8,7 +8,7 @@
 package io.nop.api.core.beans.file;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.annotations.graphql.GraphQLBean;
 import io.nop.api.core.annotations.graphql.GraphQLObject;
 import io.nop.api.core.annotations.meta.PropMeta;

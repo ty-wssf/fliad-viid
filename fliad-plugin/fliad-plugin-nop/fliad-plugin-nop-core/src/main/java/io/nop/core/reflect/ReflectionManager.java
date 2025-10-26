@@ -8,7 +8,7 @@
 package io.nop.core.reflect;
 
 import io.nop.api.core.annotations.core.GlobalInstance;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.beans.FieldSelectionBean;
 import io.nop.api.core.beans.TreeBean;
 import io.nop.api.core.convert.ITypeConverter;

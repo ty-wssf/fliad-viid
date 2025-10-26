@@ -7,7 +7,7 @@
  */
 package io.nop.commons.cache;
 
-import io.nop.api.core.annotations.data.ImmutableBean;
+import io.nop.api.core.annotations.data_.ImmutableBean;
 import io.nop.api.core.util.Guard;
 import org.noear.solon.validation.annotation.NotNull;
 

@@ -8,7 +8,7 @@
 package io.nop.core.module;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.core.resource.ResourceHelper;
 
 import java.util.Set;

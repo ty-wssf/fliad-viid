@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import io.nop.api.core.ApiConstants;
 import io.nop.api.core.ApiErrors;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.json.IJsonString;
 import io.nop.api.core.util.CloneHelper;

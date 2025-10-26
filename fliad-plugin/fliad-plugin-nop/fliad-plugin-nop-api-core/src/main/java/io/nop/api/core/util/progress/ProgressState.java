@@ -1,7 +1,7 @@
 package io.nop.api.core.util.progress;
 
 import io.nop.api.core.annotations.core.Name;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 @DataBean
 public class ProgressState {

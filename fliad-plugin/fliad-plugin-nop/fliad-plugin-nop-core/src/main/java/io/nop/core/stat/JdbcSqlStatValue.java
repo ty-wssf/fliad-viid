@@ -1,6 +1,6 @@
 package io.nop.core.stat;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.beans.ErrorBean;
 
 @DataBean

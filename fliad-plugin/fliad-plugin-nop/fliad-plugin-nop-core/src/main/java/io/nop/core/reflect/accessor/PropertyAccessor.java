@@ -8,7 +8,7 @@
 package io.nop.core.reflect.accessor;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.util.Guard;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.reflect.IPropertyGetter;

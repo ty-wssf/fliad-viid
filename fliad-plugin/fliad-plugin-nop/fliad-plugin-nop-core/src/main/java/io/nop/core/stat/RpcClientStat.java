@@ -1,6 +1,6 @@
 package io.nop.core.stat;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 @DataBean
 public class RpcClientStat extends AbstractExecuteStat {

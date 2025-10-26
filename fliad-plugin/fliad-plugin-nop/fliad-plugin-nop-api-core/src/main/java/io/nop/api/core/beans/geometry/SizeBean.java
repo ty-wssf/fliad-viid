@@ -1,7 +1,7 @@
 package io.nop.api.core.beans.geometry;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 @DataBean
 public class SizeBean {

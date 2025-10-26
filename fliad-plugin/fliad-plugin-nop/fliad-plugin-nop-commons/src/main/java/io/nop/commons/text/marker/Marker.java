@@ -7,7 +7,7 @@
  */
 package io.nop.commons.text.marker;
 
-import io.nop.api.core.annotations.data.ImmutableBean;
+import io.nop.api.core.annotations.data_.ImmutableBean;
 import io.nop.api.core.util.Guard;
 
 import java.io.Serializable;

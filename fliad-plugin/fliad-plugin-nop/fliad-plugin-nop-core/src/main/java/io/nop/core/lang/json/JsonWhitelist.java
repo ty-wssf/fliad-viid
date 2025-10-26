@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 允许明确注册的bean可以被序列化。缺省情况下只有标记了{@link io.nop.api.core.annotations.data.DataBean} 注解的对象可以被json序列化
+ * 允许明确注册的bean可以被序列化。缺省情况下只有标记了{@link io.nop.api.core.annotations.data_.DataBean} 注解的对象可以被json序列化
  */
 @GlobalInstance
 public class JsonWhitelist {

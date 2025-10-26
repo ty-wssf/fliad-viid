@@ -8,7 +8,7 @@
 package io.nop.api.core.beans.graphql;
 
 import io.nop.api.core.annotations.core.LazyLoad;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.annotations.graphql.GraphQLObject;
 import io.nop.api.core.annotations.meta.PropMeta;
 

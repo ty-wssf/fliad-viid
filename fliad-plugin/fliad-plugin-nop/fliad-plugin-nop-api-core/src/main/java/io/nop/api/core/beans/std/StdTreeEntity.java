@@ -1,7 +1,7 @@
 package io.nop.api.core.beans.std;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 @DataBean
 public class StdTreeEntity {

@@ -7,7 +7,7 @@
  */
 package io.nop.commons.concurrent.ratelimit;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 public interface IRateLimiter {
     /**

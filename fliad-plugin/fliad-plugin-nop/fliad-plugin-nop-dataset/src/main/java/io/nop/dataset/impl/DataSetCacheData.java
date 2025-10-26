@@ -7,7 +7,7 @@
  */
 package io.nop.dataset.impl;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.beans.LongRangeBean;
 
 import java.util.List;

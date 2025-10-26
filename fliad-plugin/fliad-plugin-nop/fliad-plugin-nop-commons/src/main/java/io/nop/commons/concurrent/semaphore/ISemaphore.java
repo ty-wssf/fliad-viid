@@ -1,7 +1,7 @@
 package io.nop.commons.concurrent.semaphore;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 public interface ISemaphore {
     boolean tryAcquire(int permits, long timeout);

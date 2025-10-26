@@ -9,7 +9,7 @@ package io.nop.core.model.table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.json.IJsonString;
 import io.nop.core.model.table.utils.CellReferenceHelper;

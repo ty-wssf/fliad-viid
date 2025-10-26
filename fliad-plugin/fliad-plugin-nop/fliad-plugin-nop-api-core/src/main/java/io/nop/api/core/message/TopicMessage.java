@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.message;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 /**
  * 将topic+message包装为一个简单对象，便于存放在列表中

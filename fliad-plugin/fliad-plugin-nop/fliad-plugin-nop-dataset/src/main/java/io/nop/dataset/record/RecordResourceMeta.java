@@ -7,7 +7,7 @@
  */
 package io.nop.dataset.record;
 
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 import java.util.List;
 import java.util.Map;

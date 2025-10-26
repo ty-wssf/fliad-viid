@@ -9,20 +9,23 @@
         <version>0.1.0</version>
     </parent>
     <packaging>pom</packaging>
-    <modules>
-        <module>fliad-plugin-nop-api-core</module>
-        <module>fliad-plugin-nop-commons</module>
-        <module>fliad-plugin-nop-dataset</module>
-        <module>fliad-plugin-nop-javac</module>
-        <module>fliad-plugin-nop-core</module>
-    </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
 
-    <dependencyManagement>
-        <dependencies>
-
-        </dependencies>
-    </dependencyManagement>
+    <profiles>
+        <profile>
+            <id>non-jdk8</id>
+            <activation>
+                <jdk>(1.8,]</jdk>
+            </activation>
+            <modules>
+                <module>fliad-plugin-nop-api-core</module>
+                <module>fliad-plugin-nop-commons</module>
+                <module>fliad-plugin-nop-dataset</module>
+                <module>fliad-plugin-nop-javac</module>
+                <module>fliad-plugin-nop-core</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

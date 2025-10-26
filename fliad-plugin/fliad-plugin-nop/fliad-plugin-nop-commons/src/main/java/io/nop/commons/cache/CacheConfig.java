@@ -8,7 +8,7 @@
 package io.nop.commons.cache;
 
 import io.nop.api.core.annotations.config.ConfigBean;
-import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data_.DataBean;
 
 import java.io.Serializable;
 import java.time.Duration;
