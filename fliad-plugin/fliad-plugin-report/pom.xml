@@ -12,6 +12,11 @@
     <artifactId>fliad-plugin-report</artifactId>
 
     <dependencies>
+        <!-- 每个插件都要引入自己的对外接口 -->
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-dev-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
@@ -20,13 +25,8 @@
             <groupId>io.github.entropy-cloud</groupId>
             <artifactId>nop-report-core</artifactId>
             <version>${nop.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.fusesource.jansi</groupId>
-                    <artifactId>jansi</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
+        
     </dependencies>
 
 </project>

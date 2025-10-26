@@ -46,14 +46,6 @@ public class Application {
      * @date 2022/7/30 21:42
      */
     public static void main(String[] args) {
-        System.out.println("111111111111");
-        System.setProperty("jansi.graceful", "true");
-        if (NativeDetector.inNativeImage()) {
-            System.setProperty("library.jansi.path", System.getProperty("user.dir"));
-            String dll = System.getProperty("user.dir") + "\\jansi.dll";
-            System.load(dll);
-        }
-        System.out.println("3333333333333");
         Solon.start(Application.class, args, app -> {
             app.context().beanInterceptorAdd(CommonWrapper.class, new CommonWrapperInterceptor());
         });

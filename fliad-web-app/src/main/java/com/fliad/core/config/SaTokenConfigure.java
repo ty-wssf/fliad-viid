@@ -91,7 +91,8 @@ public class SaTokenConfigure {
             "/VIID/**",
             "/viid/**",
             "/api/task/**",
-            "/**/*.jpg"
+            "/**/*.jpg",
+            "/report/**",
     };
 
     /**
