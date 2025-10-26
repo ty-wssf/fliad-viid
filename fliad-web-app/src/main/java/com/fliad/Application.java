@@ -18,6 +18,7 @@ import org.noear.solon.annotation.*;
 import com.fliad.common.annotation.CommonWrapper;
 import com.fliad.core.config.CommonWrapperInterceptor;
 import org.noear.solon.annotation.SolonMain;
+import org.noear.solon.core.runtime.NativeDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,8 +47,10 @@ public class Application {
      */
     public static void main(String[] args) {
         System.out.println("111111111111");
-        String dll = System.getProperty("user.dir") + "\\jansi.dll";
-        System.load(dll);
+        if (NativeDetector.inNativeImage()) {
+            String dll = System.getProperty("user.dir") + "\\jansi.dll";
+            System.load(dll);
+        }
         System.out.println("3333333333333");
         Solon.start(Application.class, args, app -> {
             app.context().beanInterceptorAdd(CommonWrapper.class, new CommonWrapperInterceptor());
