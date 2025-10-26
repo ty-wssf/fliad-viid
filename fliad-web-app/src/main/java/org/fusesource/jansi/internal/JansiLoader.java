@@ -96,6 +96,7 @@ public class JansiLoader {
                         e);
             }
         }
+        System.out.println("22222222222222");
         return loaded;
     }
 

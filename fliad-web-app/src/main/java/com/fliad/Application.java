@@ -46,6 +46,9 @@ public class Application {
      */
     public static void main(String[] args) {
         System.out.println("111111111111");
+        String dll = System.getProperty("user.dir") + "\\jansi.dll";
+        System.load(dll);
+        System.out.println("3333333333333");
         Solon.start(Application.class, args, app -> {
             app.context().beanInterceptorAdd(CommonWrapper.class, new CommonWrapperInterceptor());
         });
