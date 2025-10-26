@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.ioc;
 
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import static io.nop.api.core.ApiConstants.BEAN_SCOPE_PROTOTYPE;
 import static io.nop.api.core.ApiConstants.BEAN_SCOPE_SINGLETON;
@@ -18,10 +18,10 @@ import static io.nop.api.core.ApiConstants.BEAN_SCOPE_SINGLETON;
 public interface IBeanProvider {
     boolean containsBean(String name);
 
-    @Nonnull
+    @NonNull
     Object getBean(String name);
 
-    @Nonnull
+    @NonNull
     <T> T getBeanByType(Class<T> clazz);
 
     String getBeanScope(String name);

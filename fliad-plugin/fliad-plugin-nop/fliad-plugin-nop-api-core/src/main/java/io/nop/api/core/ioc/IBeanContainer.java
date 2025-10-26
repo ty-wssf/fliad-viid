@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.ioc;
 
-import jakarta.annotation.Nonnull;
+import org.noear.solon.lang.NonNull;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;
@@ -32,12 +32,12 @@ public interface IBeanContainer extends IBeanProvider {
 
     boolean isRunning();
 
-    @Nonnull
+    @NonNull
     Object getBean(String name);
 
     boolean containsBeanType(Class<?> clazz);
 
-    @Nonnull
+    @NonNull
     <T> T getBeanByType(Class<T> clazz);
 
     <T> T tryGetBeanByType(Class<T> clazz);
