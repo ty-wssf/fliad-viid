@@ -94,7 +94,52 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
         BigDecimal divisor1000 = new BigDecimal(1000);
         String valueStr = value.divide(divisor1000, 3, RoundingMode.HALF_UP).toString();
 
-        if (dwChanNo == 1) {
+        if (dwVariableNo == 101) {
+            dsWeather.setNjd(valueStr);
+            dsWeather.setNjdpjz(valueStr);
+            dsWeather.setNjdssz(valueStr);
+        } else if (dwVariableNo == 203) {
+            // 路面温度
+            dsWeather.setLmwd(valueStr);
+        } else if (dwVariableNo == 204) {
+            // 水膜厚度
+            dsWeather.setSmhd(valueStr);
+        } else if (dwVariableNo == 205) {
+            // 冰厚度
+            dsWeather.setBhd(valueStr);
+        } else if (dwVariableNo == 206) {
+            // 雪厚度
+            dsWeather.setXshd(valueStr);
+        } else if (dwVariableNo == 207) {
+            // 湿滑系数
+            dsWeather.setShxs(valueStr);
+        } else if (dwVariableNo == 208) {
+            // 路面状态
+            dsWeather.setLmzk(valueStr);
+        } else if (dwVariableNo == 1) {
+            // 空气温度
+            dsWeather.setWdu(valueStr);
+            dsWeather.setHjwd(valueStr);
+        } else if (dwVariableNo == 2) {
+            // 空气湿度
+            dsWeather.setHjsd(valueStr);
+        } else if (dwVariableNo == 3) {
+            // 风速
+            dsWeather.setFs(valueStr);
+            dsWeather.setFspjz(valueStr);
+            dsWeather.setFsssz(valueStr);
+        } else if (dwVariableNo == 4) {
+            // 风向
+            dsWeather.setSjfx(valueStr);
+            dsWeather.setXdfx(valueStr);
+        } else if (dwVariableNo == 8) {
+            // 大气压力
+            dsWeather.setQy(valueStr);
+        } else if (dwVariableNo == 11) {
+            // 降雨量
+            dsWeather.setJyl(valueStr);
+        }
+        /*if (dwChanNo == 1) {
             if (dwVariableNo == 1) {
                 // valueStr
                 dsWeather.setNjd(valueStr);
@@ -145,7 +190,7 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
                 // 降雨量
                 dsWeather.setJyl(valueStr);
             }
-        }
+        }*/
         dsWeather.setLsh(IdUtil.simpleUUID());
         dsWeather.setAcceptTime(new Date());
 

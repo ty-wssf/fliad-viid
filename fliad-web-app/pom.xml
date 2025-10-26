@@ -321,6 +321,10 @@
                     <groupId>com.fliad</groupId>
                     <artifactId>fliad-plugin-report</artifactId>
                 </dependency>-->
+                <dependency>
+                    <groupId>io.github.entropy-cloud</groupId>
+                    <artifactId>nop-core</artifactId>
+                </dependency>
             </dependencies>
         </profile>
     </profiles>
