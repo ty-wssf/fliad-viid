@@ -12,13 +12,11 @@
  */
 package com.fliad;
 
-import org.fusesource.jansi.internal.JansiLoader;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.*;
 import com.fliad.common.annotation.CommonWrapper;
 import com.fliad.core.config.CommonWrapperInterceptor;
 import org.noear.solon.annotation.SolonMain;
-import org.noear.solon.core.runtime.NativeDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
