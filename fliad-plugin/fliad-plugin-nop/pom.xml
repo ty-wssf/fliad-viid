@@ -24,6 +24,8 @@
                 <module>fliad-plugin-nop-dataset</module>
                 <module>fliad-plugin-nop-javac</module>
                 <module>fliad-plugin-nop-core</module>
+                <module>fliad-plugin-nop-xdefs</module>
+                <!--<module>fliad-plugin-nop-xlang</module>-->
             </modules>
         </profile>
     </profiles>
