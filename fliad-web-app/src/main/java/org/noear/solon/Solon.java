@@ -264,17 +264,19 @@ public class Solon {
      */
     private static void logIncubate() throws Throwable {
         //孵化日志实现（加载配置，转换格式）
+        System.out.println("11111");
         ServiceLoader<LogIncubator> internetServices = ServiceLoader.load(LogIncubator.class);
+        System.out.println("22222");
         for (LogIncubator logIncubator : internetServices) {
-            log.info("Log: Start loading：{}", logIncubator.getClass().getName());
+            System.out.println("Log: Start loading：" + logIncubator.getClass().getName());
             try {
                 logIncubator.incubate();
             } catch (Throwable e) {
-                log.error("Log: Incubate failed：{}", logIncubator.getClass().getName(), e);
+                System.out.println("Log: Incubate failed：" + e.getMessage());
             }
-            logIncubator.incubate();
-            log.info("Log: End loading elapsed=" + app.elapsedTimes() + "ms");
+            System.out.println("Log: End loading elapsed=" + app.elapsedTimes() + "ms");
         }
+        System.out.println("3333");
     }
 
     /**
