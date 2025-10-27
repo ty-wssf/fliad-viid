@@ -91,6 +91,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         metadata.registerResourceInclude("_sql/.*");
         metadata.registerResourceInclude("app-local.yml");
+        metadata.registerResourceInclude("app-local.yml");
 
         // 允许访问 java.lang.invoke 包中的内部API，解决反射调用相关问题
         metadata.registerArg("-J--add-opens=java.base/java.lang.invoke=ALL-UNNAMED");
