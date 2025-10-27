@@ -43,7 +43,16 @@ jobs:
         with:
           node-version: 22.17.0
 
+      # 缓存前端构建产物
+      - name: Cache frontend build
+        id: cache-frontend
+        uses: actions/cache@v3
+        with:
+          path: ./fliad-admin-web/dist
+          key: frontend-dist-${{ hashFiles('fliad-admin-web/package-lock.json') }}-${{ hashFiles('fliad-admin-web/src/**/*') }}
+
       - name: build fliad-admin-web
+        if: steps.cache-frontend.outputs.cache-hit != 'true'
         run: |
           cd fliad-admin-web
           npm install
