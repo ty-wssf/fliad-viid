@@ -9,31 +9,23 @@
         <version>0.1.0</version>
     </parent>
 
-    <artifactId>fliad-plugin-nop-xlang</artifactId>
+    <artifactId>fliad-plugin-nop-antlr4-common</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-nop-commons</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fliad</groupId>
             <artifactId>fliad-plugin-nop-core</artifactId>
-            <version>${project.version}</version>
         </dependency>
-
         <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-nop-xdefs</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-nop-antlr4-common</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.13.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.ibm.icu</groupId>
+                    <artifactId>icu4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

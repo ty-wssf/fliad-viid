@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<dialect x:schema="/test/test_merge.xdef">
-    <functions a="1"/>
-</dialect>

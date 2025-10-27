@@ -1,3 +1,0 @@
-<simple name="a" x:schema="/simple/simple.xdef" xmlns:x="/nop/schema/xdsl.xdef">
-   <description>b</description>
-</simple>

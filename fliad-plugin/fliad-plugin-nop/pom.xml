@@ -9,6 +9,9 @@
         <version>0.1.0</version>
     </parent>
     <packaging>pom</packaging>
+    <modules>
+        <module>fliad-plugin-nop-antlr4-common</module>
+    </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
 
@@ -25,7 +28,8 @@
                 <module>fliad-plugin-nop-javac</module>
                 <module>fliad-plugin-nop-core</module>
                 <module>fliad-plugin-nop-xdefs</module>
-                <!--<module>fliad-plugin-nop-xlang</module>-->
+                <module>fliad-plugin-nop-xlang</module>
+                <module>fliad-plugin-nop-antlr4-common</module>
             </modules>
         </profile>
     </profiles>
