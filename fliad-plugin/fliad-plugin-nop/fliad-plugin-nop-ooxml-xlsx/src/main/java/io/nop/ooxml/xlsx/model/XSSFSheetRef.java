@@ -1,0 +1,48 @@
+/**
+ * Copyright (c) 2017-2024 Nop Platform. All rights reserved.
+ * Author: canonical_entropy@163.com
+ * Blog:   https://www.zhihu.com/people/canonical-entropy
+ * Gitee:  https://gitee.com/canonical-entropy/nop-entropy
+ * Github: https://github.com/entropy-cloud/nop-entropy
+ */
+package io.nop.ooxml.xlsx.model;
+
+public class XSSFSheetRef {
+    private String relId;
+    private String name;
+    private String sheetId;
+
+    public XSSFSheetRef() {
+
+    }
+
+    public XSSFSheetRef(String relId, String name, String sheetId){
+        this.relId = relId;
+        this.name = name;
+        this.sheetId = sheetId;
+    }
+
+    public String getRelId() {
+        return relId;
+    }
+
+    public void setRelId(String relId) {
+        this.relId = relId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSheetId() {
+        return sheetId;
+    }
+
+    public void setSheetId(String sheetId) {
+        this.sheetId = sheetId;
+    }
+}

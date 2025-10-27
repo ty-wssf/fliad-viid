@@ -10,7 +10,9 @@
     </parent>
     <packaging>pom</packaging>
     <modules>
-        <module>fliad-plugin-nop-antlr4-common</module>
+
+
+
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
@@ -30,6 +32,9 @@
                 <module>fliad-plugin-nop-xdefs</module>
                 <module>fliad-plugin-nop-xlang</module>
                 <module>fliad-plugin-nop-antlr4-common</module>
+                <module>fliad-plugin-nop-ooxml-common</module>
+                <module>fliad-plugin-nop-excel</module>
+                <module>fliad-plugin-nop-ooxml-xlsx</module>
             </modules>
         </profile>
     </profiles>
