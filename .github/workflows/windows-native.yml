@@ -63,25 +63,25 @@ jobs:
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
           mvn clean install --file pom.xml --no-transfer-progress
 
-      - name: Build with Native Image
-        run: |
-          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
-          cd fliad-web-app
-          mvn clean native:compile -P native,non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
+      #- name: Build with Native Image
+      #  run: |
+      #    set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+      #    cd fliad-web-app
+      #    mvn clean native:compile -P native,non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
 
       - name: copy resource
         run: |
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app-native/fliad-admin-web/dist
-          cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
+     #    cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
           cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
           
           # 解压 fliad-web-app.jar 并复制 _vfs 文件夹
           mkdir -p temp-jar-extract
-          cd temp-jar-extract
-          jar -xf ../fliad-web-app/target/fliad-web-app.jar
-          cp -r _vfs/ ../package/fliad-web-app-native/
-          cd ..
+     #     cd temp-jar-extract
+     #     jar -xf ../fliad-web-app/target/fliad-web-app.jar
+     #     cp -r _vfs/ ../package/fliad-web-app-native/
+     #     cd ..
           
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app/fliad-admin-web/dist
           cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
