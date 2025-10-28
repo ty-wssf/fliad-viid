@@ -82,7 +82,6 @@ jobs:
           jar -xf ../fliad-web-app/target/fliad-web-app.jar
           cp -r _vfs/ ../package/fliad-web-app-native/
           cd ..
-          rm -rf temp-jar-extract
           
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app/fliad-admin-web/dist
           cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
