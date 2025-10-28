@@ -82,9 +82,10 @@ jobs:
 
       - name: copy resource1
         run: |
-          $jarPath = "./package/fliad-web-app/fliad-web-app.jar"
-          $extractDir = "./package/fliad-web-app/unpacked"
+          $jarPath = "./fliad-web-app/target/fliad-web-app.jar"
+          $extractDir = "./package/unpacked"
           New-Item -ItemType Directory -Path $extractDir -Force | Out-Null
+          Expand-Archive -Path $jarPath -DestinationPath $extractDir -Force
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
