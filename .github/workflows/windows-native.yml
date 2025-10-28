@@ -72,21 +72,20 @@ jobs:
       - name: copy resource
         run: |
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app-native/fliad-admin-web/dist
-     #    cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
+          cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
           cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
-          
-          # 解压 fliad-web-app.jar 并复制 _vfs 文件夹
-          mkdir -p temp-jar-extract
-     #     cd temp-jar-extract
-     #     jar -xf ../fliad-web-app/target/fliad-web-app.jar
-     #     cp -r _vfs/ ../package/fliad-web-app-native/
-     #     cd ..
           
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app/fliad-admin-web/dist
           cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app/app-local.yml
           cp -r ./fliad-web-app/target/classes/_sql/ ./package/fliad-web-app/_sql
+          
+          $jarPath = "./package/fliad-web-app/fliad-web-app.jar"
+          $extractDir = "./package/fliad-web-app/unpacked"
+          New-Item -ItemType Directory -Path $extractDir -Force | Out-Null
+          Expand-Archive -Path $jarPath -DestinationPath $extractDir -Force
+          cp -r ./package/fliad-web-app/unpacked/_vfs/ ./package/fliad-web-app-native/_vfs
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
