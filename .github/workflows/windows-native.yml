@@ -83,7 +83,8 @@ jobs:
       - name: copy resource1
         run: |
           cd ./fliad-web-app/target
-          java -jar ./fliad-web-app.jar -xf ./unpacked
+          ren fliad-web-app.jar fliad-web-app.zip
+          Expand-Archive -Path fliad-web-app.zip -DestinationPath ./unpacked -Force
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
