@@ -72,7 +72,7 @@ jobs:
       - name: copy resource
         run: |
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app-native/fliad-admin-web/dist
-          cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
+ #         cp ./fliad-web-app/target/fliad-web-app.exe ./package/fliad-web-app-native/fliad-web-app.exe
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
           cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
           
