@@ -76,6 +76,14 @@ jobs:
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app-native/app-local.yml
           cp ./fliad-web-app/target/*.dll ./package/fliad-web-app-native/
           
+          # 解压 fliad-web-app.jar 并复制 _vfs 文件夹
+          mkdir -p temp-jar-extract
+          cd temp-jar-extract
+          jar -xf ../fliad-web-app/target/fliad-web-app.jar
+          cp -r _vfs/ ../package/fliad-web-app-native/
+          cd ..
+          rm -rf temp-jar-extract
+          
           cp -r ./fliad-admin-web/dist/ ./package/fliad-web-app/fliad-admin-web/dist
           cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app/app-local.yml
