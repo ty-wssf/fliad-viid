@@ -1,10 +1,12 @@
 package com.fliad.report.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.report.service.ReportService;
 import com.fliad.common.exception.CommonException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.*;
 import org.noear.solon.core.handle.Context;
 import org.slf4j.Logger;
@@ -29,6 +31,20 @@ public class ReportController {
     @Inject
     private ReportService reportService;
 
+    @ApiOperation("test1")
+    @Post
+    @Mapping("/test1")
+    public CommonResult<String> test1(@Param("templatePath") String templatePath, Map<String, Object> data) {
+        return CommonResult.data(ONode.stringify(data));
+    }
+
+    @ApiOperation("test2")
+    @Post
+    @Mapping("/test2")
+    public CommonResult<String> test2(@Param("templatePath") String templatePath, Test test) {
+        return CommonResult.data(ONode.stringify(test));
+    }
+
     /**
      * 生成XLSX格式报表
      *
@@ -39,8 +55,7 @@ public class ReportController {
     @ApiOperation("生成XLSX格式报表")
     @Post
     @Mapping("/xlsx")
-    public void generateXlsxReport(@Param("templatePath") String templatePath,
-                                   @Body Map<String, Object> data, Context context) {
+    public void generateXlsxReport(@Param("templatePath") String templatePath, Map<String, Object> data, Context context) {
         generateReport(templatePath, "xlsx", data, context);
     }
 
@@ -53,43 +68,13 @@ public class ReportController {
      */
     @Post
     @Mapping("/html")
-    public void generateHtmlReport(@Param("templatePath") String templatePath,
-                                   @Body Map<String, Object> data, Context context) {
+    public void generateHtmlReport(@Param("templatePath") String templatePath, Map<String, Object> data, Context context) {
         generateReport(templatePath, "html", data, context);
-    }
-
-    @Get
-    @Mapping("/html")
-    public String generateHtml(@Param("templatePath") String templatePath,
-                               @Body Map<String, Object> data, Context context) {
-        try {
-            // 验证模板是否存在
-            if (!reportService.isTemplateExists(templatePath)) {
-                throw new CommonException("报表模板不存在: " + templatePath);
-            }
-
-            // 如果没有提供数据，则使用空数据
-            if (data == null) {
-                data = new HashMap<>();
-            }
-
-            // 生成HTML报表并直接返回内容
-            byte[] htmlBytes = reportService.generateHtmlReportBytes(templatePath, data);
-            String htmlContent = new String(htmlBytes, "UTF-8");
-
-            // 设置响应类型为HTML
-            context.contentType("text/html;charset=UTF-8");
-            return htmlContent;
-        } catch (Exception e) {
-            log.error("生成报表失败，模板路径: {}", templatePath, e);
-            throw new CommonException("生成报表失败: " + e.getMessage());
-        }
     }
 
     @Post
     @Mapping("/htmlJson")
-    public CommonResult<String> generateHtmlJson(@Param("templatePath") String templatePath,
-                                                 @Body Map<String, Object> data) {
+    public CommonResult<String> generateHtmlJson(@Param("templatePath") String templatePath, Map<String, Object> data) {
         try {
             // 验证模板是否存在
             if (!reportService.isTemplateExists(templatePath)) {

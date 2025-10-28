@@ -1,5 +1,6 @@
 package com.fliad.core.handler;
 
+import com.fliad.common.util.CommonServletUtil;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.exception.StatusException;
 import org.noear.solon.core.handle.Context;
@@ -30,6 +31,7 @@ public class GlobalErrorFilter implements Filter {
             ctx.render(CommonResult.error(e.getMessage()));
         } catch (StatusException e) {
             //4xx 状态类异常
+            log.error(">>> 状态类异常，请求地址：{}，具体信息：", CommonServletUtil.getRequest().url(), e);
             ctx.status(e.getCode());
         } catch (Throwable e) {
             log.error("", e);
