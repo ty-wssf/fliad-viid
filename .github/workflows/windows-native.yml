@@ -61,7 +61,7 @@ jobs:
       - name: Build with Maven
         run: |
           set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
-          mvn clean package -P native,non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
+          mvn clean package -P non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
 
       - name: Build with Native Image
         run: |
