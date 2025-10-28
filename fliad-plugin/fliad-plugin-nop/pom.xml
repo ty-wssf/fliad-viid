@@ -12,7 +12,6 @@
     <modules>
 
 
-
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
@@ -35,6 +34,7 @@
                 <module>fliad-plugin-nop-ooxml-common</module>
                 <module>fliad-plugin-nop-excel</module>
                 <module>fliad-plugin-nop-ooxml-xlsx</module>
+                <module>fliad-plugin-nop-report-core</module>
             </modules>
         </profile>
     </profiles>
