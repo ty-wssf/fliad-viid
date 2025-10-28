@@ -16,6 +16,8 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
     public void register(AppContext context, RuntimeNativeMetadata metadata) {
         metadata.registerReflection(XptModelLoader.class, MemberCategory.values());
         metadata.registerReflection(ImportModel.class, MemberCategory.values());
+
+        metadata.registerResourceInclude("_vfs/.*");
     }
 
 }
