@@ -262,10 +262,10 @@
         </dependency>
 
         <!-- jackson序列化工具 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon.serialization.jackson</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- 视图库功能插件 -->
         <dependency>
