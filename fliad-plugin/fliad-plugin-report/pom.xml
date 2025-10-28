@@ -27,6 +27,11 @@
             <artifactId>fliad-plugin-nop-report-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-aot</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
