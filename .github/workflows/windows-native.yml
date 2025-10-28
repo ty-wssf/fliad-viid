@@ -79,12 +79,12 @@ jobs:
           cp ./fliad-web-app/target/*.jar ./package/fliad-web-app/
           cp ./fliad-web-app/target/classes/app-local.yml ./package/fliad-web-app/app-local.yml
           cp -r ./fliad-web-app/target/classes/_sql/ ./package/fliad-web-app/_sql
-          
+
+      - name: copy resource1
+        run: |
           $jarPath = "./package/fliad-web-app/fliad-web-app.jar"
           $extractDir = "./package/fliad-web-app/unpacked"
           New-Item -ItemType Directory -Path $extractDir -Force | Out-Null
-          Expand-Archive -Path $jarPath -DestinationPath $extractDir -Force
-          cp -r ./package/fliad-web-app/unpacked/_vfs/ ./package/fliad-web-app-native/_vfs
 
       - name: Upload artifacts app
         uses: actions/upload-artifact@v4
