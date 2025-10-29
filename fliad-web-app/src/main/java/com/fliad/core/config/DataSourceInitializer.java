@@ -17,15 +17,15 @@ import java.sql.Statement;
 import java.util.List;
 
 /**
- * H2数据库初始化器
- * 当使用H2数据库时，自动执行初始化脚本
+ * 数据库初始化器
+ * 自动执行初始化脚本
  *
  * @author lingma
  */
 @Component(index = -10)
-public class H2DataSourceInitializer implements LifecycleBean {
+public class DataSourceInitializer implements LifecycleBean {
 
-    private static final Logger log = LoggerFactory.getLogger(H2DataSourceInitializer.class);
+    private static final Logger log = LoggerFactory.getLogger(DataSourceInitializer.class);
 
     @Inject
     private DataSource dataSource;
@@ -35,28 +35,26 @@ public class H2DataSourceInitializer implements LifecycleBean {
 
     @Override
     public void start() throws Throwable {
-        // 检查是否为H2数据库
-        if ("h2".equals(customDbIdProvider.getDatabaseId(dataSource))) {
-            log.info("检测到H2数据库，开始执行初始化脚本...");
-            executeInitScript();
-            log.info("H2数据库初始化脚本执行完成");
-        }
+        String databaseId = customDbIdProvider.getDatabaseId(dataSource);
+        log.info("检测到{}数据库，开始执行初始化脚本...", databaseId);
+        executeInitScript(databaseId);
+        log.info("{}数据库初始化脚本执行完成", databaseId);
     }
 
     /**
      * 执行H2数据库初始化脚本
      */
-    private void executeInitScript() {
+    private void executeInitScript(String databaseId) {
         try (Connection connection = dataSource.getConnection()) {
-            executeScript(connection, "_sql/h2/snowy_schema.sql");
-            executeScript(connection, "_sql/h2/snowy_data.sql");
+            executeScript(connection, String.format("_sql/%s/snowy_schema.sql", databaseId));
+            executeScript(connection, String.format("_sql/%s/snowy_data.sql", databaseId));
             // 执行schema脚本
-            for (String u1 : ResourceUtil.scanResources("classpath:_sql/h2/*.sql")) {
+            for (String u1 : ResourceUtil.scanResources(String.format("classpath:_sql/%s/*.sql", databaseId))) {
                 if (u1.contains("schema") && !u1.contains("snowy_schema")) {
                     executeScript(connection, u1);
                 }
             }
-            for (String u1 : ResourceUtil.scanResources("classpath:_sql/h2/*.sql")) {
+            for (String u1 : ResourceUtil.scanResources(String.format("classpath:_sql/%s/*.sql", databaseId))) {
                 if (u1.contains("data") && !u1.contains("snowy_data")) {
                     executeScript(connection, u1);
                 }

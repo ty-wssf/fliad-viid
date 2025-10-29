@@ -5,7 +5,6 @@ SET
 -- ----------------------------
 -- Table structure for VIID_CASCADE_PLATFORM
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_CASCADE_PLATFORM`;
 CREATE TABLE `VIID_CASCADE_PLATFORM`
 (
     `ID`                      varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -29,7 +28,6 @@ CREATE TABLE `VIID_CASCADE_PLATFORM`
 -- ----------------------------
 -- Table structure for VIID_APE
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_APE`;
 CREATE TABLE `VIID_APE`
 (
     `ID`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -64,7 +62,6 @@ CREATE TABLE `VIID_APE`
 -- ----------------------------
 -- Table structure for VIID_TOLLGATE
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_TOLLGATE`;
 CREATE TABLE `VIID_TOLLGATE`
 (
     `ID`            varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -88,7 +85,6 @@ CREATE TABLE `VIID_TOLLGATE`
 -- ----------------------------
 -- Table structure for VIID_SUBSCRIBE_NOTIFICATIONS
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_SUBSCRIBE_NOTIFICATIONS`;
 CREATE TABLE `VIID_SUBSCRIBE_NOTIFICATIONS`
 (
     `ID`             varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -109,7 +105,6 @@ CREATE TABLE `VIID_SUBSCRIBE_NOTIFICATIONS`
 -- ----------------------------
 -- Table structure for viid_subscribe
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_SUBSCRIBE`;
 CREATE TABLE `VIID_SUBSCRIBE`
 (
     `SubscribeID`            varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订阅标识符',
@@ -140,7 +135,6 @@ CREATE TABLE `VIID_SUBSCRIBE`
 -- ----------------------------
 -- Table structure for VIID_WORKFLOW
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_WORKFLOW`;
 CREATE TABLE `VIID_WORKFLOW`
 (
     `ID`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
@@ -162,7 +156,6 @@ CREATE TABLE `VIID_WORKFLOW`
 -- ----------------------------
 -- Table structure for VIID_DATASOURCE
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_DATASOURCE`;
 CREATE TABLE `VIID_DATASOURCE`
 (
     `ID`          varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
@@ -185,7 +178,6 @@ CREATE TABLE `VIID_DATASOURCE`
 -- ----------------------------
 -- Table structure for VIID_HIKVISION_CAMERA
 -- ----------------------------
-DROP TABLE IF EXISTS `VIID_HIKVISION_CAMERA`;
 CREATE TABLE `VIID_HIKVISION_CAMERA`
 (
     `ID`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL COMMENT '主键',
