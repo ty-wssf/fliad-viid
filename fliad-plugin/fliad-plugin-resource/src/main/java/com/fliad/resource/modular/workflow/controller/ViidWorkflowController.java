@@ -50,9 +50,9 @@ public class ViidWorkflowController {
      * @date  2025/08/27 14:03
      */
     @ApiOperation("获取工作流分页")
-    @SaCheckPermission("/viid/workflow/page")
+    @SaCheckPermission("/resource/workflow/page")
     @Get
-    @Mapping("/viid/workflow/page")
+    @Mapping("/resource/workflow/page")
     public CommonResult<Page<ViidWorkflow>> page(ViidWorkflowPageParam viidWorkflowPageParam) {
         return CommonResult.data(viidWorkflowService.page(viidWorkflowPageParam));
     }
@@ -65,9 +65,9 @@ public class ViidWorkflowController {
      */
     @ApiOperation("添加工作流")
     @CommonLog("添加工作流")
-    @SaCheckPermission("/viid/workflow/add")
+    @SaCheckPermission("/resource/workflow/add")
     @Post
-    @Mapping("/viid/workflow/add")
+    @Mapping("/resource/workflow/add")
     public CommonResult<String> add(ViidWorkflowAddParam viidWorkflowAddParam) {
         viidWorkflowService.add(viidWorkflowAddParam);
         return CommonResult.ok();
@@ -97,9 +97,9 @@ public class ViidWorkflowController {
      */
     @ApiOperation("删除工作流")
     @CommonLog("删除工作流")
-    @SaCheckPermission("/viid/workflow/delete")
+    @SaCheckPermission("/resource/workflow/delete")
     @Post
-    @Mapping("/viid/workflow/delete")
+    @Mapping("/resource/workflow/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
                                                    CommonValidList<ViidWorkflowIdParam> viidWorkflowIdParamList) {
         viidWorkflowService.delete(viidWorkflowIdParamList);
@@ -115,7 +115,7 @@ public class ViidWorkflowController {
     @ApiOperation("获取工作流详情")
     // @SaCheckPermission("/viid/workflow/detail")
     @Get
-    @Mapping("/viid/workflow/detail")
+    @Mapping("/resource/workflow/detail")
     public CommonResult<ViidWorkflow> detail(ViidWorkflowIdParam viidWorkflowIdParam) {
         return CommonResult.data(viidWorkflowService.detail(viidWorkflowIdParam));
     }
@@ -128,9 +128,9 @@ public class ViidWorkflowController {
      */
     @ApiOperation("复制工作流")
     @CommonLog("复制工作流")
-    @SaCheckPermission("/viid/workflow/add")
+    @SaCheckPermission("/resource/workflow/add")
     @Post
-    @Mapping("/viid/workflow/copy")
+    @Mapping("/resource/workflow/copy")
     public CommonResult<String> copy(ViidWorkflowIdParam viidWorkflowIdParam) {
         viidWorkflowService.copy(viidWorkflowIdParam);
         return CommonResult.ok();
@@ -138,7 +138,7 @@ public class ViidWorkflowController {
 
     @ApiOperation("禁用工作流")
     @Post
-    @Mapping("/viid/workflow/disableWorkflow")
+    @Mapping("/resource/workflow/disableWorkflow")
     public CommonResult<String> disableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam) {
         viidWorkflowService.disableWorkflow(viidWorkflowIdParam);
         return CommonResult.ok();
@@ -146,7 +146,7 @@ public class ViidWorkflowController {
 
     @ApiOperation("启用工作流")
     @Post
-    @Mapping("/viid/workflow/enableWorkflow")
+    @Mapping("/resource/workflow/enableWorkflow")
     public CommonResult<String> enableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam) {
         viidWorkflowService.enableWorkflow(viidWorkflowIdParam);
         return CommonResult.ok();

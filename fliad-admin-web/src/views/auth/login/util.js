@@ -48,9 +48,9 @@ export const afterLogin = async (loginToken) => {
 		path: indexMenu
 	})
 	// 判断用户密码是否过期
-	userCenterApi.userCenterIsUserPasswordExpired().then((expired) => {
+	/*userCenterApi.userCenterIsUserPasswordExpired().then((expired) => {
 		if (expired) {
 			message.warning('当前登录密码已过期，请及时更改！')
 		}
-	})
+	})*/
 }

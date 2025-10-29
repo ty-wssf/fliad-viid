@@ -10,7 +10,7 @@ VALUES ('317770316242853888', '0', '资源管理', null, null, 'MENU', '15489011
 -- 数据源主菜单
 INSERT INTO sys_resource
 VALUES ('1980000000000000001', '317770316242853888', '数据源', 'datasource', 'DATASOURCE_MANAGE', 'MENU',
-        '1548901111999773976', 'MENU', '/viid/datasource', 'viid/datasource/index', 'appstore-outlined', null,
+        '1548901111999773976', 'MENU', '/resource/datasource', 'resource/datasource/index', 'appstore-outlined', null,
         'TRUE', 100, null, 'NOT_DELETE', '2025-09-24 20:05:00', '1543837863788879871', null, null);
 -- 数据源操作按钮
 INSERT INTO sys_resource
@@ -50,7 +50,7 @@ VALUES ('1960168590876450818', '313516724900175872', '删除视图库', NULL, 'v
 -- 工作流主菜单
 INSERT INTO SYS_RESOURCE
 VALUES ('1968883972877418496', '317770316242853888', '工作流', 'workflow', 'j4DOSt5Aun', 'MENU',
-        '1548901111999773976', 'MENU', '/viid/workflow', 'viid/workflow/index', 'appstore-outlined', NULL, NULL, 102,
+        '1548901111999773976', 'MENU', '/resource/workflow', 'resource/workflow/index', 'appstore-outlined', NULL, NULL, 102,
         NULL,
         'NOT_DELETE', NULL, NULL, NULL, NULL);
 -- 工作流操作按钮
@@ -356,20 +356,20 @@ VALUES ('3287000000000000010', '1570687866138206209', '1979521093836898822', 'SY
 
 -- 为业务管理员角色关联VIID所有权限标识
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000011', '1570687866138206209', '/viid/workflow/page', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/workflow/page","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000011', '1570687866138206209', '/resource/workflow/page', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/workflow/page","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000012', '1570687866138206209', '/viid/workflow/add', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/workflow/add","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000012', '1570687866138206209', '/resource/workflow/add', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/workflow/add","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000013', '1570687866138206209', '/viid/workflow/delete', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/workflow/delete","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000013', '1570687866138206209', '/resource/workflow/delete', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/workflow/delete","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000014', '1570687866138206209', '/viid/workflow/copy', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/workflow/copy","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000014', '1570687866138206209', '/resource/workflow/copy', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/workflow/copy","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
 VALUES ('3287000000000000015', '1570687866138206209', '/viid/subscribe/page', 'SYS_ROLE_HAS_PERMISSION',
@@ -412,28 +412,28 @@ VALUES ('3287000000000000024', '1570687866138206209', '/viid/cascadeplatform/det
         '{"apiUrl":"/viid/cascadeplatform/detail","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000025', '1570687866138206209', '/viid/datasource/page', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/page","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000025', '1570687866138206209', '/resource/datasource/page', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/page","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000026', '1570687866138206209', '/viid/datasource/add', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/add","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000026', '1570687866138206209', '/resource/datasource/add', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/add","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000027', '1570687866138206209', '/viid/datasource/edit', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/edit","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000027', '1570687866138206209', '/resource/datasource/edit', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/edit","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000028', '1570687866138206209', '/viid/datasource/delete', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/delete","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000028', '1570687866138206209', '/resource/datasource/delete', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/delete","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000029', '1570687866138206209', '/viid/datasource/detail', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/detail","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000029', '1570687866138206209', '/resource/datasource/detail', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/detail","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000030', '1570687866138206209', '/viid/datasource/copy', 'SYS_ROLE_HAS_PERMISSION',
-        '{"apiUrl":"/viid/datasource/copy","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
+VALUES ('3287000000000000030', '1570687866138206209', '/resource/datasource/copy', 'SYS_ROLE_HAS_PERMISSION',
+        '{"apiUrl":"/resource/datasource/copy","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
 VALUES ('3287000000000000031', '1570687866138206209', '/viid/ape/page', 'SYS_ROLE_HAS_PERMISSION',

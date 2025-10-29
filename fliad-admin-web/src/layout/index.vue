@@ -259,8 +259,8 @@
 		updateVersion()
 		nextTick(() => {
 			getNav()
-			bindPhoneRef.value.checkNeedBindPhone()
-			bindEmailRef.value.checkNeedBindEmail()
+			/*bindPhoneRef.value.checkNeedBindPhone()
+			bindEmailRef.value.checkNeedBindEmail()*/
 		})
 	})
 	onBeforeUnmount(() => {

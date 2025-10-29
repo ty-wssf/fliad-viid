@@ -1,6 +1,6 @@
 import { baseRequest } from '@/utils/request'
 
-const request = (url, ...arg) => baseRequest(`/viid/workflow/` + url, ...arg)
+const request = (url, ...arg) => baseRequest(`/resource/workflow/` + url, ...arg)
 
 /**
  * VIID工作流API

@@ -50,9 +50,9 @@ public class ViidDatasourceController {
      * @date  2025/09/24 20:05
      */
     @ApiOperation("获取数据源分页")
-    @SaCheckPermission("/viid/datasource/page")
+    @SaCheckPermission("/resource/datasource/page")
     @Get
-    @Mapping("/viid/datasource/page")
+    @Mapping("/resource/datasource/page")
     public CommonResult<Page<ViidDatasource>> page(ViidDatasourcePageParam viidDatasourcePageParam) {
         return CommonResult.data(viidDatasourceService.page(viidDatasourcePageParam));
     }
@@ -65,9 +65,9 @@ public class ViidDatasourceController {
      */
     @ApiOperation("添加数据源")
     @CommonLog("添加数据源")
-    @SaCheckPermission("/viid/datasource/add")
+    @SaCheckPermission("/resource/datasource/add")
     @Post
-    @Mapping("/viid/datasource/add")
+    @Mapping("/resource/datasource/add")
     public CommonResult<String> add(ViidDatasourceAddParam viidDatasourceAddParam) {
         viidDatasourceService.add(viidDatasourceAddParam);
         return CommonResult.ok();
@@ -81,9 +81,9 @@ public class ViidDatasourceController {
      */
     @ApiOperation("编辑数据源")
     @CommonLog("编辑数据源")
-    @SaCheckPermission("/viid/datasource/edit")
+    @SaCheckPermission("/resource/datasource/edit")
     @Post
-    @Mapping("/viid/datasource/edit")
+    @Mapping("/resource/datasource/edit")
     public CommonResult<String> edit(ViidDatasourceEditParam viidDatasourceEditParam) {
         viidDatasourceService.edit(viidDatasourceEditParam);
         return CommonResult.ok();
@@ -97,9 +97,9 @@ public class ViidDatasourceController {
      */
     @ApiOperation("删除数据源")
     @CommonLog("删除数据源")
-    @SaCheckPermission("/viid/datasource/delete")
+    @SaCheckPermission("/resource/datasource/delete")
     @Post
-    @Mapping("/viid/datasource/delete")
+    @Mapping("/resource/datasource/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
                                                    CommonValidList<ViidDatasourceIdParam> viidDatasourceIdParamList) {
         viidDatasourceService.delete(viidDatasourceIdParamList);
@@ -113,16 +113,16 @@ public class ViidDatasourceController {
      * @date  2025/09/24 20:05
      */
     @ApiOperation("获取数据源详情")
-    @SaCheckPermission("/viid/datasource/detail")
+    @SaCheckPermission("/resource/datasource/detail")
     @Get
-    @Mapping("/viid/datasource/detail")
+    @Mapping("/resource/datasource/detail")
     public CommonResult<ViidDatasource> detail(ViidDatasourceIdParam viidDatasourceIdParam) {
         return CommonResult.data(viidDatasourceService.detail(viidDatasourceIdParam));
     }
 
     @ApiOperation("禁用数据源")
     @Post
-    @Mapping("/viid/datasource/disableDatasource")
+    @Mapping("/resource/datasource/disableDatasource")
     public CommonResult<String> disableDatasource(ViidDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.disableDatasource(viidDatasourceIdParam);
         return CommonResult.ok();
@@ -130,7 +130,7 @@ public class ViidDatasourceController {
 
     @ApiOperation("启用数据源")
     @Post
-    @Mapping("/viid/datasource/enableDatasource")
+    @Mapping("/resource/datasource/enableDatasource")
     public CommonResult<String> enableDatasource(ViidDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.enableDatasource(viidDatasourceIdParam);
         return CommonResult.ok();
@@ -144,9 +144,9 @@ public class ViidDatasourceController {
      */
     @ApiOperation("复制数据源")
     @CommonLog("复制数据源")
-    @SaCheckPermission("/viid/datasource/add")
+    @SaCheckPermission("/resource/datasource/add")
     @Post
-    @Mapping("/viid/datasource/copy")
+    @Mapping("/resource/datasource/copy")
     public CommonResult<String> copy(ViidDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.copy(viidDatasourceIdParam);
         return CommonResult.ok();

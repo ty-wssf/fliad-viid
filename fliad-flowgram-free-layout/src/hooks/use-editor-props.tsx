@@ -250,7 +250,7 @@ export function useEditorProps(
 
           // 只有获取到ID时才调用保存接口
           if (flowId) {
-              fetch('/viid/workflow/edit', {
+              fetch('/resource/workflow/edit', {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json',
@@ -296,7 +296,7 @@ export function useEditorProps(
 
           // 只有获取到ID时才调用接口获取画布数据
           if (flowId) {
-              fetch(`/viid/workflow/detail?id=${flowId}`, {
+              fetch(`/resource/workflow/detail?id=${flowId}`, {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',

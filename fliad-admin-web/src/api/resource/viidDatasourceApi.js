@@ -1,6 +1,6 @@
 import { baseRequest } from '@/utils/request'
 
-const request = (url, ...arg) => baseRequest(`/viid/datasource/` + url, ...arg)
+const request = (url, ...arg) => baseRequest(`/resource/datasource/` + url, ...arg)
 
 /**
  * 数据源Api接口管理器
