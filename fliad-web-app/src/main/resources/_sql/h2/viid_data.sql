@@ -30,9 +30,9 @@ VALUES ('1980000000000000005', '1980000000000000001', '批量删除数据源', n
         null);
 -- 视图库主菜单
 INSERT INTO sys_resource
-VALUES ('313516724900175872', '317770316242853888', '视图库', 'cascadeplatform', 'CoJEA1gOuN', 'MENU',
+VALUES ('313516724900175872', '317770571755659264', '视图库', 'cascadeplatform', 'CoJEA1gOuN', 'MENU',
         '1548901111999773976', 'MENU', '/viid/cascadeplatform', 'viid/cascadeplatform/index', 'appstore-outlined', null,
-        'TRUE', 101, null, 'NOT_DELETE', '2025-08-14 16:24:32', '1543837863788879871', '2025-08-26 10:03:16',
+        'TRUE', 1, null, 'NOT_DELETE', '2025-08-14 16:24:32', '1543837863788879871', '2025-08-26 10:03:16',
         '1543837863788879871');
 -- 视图库操作按钮
 INSERT INTO sys_resource
@@ -67,16 +67,16 @@ INSERT INTO SYS_RESOURCE
 VALUES ('1968883972881612802', '1968883972877418496', '删除工作流', NULL, 'viidWorkflowDelete', 'BUTTON', NULL, NULL,
         NULL, NULL, NULL, NULL, NULL, 4, NULL, 'NOT_DELETE', NULL, NULL, NULL, NULL);
 
--- 订阅管理模块
+-- 视图库管理模块
 INSERT INTO sys_resource
-VALUES ('317770571755659264', '0', '订阅管理', null, null, 'MENU', '1548901111999773976', 'CATALOG',
+VALUES ('317770571755659264', '0', '视图库管理', null, null, 'MENU', '1548901111999773976', 'CATALOG',
         '/7365927918486163456', null, 'appstore-outlined', null, 'TRUE', 121, null, 'NOT_DELETE', '2025-08-26 10:07:48',
         '1543837863788879871', null, null);
 -- 下级订阅主菜单
 INSERT INTO sys_resource
 VALUES ('316394739489427456', '317770571755659264', '下级订阅', 'subscribeDown', '9BX0tJv57h', 'MENU',
         '1548901111999773976', 'MENU', '/viid/subscribe/down', 'viid/subscribe/down/index', 'appstore-outlined', null,
-        'TRUE', 101, null, 'NOT_DELETE', '2025-08-22 15:00:44', '1543837863788879871', '2025-08-26 10:03:26',
+        'TRUE', 2, null, 'NOT_DELETE', '2025-08-22 15:00:44', '1543837863788879871', '2025-08-26 10:03:26',
         '1543837863788879871');
 -- 下级订阅操作按钮
 INSERT INTO sys_resource
@@ -97,9 +97,9 @@ VALUES ('316394740550586368', '316394739489427456', '批量删除', null, 'viidS
 -- 采集设备管理功能资源
 -- 采集设备主菜单
 INSERT INTO sys_resource
-VALUES ('1975125938436898816', '317770316242853888', '采集设备', 'ape', 'APE_MANAGE', 'MENU',
+VALUES ('1975125938436898816', '317770571755659264', '采集设备', 'ape', 'APE_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/ape', 'viid/ape/index', 'appstore-outlined', null,
-        'TRUE', 102, null, 'NOT_DELETE', '2025-09-19 10:00:00', '1543837863788879871', null, null);
+        'TRUE', 6, null, 'NOT_DELETE', '2025-09-19 10:00:00', '1543837863788879871', null, null);
 -- 采集设备操作按钮
 INSERT INTO sys_resource
 VALUES ('1975125938436898817', '1975125938436898816', '新增采集设备', null, 'viidApeAdd', 'BUTTON', null, null,
@@ -119,9 +119,9 @@ VALUES ('1975125938436898820', '1975125938436898816', '批量删除采集设备'
 -- 视频卡口管理功能资源
 -- 视频卡口主菜单
 INSERT INTO sys_resource
-VALUES ('1975125938436898821', '317770316242853888', '视频卡口', 'tollgate', 'TOLLGATE_MANAGE', 'MENU',
+VALUES ('1975125938436898821', '317770571755659264', '视频卡口', 'tollgate', 'TOLLGATE_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/tollgate', 'viid/tollgate/index', 'appstore-outlined', null,
-        'TRUE', 103, null, 'NOT_DELETE', '2025-09-19 10:00:00', '1543837863788879871', null, null);
+        'TRUE', 7, null, 'NOT_DELETE', '2025-09-19 10:00:00', '1543837863788879871', null, null);
 -- 视频卡口操作按钮
 INSERT INTO sys_resource
 VALUES ('1975125938436898822', '1975125938436898821', '新增视频卡口', null, 'viidTollgateAdd', 'BUTTON', null, null,
@@ -144,7 +144,7 @@ VALUES ('1975125938436898825', '1975125938436898821', '批量删除视频卡口'
 INSERT INTO sys_resource
 VALUES ('1979521093836898816', '317770571755659264', '下级通知', 'notification', 'NOTIFICATION_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/notification', 'viid/notification/index', 'appstore-outlined', null,
-        'TRUE', 102, null, 'NOT_DELETE', '2025-09-22 10:00:00', '1543837863788879871', null, null);
+        'TRUE', 3, null, 'NOT_DELETE', '2025-09-22 10:00:00', '1543837863788879871', null, null);
 -- 订阅通知操作按钮
 INSERT INTO sys_resource
 VALUES ('1979521093836898817', '1979521093836898816', '新增下级通知', null, 'viidNotificationAdd', 'BUTTON', null, null,
@@ -513,9 +513,14 @@ INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
 VALUES ('3287000000000000049', '1570687866138206209', '/biz/index/notice/detail', 'SYS_ROLE_HAS_PERMISSION',
         '{"apiUrl":"/biz/index/notice/detail","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
--- 为业务管理员角色关联海康布防功能资源
+-- 为业务管理员角色关联海康布防模块
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000050', '1570687866138206209', '1980000000000000006', 'SYS_ROLE_HAS_RESOURCE',
+VALUES ('3287000000000000050', '1570687866138206209', '1980000000000000022', 'SYS_ROLE_HAS_RESOURCE',
+        '{"menuId":"1980000000000000022","buttonInfo":[]}');
+
+-- 为业务管理员角色关联海康设备功能资源
+INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
+VALUES ('3287000000000000068', '1570687866138206209', '1980000000000000006', 'SYS_ROLE_HAS_RESOURCE',
         '{"menuId":"1980000000000000006","buttonInfo":["1980000000000000007","1980000000000000008","1980000000000000009","1980000000000000010"]}');
 
 -- 为业务管理员角色关联海康布防所有权限标识
@@ -540,27 +545,33 @@ VALUES ('3287000000000000055', '1570687866138206209', '/viid/hikvision/defense/d
         '{"apiUrl":"/viid/hikvision/defense/detail","scopeCategory":"SCOPE_ALL","scopeDefineOrgIdList":[]}');
 
 
--- 海康布防管理功能资源
--- 海康布防主菜单
+-- 海康布防模块
 INSERT INTO sys_resource
-VALUES ('1980000000000000006', '317770316242853888', '海康布防', 'hikvision', 'HIKVISION_DEFENSE_MANAGE', 'MENU',
+VALUES ('1980000000000000022', '0', '海康布防', null, null, 'MENU', '1548901111999773976', 'CATALOG',
+        '/7365927918486163457', null, 'appstore-outlined', null, 'TRUE', 122, null, 'NOT_DELETE', '2025-10-29 10:00:00',
+        '1543837863788879871', null, null);
+
+-- 海康设备管理功能资源
+-- 海康设备主菜单
+INSERT INTO sys_resource
+VALUES ('1980000000000000006', '1980000000000000022', '海康设备', 'hikvision', 'HIKVISION_DEFENSE_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/hikvision', 'viid/hikvision/index', 'appstore-outlined', null,
         'TRUE', 104, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 -- 海康布防操作按钮
 INSERT INTO sys_resource
-VALUES ('1980000000000000007', '1980000000000000006', '新增海康布防', null, 'viidHikvisionDefenseAdd', 'BUTTON', null,
+VALUES ('1980000000000000007', '1980000000000000006', '新增海康设备', null, 'viidHikvisionDefenseAdd', 'BUTTON', null,
         null,
         null, null, null, null, null, 1, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000008', '1980000000000000006', '编辑海康布防', null, 'viidHikvisionDefenseEdit', 'BUTTON', null,
+VALUES ('1980000000000000008', '1980000000000000006', '编辑海康设备', null, 'viidHikvisionDefenseEdit', 'BUTTON', null,
         null,
         null, null, null, null, null, 2, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000009', '1980000000000000006', '删除海康布防', null, 'viidHikvisionDefenseDelete', 'BUTTON', null,
+VALUES ('1980000000000000009', '1980000000000000006', '删除海康设备', null, 'viidHikvisionDefenseDelete', 'BUTTON', null,
         null, null, null, null, null, null, 3, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null,
         null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000010', '1980000000000000006', '批量删除海康布防', null, 'viidHikvisionDefenseBatchDelete',
+VALUES ('1980000000000000010', '1980000000000000006', '批量删除海康设备', null, 'viidHikvisionDefenseBatchDelete',
         'BUTTON', null,
         null, null, null, null, null, null, 4, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null,
         null);
@@ -569,7 +580,7 @@ VALUES ('1980000000000000010', '1980000000000000006', '批量删除海康布防'
 INSERT INTO sys_resource
 VALUES ('1980000000000000011', '317770571755659264', '上级订阅', 'subscribeUp', 'SUBSCRIBE_UP_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/subscribe/up', 'viid/subscribe/up/index', 'appstore-outlined', null,
-        'TRUE', 99, null, 'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
+        'TRUE', 4, null, 'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
 -- 上级订阅操作按钮
 INSERT INTO sys_resource
 VALUES ('1980000000000000012', '1980000000000000011', '新增上级订阅', null, 'viidSubscribeUpAdd', 'BUTTON', null, null,
@@ -591,7 +602,7 @@ VALUES ('1980000000000000015', '1980000000000000011', '批量删除上级订阅'
 INSERT INTO sys_resource
 VALUES ('1980000000000000016', '317770571755659264', '上级通知', 'notificationUp', 'NOTIFICATION_UP_MANAGE', 'MENU',
         '1548901111999773976', 'MENU', '/viid/notification/up', 'viid/notification/up/index', 'appstore-outlined', null,
-        'TRUE', 100, null, 'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
+        'TRUE', 5, null, 'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
 -- 上级通知操作按钮
 INSERT INTO sys_resource
 VALUES ('1980000000000000017', '1980000000000000016', '新增上级通知', null, 'viidNotificationUpAdd', 'BUTTON', null, null,
