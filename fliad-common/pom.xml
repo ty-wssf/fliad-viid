@@ -111,5 +111,11 @@
             <version>${sa-token.version}</version>
         </dependency>
 
+        <!-- junit Jupiter -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-test-junit5</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>
