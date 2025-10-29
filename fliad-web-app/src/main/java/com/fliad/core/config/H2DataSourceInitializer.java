@@ -48,16 +48,19 @@ public class H2DataSourceInitializer implements LifecycleBean {
      */
     private void executeInitScript() {
         try (Connection connection = dataSource.getConnection()) {
+            executeScript(connection, "_sql/h2/snowy_schema.sql");
+            executeScript(connection, "_sql/h2/snowy_data.sql");
             // 执行schema脚本
-            executeScript(connection, "./_sql/h2/snowy_schema.sql");
-            executeScript(connection, "./_sql/h2/biz_schema.sql");
-            executeScript(connection, "./_sql/h2/viid_schema.sql");
-
-            // 执行data脚本
-            executeScript(connection, "./_sql/h2/snowy_data.sql");
-            executeScript(connection, "./_sql/h2/biz_data.sql");
-            executeScript(connection, "./_sql/h2/viid_data.sql");
-
+            for (String u1 : ResourceUtil.scanResources("classpath:_sql/h2/*.sql")) {
+                if (u1.contains("schema") && !u1.contains("snowy_schema")) {
+                    executeScript(connection, u1);
+                }
+            }
+            for (String u1 : ResourceUtil.scanResources("classpath:_sql/h2/*.sql")) {
+                if (u1.contains("data") && !u1.contains("snowy_data")) {
+                    executeScript(connection, u1);
+                }
+            }
         } catch (SQLException e) {
             log.error("执行H2数据库初始化脚本失败", e);
         }
