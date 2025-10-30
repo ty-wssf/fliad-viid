@@ -609,7 +609,7 @@
                 <jdk>(1.8,]</jdk>
             </activation>
             <properties>
-                <java.version>21</java.version>
+                <java.version>25</java.version>
             </properties>
         </profile>
     </profiles>
