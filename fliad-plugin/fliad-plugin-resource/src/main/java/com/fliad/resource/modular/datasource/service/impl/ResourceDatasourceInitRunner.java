@@ -16,12 +16,12 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.fliad.resource.modular.datasource.entity.ViidDatasource;
-import com.fliad.resource.modular.datasource.service.ViidDatasourceService;
+import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
+import com.fliad.resource.modular.datasource.service.ResourceDatasourceService;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
 import com.fliad.resource.modular.flowgram.service.FlowgramService;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
-import com.fliad.resource.modular.workflow.service.ViidWorkflowService;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
+import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.rabbitmq.client.*;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
@@ -42,14 +42,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2025/09/25 10:00
  */
 @Component
-public class ViidDatasourceInitRunner implements LifecycleBean {
-    private static final Logger log = LoggerFactory.getLogger(ViidDatasourceInitRunner.class);
+public class ResourceDatasourceInitRunner implements LifecycleBean {
+    private static final Logger log = LoggerFactory.getLogger(ResourceDatasourceInitRunner.class);
 
     @Inject
-    private ViidDatasourceService viidDatasourceService;
+    private ResourceDatasourceService viidDatasourceService;
 
     @Inject
-    private ViidWorkflowService viidWorkflowService;
+    private ResourceWorkflowService viidWorkflowService;
 
     @Inject
     private FlowgramService flowgramService;
@@ -65,10 +65,10 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
         log.info(">>> 开始初始化数据源 <<<");
         try {
             // 获取所有启用的数据源
-            List<ViidDatasource> enabledDatasources = viidDatasourceService.listByStatus("ENABLE");
+            List<ResourceDatasource> enabledDatasources = viidDatasourceService.listByStatus("ENABLE");
             if (enabledDatasources != null && !enabledDatasources.isEmpty()) {
                 log.info("找到 {} 个启用的数据源，开始初始化", enabledDatasources.size());
-                for (ViidDatasource datasource : enabledDatasources) {
+                for (ResourceDatasource datasource : enabledDatasources) {
                     try {
                         // 根据数据源类型和订阅类别初始化连接
                         initDatasourceConnection(datasource);
@@ -90,7 +90,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
      *
      * @param datasource 数据源实体
      */
-    private void initDatasourceConnection(ViidDatasource datasource) {
+    private void initDatasourceConnection(ResourceDatasource datasource) {
         log.info("开始初始化数据源，ID：{}，标题：{}，类型：{}，订阅类别：{}",
                 datasource.getId(), datasource.getTitle(), datasource.getType(), datasource.getSubscribeDetail());
 
@@ -110,7 +110,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
      *
      * @param datasource 数据源实体
      */
-    private void initRabbitMQConnection(ViidDatasource datasource) {
+    private void initRabbitMQConnection(ResourceDatasource datasource) {
         // 解析配置信息
         if (StrUtil.isBlank(datasource.getContent())) {
             log.warn("数据源配置内容为空，数据源ID：{}", datasource.getId());
@@ -179,7 +179,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
      * @param queueName  队列名
      * @param datasource 数据源
      */
-    private void createConsumer(Channel channel, String queueName, ViidDatasource datasource) {
+    private void createConsumer(Channel channel, String queueName, ResourceDatasource datasource) {
         try {
             // 创建消费者
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
@@ -223,7 +223,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
      * @param message    消息内容
      * @param datasource 数据源
      */
-    private void processMessage(String message, ViidDatasource datasource) {
+    private void processMessage(String message, ResourceDatasource datasource) {
         /*log.info("处理消息，数据源ID：{}，订阅类别：{}，消息大小：{}",
                 datasource.getId(), datasource.getSubscribeDetail(), message.length());*/
 
@@ -250,7 +250,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
             log.debug("开始处理数据，订阅类别：{}", subscribeDetail);
 
             // 获取对应的工作流
-            List<ViidWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail(subscribeDetail);
+            List<ResourceWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail(subscribeDetail);
             log.debug("找到 {} 个工作流处理数据", workflowList.size());
 
             // 如果没有找到处理流程，打印提示信息
@@ -260,7 +260,7 @@ public class ViidDatasourceInitRunner implements LifecycleBean {
             }
 
             // 执行工作流
-            for (ViidWorkflow workflow : workflowList) {
+            for (ResourceWorkflow workflow : workflowList) {
                 TaskRunInput taskRunInput = new TaskRunInput();
                 taskRunInput.setSchema(workflow.getContent());
                 taskRunInput.setInputs(MapUtil.of("inputs", message));

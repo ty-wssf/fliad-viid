@@ -25,7 +25,7 @@ import java.util.Date;
  * @date  2025/09/24 20:05
  */
 @Table(value = "viid_datasource")
-public class ViidDatasource {
+public class ResourceDatasource {
 
     /** ID */
     @Id

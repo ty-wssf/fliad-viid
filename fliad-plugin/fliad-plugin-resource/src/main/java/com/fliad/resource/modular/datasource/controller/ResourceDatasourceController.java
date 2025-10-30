@@ -22,12 +22,12 @@ import org.noear.solon.validation.annotation.Valid;
 import com.fliad.common.annotation.CommonLog;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.pojo.CommonValidList;
-import com.fliad.resource.modular.datasource.entity.ViidDatasource;
-import com.fliad.resource.modular.datasource.param.ViidDatasourceAddParam;
-import com.fliad.resource.modular.datasource.param.ViidDatasourceEditParam;
-import com.fliad.resource.modular.datasource.param.ViidDatasourceIdParam;
-import com.fliad.resource.modular.datasource.param.ViidDatasourcePageParam;
-import com.fliad.resource.modular.datasource.service.ViidDatasourceService;
+import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
+import com.fliad.resource.modular.datasource.param.ResourceDatasourceAddParam;
+import com.fliad.resource.modular.datasource.param.ResourceDatasourceEditParam;
+import com.fliad.resource.modular.datasource.param.ResourceDatasourceIdParam;
+import com.fliad.resource.modular.datasource.param.ResourceDatasourcePageParam;
+import com.fliad.resource.modular.datasource.service.ResourceDatasourceService;
 
 /**
  * 数据源控制器
@@ -38,10 +38,10 @@ import com.fliad.resource.modular.datasource.service.ViidDatasourceService;
 @Api(tags = "数据源控制器")
 @Controller
 @Valid
-public class ViidDatasourceController {
+public class ResourceDatasourceController {
 
     @Inject
-    private ViidDatasourceService viidDatasourceService;
+    private ResourceDatasourceService viidDatasourceService;
 
     /**
      * 获取数据源分页
@@ -53,7 +53,7 @@ public class ViidDatasourceController {
     @SaCheckPermission("/resource/datasource/page")
     @Get
     @Mapping("/resource/datasource/page")
-    public CommonResult<Page<ViidDatasource>> page(ViidDatasourcePageParam viidDatasourcePageParam) {
+    public CommonResult<Page<ResourceDatasource>> page(ResourceDatasourcePageParam viidDatasourcePageParam) {
         return CommonResult.data(viidDatasourceService.page(viidDatasourcePageParam));
     }
 
@@ -68,7 +68,7 @@ public class ViidDatasourceController {
     @SaCheckPermission("/resource/datasource/add")
     @Post
     @Mapping("/resource/datasource/add")
-    public CommonResult<String> add(ViidDatasourceAddParam viidDatasourceAddParam) {
+    public CommonResult<String> add(ResourceDatasourceAddParam viidDatasourceAddParam) {
         viidDatasourceService.add(viidDatasourceAddParam);
         return CommonResult.ok();
     }
@@ -84,7 +84,7 @@ public class ViidDatasourceController {
     @SaCheckPermission("/resource/datasource/edit")
     @Post
     @Mapping("/resource/datasource/edit")
-    public CommonResult<String> edit(ViidDatasourceEditParam viidDatasourceEditParam) {
+    public CommonResult<String> edit(ResourceDatasourceEditParam viidDatasourceEditParam) {
         viidDatasourceService.edit(viidDatasourceEditParam);
         return CommonResult.ok();
     }
@@ -101,7 +101,7 @@ public class ViidDatasourceController {
     @Post
     @Mapping("/resource/datasource/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
-                                                   CommonValidList<ViidDatasourceIdParam> viidDatasourceIdParamList) {
+                                                   CommonValidList<ResourceDatasourceIdParam> viidDatasourceIdParamList) {
         viidDatasourceService.delete(viidDatasourceIdParamList);
         return CommonResult.ok();
     }
@@ -116,14 +116,14 @@ public class ViidDatasourceController {
     @SaCheckPermission("/resource/datasource/detail")
     @Get
     @Mapping("/resource/datasource/detail")
-    public CommonResult<ViidDatasource> detail(ViidDatasourceIdParam viidDatasourceIdParam) {
+    public CommonResult<ResourceDatasource> detail(ResourceDatasourceIdParam viidDatasourceIdParam) {
         return CommonResult.data(viidDatasourceService.detail(viidDatasourceIdParam));
     }
 
     @ApiOperation("禁用数据源")
     @Post
     @Mapping("/resource/datasource/disableDatasource")
-    public CommonResult<String> disableDatasource(ViidDatasourceIdParam viidDatasourceIdParam) {
+    public CommonResult<String> disableDatasource(ResourceDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.disableDatasource(viidDatasourceIdParam);
         return CommonResult.ok();
     }
@@ -131,7 +131,7 @@ public class ViidDatasourceController {
     @ApiOperation("启用数据源")
     @Post
     @Mapping("/resource/datasource/enableDatasource")
-    public CommonResult<String> enableDatasource(ViidDatasourceIdParam viidDatasourceIdParam) {
+    public CommonResult<String> enableDatasource(ResourceDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.enableDatasource(viidDatasourceIdParam);
         return CommonResult.ok();
     }
@@ -147,7 +147,7 @@ public class ViidDatasourceController {
     @SaCheckPermission("/resource/datasource/add")
     @Post
     @Mapping("/resource/datasource/copy")
-    public CommonResult<String> copy(ViidDatasourceIdParam viidDatasourceIdParam) {
+    public CommonResult<String> copy(ResourceDatasourceIdParam viidDatasourceIdParam) {
         viidDatasourceService.copy(viidDatasourceIdParam);
         return CommonResult.ok();
     }

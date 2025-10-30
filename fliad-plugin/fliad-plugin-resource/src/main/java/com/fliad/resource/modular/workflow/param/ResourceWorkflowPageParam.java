@@ -10,18 +10,17 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.resource.modular.datasource.param;
+package com.fliad.resource.modular.workflow.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Date;
 
 /**
- * 数据源查询参数
+ * 工作流查询参数
  *
  * @author wyl
- * @date  2025/09/24 20:05
+ * @date  2025/08/27 14:03
  **/
-public class ViidDatasourcePageParam {
+public class ResourceWorkflowPageParam {
 
     /** 当前页 */
     @ApiModelProperty(value = "当前页码")
@@ -46,10 +45,6 @@ public class ViidDatasourcePageParam {
     /** 标题 */
     @ApiModelProperty(value = "标题")
     private String title;
-
-    /** 类型 */
-    @ApiModelProperty(value = "类型")
-    private String type;
 
     public Integer getCurrent() {
         return current;
@@ -97,13 +92,5 @@ public class ViidDatasourcePageParam {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 }

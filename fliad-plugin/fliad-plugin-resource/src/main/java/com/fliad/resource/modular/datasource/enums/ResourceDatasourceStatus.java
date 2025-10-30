@@ -1,7 +1,7 @@
 package com.fliad.resource.modular.datasource.enums;
 
 import com.fliad.common.exception.CommonException;
-public enum ViidDatasourceStatus {
+public enum ResourceDatasourceStatus {
 
     /**
      * 正常
@@ -15,7 +15,7 @@ public enum ViidDatasourceStatus {
 
     private final String value;
 
-    ViidDatasourceStatus(String value) {
+    ResourceDatasourceStatus(String value) {
         this.value = value;
     }
 

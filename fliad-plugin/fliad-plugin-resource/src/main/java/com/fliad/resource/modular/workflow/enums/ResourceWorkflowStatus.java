@@ -1,7 +1,7 @@
 package com.fliad.resource.modular.workflow.enums;
 
 import com.fliad.common.exception.CommonException;
-public enum ViidWorkflowStatus {
+public enum ResourceWorkflowStatus {
 
     /**
      * 正常
@@ -15,7 +15,7 @@ public enum ViidWorkflowStatus {
 
     private final String value;
 
-    ViidWorkflowStatus(String value) {
+    ResourceWorkflowStatus(String value) {
         this.value = value;
     }
 

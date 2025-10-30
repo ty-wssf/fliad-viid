@@ -13,7 +13,7 @@
 package com.fliad.resource.modular.datasource.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.fliad.resource.modular.datasource.entity.ViidDatasource;
+import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
 
 /**
  * 数据源Mapper接口
@@ -21,5 +21,5 @@ import com.fliad.resource.modular.datasource.entity.ViidDatasource;
  * @author wyl
  * @date  2025/09/24 20:05
  **/
-public interface ViidDatasourceMapper extends BaseMapper<ViidDatasource> {
+public interface ResourceDatasourceMapper extends BaseMapper<ResourceDatasource> {
 }

@@ -17,7 +17,6 @@ import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
 import org.noear.solon.validation.annotation.NotBlank;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -27,7 +26,7 @@ import java.util.Date;
  * @date  2025/08/27 14:03
  **/
 @Table(value = "viid_workflow")
-public class ViidWorkflow {
+public class ResourceWorkflow {
 
     /** ID */
     @Id

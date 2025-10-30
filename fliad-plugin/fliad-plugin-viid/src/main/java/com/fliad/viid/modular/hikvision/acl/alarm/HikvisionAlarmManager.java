@@ -1,7 +1,7 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
 import com.fliad.resource.modular.flowgram.service.FlowgramService;
-import com.fliad.resource.modular.workflow.service.ViidWorkflowService;
+import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -37,7 +37,7 @@ public class HikvisionAlarmManager {
     private HikvisionAlarmCallback alarmCallback;
 
     FlowgramService flowgramService;
-    ViidWorkflowService viidWorkflowService;
+    ResourceWorkflowService viidWorkflowService;
 
     /**
      * 初始化SDK
@@ -47,7 +47,7 @@ public class HikvisionAlarmManager {
             Solon.context().subBeansOfType(FlowgramService.class, viidWorkflowService -> {
                 this.flowgramService = viidWorkflowService;
             });
-            Solon.context().subBeansOfType(ViidWorkflowService.class, viidWorkflowService -> {
+            Solon.context().subBeansOfType(ResourceWorkflowService.class, viidWorkflowService -> {
                 this.viidWorkflowService = viidWorkflowService;
             });
             createSDKInstance();
@@ -443,7 +443,7 @@ public class HikvisionAlarmManager {
         }
     }
 
-    public ViidWorkflowService getViidWorkflowService() {
+    public ResourceWorkflowService getViidWorkflowService() {
         return viidWorkflowService;
     }
 

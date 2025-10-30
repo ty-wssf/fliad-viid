@@ -10,21 +10,19 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.resource.modular.datasource.param;
+package com.fliad.resource.modular.workflow.param;
 
-import com.mybatisflex.annotation.Column;
 import io.swagger.annotations.ApiModelProperty;
 
 import org.noear.solon.validation.annotation.NotBlank;
-import java.util.Date;
 
 /**
- * 数据源编辑参数
+ * 工作流编辑参数
  *
  * @author wyl
- * @date  2025/09/24 20:05
+ * @date  2025/08/27 14:03
  **/
-public class ViidDatasourceEditParam {
+public class ResourceWorkflowEditParam {
 
     /** ID */
     @ApiModelProperty(value = "ID", required = true, position = 1)
@@ -36,22 +34,17 @@ public class ViidDatasourceEditParam {
     @NotBlank(message = "title不能为空")
     private String title;
 
-    /** 类型 */
-    @ApiModelProperty(value = "类型", required = true, position = 3)
-    @NotBlank(message = "type不能为空")
-    private String type;
-
     /** 订阅类别 */
-    @ApiModelProperty(value = "订阅类别", position = 4)
-    @Column("SubscribeDetail")
+    @ApiModelProperty(value = "订阅类别", required = true, position = 3)
+    @NotBlank(message = "subscribedetail不能为空")
     private String subscribeDetail;
 
-    /** 数据源配置的 JSON 内容 */
-    @ApiModelProperty(value = "数据源配置的 JSON 内容", position = 5)
+    /** 工作流设计的 JSON 内容 */
+    @ApiModelProperty(value = "工作流设计的 JSON 内容", position = 5)
     private String content;
 
     /** 备注 */
-    @ApiModelProperty(value = "备注", position = 6)
+    @ApiModelProperty(value = "备注", position = 4)
     private String remark;
 
     public String getId() {
@@ -68,14 +61,6 @@ public class ViidDatasourceEditParam {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getSubscribeDetail() {

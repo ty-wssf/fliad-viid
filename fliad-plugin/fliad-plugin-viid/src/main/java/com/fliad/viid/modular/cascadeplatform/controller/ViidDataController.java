@@ -5,8 +5,8 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
 import com.fliad.resource.modular.flowgram.service.FlowgramService;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
-import com.fliad.resource.modular.workflow.service.ViidWorkflowService;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
+import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.fliad.viid.modular.cascadeplatform.domain.*;
 import com.fliad.viid.modular.cascadeplatform.service.ViidPlatformStatusService;
 import com.fliad.viid.modular.notification.param.ViidSubscribeNotificationsAddParam;
@@ -38,7 +38,7 @@ public class ViidDataController {
     private ViidPlatformStatusService viidPlatformStatusService;
 
     @Inject
-    private ViidWorkflowService viidWorkflowService;
+    private ResourceWorkflowService viidWorkflowService;
 
     @Inject
     private FlowgramService flowgramService;
@@ -205,9 +205,9 @@ public class ViidDataController {
      * @param vehiclesFlowNode 车流量数据对象
      */
     private void processVehicleFlowData(ONode vehiclesFlowNode) {
-        List<ViidWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail("101");
+        List<ResourceWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail("101");
 
-        for (ViidWorkflow workflow : workflowList) {
+        for (ResourceWorkflow workflow : workflowList) {
             TaskRunInput taskRunInput = new TaskRunInput();
             taskRunInput.setSchema(workflow.getContent());
             taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(vehiclesFlowNode)));
@@ -288,10 +288,10 @@ public class ViidDataController {
      * @param <T>             数据类型
      */
     private <T> void processNotificationData(List<T> dataList, String subscribeDetail) {
-        List<ViidWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail(subscribeDetail);
+        List<ResourceWorkflow> workflowList = viidWorkflowService.findBySubscribeDetail(subscribeDetail);
 
         for (T data : dataList) {
-            for (ViidWorkflow workflow : workflowList) {
+            for (ResourceWorkflow workflow : workflowList) {
                 TaskRunInput taskRunInput = new TaskRunInput();
                 taskRunInput.setSchema(workflow.getContent());
                 taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(data)));

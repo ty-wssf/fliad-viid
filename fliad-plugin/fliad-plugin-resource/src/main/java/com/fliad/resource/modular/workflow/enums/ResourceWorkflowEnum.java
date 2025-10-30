@@ -10,30 +10,26 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.resource.modular.datasource.param;
-
-import io.swagger.annotations.ApiModelProperty;
-
-import org.noear.solon.validation.annotation.NotBlank;
+package com.fliad.resource.modular.workflow.enums;
 
 /**
- * 数据源Id参数
+ * 工作流枚举
  *
  * @author wyl
- * @date  2025/09/24 20:05
- **/
-public class ViidDatasourceIdParam {
+ * @date  2025/08/27 14:03
+ */
+public enum ResourceWorkflowEnum {
 
-    /** ID */
-    @ApiModelProperty(value = "ID", required = true)
-    @NotBlank(message = "id不能为空")
-    private String id;
+    /** 测试 */
+    TEST("TEST");
 
-    public String getId() {
-        return id;
+    private final String value;
+
+    ResourceWorkflowEnum(String value) {
+        this.value = value;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getValue() {
+        return value;
     }
 }

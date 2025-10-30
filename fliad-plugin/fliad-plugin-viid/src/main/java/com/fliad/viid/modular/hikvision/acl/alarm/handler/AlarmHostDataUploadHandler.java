@@ -3,7 +3,7 @@ package com.fliad.viid.modular.hikvision.acl.alarm.handler;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionAlarmManager;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionDevice;
@@ -194,7 +194,7 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
         dsWeather.setLsh(IdUtil.simpleUUID());
         dsWeather.setAcceptTime(new Date());
 
-        List<ViidWorkflow> workflowList = alarmManager.getViidWorkflowService().findBySubscribeDetail("103");
+        List<ResourceWorkflow> workflowList = alarmManager.getViidWorkflowService().findBySubscribeDetail("103");
 
         // 配置ONode日期格式
         Options options = Options.def();
@@ -203,7 +203,7 @@ public class AlarmHostDataUploadHandler implements AlarmHandler {
             node.val().setString(sdf.format(data));
         });
         log.info("气象数据：{}", ONode.stringify(dsWeather, options));
-        for (ViidWorkflow workflow : workflowList) {
+        for (ResourceWorkflow workflow : workflowList) {
             TaskRunInput taskRunInput = new TaskRunInput();
             taskRunInput.setSchema(workflow.getContent());
             taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(dsWeather, options)));

@@ -16,7 +16,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fliad.resource.modular.workflow.enums.ViidWorkflowStatus;
+import com.fliad.resource.modular.workflow.enums.ResourceWorkflowStatus;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
@@ -27,13 +27,13 @@ import org.noear.solon.data.annotation.Tran;
 import com.fliad.common.enums.CommonSortOrderEnum;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.page.CommonPageRequest;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
-import com.fliad.resource.modular.workflow.mapper.ViidWorkflowMapper;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowAddParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowEditParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowIdParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowPageParam;
-import com.fliad.resource.modular.workflow.service.ViidWorkflowService;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
+import com.fliad.resource.modular.workflow.mapper.ResourceWorkflowMapper;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowAddParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowEditParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowIdParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowPageParam;
+import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import org.noear.solon.data.cache.CacheService;
 
 import java.util.List;
@@ -47,14 +47,14 @@ import java.util.stream.Collectors;
  * @date 2025/08/27 14:03
  **/
 @Component
-public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, ViidWorkflow> implements ViidWorkflowService {
+public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMapper, ResourceWorkflow> implements ResourceWorkflowService {
 
     @Inject
     CacheService cacheService;
 
-    public List<ViidWorkflow> findBySubscribeDetail(String subscribeDetail) {
-        List<ViidWorkflow> list = cacheService.getOrStore("viid_workflow_list", List.class, 60 * 5, () -> {
-            return this.list(QueryWrapper.create().eq(ViidWorkflow::getStatus, ViidWorkflowStatus.ENABLE.getValue()));
+    public List<ResourceWorkflow> findBySubscribeDetail(String subscribeDetail) {
+        List<ResourceWorkflow> list = cacheService.getOrStore("viid_workflow_list", List.class, 60 * 5, () -> {
+            return this.list(QueryWrapper.create().eq(ResourceWorkflow::getStatus, ResourceWorkflowStatus.ENABLE.getValue()));
         });
         return list.stream().filter(viidWorkflow -> {
             AtomicBoolean flag = new AtomicBoolean(false);
@@ -68,18 +68,18 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
     }
 
     @Override
-    public Page<ViidWorkflow> page(ViidWorkflowPageParam viidWorkflowPageParam) {
+    public Page<ResourceWorkflow> page(ResourceWorkflowPageParam viidWorkflowPageParam) {
         QueryWrapper queryWrapper = new QueryWrapper();
         if (ObjectUtil.isNotEmpty(viidWorkflowPageParam.getTitle())) {
-            queryWrapper.like(ViidWorkflow::getTitle, viidWorkflowPageParam.getTitle());
+            queryWrapper.like(ResourceWorkflow::getTitle, viidWorkflowPageParam.getTitle());
         }
         if (ObjectUtil.isAllNotEmpty(viidWorkflowPageParam.getSortField(), viidWorkflowPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(viidWorkflowPageParam.getSortOrder());
             queryWrapper.orderBy(StrUtil.toUnderlineCase(viidWorkflowPageParam.getSortField()), viidWorkflowPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
         } else {
-            queryWrapper.orderBy(ViidWorkflow::getId, false);
+            queryWrapper.orderBy(ResourceWorkflow::getId, false);
         }
-        Page<ViidWorkflow> pageList = this.page(CommonPageRequest.defaultPage(), queryWrapper);
+        Page<ResourceWorkflow> pageList = this.page(CommonPageRequest.defaultPage(), queryWrapper);
         pageList.getRecords().forEach(item -> {
             removeEscapeCharacters(item);
         });
@@ -88,10 +88,10 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
 
     @Tran
     @Override
-    public void add(ViidWorkflowAddParam viidWorkflowAddParam) {
-        ViidWorkflow viidWorkflow = BeanUtil.toBean(viidWorkflowAddParam, ViidWorkflow.class);
+    public void add(ResourceWorkflowAddParam viidWorkflowAddParam) {
+        ResourceWorkflow viidWorkflow = BeanUtil.toBean(viidWorkflowAddParam, ResourceWorkflow.class);
         // 设置状态
-        viidWorkflow.setStatus(ViidWorkflowStatus.DISABLED.getValue());
+        viidWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue());
         this.save(viidWorkflow);
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
@@ -99,8 +99,8 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
 
     @Tran
     @Override
-    public void edit(ViidWorkflowEditParam viidWorkflowEditParam) {
-        ViidWorkflow viidWorkflow = this.queryEntity(viidWorkflowEditParam.getId());
+    public void edit(ResourceWorkflowEditParam viidWorkflowEditParam) {
+        ResourceWorkflow viidWorkflow = this.queryEntity(viidWorkflowEditParam.getId());
         BeanUtil.copyProperties(viidWorkflowEditParam, viidWorkflow);
         this.updateById(viidWorkflow);
         // 使缓存失效
@@ -109,23 +109,23 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
 
     @Tran
     @Override
-    public void delete(List<ViidWorkflowIdParam> viidWorkflowIdParamList) {
+    public void delete(List<ResourceWorkflowIdParam> viidWorkflowIdParamList) {
         // 执行删除
-        this.removeByIds(CollStreamUtil.toList(viidWorkflowIdParamList, ViidWorkflowIdParam::getId));
+        this.removeByIds(CollStreamUtil.toList(viidWorkflowIdParamList, ResourceWorkflowIdParam::getId));
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
     }
 
     @Override
-    public ViidWorkflow detail(ViidWorkflowIdParam viidWorkflowIdParam) {
-        ViidWorkflow viidWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
+    public ResourceWorkflow detail(ResourceWorkflowIdParam viidWorkflowIdParam) {
+        ResourceWorkflow viidWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
         removeEscapeCharacters(viidWorkflow);
         return viidWorkflow;
     }
 
     @Override
-    public ViidWorkflow queryEntity(String id) {
-        ViidWorkflow viidWorkflow = this.getById(id);
+    public ResourceWorkflow queryEntity(String id) {
+        ResourceWorkflow viidWorkflow = this.getById(id);
         if (ObjectUtil.isEmpty(viidWorkflow)) {
             throw new CommonException("工作流不存在，id值为：{}", id);
         }
@@ -133,17 +133,17 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
     }
 
     @Override
-    public void copy(ViidWorkflowIdParam viidWorkflowIdParam) {
+    public void copy(ResourceWorkflowIdParam viidWorkflowIdParam) {
         // 获取原工作流
-        ViidWorkflow originalWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
+        ResourceWorkflow originalWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
 
         // 创建新工作流对象
-        ViidWorkflow newWorkflow = new ViidWorkflow();
+        ResourceWorkflow newWorkflow = new ResourceWorkflow();
         // 复制属性，但使用新的ID和标题
         BeanUtil.copyProperties(originalWorkflow, newWorkflow);
         newWorkflow.setId(null); // 生成新的ID
         newWorkflow.setTitle(originalWorkflow.getTitle() + "_副本"); // 添加副本标识
-        newWorkflow.setStatus(ViidWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
+        newWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
 
         // 保存新工作流
         this.save(newWorkflow);
@@ -152,17 +152,17 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
     }
 
     @Override
-    public void disableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam) {
-        this.updateChain().eq(ViidWorkflow::getId, viidWorkflowIdParam.getId())
-                .set(ViidWorkflow::getStatus, ViidWorkflowStatus.DISABLED.getValue()).update();
+    public void disableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam) {
+        this.updateChain().eq(ResourceWorkflow::getId, viidWorkflowIdParam.getId())
+                .set(ResourceWorkflow::getStatus, ResourceWorkflowStatus.DISABLED.getValue()).update();
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
     }
 
     @Override
-    public void enableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam) {
-        this.updateChain().eq(ViidWorkflow::getId, viidWorkflowIdParam.getId())
-                .set(ViidWorkflow::getStatus, ViidWorkflowStatus.ENABLE.getValue()).update();
+    public void enableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam) {
+        this.updateChain().eq(ResourceWorkflow::getId, viidWorkflowIdParam.getId())
+                .set(ResourceWorkflow::getStatus, ResourceWorkflowStatus.ENABLE.getValue()).update();
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
     }
@@ -172,7 +172,7 @@ public class ViidWorkflowServiceImpl extends ServiceImpl<ViidWorkflowMapper, Vii
      *
      * @param viidWorkflow 工作流对象
      */
-    private void removeEscapeCharacters(ViidWorkflow viidWorkflow) {
+    private void removeEscapeCharacters(ResourceWorkflow viidWorkflow) {
         // 处理 subscribeDetail 字段中的转义字符
         viidWorkflow.setSubscribeDetail(handleEscapeCharacters(viidWorkflow.getSubscribeDetail()));
         

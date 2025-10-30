@@ -10,16 +10,30 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.resource.modular.workflow.mapper;
+package com.fliad.resource.modular.workflow.param;
 
-import com.mybatisflex.core.BaseMapper;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
+import io.swagger.annotations.ApiModelProperty;
+
+import org.noear.solon.validation.annotation.NotBlank;
 
 /**
- * 工作流Mapper接口
+ * 工作流Id参数
  *
  * @author wyl
  * @date  2025/08/27 14:03
  **/
-public interface ViidWorkflowMapper extends BaseMapper<ViidWorkflow> {
+public class ResourceWorkflowIdParam {
+
+    /** ID */
+    @ApiModelProperty(value = "ID", required = true)
+    @NotBlank(message = "id不能为空")
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

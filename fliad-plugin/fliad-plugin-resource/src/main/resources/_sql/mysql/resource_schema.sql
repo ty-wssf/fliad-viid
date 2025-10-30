@@ -1,7 +1,7 @@
 -- ----------------------------
 -- Table structure for VIID_WORKFLOW
 -- ----------------------------
-CREATE TABLE `VIID_WORKFLOW`
+CREATE TABLE `RESOURCE_WORKFLOW`
 (
     `ID`               varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
     `TITLE`            varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
@@ -22,7 +22,7 @@ CREATE TABLE `VIID_WORKFLOW`
 -- ----------------------------
 -- Table structure for VIID_DATASOURCE
 -- ----------------------------
-CREATE TABLE `VIID_DATASOURCE`
+CREATE TABLE `RESOURCE_DATASOURCE`
 (
     `ID`          varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
     `TITLE`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',

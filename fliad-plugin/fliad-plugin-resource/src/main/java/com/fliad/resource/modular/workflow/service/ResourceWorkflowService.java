@@ -14,11 +14,11 @@ package com.fliad.resource.modular.workflow.service;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.fliad.resource.modular.workflow.entity.ViidWorkflow;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowAddParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowEditParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowIdParam;
-import com.fliad.resource.modular.workflow.param.ViidWorkflowPageParam;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowAddParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowEditParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowIdParam;
+import com.fliad.resource.modular.workflow.param.ResourceWorkflowPageParam;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * @author wyl
  * @date 2025/08/27 14:03
  **/
-public interface ViidWorkflowService extends IService<ViidWorkflow> {
+public interface ResourceWorkflowService extends IService<ResourceWorkflow> {
 
     /**
      * 获取工作流分页
@@ -36,7 +36,7 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    Page<ViidWorkflow> page(ViidWorkflowPageParam viidWorkflowPageParam);
+    Page<ResourceWorkflow> page(ResourceWorkflowPageParam viidWorkflowPageParam);
 
     /**
      * 添加工作流
@@ -44,7 +44,7 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    void add(ViidWorkflowAddParam viidWorkflowAddParam);
+    void add(ResourceWorkflowAddParam viidWorkflowAddParam);
 
     /**
      * 编辑工作流
@@ -52,7 +52,7 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    void edit(ViidWorkflowEditParam viidWorkflowEditParam);
+    void edit(ResourceWorkflowEditParam viidWorkflowEditParam);
 
     /**
      * 删除工作流
@@ -60,7 +60,7 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    void delete(List<ViidWorkflowIdParam> viidWorkflowIdParamList);
+    void delete(List<ResourceWorkflowIdParam> viidWorkflowIdParamList);
 
     /**
      * 获取工作流详情
@@ -68,7 +68,7 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    ViidWorkflow detail(ViidWorkflowIdParam viidWorkflowIdParam);
+    ResourceWorkflow detail(ResourceWorkflowIdParam viidWorkflowIdParam);
 
     /**
      * 获取工作流详情
@@ -76,28 +76,28 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @author wyl
      * @date 2025/08/27 14:03
      */
-    ViidWorkflow queryEntity(String id);
+    ResourceWorkflow queryEntity(String id);
 
     /**
      * 复制工作流
      *
      * @param viidWorkflowIdParam 工作流ID参数
      */
-    void copy(ViidWorkflowIdParam viidWorkflowIdParam);
+    void copy(ResourceWorkflowIdParam viidWorkflowIdParam);
 
     /**
      * 禁用工作流
      *
      * @param viidWorkflowIdParam
      */
-    void disableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam);
+    void disableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam);
 
     /**
      * 启用工作流
      *
      * @param viidWorkflowIdParam
      */
-    void enableWorkflow(ViidWorkflowIdParam viidWorkflowIdParam);
+    void enableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam);
 
     /**
      * 根据订阅详情查找工作流
@@ -105,6 +105,6 @@ public interface ViidWorkflowService extends IService<ViidWorkflow> {
      * @param subscribeDetail 订阅详情
      * @return 工作流列表
      */
-    List<ViidWorkflow> findBySubscribeDetail(String subscribeDetail);
+    List<ResourceWorkflow> findBySubscribeDetail(String subscribeDetail);
 
 }

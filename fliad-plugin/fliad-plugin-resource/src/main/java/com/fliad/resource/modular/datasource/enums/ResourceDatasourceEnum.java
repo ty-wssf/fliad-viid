@@ -10,22 +10,22 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.resource.modular.workflow.enums;
+package com.fliad.resource.modular.datasource.enums;
 
 /**
- * 工作流枚举
+ * 数据源枚举
  *
  * @author wyl
- * @date  2025/08/27 14:03
+ * @date  2025/09/24 20:05
  */
-public enum ViidWorkflowEnum {
+public enum ResourceDatasourceEnum {
 
     /** 测试 */
     TEST("TEST");
 
     private final String value;
 
-    ViidWorkflowEnum(String value) {
+    ResourceDatasourceEnum(String value) {
         this.value = value;
     }
 
