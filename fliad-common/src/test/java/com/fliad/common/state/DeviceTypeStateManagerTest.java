@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -124,7 +125,7 @@ class DeviceTypeStateManagerTest {
         deviceTypeStateManager.handleOnlineEvent(entityId2);
         
         // 获取在线实体列表
-        var onlineEntities = deviceTypeStateManager.getOnlineEntities();
+        Set<String> onlineEntities = deviceTypeStateManager.getOnlineEntities();
         assertEquals(2, onlineEntities.size());
         assertTrue(onlineEntities.contains(entityId1));
         assertTrue(onlineEntities.contains(entityId2));
