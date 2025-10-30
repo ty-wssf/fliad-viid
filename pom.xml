@@ -13,13 +13,13 @@
     <parent>
         <groupId>org.noear</groupId>
         <artifactId>solon-parent</artifactId>
-        <version>3.6.0</version>
+        <version>3.6.2</version>
         <relativePath/>
     </parent>
 
     <properties>
         <viid.version>0.1.0</viid.version>
-        <solon.version>3.6.0</solon.version>
+        <solon.version>3.6.2</solon.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
