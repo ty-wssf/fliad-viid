@@ -257,11 +257,11 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- lombok -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.versin}</version>
-            </dependency>
+            </dependency>-->
 
             <!-- mybatis-flex -->
             <dependency>
