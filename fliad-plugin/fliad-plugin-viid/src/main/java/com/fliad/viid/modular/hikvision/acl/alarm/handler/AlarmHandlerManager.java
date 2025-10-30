@@ -14,15 +14,15 @@ import java.util.Map;
  */
 public class AlarmHandlerManager {
     private static final Logger log = LoggerFactory.getLogger(AlarmHandlerManager.class);
-    
+
     private final Map<Integer, AlarmHandler> handlers = new HashMap<>();
     private final HikvisionAlarmManager alarmManager;
-    
+
     public AlarmHandlerManager(HikvisionAlarmManager alarmManager) {
         this.alarmManager = alarmManager;
         initHandlers();
     }
-    
+
     private void initHandlers() {
         handlers.put(HCNetSDK.COMM_ITS_PLATE_RESULT, new ItsPlateResultHandler());
         handlers.put(HCNetSDK.COMM_ALARM_AID_V41, new AidAlarmV41Handler());
@@ -38,19 +38,22 @@ public class AlarmHandlerManager {
         handlers.put(HCNetSDK.COMM_UPLOAD_AIOP_PICTURE, new AiopPictureUploadHandler());
         handlers.put(HCNetSDK.COMM_FIREDETECTION_ALARM, new FireDetectionAlarmHandler());
         handlers.put(HCNetSDK.COMM_ALARMHOST_DATA_UPLOAD, new AlarmHostDataUploadHandler(alarmManager));
+        handlers.put(HCNetSDK.COMM_ALARM_TPS_STATISTICS, new TpsStatisticsAlarmHandler());
+        handlers.put(HCNetSDK.COMM_ALARM_TPS_REAL_TIME, new TpsRealTimeAlarmHandler());
     }
-    
+
     public void handleAlarm(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
+        String sbip = "";
+        try {
+            sbip = new String(pAlarmer.sDeviceIP, "GBK").trim();
+        } catch (Exception e) {
+            log.error("获取设备IP失败", e);
+        }
+        alarmManager.getDeviceStateManager().handleOnlineEvent("hikvision", alarmManager.getDeviceByIp(sbip).getDeviceId());
         AlarmHandler handler = handlers.get(lCommand);
         if (handler != null) {
             handler.handle(lCommand, pAlarmer, pAlarmInfo, dwBufLen, pUser);
         } else {
-            String sbip = "";
-            try {
-                sbip = new String(pAlarmer.sDeviceIP, "GBK").trim();
-            } catch (Exception e) {
-                log.error("获取设备IP失败", e);
-            }
             log.warn("设备IP: {}，未知的报警类型: 0x{}", sbip, Integer.toHexString(lCommand));
         }
     }

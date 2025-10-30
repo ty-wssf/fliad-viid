@@ -1,15 +1,3 @@
-/*
- * Copyright [2022] [https://www.xiaonuo.vip]
- *
- * Snowy采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Snowy源码头部的版权声明。
- * 3.本项目代码可免费商业使用，商业使用请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://www.xiaonuo.vip
- * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
- * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
- */
 package com.fliad.common.state;
 
 import cn.hutool.core.collection.CollectionUtil;
@@ -105,7 +93,7 @@ public class DeviceTypeStateManager {
         
         // 如果实体已经在内存中在线，不处理
         if (onlineEntities.contains(entityId)) {
-            log.debug("实体{}已经在线，无需重复处理上线事件", entityId);
+            log.debug("实体{}({})已经在线，无需重复处理上线事件", entityId, deviceType);
             return false;
         }
         
@@ -124,7 +112,7 @@ public class DeviceTypeStateManager {
             }
         }
         
-        log.info("实体{}已上线", entityId);
+        log.info("实体{}({})已上线", entityId, deviceType);
         return true;
     }
     
@@ -148,7 +136,7 @@ public class DeviceTypeStateManager {
         
         // 只有当实体在线时才处理下线事件
         if (!onlineEntities.contains(entityId)) {
-            log.debug("实体{}不在线，无需处理下线事件", entityId);
+            log.debug("实体{}({})不在线，无需处理下线事件", entityId, deviceType);
             return false;
         }
         
@@ -167,7 +155,7 @@ public class DeviceTypeStateManager {
             }
         }
         
-        log.info("实体{}已下线", entityId);
+        log.info("实体{}({})已下线", entityId, deviceType);
         return true;
     }
     

@@ -1,5 +1,6 @@
 package com.fliad.viid.modular.hikvision.acl.alarm;
 
+import com.fliad.common.state.DeviceStateManager;
 import com.fliad.resource.modular.flowgram.service.FlowgramService;
 import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
@@ -38,12 +39,14 @@ public class HikvisionAlarmManager {
 
     FlowgramService flowgramService;
     ResourceWorkflowService viidWorkflowService;
+    DeviceStateManager deviceStateManager;
 
     /**
      * 初始化SDK
      */
-    public void init() {
+    public void init(DeviceStateManager deviceStateManager) {
         try {
+            this.deviceStateManager = deviceStateManager;
             Solon.context().subBeansOfType(FlowgramService.class, viidWorkflowService -> {
                 this.flowgramService = viidWorkflowService;
             });
@@ -449,6 +452,10 @@ public class HikvisionAlarmManager {
 
     public FlowgramService getFlowgramService() {
         return flowgramService;
+    }
+
+    public DeviceStateManager getDeviceStateManager() {
+        return deviceStateManager;
     }
 
 }

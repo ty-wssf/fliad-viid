@@ -1,10 +1,14 @@
 package com.fliad.viid.modular.hikvision.service.impl;
 
 import cn.hutool.core.thread.ThreadUtil;
+import com.fliad.common.cache.CommonCacheOperator;
+import com.fliad.common.state.DeviceStateManager;
+import com.fliad.common.state.MultiDeviceStatusChangeListener;
 import com.fliad.dev.api.DevConfigApi;
 import com.fliad.viid.modular.hikvision.acl.alarm.HikvisionAlarmManager;
 import com.fliad.viid.modular.hikvision.entity.ViidHikvisionCamera;
 import com.fliad.viid.modular.hikvision.service.ViidHikvisionCameraService;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
@@ -23,9 +27,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @date 2025/09/28
  */
 @Component(index = 10)
-public class ViidHikvisionCameraInitRunner implements LifecycleBean {
+public class ViidHikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStatusChangeListener {
 
     private static final Logger log = LoggerFactory.getLogger(ViidHikvisionCameraInitRunner.class);
+
+    private static final String DEVICE_TYPE = "hikvision";
 
     @Inject
     private ViidHikvisionCameraService viidHikvisionCameraService;
@@ -35,6 +41,8 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
 
     @Inject
     private DevConfigApi devConfigApi;
+
+    private DeviceStateManager deviceStateManager;
 
     // 存储已初始化的设备ID列表
     private final List<String> initializedDevices = new CopyOnWriteArrayList<>();
@@ -77,8 +85,22 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
             return;
         }
 
+        Solon.context().subBeansOfType(CommonCacheOperator.class, cacheOperator -> {
+            this.deviceStateManager = new DeviceStateManager(cacheOperator);
+            // 注册海康威视设备类型
+            deviceStateManager.registerDeviceType(DEVICE_TYPE, "device:online:hikvision:");
+            deviceStateManager.setDeviceTimeoutMillis(DEVICE_TYPE, 90 * 1000L); // 90秒超时
+            deviceStateManager.addListener(this);
+            deviceStateManager.enableScheduledCheck(DEVICE_TYPE);
+            try {
+                deviceStateManager.start();
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         // 初始化海康威视报警管理器
-        hikvisionAlarmManager.init();
+        hikvisionAlarmManager.init(deviceStateManager);
 
         log.info("开始初始化海康威视设备...");
 
@@ -108,6 +130,8 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     if (!added) {
                         log.warn("设备 {} 添加失败", deviceId);
                         failedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                         continue;
                     }
 
@@ -116,6 +140,8 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     if (!loggedIn) {
                         log.warn("设备 {} 登录失败", deviceId);
                         failedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                         continue;
                     }
 
@@ -124,16 +150,22 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     if (alarmHandle == -1) {
                         log.warn("设备 {} 布防失败", deviceId);
                         failedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                         continue;
                     }
 
                     // 记录成功初始化的设备
                     initializedDevices.add(deviceId);
+                    // 标记设备为在线状态
+                    deviceStateManager.handleOnlineEvent(DEVICE_TYPE, deviceId);
 
                     log.info("设备 {} 初始化成功", deviceId);
                 } catch (Exception e) {
                     log.error("初始化设备 {} 时发生异常", camera.getId(), e);
                     failedDevices.add(camera);
+                    // 标记设备为离线状态
+                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
                 }
             }
 
@@ -193,6 +225,8 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     if (!loggedIn) {
                         log.warn("设备 {} 重试登录失败", deviceId);
                         stillFailedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                         continue;
                     }
 
@@ -201,15 +235,21 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     if (alarmHandle == -1) {
                         log.warn("设备 {} 重试布防失败", deviceId);
                         stillFailedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                         continue;
                     }
 
                     // 记录成功初始化的设备
                     initializedDevices.add(deviceId);
+                    // 标记设备为在线状态
+                    deviceStateManager.handleOnlineEvent(DEVICE_TYPE, deviceId);
                     log.info("设备 {} 重试初始化成功", deviceId);
                 } catch (Exception e) {
                     log.error("重试初始化设备 {} 时发生异常", camera.getId(), e);
                     stillFailedDevices.add(camera);
+                    // 标记设备为离线状态
+                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
                 }
             }
 
@@ -244,6 +284,10 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
         log.info("开始清理海康威视设备资源...");
 
         try {
+            if (deviceStateManager != null) {
+                deviceStateManager.stop();
+            }
+
             // 创建已初始化设备列表的副本以避免并发修改
             List<String> devicesToClean = new ArrayList<>(initializedDevices);
 
@@ -259,6 +303,9 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
                     // 注销设备
                     hikvisionAlarmManager.logoutDevice(deviceId);
                     log.info("设备 {} 注销完成", deviceId);
+
+                    // 标记设备为离线状态
+                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
                 } catch (Exception e) {
                     log.error("清理设备 {} 时发生异常", deviceId, e);
                 }
@@ -270,6 +317,30 @@ public class ViidHikvisionCameraInitRunner implements LifecycleBean {
             log.info("海康威视设备资源清理完成");
         } catch (Exception e) {
             log.error("清理海康威视设备资源时发生异常", e);
+        }
+    }
+
+    @Override
+    public void onDeviceOnline(String deviceType, String deviceId) {
+        if (deviceType.equals(DEVICE_TYPE)) {
+            // 更新ViidHikvisionCamera实体在数据库的状态
+            ViidHikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.getById(deviceId);
+            if (viidHikvisionCamera != null) {
+                viidHikvisionCamera.setOnlineStatus(1);
+                viidHikvisionCameraService.updateById(viidHikvisionCamera);
+            }
+        }
+    }
+
+    @Override
+    public void onDeviceOffline(String deviceType, String deviceId) {
+        if (deviceType.equals(DEVICE_TYPE)) {
+            // 删除ViidHikvisionCamera实体在数据库的状态
+            ViidHikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.getById(deviceId);
+            if (viidHikvisionCamera != null) {
+                viidHikvisionCamera.setOnlineStatus(0);
+                viidHikvisionCameraService.updateById(viidHikvisionCamera);
+            }
         }
     }
 }
