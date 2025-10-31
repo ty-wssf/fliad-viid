@@ -24,7 +24,7 @@ import java.util.Date;
  * @author wyl
  * @date  2025/09/24 20:05
  */
-@Table(value = "viid_datasource")
+@Table(value = "resource_datasource")
 public class ResourceDatasource {
 
     /** ID */

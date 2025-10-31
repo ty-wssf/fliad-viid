@@ -25,7 +25,7 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/27 14:03
  **/
-@Table(value = "viid_workflow")
+@Table(value = "resource_workflow")
 public class ResourceWorkflow {
 
     /** ID */

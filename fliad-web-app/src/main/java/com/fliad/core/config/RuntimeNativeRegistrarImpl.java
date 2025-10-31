@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONConverter;
 import com.fliad.auth.modular.third.service.impl.AuthThirdServiceImpl;
-import com.fliad.viid.modular.hikvision.acl.NetSDK.HCNetSDK;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiBasicAuth;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiExtendSetting;
 import com.github.xiaoymin.knife4j.solon.settings.OpenApiSetting;
@@ -28,7 +27,6 @@ import org.noear.solon.core.util.ScanUtil;
 import org.noear.solon.net.http.HttpUtils;
 import org.noear.solon.serialization.prop.JsonProps;
 
-import java.awt.*;
 import java.lang.reflect.Method;
 
 @Component
@@ -59,7 +57,7 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
         metadata.registerReflection("org.graalvm.polyglot.PolyglotAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.HostAccess", MemberCategory.values());
         metadata.registerReflection("org.graalvm.polyglot.Language", MemberCategory.values());
-        metadata.registerReflection(HCNetSDK.class, MemberCategory.values());
+
         metadata.registerReflection(HttpUtils.class, MemberCategory.values());
 
         metadata.registerReflection(HttpUtil.class, MemberCategory.values());
@@ -72,7 +70,6 @@ public class RuntimeNativeRegistrarImpl implements RuntimeNativeRegistrar {
 
         metadata.registerReflection(ch.qos.logback.classic.Logger.class, MemberCategory.values());
 
-        metadata.registerJdkProxy(HCNetSDK.class);
         metadata.registerJdkProxy(HttpUtils.class);
 
         //扫描类文件并处理（采用两段式加载，可以部分bean先处理；剩下的为第二段处理）

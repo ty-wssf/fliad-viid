@@ -1,7 +1,7 @@
 -- ----------------------------
 -- Table structure for VIID_WORKFLOW
 -- ----------------------------
-CREATE TABLE VIID_WORKFLOW
+CREATE TABLE RESOURCE_WORKFLOW
 (
     ID               varchar(20) NOT NULL,
     TITLE            varchar(255) DEFAULT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE VIID_WORKFLOW
 -- ----------------------------
 -- Table structure for VIID_DATASOURCE
 -- ----------------------------
-CREATE TABLE VIID_DATASOURCE
+CREATE TABLE RESOURCE_DATASOURCE
 (
     ID          varchar(20) NOT NULL,
     TITLE       varchar(255) DEFAULT NULL,

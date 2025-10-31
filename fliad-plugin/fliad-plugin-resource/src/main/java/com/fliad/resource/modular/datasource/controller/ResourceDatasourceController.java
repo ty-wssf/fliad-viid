@@ -41,7 +41,7 @@ import com.fliad.resource.modular.datasource.service.ResourceDatasourceService;
 public class ResourceDatasourceController {
 
     @Inject
-    private ResourceDatasourceService viidDatasourceService;
+    private ResourceDatasourceService datasourceService;
 
     /**
      * 获取数据源分页
@@ -53,8 +53,8 @@ public class ResourceDatasourceController {
     @SaCheckPermission("/resource/datasource/page")
     @Get
     @Mapping("/resource/datasource/page")
-    public CommonResult<Page<ResourceDatasource>> page(ResourceDatasourcePageParam viidDatasourcePageParam) {
-        return CommonResult.data(viidDatasourceService.page(viidDatasourcePageParam));
+    public CommonResult<Page<ResourceDatasource>> page(ResourceDatasourcePageParam datasourcePageParam) {
+        return CommonResult.data(datasourceService.page(datasourcePageParam));
     }
 
     /**
@@ -68,8 +68,8 @@ public class ResourceDatasourceController {
     @SaCheckPermission("/resource/datasource/add")
     @Post
     @Mapping("/resource/datasource/add")
-    public CommonResult<String> add(ResourceDatasourceAddParam viidDatasourceAddParam) {
-        viidDatasourceService.add(viidDatasourceAddParam);
+    public CommonResult<String> add(ResourceDatasourceAddParam datasourceAddParam) {
+        datasourceService.add(datasourceAddParam);
         return CommonResult.ok();
     }
 
@@ -84,8 +84,8 @@ public class ResourceDatasourceController {
     @SaCheckPermission("/resource/datasource/edit")
     @Post
     @Mapping("/resource/datasource/edit")
-    public CommonResult<String> edit(ResourceDatasourceEditParam viidDatasourceEditParam) {
-        viidDatasourceService.edit(viidDatasourceEditParam);
+    public CommonResult<String> edit(ResourceDatasourceEditParam datasourceEditParam) {
+        datasourceService.edit(datasourceEditParam);
         return CommonResult.ok();
     }
 
@@ -101,8 +101,8 @@ public class ResourceDatasourceController {
     @Post
     @Mapping("/resource/datasource/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
-                                                   CommonValidList<ResourceDatasourceIdParam> viidDatasourceIdParamList) {
-        viidDatasourceService.delete(viidDatasourceIdParamList);
+                                                   CommonValidList<ResourceDatasourceIdParam> datasourceIdParamList) {
+        datasourceService.delete(datasourceIdParamList);
         return CommonResult.ok();
     }
 
@@ -116,23 +116,23 @@ public class ResourceDatasourceController {
     @SaCheckPermission("/resource/datasource/detail")
     @Get
     @Mapping("/resource/datasource/detail")
-    public CommonResult<ResourceDatasource> detail(ResourceDatasourceIdParam viidDatasourceIdParam) {
-        return CommonResult.data(viidDatasourceService.detail(viidDatasourceIdParam));
+    public CommonResult<ResourceDatasource> detail(ResourceDatasourceIdParam datasourceIdParam) {
+        return CommonResult.data(datasourceService.detail(datasourceIdParam));
     }
 
     @ApiOperation("禁用数据源")
     @Post
     @Mapping("/resource/datasource/disableDatasource")
-    public CommonResult<String> disableDatasource(ResourceDatasourceIdParam viidDatasourceIdParam) {
-        viidDatasourceService.disableDatasource(viidDatasourceIdParam);
+    public CommonResult<String> disableDatasource(ResourceDatasourceIdParam datasourceIdParam) {
+        datasourceService.disableDatasource(datasourceIdParam);
         return CommonResult.ok();
     }
 
     @ApiOperation("启用数据源")
     @Post
     @Mapping("/resource/datasource/enableDatasource")
-    public CommonResult<String> enableDatasource(ResourceDatasourceIdParam viidDatasourceIdParam) {
-        viidDatasourceService.enableDatasource(viidDatasourceIdParam);
+    public CommonResult<String> enableDatasource(ResourceDatasourceIdParam datasourceIdParam) {
+        datasourceService.enableDatasource(datasourceIdParam);
         return CommonResult.ok();
     }
 
@@ -147,8 +147,8 @@ public class ResourceDatasourceController {
     @SaCheckPermission("/resource/datasource/add")
     @Post
     @Mapping("/resource/datasource/copy")
-    public CommonResult<String> copy(ResourceDatasourceIdParam viidDatasourceIdParam) {
-        viidDatasourceService.copy(viidDatasourceIdParam);
+    public CommonResult<String> copy(ResourceDatasourceIdParam datasourceIdParam) {
+        datasourceService.copy(datasourceIdParam);
         return CommonResult.ok();
     }
 

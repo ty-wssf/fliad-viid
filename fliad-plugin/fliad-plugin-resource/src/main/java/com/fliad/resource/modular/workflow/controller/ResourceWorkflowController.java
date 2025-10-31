@@ -41,7 +41,7 @@ import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 public class ResourceWorkflowController {
 
     @Inject
-    private ResourceWorkflowService viidWorkflowService;
+    private ResourceWorkflowService workflowService;
 
     /**
      * 获取工作流分页
@@ -53,8 +53,8 @@ public class ResourceWorkflowController {
     @SaCheckPermission("/resource/workflow/page")
     @Get
     @Mapping("/resource/workflow/page")
-    public CommonResult<Page<ResourceWorkflow>> page(ResourceWorkflowPageParam viidWorkflowPageParam) {
-        return CommonResult.data(viidWorkflowService.page(viidWorkflowPageParam));
+    public CommonResult<Page<ResourceWorkflow>> page(ResourceWorkflowPageParam workflowPageParam) {
+        return CommonResult.data(workflowService.page(workflowPageParam));
     }
 
     /**
@@ -68,8 +68,8 @@ public class ResourceWorkflowController {
     @SaCheckPermission("/resource/workflow/add")
     @Post
     @Mapping("/resource/workflow/add")
-    public CommonResult<String> add(ResourceWorkflowAddParam viidWorkflowAddParam) {
-        viidWorkflowService.add(viidWorkflowAddParam);
+    public CommonResult<String> add(ResourceWorkflowAddParam workflowAddParam) {
+        workflowService.add(workflowAddParam);
         return CommonResult.ok();
     }
 
@@ -83,9 +83,9 @@ public class ResourceWorkflowController {
     // @CommonLog("编辑工作流")
     // @SaCheckPermission("/viid/workflow/edit")
     @Post
-    @Mapping("/viid/workflow/edit")
-    public CommonResult<String> edit(ResourceWorkflowEditParam viidWorkflowEditParam) {
-        viidWorkflowService.edit(viidWorkflowEditParam);
+    @Mapping("/resource/workflow/edit")
+    public CommonResult<String> edit(ResourceWorkflowEditParam workflowEditParam) {
+        workflowService.edit(workflowEditParam);
         return CommonResult.ok();
     }
 
@@ -101,8 +101,8 @@ public class ResourceWorkflowController {
     @Post
     @Mapping("/resource/workflow/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
-                                                   CommonValidList<ResourceWorkflowIdParam> viidWorkflowIdParamList) {
-        viidWorkflowService.delete(viidWorkflowIdParamList);
+                                                   CommonValidList<ResourceWorkflowIdParam> workflowIdParamList) {
+        workflowService.delete(workflowIdParamList);
         return CommonResult.ok();
     }
 
@@ -116,8 +116,8 @@ public class ResourceWorkflowController {
     // @SaCheckPermission("/viid/workflow/detail")
     @Get
     @Mapping("/resource/workflow/detail")
-    public CommonResult<ResourceWorkflow> detail(ResourceWorkflowIdParam viidWorkflowIdParam) {
-        return CommonResult.data(viidWorkflowService.detail(viidWorkflowIdParam));
+    public CommonResult<ResourceWorkflow> detail(ResourceWorkflowIdParam workflowIdParam) {
+        return CommonResult.data(workflowService.detail(workflowIdParam));
     }
 
     /**
@@ -131,24 +131,24 @@ public class ResourceWorkflowController {
     @SaCheckPermission("/resource/workflow/add")
     @Post
     @Mapping("/resource/workflow/copy")
-    public CommonResult<String> copy(ResourceWorkflowIdParam viidWorkflowIdParam) {
-        viidWorkflowService.copy(viidWorkflowIdParam);
+    public CommonResult<String> copy(ResourceWorkflowIdParam workflowIdParam) {
+        workflowService.copy(workflowIdParam);
         return CommonResult.ok();
     }
 
     @ApiOperation("禁用工作流")
     @Post
     @Mapping("/resource/workflow/disableWorkflow")
-    public CommonResult<String> disableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam) {
-        viidWorkflowService.disableWorkflow(viidWorkflowIdParam);
+    public CommonResult<String> disableWorkflow(ResourceWorkflowIdParam workflowIdParam) {
+        workflowService.disableWorkflow(workflowIdParam);
         return CommonResult.ok();
     }
 
     @ApiOperation("启用工作流")
     @Post
     @Mapping("/resource/workflow/enableWorkflow")
-    public CommonResult<String> enableWorkflow(ResourceWorkflowIdParam viidWorkflowIdParam) {
-        viidWorkflowService.enableWorkflow(viidWorkflowIdParam);
+    public CommonResult<String> enableWorkflow(ResourceWorkflowIdParam workflowIdParam) {
+        workflowService.enableWorkflow(workflowIdParam);
         return CommonResult.ok();
     }
 
