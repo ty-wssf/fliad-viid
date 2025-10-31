@@ -36,5 +36,13 @@ export default {
 	// 复制数据源
 	viidDatasourceCopy(data) {
 		return request('copy', data)
+	},
+	// 安装模板
+	viidDatasourceInstallTemplate(data) {
+		return request('installTemplate', data)
+	},
+	// 获取模板列表
+	viidDatasourceTemplateList() {
+		return request('templateList', {}, 'get')
 	}
 }

@@ -1,15 +1,3 @@
-/*
- * Copyright [2022] [https://www.xiaonuo.vip]
- *
- * Snowy采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Snowy源码头部的版权声明。
- * 3.本项目代码可免费商业使用，商业使用请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://www.xiaonuo.vip
- * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
- * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
- */
 package com.fliad.resource.modular.workflow.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
@@ -54,7 +42,8 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
 
     public List<ResourceWorkflow> findBySubscribeDetail(String subscribeDetail) {
         List<ResourceWorkflow> list = cacheService.getOrStore("viid_workflow_list", List.class, 60 * 5, () -> {
-            return this.list(QueryWrapper.create().eq(ResourceWorkflow::getStatus, ResourceWorkflowStatus.ENABLE.getValue()));
+            return this.list(QueryWrapper.create().eq(ResourceWorkflow::getStatus, ResourceWorkflowStatus.ENABLE.getValue())
+                    .eq(ResourceWorkflow::getIsTemplate, false));
         });
         return list.stream().filter(viidWorkflow -> {
             AtomicBoolean flag = new AtomicBoolean(false);
@@ -73,6 +62,8 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         if (ObjectUtil.isNotEmpty(viidWorkflowPageParam.getTitle())) {
             queryWrapper.like(ResourceWorkflow::getTitle, viidWorkflowPageParam.getTitle());
         }
+        // 默认不显示模板数据
+        queryWrapper.eq(ResourceWorkflow::getIsTemplate, false);
         if (ObjectUtil.isAllNotEmpty(viidWorkflowPageParam.getSortField(), viidWorkflowPageParam.getSortOrder())) {
             CommonSortOrderEnum.validate(viidWorkflowPageParam.getSortOrder());
             queryWrapper.orderBy(StrUtil.toUnderlineCase(viidWorkflowPageParam.getSortField()), viidWorkflowPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
@@ -92,6 +83,8 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         ResourceWorkflow viidWorkflow = BeanUtil.toBean(viidWorkflowAddParam, ResourceWorkflow.class);
         // 设置状态
         viidWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue());
+        // 默认设置为非模板
+        viidWorkflow.setIsTemplate(false);
         this.save(viidWorkflow);
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
@@ -144,6 +137,7 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         newWorkflow.setId(null); // 生成新的ID
         newWorkflow.setTitle(originalWorkflow.getTitle() + "_副本"); // 添加副本标识
         newWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
+        newWorkflow.setIsTemplate(false); // 设置为非模板
 
         // 保存新工作流
         this.save(newWorkflow);
@@ -165,6 +159,46 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
                 .set(ResourceWorkflow::getStatus, ResourceWorkflowStatus.ENABLE.getValue()).update();
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
+    }
+
+    /**
+     * 安装模板
+     * 
+     * @param viidWorkflowIdParam 模板ID参数
+     */
+    @Tran
+    @Override
+    public void installTemplate(ResourceWorkflowIdParam viidWorkflowIdParam) {
+        // 获取模板工作流
+        ResourceWorkflow templateWorkflow = this.queryEntity(viidWorkflowIdParam.getId());
+        
+        // 检查是否为模板
+        if (templateWorkflow.getIsTemplate() == null || !templateWorkflow.getIsTemplate()) {
+            throw new CommonException("指定的工作流不是模板");
+        }
+        
+        // 创建新工作流对象
+        ResourceWorkflow newWorkflow = new ResourceWorkflow();
+        // 复制属性，但使用新的ID和标记为非模板
+        BeanUtil.copyProperties(templateWorkflow, newWorkflow);
+        newWorkflow.setId(null); // 生成新的ID
+        newWorkflow.setIsTemplate(false); // 设置为非模板
+        newWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
+
+        // 保存新工作流
+        this.save(newWorkflow);
+        // 使缓存失效
+        cacheService.remove("viid_workflow_list");
+    }
+
+    /**
+     * 获取模板列表
+     * 
+     * @return 模板列表
+     */
+    @Override
+    public List<ResourceWorkflow> listTemplates() {
+        return this.list(new QueryWrapper().eq(ResourceWorkflow::getIsTemplate, true));
     }
 
     /**

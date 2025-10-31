@@ -46,6 +46,10 @@ public class ResourceDatasourceAddParam {
     @ApiModelProperty(value = "备注", position = 6)
     private String remark;
 
+    /** 是否是模板 */
+    @ApiModelProperty(value = "是否是模板", position = 7)
+    private Boolean isTemplate;
+
     public String getTitle() {
         return title;
     }
@@ -84,5 +88,13 @@ public class ResourceDatasourceAddParam {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getIsTemplate() {
+        return isTemplate;
+    }
+
+    public void setIsTemplate(Boolean isTemplate) {
+        this.isTemplate = isTemplate;
     }
 }

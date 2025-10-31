@@ -11,6 +11,9 @@
 			<a-form-item label="标题：" name="title">
 				<a-input v-model:value="formData.title" placeholder="请输入标题" allow-clear />
 			</a-form-item>
+			<a-form-item label="是否为模板：" name="isTemplate">
+				<a-switch v-model:checked="formData.isTemplate" checked-children="是" un-checked-children="否" />
+			</a-form-item>
 			<a-form-item label="订阅类别：" name="subscribeDetail">
 				<a-select
 					v-model:value="formData.subscribeDetail"
@@ -58,13 +61,19 @@
 				recordData.subscribeDetail = JSON.parse(recordData.subscribeDetail)
 			}
 			formData.value = Object.assign({}, recordData)
+		} else {
+			formData.value = {
+				isTemplate: false
+			}
 		}
 		subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
 	}
 	// 关闭抽屉
 	const onClose = () => {
 		formRef.value.resetFields()
-		formData.value = {}
+		formData.value = {
+			isTemplate: false
+		}
 		visible.value = false
 	}
 	// 默认要校验的

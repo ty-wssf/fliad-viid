@@ -23,6 +23,7 @@ import com.fliad.resource.modular.flowgram.service.FlowgramService;
 import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
 import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.rabbitmq.client.*;
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
@@ -119,14 +120,14 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
 
         try {
             // 解析 RabbitMQ 配置
-            Map<String, Object> config = JSONUtil.toBean(datasource.getContent(), Map.class);
-            String host = (String) config.get("host");
-            Integer port = (Integer) config.get("port");
-            String username = (String) config.get("username");
-            String password = (String) config.get("password");
-            String exchange = (String) config.get("exchange");
-            String routingKey = (String) config.get("routingKey");
-            String queueName = (String) config.get("queueName");
+            ONode config = ONode.load(handleEscapeCharacters(datasource.getContent()));
+            String host = config.get("host").getString();
+            int port = config.get("port").getInt();
+            String username = config.get("username").getString();
+            String password = config.get("password").getString();
+            String exchange = config.get("exchange").getString();
+            String routingKey = config.get("routingKey").getString();
+            String queueName = config.get("queueName").getString();
 
             log.info("RabbitMQ配置信息：host={}, port={}, username={}, exchange={}, routingKey={}, queueName={}",
                     host, port, username, exchange, routingKey, queueName);
@@ -301,4 +302,55 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
         datasourceChannels.clear();
         datasourceConnections.clear();
     }
+
+    /**
+     * 处理字符串中的转义字符
+     *
+     * @param jsonStr 包含可能转义字符的JSON字符串
+     * @return 处理后的JSON字符串
+     */
+    private String handleEscapeCharacters(String jsonStr) {
+        if (jsonStr == null || jsonStr.isEmpty()) {
+            return jsonStr;
+        }
+
+        // 先尝试直接解析
+        if (isValidJson(jsonStr)) {
+            return jsonStr;
+        }
+
+        // 尝试不同的策略来修复转义字符
+        String[] strategies = {
+                jsonStr.replace("\\\"", "\""),           // 将 \" 替换为 "
+                jsonStr.replace("\\\\", "\\"),           // 将 \\ 替换为 \
+                jsonStr.replace("\\\"", "\"").replace("\\\\", "\\"),  // 组合策略1
+                jsonStr.replace("\\\\\"", "\"").replace("\\\\'", "'"), // 组合策略2
+        };
+
+        // 尝试每种策略，找到第一个能生成有效JSON的
+        for (String strategy : strategies) {
+            if (isValidJson(strategy)) {
+                return strategy;
+            }
+        }
+
+        // 如果所有策略都失败，返回原始字符串
+        return jsonStr;
+    }
+
+    /**
+     * 检查字符串是否为有效的JSON
+     *
+     * @param jsonStr 待检查的字符串
+     * @return 是否为有效的JSON
+     */
+    private boolean isValidJson(String jsonStr) {
+        try {
+            ONode.loadStr(jsonStr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

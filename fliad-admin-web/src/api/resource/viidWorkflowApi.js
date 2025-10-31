@@ -62,5 +62,20 @@ export default {
 	 */
 	enableWorkflow: (parameter) => {
 		return request('enableWorkflow', parameter)
+	},
+	/**
+	 * 安装模板
+	 * @param parameter
+	 * @returns {*}
+	 */
+	viidWorkflowInstallTemplate: (parameter) => {
+		return request('installTemplate', parameter)
+	},
+	/**
+	 * 获取模板列表
+	 * @returns {*}
+	 */
+	viidWorkflowTemplateList: () => {
+		return request('templateList', {}, 'get')
 	}
 }

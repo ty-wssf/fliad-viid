@@ -32,6 +32,11 @@
 						/>
 					</a-form-item>
 				</a-col>
+				<a-col :span="24">
+					<a-form-item label="是否为模板：" name="isTemplate">
+						<a-switch v-model:checked="formData.isTemplate" checked-children="是" un-checked-children="否" />
+					</a-form-item>
+				</a-col>
 			</a-row>
 			<template v-if="formData.type === 'rabbitmq'">
 				<a-row :gutter="24">
@@ -200,7 +205,8 @@ const onOpen = (record) => {
 			rabbitmqPassword: undefined,
 			rabbitmqExchange: undefined,
 			rabbitmqRoutingKey: undefined,
-			rabbitmqQueueName: undefined
+			rabbitmqQueueName: undefined,
+			isTemplate: false
 		}
 	}
 	subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
@@ -215,7 +221,8 @@ const onClose = () => {
 		rabbitmqPassword: undefined,
 		rabbitmqExchange: undefined,
 		rabbitmqRoutingKey: undefined,
-		rabbitmqQueueName: undefined
+		rabbitmqQueueName: undefined,
+		isTemplate: false
 	}
 	visible.value = false
 }

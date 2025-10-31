@@ -38,6 +38,10 @@ public class ResourceWorkflowAddParam {
     @ApiModelProperty(value = "备注", position = 4)
     private String remark;
 
+    /** 是否是模板 */
+    @ApiModelProperty(value = "是否是模板", position = 5)
+    private Boolean isTemplate;
+
     public String getTitle() {
         return title;
     }
@@ -60,5 +64,13 @@ public class ResourceWorkflowAddParam {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Boolean getIsTemplate() {
+        return isTemplate;
+    }
+
+    public void setIsTemplate(Boolean isTemplate) {
+        this.isTemplate = isTemplate;
     }
 }
