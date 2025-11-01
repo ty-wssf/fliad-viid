@@ -1,6 +1,8 @@
 package io.nop.commons.text.formatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -190,7 +192,8 @@ public class CodeFormatter {
         public Node call(String name, List<Node> arguments) {
             id++;
             if (arguments.isEmpty()) {
-                return Node.group(id, List.of(Node.text(name), Node.text("()")));
+                // Java 8兼容性修改: 使用Arrays.asList替代List.of
+                return Node.group(id, Arrays.asList(Node.text(name), Node.text("()")));
             }
 
             int max = arguments.size() - 1;
@@ -198,15 +201,15 @@ public class CodeFormatter {
             for (int i = 0; i < arguments.size(); i++) {
                 Node argument = arguments.get(i);
                 if (i < max) {
-                    argumentNodes.add(Node.nodes(List.of(argument, Node.text(","), Node.spaceOrLine())));
+                    argumentNodes.add(Node.nodes(Arrays.asList(argument, Node.text(","), Node.spaceOrLine())));
                 } else {
-                    argumentNodes.add(Node.nodes(List.of(argument, Node.ifWrap(id, Node.text(","), Node.text("")))));
+                    argumentNodes.add(Node.nodes(Arrays.asList(argument, Node.ifWrap(id, Node.text(","), Node.text("")))));
                 }
             }
 
             List<Node> groupNodes = new ArrayList<>();
             groupNodes.add(Node.text(name));
-            groupNodes.add(Node.group(id, List.of(
+            groupNodes.add(Node.group(id, Arrays.asList(
                     Node.text("("),
                     Node.line(),
                     Node.indent(argumentNodes),
@@ -219,7 +222,8 @@ public class CodeFormatter {
 
         public Node string(String value) {
             id++;
-            return Node.group(id, List.of(Node.text("\""), Node.unicode(value), Node.text("\"")));
+            // Java 8兼容性修改: 使用Arrays.asList替代List.of
+            return Node.group(id, Arrays.asList(Node.text("\""), Node.unicode(value), Node.text("\"")));
         }
     }
 
@@ -234,11 +238,11 @@ public class CodeFormatter {
 
         Node root = builder.call(
                 "foo",
-                List.of(
+                Arrays.asList(  // Java 8兼容性修改: 使用Arrays.asList替代List.of
                         Node.text("1000000000000000000000000000000"),
                         builder.call(
                                 "bar",
-                                List.of(
+                                Arrays.asList(  // Java 8兼容性修改: 使用Arrays.asList替代List.of
                                         Node.text("2000000000000000000000000000000"),
                                         builder.string("this is a string"),
                                         builder.call("without_arguments", new ArrayList<>())

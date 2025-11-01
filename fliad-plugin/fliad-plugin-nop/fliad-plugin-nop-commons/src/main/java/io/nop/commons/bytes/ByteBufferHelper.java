@@ -154,7 +154,7 @@ public class ByteBufferHelper {
         if (buffer.hasArray()) {
             out.write(buffer.array(), buffer.position() + buffer.arrayOffset(), length);
         } else {
-            ByteBuffer slice = buffer.slice().limit(length);
+            ByteBuffer slice = (ByteBuffer) buffer.slice().limit(length);
             byte[] temp = new byte[Math.min(length, 8192)];
             while (slice.hasRemaining()) {
                 int chunkSize = Math.min(slice.remaining(), temp.length);
@@ -179,7 +179,7 @@ public class ByteBufferHelper {
             out.write(buffer.array(), buffer.arrayOffset() + buffer.position(), length);
         } else {
             // 对于非数组支持的缓冲区，使用临时数组批量写入
-            ByteBuffer slice = buffer.slice().limit(length);
+            ByteBuffer slice = (ByteBuffer) buffer.slice().limit(length);
             if (out instanceof WritableByteChannel) {
                 ((WritableByteChannel) out).write(slice);
             } else {

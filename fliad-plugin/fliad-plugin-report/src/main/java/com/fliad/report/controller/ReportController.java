@@ -55,8 +55,14 @@ public class ReportController {
     @ApiOperation("生成XLSX格式报表")
     @Post
     @Mapping("/xlsx")
-    public void generateXlsxReport(@Param("templatePath") String templatePath, Map<String, Object> data, Context context) {
+    public void generateXlsxReport(@Param("templatePath") String templatePath, Map<String, String> data, Context context) {
         generateReport(templatePath, "xlsx", data, context);
+    }
+
+    @Get
+    @Mapping("/html")
+    public void generateHtmlReport(@Param("templatePath") String templatePath, Context context) throws Exception {
+        generateHtmlReportDirect(templatePath, context.paramMap().toValueMap(), context);
     }
 
     /**
@@ -68,13 +74,13 @@ public class ReportController {
      */
     @Post
     @Mapping("/html")
-    public void generateHtmlReport(@Param("templatePath") String templatePath, Map<String, Object> data, Context context) {
+    public void generateHtmlReport(@Param("templatePath") String templatePath, Map<String, String> data, Context context) {
         generateReport(templatePath, "html", data, context);
     }
-
+    
     @Post
     @Mapping("/htmlJson")
-    public CommonResult<String> generateHtmlJson(@Param("templatePath") String templatePath, Map<String, Object> data) {
+    public CommonResult<String> generateHtmlJson(@Param("templatePath") String templatePath, Map<String, String> data) {
         try {
             // 验证模板是否存在
             if (!reportService.isTemplateExists(templatePath)) {
@@ -98,6 +104,37 @@ public class ReportController {
     }
 
     /**
+     * 直接生成并渲染HTML报表内容
+     *
+     * @param templatePath 报表模板路径
+     * @param data         报表数据
+     * @param context      请求上下文
+     */
+    private void generateHtmlReportDirect(String templatePath, Map<String, String> data, Context context) throws Exception {
+        try {
+            // 验证模板是否存在
+            if (!reportService.isTemplateExists(templatePath)) {
+                throw new CommonException("报表模板不存在: " + templatePath);
+            }
+
+            // 如果没有提供数据，则使用空数据
+            if (data == null) {
+                data = new HashMap<>();
+            }
+
+            // 生成HTML报表并获取字节内容
+            byte[] htmlBytes = reportService.generateHtmlReportBytes(templatePath, data);
+            
+            // 设置响应头信息，直接渲染HTML而不是下载
+            context.contentType("text/html;charset=UTF-8");
+            context.output(htmlBytes);
+        } catch (Exception e) {
+            log.error("生成报表失败，模板路径: {}", templatePath, e);
+            throw new CommonException("生成报表失败: " + e.getMessage());
+        }
+    }
+
+    /**
      * 生成指定格式的报表
      *
      * @param templatePath 报表模板路径
@@ -105,7 +142,7 @@ public class ReportController {
      * @param data         报表数据（JSON格式）
      * @return 报表文件
      */
-    private void generateReport(String templatePath, String format, Map<String, Object> data, Context context) {
+    private void generateReport(String templatePath, String format, Map<String, String> data, Context context) {
         Path tempFile = null;
         try {
             // 验证模板是否存在

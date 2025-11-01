@@ -10,33 +10,20 @@
     </parent>
     <packaging>pom</packaging>
     <modules>
-
-
+        <module>fliad-plugin-nop-api-core</module>
+        <module>fliad-plugin-nop-commons</module>
+        <module>fliad-plugin-nop-dataset</module>
+        <module>fliad-plugin-nop-xdefs</module>
+        <module>fliad-plugin-nop-javac</module>
+        <module>fliad-plugin-nop-core</module>
+        <module>fliad-plugin-nop-antlr4-common</module>
+        <module>fliad-plugin-nop-xlang</module>
+        <module>fliad-plugin-nop-ooxml-common</module>
+        <module>fliad-plugin-nop-excel</module>
+        <module>fliad-plugin-nop-ooxml-xlsx</module>
+        <module>fliad-plugin-nop-report-core</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
-
-    <profiles>
-        <profile>
-            <id>non-jdk8</id>
-            <activation>
-                <jdk>(1.8,]</jdk>
-            </activation>
-            <modules>
-                <module>fliad-plugin-nop-api-core</module>
-                <module>fliad-plugin-nop-commons</module>
-                <module>fliad-plugin-nop-dataset</module>
-                <module>fliad-plugin-nop-javac</module>
-                <module>fliad-plugin-nop-core</module>
-                <module>fliad-plugin-nop-xdefs</module>
-                <module>fliad-plugin-nop-xlang</module>
-                <module>fliad-plugin-nop-antlr4-common</module>
-                <module>fliad-plugin-nop-ooxml-common</module>
-                <module>fliad-plugin-nop-excel</module>
-                <module>fliad-plugin-nop-ooxml-xlsx</module>
-                <module>fliad-plugin-nop-report-core</module>
-            </modules>
-        </profile>
-    </profiles>
 
 </project>

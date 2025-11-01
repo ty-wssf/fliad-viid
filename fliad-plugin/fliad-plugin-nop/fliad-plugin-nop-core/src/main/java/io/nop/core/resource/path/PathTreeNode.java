@@ -297,7 +297,8 @@ public class PathTreeNode {
 
             for (int i = 1; i < lines.size(); i++) {
                 String line = lines.get(i);
-                if (line.isBlank()) continue;
+                // Java 8兼容性修改: 使用String.trim().isEmpty()替代isBlank()
+                if (line.trim().isEmpty()) continue;
 
                 int count = skipSeparator(line);
                 int indent = count / SPACES_PER_LEVEL;

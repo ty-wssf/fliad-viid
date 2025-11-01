@@ -46,18 +46,6 @@
         <module>fliad-plugin-sip-gb28181</module>
         <module>fliad-plugin-nop</module>
         <module>fliad-plugin-hikvision</module>
+        <module>fliad-plugin-report</module>
     </modules>
-
-    <!-- 非JDK 8环境下的GraalVM依赖 -->
-    <profiles>
-        <profile>
-            <id>non-jdk8</id>
-            <activation>
-                <jdk>(1.8,]</jdk>
-            </activation>
-            <modules>
-                <module>fliad-plugin-report</module>
-            </modules>
-        </profile>
-    </profiles>
 </project>

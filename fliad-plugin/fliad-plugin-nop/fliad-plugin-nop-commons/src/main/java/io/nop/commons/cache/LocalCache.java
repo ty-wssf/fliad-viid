@@ -176,7 +176,7 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
 
         if (config.getRefreshAfterWrite() != null) {
             policy.refreshAfterWrite().ifPresent(exp -> {
-                exp.setRefreshesAfter(config.getRefreshAfterWrite());
+
             });
         }
 

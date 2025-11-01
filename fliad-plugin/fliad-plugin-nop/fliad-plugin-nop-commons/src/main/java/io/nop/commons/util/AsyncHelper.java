@@ -6,6 +6,8 @@ import io.nop.commons.concurrent.AsyncJoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -114,7 +116,8 @@ public class AsyncHelper {
             List<Supplier<CompletionStage<T>>> tasks) {
 
         if (tasks == null || tasks.isEmpty()) {
-            return CompletableFuture.completedFuture(List.of());
+            // Java 8兼容性修改: 使用Collections.emptyList替代List.of
+            return CompletableFuture.completedFuture(Collections.emptyList());
         }
 
         // 执行所有任务并收集结果
@@ -140,11 +143,12 @@ public class AsyncHelper {
             List<Supplier<CompletionStage<T>>> tasks) {
 
         if (tasks == null || tasks.isEmpty()) {
-            return CompletableFuture.completedFuture(List.of());
+            // Java 8兼容性修改: 使用Collections.emptyList替代List.of
+            return CompletableFuture.completedFuture(Collections.emptyList());
         }
 
         CompletableFuture<List<T>> result = CompletableFuture.completedFuture(
-                new java.util.ArrayList<>());
+                new ArrayList<>());
 
         for (Supplier<CompletionStage<T>> task : tasks) {
             result = result.thenCompose(list ->

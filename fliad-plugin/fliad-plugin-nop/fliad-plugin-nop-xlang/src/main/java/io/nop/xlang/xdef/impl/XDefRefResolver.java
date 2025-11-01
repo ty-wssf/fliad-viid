@@ -36,7 +36,8 @@ public class XDefRefResolver {
     public void resolve(XDefinition def) {
         propNs = def.getXdefPropNs();
 
-        new RefResolver<XDefNode>().resolve(new RefResolver.IResolveNodeModel<>() {
+        // Java 8兼容性修改: 显式指定泛型类型，避免使用<>
+        new RefResolver<XDefNode>().resolve(new RefResolver.IResolveNodeModel<XDefNode>() {
             @Override
             public String getRef(XDefNode node) {
                 return node.getXdefRef();

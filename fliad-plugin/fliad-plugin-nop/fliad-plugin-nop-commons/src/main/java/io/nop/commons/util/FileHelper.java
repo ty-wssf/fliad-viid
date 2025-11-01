@@ -100,7 +100,13 @@ public class FileHelper {
 
     public static String readText(File file, String encoding) {
         try {
-            return Files.readString(file.toPath(), StringHelper.toCharset(encoding));
+            // Java 8兼容性修改: 使用FileInputStream和IoHelper.readText替代Files.readString
+            FileInputStream fis = new FileInputStream(file);
+            try {
+                return IoHelper.readText(fis, encoding);
+            } finally {
+                IoHelper.safeClose(fis);
+            }
         } catch (Exception e) {
             LOG.error("nop.file.read-text-fail:encoding={},file={}", encoding, file);
             throw NopException.adapt(e);

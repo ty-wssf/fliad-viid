@@ -10,6 +10,9 @@ import io.nop.core.reflect.ReflectionManager;
 import io.nop.core.reflect.hook.IMethodMissingHook;
 import io.nop.core.reflect.hook.MethodMissingHookFunction;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -22,9 +25,12 @@ import static io.nop.xlang.XLangErrors.ERR_EXEC_CLASS_NO_STATIC_METHOD;
 import static io.nop.xlang.XLangErrors.ERR_EXEC_NO_OBJ_METHOD;
 
 public class ObjFunctionHandle {
-    static final Set<String> ARRAY_FUNCTIONS = Set.of("map", "flatMap", "forEach", "filter",
+    // Java 8兼容性修改: 使用Arrays.asList和Collections.unmodifiableSet替代Set.of
+    static final Set<String> ARRAY_FUNCTIONS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+            "map", "flatMap", "forEach", "filter",
             "reduce", "reduceRight", "some", "every", "find", "findIndex", "indexOf", "lastIndexOf",
-            "includes", "join", "concat", "reverse", "toString", "toLocaleString");
+            "includes", "join", "concat", "reverse", "toString", "toLocaleString"
+    )));
 
     private transient Pair<Class<?>, IEvalFunction> _cacheFunc = Pair.of(null, null);
 

@@ -14,6 +14,7 @@ import io.nop.core.model.tree.impl.WidthFirstIterator;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +33,7 @@ public class TreeVisitors {
             File[] files = node.listFiles();
             if (files == null)
                 return null;
-            return List.of(files);
+            return Arrays.asList(files);
         }
     };
 

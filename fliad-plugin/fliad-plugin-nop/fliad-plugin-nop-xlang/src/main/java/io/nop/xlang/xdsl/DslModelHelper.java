@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -127,7 +128,9 @@ public class DslModelHelper {
 
         try {
             ServiceLoader<IExcelModelLoaderFactory> loader = ServiceLoader.load(IExcelModelLoaderFactory.class);
-            return loader.findFirst().isPresent();
+            // Java 8兼容性修改: 使用iterator().hasNext()和iterator().next()替代findFirst()
+            Iterator<IExcelModelLoaderFactory> iterator = loader.iterator();
+            return iterator.hasNext();
         } catch (Exception e) {
             LOG.warn("nop.xlang.not-support-excel-model-loader:missing-lib={}", "nop-ooxml-xlsx.jar");
             return false;
@@ -140,7 +143,9 @@ public class DslModelHelper {
             return g_excelModelLoaderFactory.newExcelModelLoader(impModelPath);
         } else {
             ServiceLoader<IExcelModelLoaderFactory> loader = ServiceLoader.load(IExcelModelLoaderFactory.class);
-            return loader.findFirst().get().newExcelModelLoader(impModelPath);
+            // Java 8兼容性修改: 使用iterator().next()替代findFirst().get()
+            Iterator<IExcelModelLoaderFactory> iterator = loader.iterator();
+            return iterator.next().newExcelModelLoader(impModelPath);
         }
     }
 }

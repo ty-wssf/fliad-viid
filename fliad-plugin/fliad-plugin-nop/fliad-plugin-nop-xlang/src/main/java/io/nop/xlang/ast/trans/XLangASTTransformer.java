@@ -15,7 +15,8 @@ import io.nop.xlang.ast.XLangASTOptimizer;
 
 public class XLangASTTransformer {
     public static Expression replaceIdentifier(Expression ast, String name, Object value) {
-        return (Expression) new XLangASTOptimizer<>() {
+        // Java 8兼容性修改: 显式指定泛型类型，避免使用<>
+        return (Expression) new XLangASTOptimizer<Object>() {
             @Override
             public XLangASTNode optimizeIdentifier(Identifier node, Object context) {
                 if (node.getName().equals(name)) {

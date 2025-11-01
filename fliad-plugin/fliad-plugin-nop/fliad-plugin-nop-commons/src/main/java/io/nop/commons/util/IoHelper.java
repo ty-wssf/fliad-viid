@@ -243,9 +243,10 @@ public class IoHelper {
     }
 
     public static byte[] readBytes(InputStream is) throws IOException {
-        if (PlatformEnv.javaVersion() >= 9) {
-            return is.readAllBytes();
-        }
+        // Java 8兼容性修改: 移除版本检查，直接使用兼容的实现
+        // if (PlatformEnv.javaVersion() >= 9) {
+        //     return is.readAllBytes();
+        // }
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         copy(is, os, CFG_IO_DEFAULT_BUF_SIZE.get(), null);
         return os.toByteArray();

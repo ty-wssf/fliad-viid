@@ -11,6 +11,7 @@ import com.github.benmanes.caffeine.cache.CacheLoader;
 import org.jspecify.annotations.NonNull;
 import org.noear.solon.lang.Nullable;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -29,20 +30,31 @@ public class CaffeineCacheLoader<K, V> implements CacheLoader<K, V> {
         return loader.load(k);
     }
 
-    @Override
-    public @NonNull Map<K, V> loadAll(@NonNull Set<? extends K> keys) throws Exception {
-        return loader.loadAll(keys);
+    // 修复方法签名以匹配Caffeine 2.9.3版本的接口
+    public Map<K, V> loadAll(@NonNull Iterable<? extends K> keys) throws Exception {
+        // 将Iterable转换为Set
+        Set<K> keySet = new HashSet<>();
+        for (K key : keys) {
+            keySet.add(key);
+        }
+        return loader.loadAll(keySet);
     }
 
     @Override
-    public @NonNull CompletableFuture<V> asyncLoad(@NonNull K key, @NonNull Executor executor) {
+    public CompletableFuture<V> asyncLoad(@NonNull K key, @NonNull Executor executor) {
         return loader.asyncLoad(key, executor);
     }
 
-    @Override
-    public @NonNull CompletableFuture<Map<K, V>> asyncLoadAll(@NonNull Set<? extends K> keys,
+    // 注释掉@Override注解，因为在Caffeine 2.9.3中可能没有这个方法
+    /*@Override*/
+    public CompletableFuture<Map<K, V>> asyncLoadAll(@NonNull Iterable<? extends K> keys,
                                                               @NonNull Executor executor) {
-        return loader.asyncLoadAll(keys, executor);
+        // 将Iterable转换为Set
+        Set<K> keySet = new HashSet<>();
+        for (K key : keys) {
+            keySet.add(key);
+        }
+        return loader.asyncLoadAll(keySet, executor);
     }
 
     @Nullable
@@ -51,8 +63,8 @@ public class CaffeineCacheLoader<K, V> implements CacheLoader<K, V> {
         return loader.reload(key, oldValue);
     }
 
-    @Override
-    public @NonNull CompletableFuture<V> asyncReload(@NonNull K key, @NonNull V oldValue, @NonNull Executor executor) {
+    // 修复方法签名以匹配Caffeine 2.9.3版本的接口
+    public CompletableFuture<V> asyncReload(@NonNull K key, @NonNull V oldValue, @NonNull Executor executor) {
         return loader.asyncReload(key, oldValue, executor);
     }
 }

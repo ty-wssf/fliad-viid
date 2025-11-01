@@ -37,7 +37,7 @@ public class ReportService {
      * @param data         报表数据
      * @param outputFile   输出文件路径
      */
-    public void generateXlsxReport(String templatePath, Map<String, Object> data, String outputFile) {
+    public void generateXlsxReport(String templatePath, Map<String, String> data, String outputFile) {
         generateReport(templatePath, "xlsx", data, outputFile);
     }
 
@@ -48,7 +48,7 @@ public class ReportService {
      * @param data         报表数据
      * @param outputFile   输出文件路径
      */
-    public void generateHtmlReport(String templatePath, Map<String, Object> data, String outputFile) {
+    public void generateHtmlReport(String templatePath, Map<String, String> data, String outputFile) {
         generateReport(templatePath, "html", data, outputFile);
     }
 
@@ -60,7 +60,7 @@ public class ReportService {
      * @param data         报表数据
      * @param outputFile   输出文件路径
      */
-    public void generateReport(String templatePath, String format, Map<String, Object> data, String outputFile) {
+    public void generateReport(String templatePath, String format, Map<String, String> data, String outputFile) {
         try {
             // 创建报表引擎
             IReportEngine reportEngine = newReportEngine();
@@ -72,7 +72,7 @@ public class ReportService {
 
             // 设置数据变量
             if (data != null) {
-                for (Map.Entry<String, Object> entry : data.entrySet()) {
+                for (Map.Entry<String, String> entry : data.entrySet()) {
                     scope.setLocalValue(entry.getKey(), entry.getValue());
                 }
             }
@@ -99,7 +99,7 @@ public class ReportService {
      * @param data         报表数据
      * @return 报表字节数组
      */
-    public byte[] generateXlsxReportBytes(String templatePath, Map<String, Object> data) {
+    public byte[] generateXlsxReportBytes(String templatePath, Map<String, String> data) {
         return generateReportBytes(templatePath, "xlsx", data);
     }
 
@@ -110,7 +110,7 @@ public class ReportService {
      * @param data         报表数据
      * @return 报表字节数组
      */
-    public byte[] generateHtmlReportBytes(String templatePath, Map<String, Object> data) {
+    public byte[] generateHtmlReportBytes(String templatePath, Map<String, String> data) {
         return generateReportBytes(templatePath, "html", data);
     }
 
@@ -122,7 +122,7 @@ public class ReportService {
      * @param data         报表数据
      * @return 报表字节数组
      */
-    public byte[] generateReportBytes(String templatePath, String format, Map<String, Object> data) {
+    public byte[] generateReportBytes(String templatePath, String format, Map<String, String> data) {
         try {
             // 创建临时文件
             Path tempFile = Files.createTempFile("report_", "." + format);

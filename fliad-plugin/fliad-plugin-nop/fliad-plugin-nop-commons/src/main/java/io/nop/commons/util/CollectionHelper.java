@@ -397,7 +397,17 @@ public class CollectionHelper {
             return iteratorToList((Iterator) c);
         } else if (c instanceof Enumeration) {
             Enumeration<T> enumeration = (Enumeration<T>) c;
-            return iteratorToList(enumeration.asIterator());
+            return iteratorToList(new Iterator<T>() {
+                @Override
+                public boolean hasNext() {
+                    return enumeration.hasMoreElements();
+                }
+
+                @Override
+                public T next() {
+                    return enumeration.nextElement();
+                }
+            });
         }
         throw new NopException(ERR_COLLECTIONS_NOT_LIST).param(ARG_CLASS, c.getClass()).param(ARG_VALUE, c);
     }

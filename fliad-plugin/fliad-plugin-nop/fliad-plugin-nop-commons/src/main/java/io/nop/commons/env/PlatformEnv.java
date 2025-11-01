@@ -75,21 +75,21 @@ public class PlatformEnv {
                 return StringHelper.EMPTY_STRING;
             }
         }
-        return String.valueOf(java.lang.management.ManagementFactory.getRuntimeMXBean().getPid());
-
-        /*
-         * if (StringHelper.isBlank(processName)) { return StringHelper.EMPTY_STRING; }
-         *
-         * String[] processSplitName = processName.split("@");
-         *
-         * if (processSplitName.length == 0) { return StringHelper.EMPTY_STRING; }
-         *
-         * String pid = processSplitName[0];
-         *
-         * if (StringHelper.isBlank(pid)) { return StringHelper.EMPTY_STRING; }
-         *
-         * return pid;
-         */
+        return String.valueOf(getPid0());
+    }
+    
+    // Java 8兼容性修改: 添加兼容方法获取进程ID
+    private static long getPid0() {
+        String name = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+        int index = name.indexOf('@');
+        if (index != -1) {
+            try {
+                return Long.parseLong(name.substring(0, index));
+            } catch (NumberFormatException e) {
+                // 忽略异常，返回默认值
+            }
+        }
+        return -1;
     }
 
     public static long getThreadId() {

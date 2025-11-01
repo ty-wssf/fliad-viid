@@ -13,6 +13,9 @@ import io.nop.commons.concurrent.lock.IResourceLock;
 import io.nop.commons.concurrent.lock.IResourceLockManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,8 +35,17 @@ public class ResourceMultiLock extends AbstractResourceLock {
                              long defaultWaitTime, long defaultLeaseTime) {
         super(defaultWaitTime, defaultLeaseTime);
         this.lockManager = lockManager;
-        this.resourceIds = Set.of(LockHelper.sortResourceIds(resourceIds));
+        // Java 8兼容性修改: 使用Collections.unmodifiableSet替代Set.of
+        this.resourceIds = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(sortResourceIds(resourceIds))));
         this.holderId = holderId;
+    }
+    
+    private String[] sortResourceIds(Set<String> resourceIds) {
+        if (resourceIds == null || resourceIds.isEmpty())
+            return new String[0];
+        String[] ret = resourceIds.toArray(new String[0]);
+        Arrays.sort(ret);
+        return ret;
     }
 
     @Override
@@ -84,7 +96,21 @@ public class ResourceMultiLock extends AbstractResourceLock {
         List<IResourceLock> locks = this.locks;
         if (locks != null) {
             this.locks = null;
-            LockHelper.unlockAll(locks);
+            unlockAll(locks);
+        }
+    }
+    
+    private void unlockAll(List<? extends IResourceLock> locks) {
+        if (locks == null)
+            return;
+
+        for (int i = locks.size() - 1; i >= 0; i--) {
+            IResourceLock lock = locks.get(i);
+            try {
+                lock.unlock();
+            } catch (Throwable e) {
+                // LOG.error("nop.lock.unlock-fail", e);
+            }
         }
     }
 
