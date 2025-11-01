@@ -108,4 +108,11 @@ public interface ResourceDatasourceService extends IService<ResourceDatasource> 
      * @return 模板列表
      */
     List<ResourceDatasource> listTemplates();
+    
+    /**
+     * 将数据源转换为模板
+     *
+     * @param viidDatasourceIdParam 数据源ID参数
+     */
+    void convertToTemplate(ResourceDatasourceIdParam viidDatasourceIdParam);
 }

@@ -108,4 +108,11 @@ public interface ResourceWorkflowService extends IService<ResourceWorkflow> {
      * @return 模板列表
      */
     List<ResourceWorkflow> listTemplates();
+
+    /**
+     * 将工作流转换为模板
+     *
+     * @param workflowIdParam 工作流ID参数
+     */
+    void convertToTemplate(ResourceWorkflowIdParam workflowIdParam);
 }

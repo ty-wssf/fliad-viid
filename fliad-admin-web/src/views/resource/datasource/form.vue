@@ -1,6 +1,6 @@
 <template>
 	<a-drawer
-		:title="formData.id ? '编辑数据源' : '增加数据源'"
+		:title="formData.id ? '编辑数据源' : isTemplateMode ? '新增模板' : '增加数据源'"
 		:width="600"
 		:visible="visible"
 		:destroy-on-close="true"
@@ -32,11 +32,7 @@
 						/>
 					</a-form-item>
 				</a-col>
-				<a-col :span="24">
-					<a-form-item label="是否为模板：" name="isTemplate">
-						<a-switch v-model:checked="formData.isTemplate" checked-children="是" un-checked-children="否" />
-					</a-form-item>
-				</a-col>
+				<!-- 移除了"是否为模板"选项，因为根据需求无论是普通数据源还是模板数据源新增时都不显示该选项 -->
 			</a-row>
 			<template v-if="formData.type === 'rabbitmq'">
 				<a-row :gutter="24">
@@ -116,7 +112,7 @@
 <script setup name="viidDatasourceForm">
 import {cloneDeep} from 'lodash-es'
 import {required} from '@/utils/formRules'
-import viidDatasourceApi from '@/api/resource/viidDatasourceApi'
+import viidDatasourceApi from '@/api/resource/datasourceApi'
 import tool from '@/utils/tool'
 // 抽屉状态
 const visible = ref(false)
@@ -129,6 +125,9 @@ const formData = ref({
 const submitLoading = ref(false)
 const datasourceTypeOptions = ref([])
 const subscribedetailOptions = ref([])
+// 是否为模板模式
+const isTemplateMode = ref(false)
+// 移除了showTemplateSwitch变量，因为不再需要控制"是否为模板"选项的显示
 
 // Host 格式校验规则
 const validateHost = (rule, value) => {
@@ -176,8 +175,11 @@ onMounted(() => {
 })
 
 // 打开抽屉
-const onOpen = (record) => {
+const onOpen = (record, templateMode = false) => {
 	visible.value = true
+	isTemplateMode.value = templateMode
+	// 移除了showTemplateSwitch的设置，因为不再需要控制"是否为模板"选项的显示
+
 	if (record) {
 		let recordData = cloneDeep(record)
 		// 如果存在config且为字符串，则解析为对象
@@ -206,7 +208,7 @@ const onOpen = (record) => {
 			rabbitmqExchange: undefined,
 			rabbitmqRoutingKey: undefined,
 			rabbitmqQueueName: undefined,
-			isTemplate: false
+			isTemplate: templateMode // 根据templateMode设置默认值
 		}
 	}
 	subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
@@ -224,6 +226,7 @@ const onClose = () => {
 		rabbitmqQueueName: undefined,
 		isTemplate: false
 	}
+	isTemplateMode.value = false
 	visible.value = false
 }
 // 默认要校验的
@@ -265,7 +268,7 @@ const onSubmit = () => {
 			delete formDataParam.rabbitmqQueueName
 		}
 		viidDatasourceApi
-			.viidDatasourceSubmitForm(formDataParam, formDataParam.id)
+			.datasourceSubmitForm(formDataParam, formDataParam.id)
 			.then(() => {
 				onClose()
 				emit('successful')

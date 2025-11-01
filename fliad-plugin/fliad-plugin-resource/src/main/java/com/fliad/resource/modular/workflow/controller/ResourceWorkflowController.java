@@ -171,4 +171,20 @@ public class ResourceWorkflowController {
     public CommonResult<List<ResourceWorkflow>> templateList() {
         return CommonResult.data(workflowService.listTemplates());
     }
+
+    /**
+     * 将工作流转换为模板
+     *
+     * @author wyl
+     * @date 2025/09/26
+     */
+    @ApiOperation("将工作流转换为模板")
+    @CommonLog("将工作流转换为模板")
+    @SaCheckPermission("/resource/workflow/edit")
+    @Post
+    @Mapping("/resource/workflow/convertToTemplate")
+    public CommonResult<String> convertToTemplate(ResourceWorkflowIdParam workflowIdParam) {
+        workflowService.convertToTemplate(workflowIdParam);
+        return CommonResult.ok();
+    }
 }

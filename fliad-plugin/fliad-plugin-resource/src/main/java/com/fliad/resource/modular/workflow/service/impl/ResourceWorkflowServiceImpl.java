@@ -83,8 +83,10 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         ResourceWorkflow viidWorkflow = BeanUtil.toBean(viidWorkflowAddParam, ResourceWorkflow.class);
         // 设置状态
         viidWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue());
-        // 默认设置为非模板
-        viidWorkflow.setIsTemplate(false);
+        // 如果未设置isTemplate，则默认设置为非模板
+        if (viidWorkflow.getIsTemplate() == null) {
+            viidWorkflow.setIsTemplate(false);
+        }
         this.save(viidWorkflow);
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
@@ -198,7 +200,12 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
      */
     @Override
     public List<ResourceWorkflow> listTemplates() {
-        return this.list(new QueryWrapper().eq(ResourceWorkflow::getIsTemplate, true));
+        List<ResourceWorkflow> templateList = this.list(new QueryWrapper().eq(ResourceWorkflow::getIsTemplate, true)
+                .orderBy(ResourceWorkflow::getId, false));
+        templateList.forEach(item -> {
+            removeEscapeCharacters(item);
+        });
+        return templateList;
     }
 
     /**
@@ -262,5 +269,29 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Tran
+    @Override
+    public void convertToTemplate(ResourceWorkflowIdParam workflowIdParam) {
+        ResourceWorkflow workflow = this.queryEntity(workflowIdParam.getId());
+        
+        // 检查是否已经是模板
+        if (workflow.getIsTemplate() != null && workflow.getIsTemplate()) {
+            throw new CommonException("该工作流已经是模板");
+        }
+        
+        // 创建新的模板工作流对象
+        ResourceWorkflow templateWorkflow = new ResourceWorkflow();
+        // 复制属性，但使用新的ID
+        BeanUtil.copyProperties(workflow, templateWorkflow);
+        templateWorkflow.setId(null); // 生成新的ID
+        templateWorkflow.setIsTemplate(true); // 设置为模板
+        
+        // 保存新模板
+        this.save(templateWorkflow);
+        
+        // 使缓存失效
+        cacheService.remove("viid_workflow_list");
     }
 }

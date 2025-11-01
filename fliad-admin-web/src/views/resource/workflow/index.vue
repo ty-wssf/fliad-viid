@@ -27,7 +27,7 @@
 				>
 					<template #operator class="table-operator">
 						<a-space>
-							<a-button type="primary" @click="formRef.onOpen()" v-if="hasPerm('viidWorkflowAdd')">
+							<a-button type="primary" @click="formRef.onOpen(undefined, false)" v-if="hasPerm('viidWorkflowAdd')">
 								<template #icon><plus-outlined /></template>
 								新增
 							</a-button>
@@ -53,26 +53,24 @@
 						<template v-if="column.dataIndex === 'status'">
 							<a-switch :loading="loading" :checked="record.status === 'ENABLE'" @change="editStatus(record)" />
 						</template>
-						<template v-if="column.dataIndex === 'isTemplate'">
-							<a-tag :color="record.isTemplate ? 'blue' : 'green'">
-								{{ record.isTemplate ? '模板' : '普通' }}
-							</a-tag>
-						</template>
+
 						<template v-if="column.dataIndex === 'action'">
-							<a @click="formRef.onOpen(record)" v-if="hasPerm('viidWorkflowEdit')">编辑</a>
+							<a @click="copyViidWorkflow(record)" v-if="hasPerm('viidWorkflowAdd')">复制</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowAdd', 'viidWorkflowEdit'], 'and')" />
+							<a @click="convertToTemplate(record)" v-if="hasPerm('viidWorkflowEdit')">转为模板</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowAdd', 'viidWorkflowEdit'], 'and')" />
+							<a @click="formRef.onOpen(record, false)" v-if="hasPerm('viidWorkflowEdit')">编辑</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowEdit', 'viidWorkflowDelete'], 'and')" />
 							<a-popconfirm title="确定要删除吗？" @confirm="deleteViidWorkflow(record)">
 								<a-button type="link" danger size="small" v-if="hasPerm('viidWorkflowDelete')">删除</a-button>
 							</a-popconfirm>
-							<a-divider type="vertical" />
-							<a @click="copyViidWorkflow(record)">复制</a>
 							<a-divider type="vertical" />
 							<a @click="designWorkflowRef.onOpen(record)">设计工作流</a>
 						</template>
 					</template>
 				</s-table>
 			</a-tab-pane>
-			
+
 			<a-tab-pane key="template" tab="模板" v-if="hasPerm('viidWorkflowAdd')">
 				<a-alert message="以下为系统预置模板，可以点击“安装”按钮将其添加为普通工作流" type="info" show-icon style="margin-bottom: 16px;" />
 				<s-table
@@ -87,6 +85,10 @@
 				>
 					<template #operator class="table-operator">
 						<a-space>
+							<a-button type="primary" @click="formRef.onOpen(undefined, true)" v-if="hasPerm('viidWorkflowAdd')">
+								<template #icon><plus-outlined /></template>
+								新增模板
+							</a-button>
 							<xn-batch-button
 								buttonName="批量安装"
 								icon="DownloadOutlined"
@@ -102,6 +104,14 @@
 							</a-tag>
 						</template>
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="copyTemplate(record)" v-if="hasPerm('viidWorkflowAdd')">复制</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowAdd', 'viidWorkflowEdit'], 'and')" />
+							<a @click="formRef.onOpen(record, true)" v-if="hasPerm('viidWorkflowEdit')">编辑</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowEdit', 'viidWorkflowDelete'], 'and')" />
+							<a-popconfirm title="确定要删除吗？" @confirm="deleteTemplate(record)">
+								<a-button type="link" danger size="small" v-if="hasPerm('viidWorkflowDelete')">删除</a-button>
+							</a-popconfirm>
+							<a-divider type="vertical" />
 							<a @click="installTemplate(record)">安装</a>
 						</template>
 					</template>
@@ -117,7 +127,7 @@
 	import { message } from 'ant-design-vue'
 	import Form from './form.vue'
 	import DesignWorkflow from './designWorkflow.vue'
-	import viidWorkflowApi from '@/api/resource/viidWorkflowApi'
+	import workflowApi from '@/api/resource/workflowApi'
 	let searchFormState = reactive({})
 	const searchFormRef = ref()
 	const table = ref()
@@ -144,10 +154,7 @@
 			title: '状态',
 			dataIndex: 'status'
 		},
-		{
-			title: '类型',
-			dataIndex: 'isTemplate'
-		},
+
 		{
 			title: '备注',
 			dataIndex: 'remark',
@@ -160,10 +167,10 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '240px'
+			width: '320px'
 		})
 	}
-	
+
 	const templateColumns = [
 		{
 			title: 'ID',
@@ -186,10 +193,10 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '100px'
+			width: '220px'
 		}
 	]
-	
+
 	let selectedRowKeys = ref([])
 	let selectedTemplateRowKeys = ref([])
 	// 列表选择配置
@@ -206,7 +213,7 @@
 			}
 		}
 	}
-	
+
 	const templateOptions = {
 		alert: {
 			show: false,
@@ -220,16 +227,16 @@
 			}
 		}
 	}
-	
+
 	const loadData = (parameter) => {
 		const searchFormParam = JSON.parse(JSON.stringify(searchFormState))
-		return viidWorkflowApi.viidWorkflowPage(Object.assign(parameter, searchFormParam)).then((data) => {
+		return workflowApi.workflowPage(Object.assign(parameter, searchFormParam)).then((data) => {
 			return data
 		})
 	}
-	
+
 	const loadTemplateData = (parameter) => {
-		return viidWorkflowApi.viidWorkflowTemplateList().then((data) => {
+		return workflowApi.workflowTemplateList().then((data) => {
 			// 模拟分页数据
 			const pageSize = parameter.size || 10
 			const current = parameter.current || 1
@@ -243,7 +250,7 @@
 			}
 		})
 	}
-	
+
 	// 删除
 	const deleteViidWorkflow = (record) => {
 		let params = [
@@ -251,7 +258,7 @@
 				id: record.id
 			}
 		]
-		viidWorkflowApi.viidWorkflowDelete(params).then(() => {
+		workflowApi.workflowDelete(params).then(() => {
 			table.value.refresh(true)
 		})
 	}
@@ -260,7 +267,7 @@
 		let params = {
 			id: record.id
 		}
-		viidWorkflowApi.viidWorkflowCopy(params).then(() => {
+		workflowApi.workflowCopy(params).then(() => {
 			table.value.refresh(true)
 			message.success('复制成功')
 		})
@@ -276,7 +283,7 @@
 				id: m
 			}
 		})
-		viidWorkflowApi.viidWorkflowDelete(params).then(() => {
+		workflowApi.workflowDelete(params).then(() => {
 			table.value.clearRefreshSelected()
 		})
 	}
@@ -284,7 +291,7 @@
 	const editStatus = (record) => {
 		loading.value = true
 		if (record.status === 'ENABLE') {
-			viidWorkflowApi
+			workflowApi
 				.disableWorkflow(record)
 				.then(() => {
 					table.value.refresh(true)
@@ -293,7 +300,7 @@
 					loading.value = false
 				})
 		} else {
-			viidWorkflowApi
+			workflowApi
 				.enableWorkflow(record)
 				.then(() => {
 					table.value.refresh(true)
@@ -303,7 +310,7 @@
 				})
 		}
 	}
-	
+
 	// 加载模板
 	const loadTemplates = () => {
 		activeKey.value = 'template'
@@ -311,17 +318,17 @@
 			templateTable.value.refresh(true)
 		})
 	}
-	
+
 	// 安装模板
 	const installTemplate = (record) => {
-		viidWorkflowApi.viidWorkflowInstallTemplate({id: record.id}).then(() => {
+		workflowApi.workflowInstallTemplate({id: record.id}).then(() => {
 			message.success('安装成功')
 			if (activeKey.value === 'workflow') {
 				table.value.refresh(true)
 			}
 		})
 	}
-	
+
 	// 批量安装模板
 	const installBatchTemplate = () => {
 		if (selectedTemplateRowKeys.value.length < 1) {
@@ -329,7 +336,7 @@
 			return false
 		}
 		const promises = selectedTemplateRowKeys.value.map(id => {
-			return viidWorkflowApi.viidWorkflowInstallTemplate({id: id})
+			return workflowApi.workflowInstallTemplate({id: id})
 		})
 		Promise.all(promises).then(() => {
 			message.success('批量安装成功')
@@ -339,7 +346,38 @@
 			}
 		})
 	}
-	
+
+	// 复制模板
+	const copyTemplate = (record) => {
+		workflowApi.workflowCopy({id: record.id}).then(() => {
+			templateTable.value.refresh(true)
+		})
+	}
+
+	// 删除模板
+	const deleteTemplate = (record) => {
+		let params = [
+			{
+				id: record.id
+			}
+		]
+		workflowApi.workflowDelete(params).then(() => {
+			templateTable.value.refresh(true)
+		})
+	}
+
+	// 将工作流转为模板
+	const convertToTemplate = (record) => {
+		workflowApi.workflowConvertToTemplate({id: record.id}).then(() => {
+			message.success('工作流已转换为模板');
+			table.value.refresh(true);
+			// 如果当前在模板tab，则刷新模板列表
+			if (activeKey.value === 'template') {
+				templateTable.value.refresh(true);
+			}
+		})
+	}
+
 	// Tab切换处理
 	const handleTabChange = (key) => {
 		if (key === 'workflow') {

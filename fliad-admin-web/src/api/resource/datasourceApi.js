@@ -10,19 +10,19 @@ const request = (url, ...arg) => baseRequest(`/resource/datasource/` + url, ...a
  **/
 export default {
 	// 获取数据源分页
-	viidDatasourcePage(data) {
+	datasourcePage(data) {
 		return request('page', data, 'get')
 	},
 	// 提交数据源表单 edit为true时为编辑，默认为新增
-	viidDatasourceSubmitForm(data, edit = false) {
+	datasourceSubmitForm(data, edit = false) {
 		return request(edit ? 'edit' : 'add', data)
 	},
 	// 删除数据源
-	viidDatasourceDelete(data) {
+	datasourceDelete(data) {
 		return request('delete', data)
 	},
 	// 获取数据源详情
-	viidDatasourceDetail(data) {
+	datasourceDetail(data) {
 		return request('detail', data, 'get')
 	},
 	// 禁用数据源
@@ -34,15 +34,19 @@ export default {
 		return request('enableDatasource', data)
 	},
 	// 复制数据源
-	viidDatasourceCopy(data) {
+	datasourceCopy(data) {
 		return request('copy', data)
 	},
 	// 安装模板
-	viidDatasourceInstallTemplate(data) {
+	datasourceInstallTemplate(data) {
 		return request('installTemplate', data)
 	},
 	// 获取模板列表
-	viidDatasourceTemplateList() {
+	datasourceTemplateList() {
 		return request('templateList', {}, 'get')
+	},
+	// 将数据源转换为模板
+	datasourceConvertToTemplate(data) {
+		return request('convertToTemplate', data)
 	}
 }

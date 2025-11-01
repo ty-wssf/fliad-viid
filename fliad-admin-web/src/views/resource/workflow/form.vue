@@ -1,6 +1,6 @@
 <template>
 	<a-drawer
-		:title="formData.id ? '编辑工作流' : '增加工作流'"
+		:title="formData.id ? '编辑工作流' : isTemplateMode ? '新增模板' : '增加工作流'"
 		:width="600"
 		:visible="visible"
 		:destroy-on-close="true"
@@ -10,9 +10,6 @@
 		<a-form ref="formRef" :model="formData" :rules="formRules" layout="vertical">
 			<a-form-item label="标题：" name="title">
 				<a-input v-model:value="formData.title" placeholder="请输入标题" allow-clear />
-			</a-form-item>
-			<a-form-item label="是否为模板：" name="isTemplate">
-				<a-switch v-model:checked="formData.isTemplate" checked-children="是" un-checked-children="否" />
 			</a-form-item>
 			<a-form-item label="订阅类别：" name="subscribeDetail">
 				<a-select
@@ -41,7 +38,7 @@
 <script setup name="viidWorkflowForm">
 	import { cloneDeep } from 'lodash-es'
 	import { required } from '@/utils/formRules'
-	import viidWorkflowApi from '@/api/resource/viidWorkflowApi'
+	import workflowApi from '@/api/resource/workflowApi'
 	import tool from '@/utils/tool'
 	// 抽屉状态
 	const visible = ref(false)
@@ -51,10 +48,13 @@
 	const formData = ref({})
 	const submitLoading = ref(false)
 	const subscribedetailOptions = ref([])
+	// 是否为模板模式
+	const isTemplateMode = ref(false)
 
 	// 打开抽屉
-	const onOpen = (record) => {
+	const onOpen = (record, templateMode = false) => {
 		visible.value = true
+		isTemplateMode.value = templateMode
 		if (record) {
 			let recordData = cloneDeep(record)
 			if (recordData.subscribeDetail) {
@@ -63,7 +63,7 @@
 			formData.value = Object.assign({}, recordData)
 		} else {
 			formData.value = {
-				isTemplate: false
+				isTemplate: templateMode // 根据templateMode设置默认值
 			}
 		}
 		subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
@@ -74,6 +74,7 @@
 		formData.value = {
 			isTemplate: false
 		}
+		isTemplateMode.value = false
 		visible.value = false
 	}
 	// 默认要校验的
@@ -87,8 +88,10 @@
 			submitLoading.value = true
 			const formDataParam = cloneDeep(formData.value)
 			formDataParam.subscribeDetail = JSON.stringify(formDataParam.subscribeDetail)
-			viidWorkflowApi
-				.viidWorkflowSubmitForm(formDataParam, formDataParam.id)
+			// 设置isTemplate属性
+			formDataParam.isTemplate = isTemplateMode.value
+			workflowApi
+				.workflowSubmitForm(formDataParam, formDataParam.id)
 				.then(() => {
 					onClose()
 					emit('successful')

@@ -11,7 +11,7 @@ export default {
 	 * @param parameter
 	 * @returns {*}
 	 */
-	viidWorkflowPage: (parameter) => {
+	workflowPage: (parameter) => {
 		return request('page', parameter, 'get')
 	},
 	/**
@@ -20,7 +20,7 @@ export default {
 	 * @param edit
 	 * @returns {*}
 	 */
-	viidWorkflowSubmitForm: (parameter, edit = false) => {
+	workflowSubmitForm: (parameter, edit = false) => {
 		return request(edit ? 'edit' : 'add', parameter)
 	},
 	/**
@@ -28,7 +28,7 @@ export default {
 	 * @param parameter
 	 * @returns {*}
 	 */
-	viidWorkflowDelete: (parameter) => {
+	workflowDelete: (parameter) => {
 		return request('delete', parameter)
 	},
 	/**
@@ -36,7 +36,7 @@ export default {
 	 * @param parameter
 	 * @returns {*}
 	 */
-	viidWorkflowDetail: (parameter) => {
+	workflowDetail: (parameter) => {
 		return request('detail', parameter, 'get')
 	},
 	/**
@@ -44,7 +44,7 @@ export default {
 	 * @param parameter
 	 * @returns {*}
 	 */
-	viidWorkflowCopy: (parameter) => {
+	workflowCopy: (parameter) => {
 		return request('copy', parameter)
 	},
 	/**
@@ -68,14 +68,22 @@ export default {
 	 * @param parameter
 	 * @returns {*}
 	 */
-	viidWorkflowInstallTemplate: (parameter) => {
+	workflowInstallTemplate: (parameter) => {
 		return request('installTemplate', parameter)
 	},
 	/**
 	 * 获取模板列表
 	 * @returns {*}
 	 */
-	viidWorkflowTemplateList: () => {
+	workflowTemplateList: () => {
 		return request('templateList', {}, 'get')
+	},
+	/**
+	 * 将工作流转换为模板
+	 * @param parameter
+	 * @returns {*}
+	 */
+	workflowConvertToTemplate: (parameter) => {
+		return request('convertToTemplate', parameter)
 	}
 }

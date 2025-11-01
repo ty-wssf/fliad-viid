@@ -171,4 +171,20 @@ public class ResourceDatasourceController {
     public CommonResult<List<ResourceDatasource>> templateList() {
         return CommonResult.data(datasourceService.listTemplates());
     }
+    
+    /**
+     * 将数据源转换为模板
+     *
+     * @author wyl
+     * @date 2025/11/01
+     */
+    @ApiOperation("将数据源转换为模板")
+    @CommonLog("将数据源转换为模板")
+    @SaCheckPermission("/resource/datasource/edit")
+    @Post
+    @Mapping("/resource/datasource/convertToTemplate")
+    public CommonResult<String> convertToTemplate(ResourceDatasourceIdParam datasourceIdParam) {
+        datasourceService.convertToTemplate(datasourceIdParam);
+        return CommonResult.ok();
+    }
 }

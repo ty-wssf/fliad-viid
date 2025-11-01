@@ -34,7 +34,7 @@
 				>
 					<template #operator class="table-operator">
 						<a-space>
-							<a-button type="primary" @click="formRef.onOpen()" v-if="hasPerm('viidDatasourceAdd')">
+							<a-button type="primary" @click="formRef.onOpen(undefined, false)" v-if="hasPerm('viidDatasourceAdd')">
 								<template #icon><plus-outlined /></template>
 								新增
 							</a-button>
@@ -71,7 +71,9 @@
 						<template v-if="column.dataIndex === 'action'">
 							<a @click="copyViidDatasource(record)" v-if="hasPerm('viidDatasourceAdd')">复制</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceAdd', 'viidDatasourceEdit'], 'and')" />
-							<a @click="formRef.onOpen(record)" v-if="hasPerm('viidDatasourceEdit')">编辑</a>
+							<a @click="convertToTemplate(record)" v-if="hasPerm('viidDatasourceEdit')">转为模板</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceAdd', 'viidDatasourceEdit'], 'and')" />
+							<a @click="formRef.onOpen(record, false)" v-if="hasPerm('viidDatasourceEdit')">编辑</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceEdit', 'viidDatasourceDelete'], 'and')" />
 							<a-popconfirm title="确定要删除吗？" @confirm="deleteViidDatasource(record)">
 								<a-button type="link" danger size="small" v-if="hasPerm('viidDatasourceDelete')">删除</a-button>
@@ -80,7 +82,7 @@
 					</template>
 				</s-table>
 			</a-tab-pane>
-			
+
 			<a-tab-pane key="template" tab="模板" v-if="hasPerm('viidDatasourceAdd')">
 				<a-alert message="以下为系统预置模板，可以点击“安装”按钮将其添加为普通数据源" type="info" show-icon style="margin-bottom: 16px;" />
 				<s-table
@@ -95,6 +97,10 @@
 				>
 					<template #operator class="table-operator">
 						<a-space>
+							<a-button type="primary" @click="formRef.onOpen(undefined, true)" v-if="hasPerm('viidDatasourceAdd')">
+								<template #icon><plus-outlined /></template>
+								新增模板
+							</a-button>
 							<xn-batch-button
 								buttonName="批量安装"
 								icon="DownloadOutlined"
@@ -113,6 +119,14 @@
 							{{ getTypeLabel(record.type) }}
 						</template>
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="copyTemplate(record)" v-if="hasPerm('viidDatasourceAdd')">复制</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceAdd', 'viidDatasourceEdit'], 'and')" />
+							<a @click="formRef.onOpen(record, true)" v-if="hasPerm('viidDatasourceEdit')">编辑</a>
+							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceEdit', 'viidDatasourceDelete'], 'and')" />
+							<a-popconfirm title="确定要删除吗？" @confirm="deleteTemplate(record)">
+								<a-button type="link" danger size="small" v-if="hasPerm('viidDatasourceDelete')">删除</a-button>
+							</a-popconfirm>
+							<a-divider type="vertical" />
 							<a @click="installTemplate(record)">安装</a>
 						</template>
 					</template>
@@ -126,7 +140,7 @@
 <script setup name="datasource">
 	import { message } from 'ant-design-vue'
 	import Form from './form.vue'
-	import viidDatasourceApi from '@/api/resource/viidDatasourceApi'
+	import viidDatasourceApi from '@/api/resource/datasourceApi'
 	import tool from '@/utils/tool'
 	let searchFormState = reactive({})
 	const searchFormRef = ref()
@@ -172,10 +186,6 @@
 			dataIndex: 'status'
 		},
 		{
-			title: '类型',
-			dataIndex: 'isTemplate'
-		},
-		{
 			title: '备注',
 			dataIndex: 'remark',
 			ellipsis: true
@@ -187,10 +197,10 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '240px'
+			width: '300px'
 		})
 	}
-	
+
 	const templateColumns = [
 		{
 			title: 'ID',
@@ -217,10 +227,10 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '100px'
+			width: '200px'
 		}
 	]
-	
+
 	let selectedRowKeys = ref([])
 	let selectedTemplateRowKeys = ref([])
 	// 列表选择配置
@@ -237,7 +247,7 @@
 			}
 		}
 	}
-	
+
 	const templateOptions = {
 		alert: {
 			show: false,
@@ -251,16 +261,16 @@
 			}
 		}
 	}
-	
+
 	const loadData = (parameter) => {
 		const searchFormParam = JSON.parse(JSON.stringify(searchFormState))
-		return viidDatasourceApi.viidDatasourcePage(Object.assign(parameter, searchFormParam)).then((data) => {
+		return viidDatasourceApi.datasourcePage(Object.assign(parameter, searchFormParam)).then((data) => {
 			return data
 		})
 	}
-	
+
 	const loadTemplateData = (parameter) => {
-		return viidDatasourceApi.viidDatasourceTemplateList().then((data) => {
+		return viidDatasourceApi.datasourceTemplateList().then((data) => {
 			// 模拟分页数据
 			const pageSize = parameter.size || 10
 			const current = parameter.current || 1
@@ -274,19 +284,19 @@
 			}
 		})
 	}
-	
-	// 删除
+
+	// 删除数据源
 	const deleteViidDatasource = (record) => {
 		let params = [
 			{
 				id: record.id
 			}
 		]
-		viidDatasourceApi.viidDatasourceDelete(params).then(() => {
+		viidDatasourceApi.datasourceDelete(params).then(() => {
 			table.value.refresh(true)
 		})
 	}
-	// 批量删除
+	// 批量删除数据源
 	const deleteBatchViidDatasource = () => {
 		if (selectedRowKeys.value.length < 1) {
 			message.warning('请选择一条或多条数据')
@@ -297,7 +307,7 @@
 				id: m
 			}
 		})
-		viidDatasourceApi.viidDatasourceDelete(params).then(() => {
+		viidDatasourceApi.datasourceDelete(params).then(() => {
 			table.value.clearRefreshSelected()
 		})
 	}
@@ -327,11 +337,42 @@
 
 	// 复制数据源
 	const copyViidDatasource = (record) => {
-		viidDatasourceApi.viidDatasourceCopy({id: record.id}).then(() => {
+		viidDatasourceApi.datasourceCopy({id: record.id}).then(() => {
 			table.value.refresh(true)
 		})
 	}
-	
+
+	// 将数据源转换为模板
+	const convertToTemplate = (record) => {
+		viidDatasourceApi.datasourceConvertToTemplate({id: record.id}).then(() => {
+			message.success('数据源已转换为模板');
+			table.value.refresh(true);
+			// 如果当前在模板tab，则刷新模板列表
+			if (activeKey.value === 'template') {
+				templateTable.value.refresh(true);
+			}
+		})
+	}
+
+	// 复制模板
+	const copyTemplate = (record) => {
+		viidDatasourceApi.datasourceCopy({id: record.id}).then(() => {
+			templateTable.value.refresh(true)
+		})
+	}
+
+	// 删除模板
+	const deleteTemplate = (record) => {
+		let params = [
+			{
+				id: record.id
+			}
+		]
+		viidDatasourceApi.datasourceDelete(params).then(() => {
+			templateTable.value.refresh(true)
+		})
+	}
+
 	// 加载模板
 	const loadTemplates = () => {
 		activeKey.value = 'template'
@@ -339,17 +380,17 @@
 			templateTable.value.refresh(true)
 		})
 	}
-	
+
 	// 安装模板
 	const installTemplate = (record) => {
-		viidDatasourceApi.viidDatasourceInstallTemplate({id: record.id}).then(() => {
+		viidDatasourceApi.datasourceInstallTemplate({id: record.id}).then(() => {
 			message.success('安装成功')
 			if (activeKey.value === 'datasource') {
 				table.value.refresh(true)
 			}
 		})
 	}
-	
+
 	// 批量安装模板
 	const installBatchTemplate = () => {
 		if (selectedTemplateRowKeys.value.length < 1) {
@@ -357,7 +398,7 @@
 			return false
 		}
 		const promises = selectedTemplateRowKeys.value.map(id => {
-			return viidDatasourceApi.viidDatasourceInstallTemplate({id: id})
+			return viidDatasourceApi.datasourceInstallTemplate({id: id})
 		})
 		Promise.all(promises).then(() => {
 			message.success('批量安装成功')
@@ -367,7 +408,7 @@
 			}
 		})
 	}
-	
+
 	// Tab切换处理
 	const handleTabChange = (key) => {
 		if (key === 'datasource') {

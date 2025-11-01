@@ -63,8 +63,10 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
         ResourceDatasource resourceDatasource = BeanUtil.toBean(resourceDatasourceAddParam, ResourceDatasource.class);
         // 设置状态
         resourceDatasource.setStatus(ResourceDatasourceStatus.DISABLED.getValue());
-        // 默认设置为非模板
-        resourceDatasource.setIsTemplate(false);
+        // 如果没有设置isTemplate属性，则默认设置为非模板
+        if (resourceDatasource.getIsTemplate() == null) {
+            resourceDatasource.setIsTemplate(false);
+        }
         this.save(resourceDatasource);
     }
 
@@ -129,7 +131,8 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
         newDatasource.setId(null); // 生成新的ID
         newDatasource.setTitle(originalDatasource.getTitle() + "_副本"); // 添加副本标识
         newDatasource.setStatus(ResourceDatasourceStatus.DISABLED.getValue()); // 设置为禁用状态
-        newDatasource.setIsTemplate(false); // 设置为非模板
+        // 保持原有的模板属性，即如果是模板则复制后还是模板，如果不是则复制后也不是模板
+        // newDatasource.setIsTemplate(false); // 注释掉这行，保持原有的isTemplate值
 
         // 保存新数据源
         this.save(newDatasource);
@@ -170,7 +173,11 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
      */
     @Override
     public List<ResourceDatasource> listTemplates() {
-        return this.list(new QueryWrapper().eq(ResourceDatasource::getIsTemplate, true));
+        List<ResourceDatasource> templates = this.list(new QueryWrapper().eq(ResourceDatasource::getIsTemplate, true)
+                .orderBy(ResourceDatasource::getId, false));
+		// 为每个模板处理转义字符
+		templates.forEach(this::removeEscapeCharacters);
+		return templates;
     }
 
     /**
@@ -232,4 +239,17 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
             return false;
         }
     }
+
+	@Override
+	public void convertToTemplate(ResourceDatasourceIdParam resourceDatasourceIdParam) {
+		ResourceDatasource resourceDatasource = this.queryEntity(resourceDatasourceIdParam.getId());
+		// 创建新的模板记录，保留原有记录不变
+		ResourceDatasource templateDatasource = new ResourceDatasource();
+		BeanUtil.copyProperties(resourceDatasource, templateDatasource);
+		templateDatasource.setId(null); // 生成新的ID
+		templateDatasource.setTitle(resourceDatasource.getTitle() + "_模板"); // 添加模板标识
+		templateDatasource.setIsTemplate(true); // 设置为模板
+		// 保存新模板
+		this.save(templateDatasource);
+	}
 }
