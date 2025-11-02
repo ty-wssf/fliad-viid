@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-nop-report-core</artifactId>
+            <artifactId>fliad-plugin-nop-report-docx</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

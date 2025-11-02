@@ -22,6 +22,8 @@
         <module>fliad-plugin-nop-excel</module>
         <module>fliad-plugin-nop-ooxml-xlsx</module>
         <module>fliad-plugin-nop-report-core</module>
+        <module>fliad-plugin-nop-ooxml-docx</module>
+        <module>fliad-plugin-nop-report-docx</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>

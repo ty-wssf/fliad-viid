@@ -26,6 +26,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.PhoneUtil;
 import cn.hutool.core.util.StrUtil;
@@ -52,7 +53,9 @@ import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.tpl.ITemplateOutput;
+import io.nop.ooxml.docx.WordTemplate;
 import io.nop.report.core.engine.IReportEngine;
+import io.nop.report.docx.parse.XptWordTemplateParser;
 import io.nop.xlang.api.XLang;
 import org.noear.snack.ONode;
 import org.slf4j.Logger;
@@ -85,11 +88,7 @@ import com.fliad.sys.api.SysRoleApi;
 import com.fliad.sys.api.SysUserApi;
 
 import java.io.*;
-import java.util.Base64;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -524,14 +523,22 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
             }
             // 导出时间
             map.put("exportDateTime", DateUtil.format(DateTime.now(), DatePattern.CHINESE_DATE_PATTERN));
-            // 生成doc
+            /*// 生成doc
             XWPFDocument doc = WordExportUtil.exportWord07(destTemplateFile.getAbsolutePath(), map);
             // 生成临时导出文件
             resultFile = FileUtil.file(FileUtil.getTmpDir() + File.separator + "SNOWY系统B端人员信息_" + bizUser.getName() + ".docx");
             // 写入
             BufferedOutputStream outputStream = FileUtil.getOutputStream(resultFile);
             doc.write(outputStream);
-            outputStream.close();
+            outputStream.close();*/
+            IResource resource = VirtualFileSystem.instance().getResource("/nop/report/biz/userExportTemplate.docx");
+            WordTemplate tpl = new XptWordTemplateParser().parseFromResource(resource);
+            IEvalScope scope = XLang.newEvalScope();
+            for (String key : map.keySet()) {
+                scope.setLocalValue(key, map.get(key));
+            }
+            resultFile = VirtualFileSystem.instance().getResource(ResourceConstants.RESOURCE_NS_TEMP + ":/demo/userExportTemplate" + IdUtil.getSnowflakeNextIdStr() + ".docx").toFile();
+            tpl.generateToFile(resultFile, scope);
             // 下载
             CommonDownloadUtil.download(resultFile, response);
         } catch (Exception e) {

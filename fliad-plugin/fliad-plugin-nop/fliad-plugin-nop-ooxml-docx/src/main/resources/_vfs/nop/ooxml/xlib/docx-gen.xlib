@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<lib x:schema="/nop/schema/xlib.xdef" xmlns:x="/nop/schema/xdsl.xdef">
+    <tags>
+        <Drawing outputMode="xml">
+            <attr name="resource"/>
+
+            <attr name="ofcPkg" implicit="true">
+                <description>
+                    正在生成的word文件对象，类型为OfficePackage"
+                </description>
+            </attr>
+
+            <slot name="default">
+                <arg name="rel" implicit="true">
+                    <description>生成的图片文件的关联对象，OfficeRelationship类型</description>
+                </arg>
+            </slot>
+
+            <source>
+                <c:if test="${resource.exists()}">
+                    <c:script>
+                        let rel = ofcPkg.addImage(resource);
+                    </c:script>
+
+                    <w:drawing xpl:disableNs="w">
+                        <c:unit xpl:slot="default" xpl:slotArgs="{rel}"/>
+                    </w:drawing>
+                </c:if>
+            </source>
+        </Drawing>
+
+        <r-br outputMode="xml">
+            <attr name="value"/>
+            <slot name="rPr" slotType="node"/>
+
+            <source>
+                <c:script>
+                    const list = value?.toString().$split('\n');
+                    const node = slot_rPr?.cloneInstance();
+                    node?.setTagName('w:rPr');
+                </c:script>
+                <c:for var="item" items="${list}" index="index" xpl:allowUnknownTag="true">
+                    <c:if test="${index > 0}">
+                        <w:br/>
+                    </c:if>
+                    <w:r>
+                        <c:out escape="none" value="${node?.xml()}"/>
+                        <w:t>${item}</w:t>
+                    </w:r>
+                </c:for>
+            </source>
+        </r-br>
+    </tags>
+</lib>
