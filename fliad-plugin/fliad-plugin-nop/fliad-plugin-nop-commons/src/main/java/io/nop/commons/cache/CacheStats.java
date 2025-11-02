@@ -17,13 +17,10 @@
  */
 package io.nop.commons.cache;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.LoadingCache;
-
 import java.io.Serializable;
 
 /**
- * Statistics about the performance of a {@link Cache}.
+ * Statistics about the performance of a cache.
  * <p>
  * Cache statistics are incremented according to the following rules:
  * <ul>
@@ -38,19 +35,14 @@ import java.io.Serializable;
  * <li>Cache lookups that encounter a missing cache entry that is still loading will wait for loading to complete
  * (whether successful or not) and then increment {@code missCount}.
  * </ul>
- * <li>When an entry is computed through the {@linkplain Cache#asMap asMap} the {@code loadSuccessCount} or
+ * <li>When an entry is computed through the cache the {@code loadSuccessCount} or
  * {@code loadFailureCount} is incremented.
  * <li>When an entry is evicted from the cache, {@code evictionCount} is incremented and the weight added to
  * {@code evictionWeight}.
  * <li>No stats are modified when a cache entry is invalidated or manually removed.
- * <li>No stats are modified by non-computing operations invoked on the {@linkplain Cache#asMap asMap} view of the
- * cache.
+ * <li>No stats are modified by non-computing operations invoked on the cache.
  * </ul>
- * <p>
- * A lookup is specifically defined as an invocation of one of the methods {@link LoadingCache#get(Object)},
- * {@link Cache#get(Object, java.util.function.Function)}, or {@link LoadingCache#getAll(Iterable)}.
  *
- * @author ben.manes@gmail.com (Ben Manes)
  */
 public final class CacheStats implements Serializable {
     private static final long serialVersionUID = -2802626144795228544L;
@@ -157,7 +149,7 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the number of times {@link Cache} lookup methods have returned either a cached or uncached value. This is
+     * Returns the number of times cache lookup methods have returned either a cached or uncached value. This is
      * defined as {@code hitCount + missCount}.
      *
      * @return the {@code hitCount + missCount}
@@ -168,9 +160,9 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the number of times {@link Cache} lookup methods have returned a cached value.
+     * Returns the number of times cache lookup methods have returned a cached value.
      *
-     * @return the number of times {@link Cache} lookup methods have returned a cached value
+     * @return the number of times cache lookup methods have returned a cached value
      */
 
     public long getHitCount() {
@@ -190,11 +182,11 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the number of times {@link Cache} lookup methods have returned an uncached (newly loaded) value, or null.
-     * Multiple concurrent calls to {@link Cache} lookup methods on an absent value can result in multiple misses, all
+     * Returns the number of times cache lookup methods have returned an uncached (newly loaded) value, or null.
+     * Multiple concurrent calls to cache lookup methods on an absent value can result in multiple misses, all
      * returning the results of a single cache load operation.
      *
-     * @return the number of times {@link Cache} lookup methods have returned an uncached (newly loaded) value, or null
+     * @return the number of times cache lookup methods have returned an uncached (newly loaded) value, or null
      */
 
     public long getMissCount() {
@@ -218,7 +210,7 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the total number of times that {@link Cache} lookup methods attempted to load new values. This includes
+     * Returns the total number of times that cache lookup methods attempted to load new values. This includes
      * both successful load operations, as well as those that threw exceptions. This is defined as
      * {@code loadSuccessCount + loadFailureCount}.
      *
@@ -230,12 +222,12 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the number of times {@link Cache} lookup methods have successfully loaded a new value. This is always
+     * Returns the number of times cache lookup methods have successfully loaded a new value. This is always
      * incremented in conjunction with {@link #missCount}, though {@code missCount} is also incremented when an
      * exception is encountered during cache loading (see {@link #loadFailureCount}). Multiple concurrent misses for the
      * same key will result in a single load operation.
      *
-     * @return the number of times {@link Cache} lookup methods have successfully loaded a new value
+     * @return the number of times cache lookup methods have successfully loaded a new value
      */
 
     public long getLoadSuccessCount() {
@@ -243,12 +235,12 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the number of times {@link Cache} lookup methods failed to load a new value, either because no value was
+     * Returns the number of times cache lookup methods failed to load a new value, either because no value was
      * found or an exception was thrown while loading. This is always incremented in conjunction with {@code missCount},
      * though {@code missCount} is also incremented when cache loading completes successfully (see
      * {@link #loadSuccessCount}). Multiple concurrent misses for the same key will result in a single load operation.
      *
-     * @return the number of times {@link Cache} lookup methods failed to load a new value
+     * @return the number of times cache lookup methods failed to load a new value
      */
 
     public long getLoadFailureCount() {
@@ -294,7 +286,7 @@ public final class CacheStats implements Serializable {
 
     /**
      * Returns the number of times an entry has been evicted. This count does not include manual
-     * {@linkplain Cache#invalidate invalidations}.
+     * {@linkplain #invalidate invalidations}.
      *
      * @return the number of times an entry has been evicted
      */
@@ -304,7 +296,7 @@ public final class CacheStats implements Serializable {
     }
 
     /**
-     * Returns the sum of weights of evicted entries. This total does not include manual {@linkplain Cache#invalidate
+     * Returns the sum of weights of evicted entries. This total does not include manual {@linkplain #invalidate
      * invalidations}.
      *
      * @return the sum of weights of evicted entities

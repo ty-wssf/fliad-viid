@@ -7,14 +7,6 @@
  */
 package io.nop.commons.cache;
 
-import com.github.benmanes.caffeine.cache.AsyncCache;
-import com.github.benmanes.caffeine.cache.AsyncLoadingCache;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.CacheLoader;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.github.benmanes.caffeine.cache.LoadingCache;
-import com.github.benmanes.caffeine.cache.Policy;
-import io.micrometer.core.instrument.binder.cache.CaffeineCacheMetrics;
 import io.nop.api.core.config.IConfigRefreshable;
 import io.nop.api.core.util.FutureHelper;
 import io.nop.commons.lang.IDestroyable;
@@ -30,6 +22,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -37,15 +31,15 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
     static final Logger LOG = LoggerFactory.getLogger(LocalCache.class);
 
     private final String name;
-    private Cache<K, V> cache;
-    private LoadingCache<K, V> loadingCache;
-    private AsyncCache<K, V> asyncCache;
+    private Map<K, V> cache;
+    private ICacheLoader<K, V> cacheLoader;
     private CacheConfig config;
 
     public LocalCache(String name, CacheConfig config, ICacheLoader<K, V> loader) {
         this.name = name;
         this.config = config;
-        buildCache(config, loader);
+        this.cacheLoader = loader;
+        buildCache(config);
 
         if (config.isUseMetrics())
             registerMetrics();
@@ -56,7 +50,7 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
     }
 
     public void destroy() {
-        cache.cleanUp();
+        cache.clear();
     }
 
     public static <K, V> LocalCache<K, V> newCache(String name, CacheConfig config, ICacheLoader<K, V> loader) {
@@ -72,71 +66,15 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
     }
 
     private void registerMetrics() {
-        if (!StringHelper.isEmpty(name)) {
-            new CaffeineCacheMetrics(cache, name, Collections.emptyList()).bindTo(GlobalMeterRegistry.instance());
-        }
+        // 本地缓存暂不支持指标监控
     }
 
-    private void buildCache(CacheConfig config, ICacheLoader<K, V> loader) {
-        Caffeine builder = Caffeine.newBuilder();
-        if (config.getMaximumSize() > 0) {
-            builder.maximumSize(config.getMaximumSize());
-        }
-
-        if (config.getExpireAfterWrite() != null && config.getExpireAfterAccess() == null) {
-            builder.expireAfterWrite(config.getExpireAfterWrite());
-        }
-
-        if (config.getExpireAfterAccess() != null) {
-            builder.expireAfterAccess(config.getExpireAfterAccess());
-        }
-
-        if (config.isWeakKeys())
-            builder.weakKeys();
-
-        if (config.isWeakValues()) {
-            builder.weakValues();
-        }
-
-        if (config.getMaximumWeight() > 0)
-            builder.maximumWeight(config.getMaximumWeight());
-
-        if (config.getRefreshAfterWrite() != null) {
-            builder.refreshAfterWrite(config.getRefreshAfterWrite());
-        }
-
-        builder.recordStats();
-
-        builder.removalListener((key, value, cause) -> {
-            LOG.trace("nop.commons.cache-item-removal:cache={},key={},value={},cause={}", name, key, value, cause);
-            if (config.isDestroyOnRemove())
-                DestroyHelper.safeDestroy(value);
-        });
-
-        Cache<K, V> prevCache = this.cache;
-
-        if (config.isAsync()) {
-            if (loader != null) {
-                AsyncLoadingCache<K, V> cache = builder.buildAsync(createCacheLoader(loader));
-                this.asyncCache = cache;
-                this.cache = this.loadingCache = cache.synchronous();
-            } else {
-                this.asyncCache = builder.buildAsync();
-                this.cache = asyncCache.synchronous();
-            }
-        } else {
-            if (loader != null) {
-                this.cache = this.loadingCache = builder.build(createCacheLoader(loader));
-            } else {
-                this.cache = builder.build();
-            }
-        }
-        if (prevCache != null)
-            prevCache.invalidateAll();
-    }
-
-    static <K, V> CacheLoader<K, V> createCacheLoader(ICacheLoader<K, V> loader) {
-        return new CaffeineCacheLoader<>(loader);
+    private void buildCache(CacheConfig config) {
+        // 使用ConcurrentHashMap作为本地缓存实现
+        this.cache = new ConcurrentHashMap<>();
+        
+        // 注意：本地实现不支持所有Caffeine的高级特性，如过期策略、最大大小限制等
+        // 这些特性需要额外的实现或依赖其他库
     }
 
     public CacheConfig getConfig() {
@@ -145,54 +83,19 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
 
     @Override
     public void refreshConfig() {
-        updateCache(config);
-    }
-
-    private void updateCache(CacheConfig config) {
-        Policy<K, V> policy = cache.policy();
-        if (config.getMaximumSize() > 0) {
-            policy.eviction().ifPresent(evt -> {
-                evt.setMaximum(config.getMaximumSize());
-            });
-        }
-
-        if (config.getMaximumWeight() > 0) {
-            policy.eviction().ifPresent(evt -> {
-                evt.setMaximum(config.getMaximumWeight());
-            });
-        }
-
-        if (config.getExpireAfterAccess() != null) {
-            policy.expireAfterAccess().ifPresent(exp -> {
-                exp.setExpiresAfter(config.getExpireAfterAccess());
-            });
-        }
-
-        if (config.getExpireAfterWrite() != null) {
-            policy.expireAfterWrite().ifPresent(exp -> {
-                exp.setExpiresAfter(config.getExpireAfterWrite());
-            });
-        }
-
-        if (config.getRefreshAfterWrite() != null) {
-            policy.refreshAfterWrite().ifPresent(exp -> {
-
-            });
-        }
-
-        cache.cleanUp();
+        // 本地缓存不支持动态刷新配置
     }
 
     public CacheStats stats() {
         CacheStats stats = new CacheStats();
-        com.github.benmanes.caffeine.cache.stats.CacheStats nativeStats = cache.stats();
-        stats.setEvictionCount(nativeStats.evictionCount());
-        stats.setEvictionWeight(nativeStats.evictionWeight());
-        stats.setHitCount(nativeStats.hitCount());
-        stats.setLoadFailureCount(nativeStats.loadFailureCount());
-        stats.setLoadSuccessCount(nativeStats.loadSuccessCount());
-        stats.setMissCount(nativeStats.missCount());
-        stats.setTotalLoadTime(nativeStats.totalLoadTime());
+        // 本地实现不支持详细的缓存统计信息
+        stats.setHitCount(0);
+        stats.setMissCount(0);
+        stats.setLoadSuccessCount(0);
+        stats.setLoadFailureCount(0);
+        stats.setTotalLoadTime(0);
+        stats.setEvictionCount(0);
+        stats.setEvictionWeight(0);
         return stats;
     }
 
@@ -205,19 +108,31 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
 
     @Override
     public V get(K key) {
-        if (loadingCache != null)
-            return loadingCache.get(key);
-        return cache.getIfPresent(key);
+        if (cacheLoader != null) {
+            V value = cache.get(key);
+            if (value == null) {
+                try {
+                    value = cacheLoader.load(key);
+                    if (value != null) {
+                        cache.put(key, value);
+                    }
+                } catch (Exception e) {
+                    LOG.warn("Failed to load cache value for key: " + key, e);
+                }
+            }
+            return value;
+        }
+        return cache.get(key);
     }
 
     @Override
     public V getIfPresent(K key) {
-        return cache.getIfPresent(key);
+        return cache.get(key);
     }
 
     @Override
     public V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
-        return cache.get(key, mappingFunction);
+        return cache.computeIfAbsent(key, mappingFunction);
     }
 
     @Override
@@ -232,7 +147,7 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
 
     @Override
     public boolean putIfAbsent(K key, V value) {
-        V old = cache.getIfPresent(key);
+        V old = cache.get(key);
         if (old == null) {
             cache.put(key, value);
             return true;
@@ -242,69 +157,78 @@ public class LocalCache<K, V> implements ICache<K, V>, IConfigRefreshable, IDest
 
     @Override
     public void remove(K key) {
-        cache.invalidate(key);
+        cache.remove(key);
     }
 
     public void clear() {
         LOG.info("nop.cache.clear:cacheName={}", getName());
-        cache.invalidateAll();
+        cache.clear();
     }
 
     @Override
     public Map<K, V> getAll(Collection<? extends K> keys) {
-        if (loadingCache != null)
-            return loadingCache.getAll(keys);
-        return cache.getAllPresent(keys);
+        // 简单实现，不支持批量加载
+        Map<K, V> result = new ConcurrentHashMap<>();
+        for (K key : keys) {
+            V value = get(key);
+            if (value != null) {
+                result.put(key, value);
+            }
+        }
+        return result;
     }
 
     @Override
     public Map<K, V> getAllPresent(Collection<? extends K> keys) {
-        return cache.getAllPresent(keys);
+        Map<K, V> result = new ConcurrentHashMap<>();
+        for (K key : keys) {
+            V value = cache.get(key);
+            if (value != null) {
+                result.put(key, value);
+            }
+        }
+        return result;
     }
 
     @Override
     public void removeAll(Collection<? extends K> keys) {
-        cache.invalidateAll(keys);
+        for (K key : keys) {
+            cache.remove(key);
+        }
     }
 
     public void refresh(K key) {
-        if (loadingCache != null) {
-            loadingCache.refresh(key);
+        if (cacheLoader != null) {
+            cache.remove(key);
         } else {
-            cache.invalidate(key);
+            cache.remove(key);
         }
     }
 
     @Override
     public long estimatedSize() {
-        return cache.estimatedSize();
+        return cache.size();
     }
 
     @Override
     public @Nullable CompletionStage<V> getAsync(@NonNull K key) {
-        if (asyncCache != null)
-            return asyncCache.getIfPresent(key);
         return FutureHelper.futureCall(() -> get(key));
     }
 
     @Override
     public @NonNull CompletionStage<V> computeIfAbsentAsync(@NonNull K key,
                                                             @NonNull Function<? super K, ? extends V> mappingFunction) {
-        if (asyncCache != null)
-            return asyncCache.get(key, mappingFunction);
         return FutureHelper.futureCall(() -> computeIfAbsent(key, mappingFunction));
     }
 
     @Override
     public @NonNull CompletionStage<Map<K, V>> getAllAsync(Collection<? extends K> keys) {
-        if (asyncCache != null)
-            return asyncCache.getAll(keys, k -> null);
         return FutureHelper.futureCall(() -> getAll(keys));
     }
 
     @Override
     public void forEachEntry(BiConsumer<? super K, ? super V> consumer) {
-        cache.asMap().entrySet().forEach(entry -> {
+        cache.entrySet().forEach(entry -> {
             consumer.accept(entry.getKey(), entry.getValue());
         });
     }

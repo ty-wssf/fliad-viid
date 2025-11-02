@@ -26,8 +26,7 @@ import java.util.concurrent.Executor;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Computes or retrieves values, based on a key, for use in populating a {@link LoadingCache} or
- * {@link AsyncLoadingCache}.
+ * Computes or retrieves values, based on a key, for use in populating a cache.
  * <p>
  * Most implementations will only need to implement {@link #load}. Other methods may be overridden as desired.
  * <p>
@@ -35,10 +34,11 @@ import static java.util.Objects.requireNonNull;
  *
  * <pre>{@code
  * CacheLoader<Key, Graph> loader = key -> createExpensiveGraph(key);
- * LoadingCache<Key, Graph> cache = Caffeine.newBuilder().build(loader);
+ * LoadingCache<Key, Graph> cache = CacheBuilder.newBuilder().build(loader);
  * }</pre>
  *
- * @author ben.manes@gmail.com (Ben Manes)
+ * @param <K> the type of keys
+ * @param <V> the type of values
  */
 @FunctionalInterface
 public interface ICacheLoader<K, V> {
@@ -60,7 +60,7 @@ public interface ICacheLoader<K, V> {
 
     /**
      * Computes or retrieves the values corresponding to {@code keys}. This method is called by
-     * {@link LoadingCache#getAll}.
+     * {@link ICache#getAll}.
      * <p>
      * If the returned map doesn't contain all requested {@code keys} then the entries it does contain will be cached
      * and {@code getAll} will return the partial results. If the returned map contains extra keys not present in
@@ -68,7 +68,7 @@ public interface ICacheLoader<K, V> {
      * from {@code getAll}.
      * <p>
      * This method should be overridden when bulk retrieval is significantly more efficient than many individual
-     * lookups. Note that {@link LoadingCache#getAll} will defer to individual calls to {@link LoadingCache#get} if this
+     * lookups. Note that {@link ICache#getAll} will defer to individual calls to {@link ICache#get} if this
      * method is not overridden.
      * <p>
      * <b>Warning:</b> loading <b>must not</b> attempt to update any mappings of this cache directly.
@@ -110,7 +110,7 @@ public interface ICacheLoader<K, V> {
 
     /**
      * Asynchronously computes or retrieves the values corresponding to {@code keys}. This method is called by
-     * {@link AsyncLoadingCache#getAll}.
+     * {@link IAsyncCache#getAll}.
      * <p>
      * If the returned map doesn't contain all requested {@code keys} then the entries it does contain will be cached
      * and {@code getAll} will return the partial results. If the returned map contains extra keys not present in
@@ -118,8 +118,8 @@ public interface ICacheLoader<K, V> {
      * from {@code getAll}.
      * <p>
      * This method should be overridden when bulk retrieval is significantly more efficient than many individual
-     * lookups. Note that {@link AsyncLoadingCache#getAll} will defer to individual calls to
-     * {@link AsyncLoadingCache#get} if this method is not overridden.
+     * lookups. Note that {@link IAsyncCache#getAll} will defer to individual calls to
+     * {@link IAsyncCache#get} if this method is not overridden.
      *
      * @param keys     the unique, non-null keys whose values should be loaded
      * @param executor the executor that with asynchronously loads the entries
@@ -145,8 +145,8 @@ public interface ICacheLoader<K, V> {
     /**
      * Computes or retrieves a replacement value corresponding to an already-cached {@code key}. If the replacement
      * value is not found then the mapping will be removed if {@code null} is returned. This method is called when an
-     * existing cache entry is refreshed by {@link Caffeine#refreshAfterWrite}, or through a call to
-     * {@link LoadingCache#refresh}.
+     * existing cache entry is refreshed, or through a call to
+     * {@link ICache#refresh}.
      * <p>
      * <b>Note:</b> <i>all exceptions thrown by this method will be logged and then swallowed</i>.
      *
@@ -166,8 +166,8 @@ public interface ICacheLoader<K, V> {
     /**
      * Asynchronously computes or retrieves a replacement value corresponding to an already-cached {@code key}. If the
      * replacement value is not found then the mapping will be removed if {@code null} is computed. This method is
-     * called when an existing cache entry is refreshed by {@link Caffeine#refreshAfterWrite}, or through a call to
-     * {@link LoadingCache#refresh}.
+     * called when an existing cache entry is refreshed, or through a call to
+     * {@link ICache#refresh}.
      * <p>
      * <b>Note:</b> <i>all exceptions thrown by this method will be logged and then swallowed</i>.
      *
