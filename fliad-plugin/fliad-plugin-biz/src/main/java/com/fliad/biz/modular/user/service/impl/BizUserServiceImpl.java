@@ -46,7 +46,15 @@ import com.fliad.common.util.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
-import org.apache.poi.ss.usermodel.*;
+import io.nop.commons.concurrent.executor.GlobalExecutors;
+import io.nop.core.lang.eval.IEvalScope;
+import io.nop.core.resource.IResource;
+import io.nop.core.resource.ResourceConstants;
+import io.nop.core.resource.VirtualFileSystem;
+import io.nop.core.resource.tpl.ITemplateOutput;
+import io.nop.report.core.engine.IReportEngine;
+import io.nop.xlang.api.XLang;
+import org.noear.snack.ONode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -69,14 +77,12 @@ import com.fliad.biz.modular.user.mapper.BizUserMapper;
 import com.fliad.biz.modular.user.result.BizUserRoleResult;
 import com.fliad.biz.modular.user.service.BizUserService;
 import com.fliad.common.enums.CommonSortOrderEnum;
-import com.fliad.common.excel.CommonExcelCustomMergeStrategy;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.listener.CommonDataChangeEventCenter;
 import com.fliad.common.page.CommonPageRequest;
 import com.fliad.dev.api.DevConfigApi;
 import com.fliad.sys.api.SysRoleApi;
 import com.fliad.sys.api.SysUserApi;
-import com.fliad.biz.modular.user.result.BizUserExportResult;
 
 import java.io.*;
 import java.util.Base64;
@@ -84,6 +90,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -116,6 +123,9 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
 
     @Inject
     private BizPositionService bizPositionService;
+
+    @Inject
+    IReportEngine reportEngine;
 
     /**
      * 将base64字符串转换为图片字节数组
@@ -421,7 +431,7 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
 
     @Override
     public void exportUser(BizUserExportParam bizUserExportParam, Context ctx) throws IOException {
-        File tempFile = null;
+        IResource tempFile = null;
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
             // 排除超管
@@ -451,118 +461,31 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
                     queryWrapper.eq(BizUser::getUserStatus, bizUserExportParam.getUserStatus());
                 }
             }
-            String fileName = "SNOWY系统B端人员信息清单.xlsx";
             List<BizUser> bizUserList = this.list(queryWrapper);
             if (ObjectUtil.isEmpty(bizUserList)) {
                 throw new CommonException("无数据可导出");
             }
 //            transService.transBatch(bizUserList);
             bizUserList = CollectionUtil.sort(bizUserList, Comparator.comparing(BizUser::getOrgId));
-            List<BizUserExportResult> bizUserExportResultList = bizUserList.stream()
-                    .map(bizUser -> {
-                        BizUserExportResult bizUserExportResult = new BizUserExportResult();
-                        BeanUtil.copyProperties(bizUser, bizUserExportResult);
-                        bizUserExportResult.setGroupName(ObjectUtil.isNotEmpty(bizUserExportResult.getOrgName()) ?
-                                bizUserExportResult.getOrgName() : "无组织");
-                        // 状态枚举转为文字
-                        bizUserExportResult.setUserStatus(bizUserExportResult.getUserStatus()
-                                .equalsIgnoreCase(BizUserStatusEnum.ENABLE.getValue()) ? "正常" : "停用");
-                        // 将base64转为byte数组
-                        if (ObjectUtil.isNotEmpty(bizUser.getAvatar())) {
-                            bizUserExportResult.setAvatar(base64ToByteArray(bizUser.getAvatar()));
-                        }
-                        return bizUserExportResult;
-                    }).collect(Collectors.toList());
-            // 创建临时文件
-            tempFile = FileUtil.file(FileUtil.getTmpDir() + FileUtil.FILE_SEPARATOR + fileName);
+            ITemplateOutput output = reportEngine.getRenderer("/nop/report/biz/SNOWY系统B端人员信息清单.xpt.xlsx", "xlsx");
+            IEvalScope scope = XLang.newEvalScope();
+            scope.setLocalValue("entity", ONode.deserialize(ONode.stringify(bizUserList)));
+            tempFile = VirtualFileSystem.instance().getResource(ResourceConstants.RESOURCE_NS_TEMP + ":/demo/SNOWY系统B端人员信息清单.xlsx");
+            output.generateToResource(tempFile, scope);
+            IResource finalTempFile = tempFile;
+            GlobalExecutors.globalTimer().schedule(() -> {
+                finalTempFile.delete();
+                return null;
+            }, 5, TimeUnit.MINUTES);
 
-            // 头的策略
-            WriteCellStyle headWriteCellStyle = new WriteCellStyle();
-            WriteFont headWriteFont = new WriteFont();
-            headWriteFont.setFontHeightInPoints((short) 14);
-            headWriteCellStyle.setWriteFont(headWriteFont);
-            // 水平垂直居中
-            headWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
-            headWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-
-            // 内容的策略
-            WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
-            // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND 不然无法显示背景颜色.头默认了 FillPatternType所以可以不指定
-            contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
-            // 内容背景白色
-            contentWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
-            WriteFont contentWriteFont = new WriteFont();
-
-            // 内容字体大小
-            contentWriteFont.setFontHeightInPoints((short) 12);
-            contentWriteCellStyle.setWriteFont(contentWriteFont);
-
-            //设置边框样式，细实线
-            contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
-            contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
-            contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
-            contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
-
-            // 水平垂直居中
-            contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.LEFT);
-            contentWriteCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-
-            // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
-            HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle,
-                    contentWriteCellStyle);
-
-            // 写excel
-            EasyExcel.write(tempFile.getPath(), BizUserExportResult.class)
-                    // 自定义样式
-                    .registerWriteHandler(horizontalCellStyleStrategy)
-                    // 自动列宽
-                    .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
-                    // 机构分组合并单元格
-                    .registerWriteHandler(new CommonExcelCustomMergeStrategy(bizUserExportResultList.stream().map(BizUserExportResult::getGroupName)
-                            .collect(Collectors.toList()), 0))
-                    // 设置第一行字体
-                    .registerWriteHandler(new CellWriteHandler() {
-                        @Override
-                        public void afterCellDispose(CellWriteHandlerContext context) {
-                            WriteCellData<?> cellData = context.getFirstCellData();
-                            WriteCellStyle writeCellStyle = cellData.getOrCreateStyle();
-                            Integer rowIndex = context.getRowIndex();
-                            if (rowIndex == 0) {
-                                WriteFont headWriteFont = new WriteFont();
-                                headWriteFont.setFontName("宋体");
-                                headWriteFont.setBold(true);
-                                headWriteFont.setFontHeightInPoints((short) 16);
-                                writeCellStyle.setWriteFont(headWriteFont);
-                            }
-                        }
-                    })
-                    // 设置表头行高
-                    .registerWriteHandler(new AbstractRowHeightStyleStrategy() {
-                        @Override
-                        protected void setHeadColumnHeight(Row row, int relativeRowIndex) {
-                            if (relativeRowIndex == 0) {
-                                // 表头第一行
-                                row.setHeightInPoints(34);
-                            } else {
-                                // 表头其他行
-                                row.setHeightInPoints(30);
-                            }
-                        }
-
-                        @Override
-                        protected void setContentColumnHeight(Row row, int relativeRowIndex) {
-                            // 内容行
-                            row.setHeightInPoints(20);
-                        }
-                    })
-                    .sheet("人员信息")
-                    .doWrite(bizUserExportResultList);
-            CommonDownloadUtil.download(tempFile, ctx);
+            CommonDownloadUtil.download(tempFile.toFile(), ctx);
         } catch (Exception e) {
             log.error(">>> 人员导出异常：", e);
             CommonResponseUtil.renderError(ctx, "导出失败");
         } finally {
-            FileUtil.del(tempFile);
+            if (tempFile != null) {
+                tempFile.delete();
+            }
         }
     }
 
