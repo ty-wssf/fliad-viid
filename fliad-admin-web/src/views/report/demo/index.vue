@@ -1,0 +1,148 @@
+<template>
+	<div class="report-demo-container">
+		<a-row :gutter="16">
+			<a-col :span="4">
+				<a-card title="报表示例列表" :bordered="false">
+					<a-tree
+						v-if="reportTreeData.length > 0"
+						:tree-data="reportTreeData"
+						:fieldNames="{ title: 'label', key: 'key', children: 'children' }"
+						@select="onSelectReport"
+						default-expand-all
+					>
+						<template #title="{ label }">
+							<span>{{ label }}</span>
+						</template>
+					</a-tree>
+					<a-empty v-else description="暂无报表示例"/>
+				</a-card>
+			</a-col>
+
+			<a-col :span="20">
+				<a-card :title="selectedReportName || '报表预览'" :bordered="false">
+					<div v-if="reportHtml" v-html="reportHtml" class="report-preview scrollable-report"></div>
+					<a-empty v-else description="请选择报表示例进行预览"/>
+				</a-card>
+			</a-col>
+		</a-row>
+	</div>
+</template>
+
+<script>
+import {defineComponent, ref, onMounted} from 'vue'
+import reportApi from '@/api/report/demo'
+
+export default defineComponent({
+	name: 'ReportDemo',
+	setup() {
+		const reportTreeData = ref([])
+		const reportHtml = ref('')
+		const selectedReportName = ref('')
+
+		// 获取报表示例列表
+		const loadReportList = async () => {
+			try {
+				const res = await reportApi.getDemoReports()
+				debugger
+				// 转换数据格式以适配 Ant Design Vue Tree 组件
+				reportTreeData.value = res
+			} catch (err) {
+				console.error('获取报表示例列表失败:', err)
+			}
+		}
+
+		// 选择报表示例
+		const onSelectReport = async (selectedKeys, event) => {
+			const node = event.node
+			if (node.value) {
+				selectedReportName.value = node.title
+				await renderReport(node.value)
+			}
+		}
+
+		// 渲染报表
+		const renderReport = async (reportPath) => {
+			try {
+				// 可以在这里传递报表需要的参数
+				const params = {
+					// 示例参数，可根据实际需要修改
+					reportName: reportPath
+				}
+
+				const res = await reportApi.renderHtml(params)
+
+				reportHtml.value = res
+			} catch (err) {
+				console.error('渲染报表失败:', err)
+				reportHtml.value = '<div style="color: red;">报表渲染失败</div>'
+			}
+		}
+
+		onMounted(() => {
+			loadReportList()
+		})
+
+		return {
+			reportTreeData,
+			reportHtml,
+			selectedReportName,
+			onSelectReport
+		}
+	}
+})
+</script>
+
+<style scoped>
+.report-demo-container {
+	padding: 16px;
+	background: #fff;
+	min-height: calc(100vh - 120px);
+}
+
+.report-preview {
+	min-height: 500px;
+	padding-right: 10px;
+}
+
+.report-preview :deep(table) {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.report-preview :deep(th),
+.report-preview :deep(td) {
+	border: 1px solid #000;
+	padding: 4px 8px;
+	text-align: center;
+}
+
+.report-preview :deep(th) {
+	background-color: #f0f0f0;
+	font-weight: bold;
+}
+
+.scrollable-report {
+	max-height: calc(100vh - 200px);
+	overflow: auto;
+}
+
+/* 美化滚动条样式，使其更符合Ant Design风格 */
+.scrollable-report::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.scrollable-report::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.scrollable-report::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scrollable-report::-webkit-scrollbar-track {
+	background-color: rgba(0, 0, 0, 0.06);
+	border-radius: 4px;
+}
+</style>
