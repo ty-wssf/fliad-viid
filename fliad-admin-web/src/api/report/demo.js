@@ -16,5 +16,9 @@ export default {
 	// 渲染报表HTML
 	renderHtml(data) {
 		return request('renderHtml', data)
+	},
+	// 下载报表
+	download(data) {
+		return request('download', data, 'post', { responseType: 'blob' })
 	}
 }

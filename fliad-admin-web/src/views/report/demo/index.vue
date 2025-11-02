@@ -20,6 +20,9 @@
 
 			<a-col :span="20">
 				<a-card :title="selectedReportName || '报表预览'" :bordered="false">
+					<div v-if="selectedReportPath" style="margin-bottom: 16px;">
+						<a-button type="primary" @click="exportReport">导出XLSX</a-button>
+					</div>
 					<div v-if="reportHtml" v-html="reportHtml" class="report-preview scrollable-report"></div>
 					<a-empty v-else description="请选择报表示例进行预览"/>
 				</a-card>
@@ -31,6 +34,8 @@
 <script>
 import {defineComponent, ref, onMounted} from 'vue'
 import reportApi from '@/api/report/demo'
+import bizUserApi from "@/api/biz/bizUserApi";
+import downloadUtil from "@/utils/downloadUtil";
 
 export default defineComponent({
 	name: 'ReportDemo',
@@ -38,6 +43,7 @@ export default defineComponent({
 		const reportTreeData = ref([])
 		const reportHtml = ref('')
 		const selectedReportName = ref('')
+		const selectedReportPath = ref('')
 
 		// 获取报表示例列表
 		const loadReportList = async () => {
@@ -55,7 +61,8 @@ export default defineComponent({
 		const onSelectReport = async (selectedKeys, event) => {
 			const node = event.node
 			if (node.value) {
-				selectedReportName.value = node.title
+				selectedReportName.value = node.label
+				selectedReportPath.value = node.value
 				await renderReport(node.value)
 			}
 		}
@@ -65,7 +72,6 @@ export default defineComponent({
 			try {
 				// 可以在这里传递报表需要的参数
 				const params = {
-					// 示例参数，可根据实际需要修改
 					reportName: reportPath
 				}
 
@@ -78,6 +84,23 @@ export default defineComponent({
 			}
 		}
 
+		// 导出报表为XLSX格式
+		const exportReport = async () => {
+			try {
+				const params = {
+					reportName: selectedReportPath.value,
+					renderType: 'xlsx'
+				}
+
+				reportApi.download(params).then((res) => {
+					downloadUtil.resultDownload(res)
+				})
+			} catch (err) {
+				console.error('导出报表失败:', err)
+				alert('导出报表失败')
+			}
+		}
+
 		onMounted(() => {
 			loadReportList()
 		})
@@ -86,7 +109,9 @@ export default defineComponent({
 			reportTreeData,
 			reportHtml,
 			selectedReportName,
-			onSelectReport
+			selectedReportPath,
+			onSelectReport,
+			exportReport
 		}
 	}
 })

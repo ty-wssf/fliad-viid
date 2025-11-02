@@ -1,15 +1,22 @@
 package com.fliad.report.controller;
 
 import com.fliad.common.pojo.CommonResult;
+import com.fliad.common.util.CommonDownloadUtil;
 import io.nop.api.core.annotations.biz.BizQuery;
 import io.nop.api.core.annotations.core.Name;
 import io.nop.api.core.annotations.core.Optional;
 import io.nop.api.core.beans.TreeResultBean;
+import io.nop.api.core.beans.WebContentBean;
+import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.Guard;
+import io.nop.commons.concurrent.executor.GlobalExecutors;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.resource.IResource;
+import io.nop.core.resource.ResourceConstants;
+import io.nop.core.resource.ResourceHelper;
 import io.nop.core.resource.VirtualFileSystem;
+import io.nop.core.resource.tpl.ITemplateOutput;
 import io.nop.core.resource.tpl.ITextTemplateOutput;
 import io.nop.report.core.engine.IReportEngine;
 import io.nop.xlang.api.XLang;
@@ -17,10 +24,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.*;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.DownloadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 报表控制器，提供生成报表的REST API接口
@@ -90,6 +101,38 @@ public class ReportController {
         String text = output.generateText(scope);
 
         return CommonResult.data(text);
+    }
+
+    @ApiOperation("download")
+    @Post
+    @Mapping("/download")
+    public void download(String reportName, String renderType, Context ctx) {
+        Guard.checkArgument(StringHelper.isValidVPath(reportName));
+        Guard.notEmpty(renderType, "renderType");
+
+        String path = REPORT_DEMO_PATH + reportName;
+
+        ITemplateOutput output = reportEngine.getRenderer(path, renderType);
+        IEvalScope scope = XLang.newEvalScope();
+
+
+        String tempPath = StringHelper.appendPath("demo", reportName.replace(".xpt.xlsx", ""));
+        IResource resource = VirtualFileSystem.instance().getResource(ResourceConstants.RESOURCE_NS_TEMP + ":/" + tempPath + "." + renderType);
+        try {
+            output.generateToResource(resource, scope);
+
+            GlobalExecutors.globalTimer().schedule(() -> {
+                resource.delete();
+                return null;
+            }, 5, TimeUnit.MINUTES);
+
+            // return new DownloadedFile(resource.toFile(), resource.toFile().getName() + "." + renderType);
+            // ctx.outputAsFile(resource.toFile());
+            CommonDownloadUtil.download(resource.toFile(), ctx);
+        } catch (Exception e) {
+            resource.delete();
+            throw NopException.adapt(e);
+        }
     }
 
 }
