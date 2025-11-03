@@ -1,9 +1,20 @@
 package com.fliad.hikvision.modular.defense.acl.alarm.handler;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import com.fliad.hikvision.modular.defense.acl.NetSDK.HCNetSDK;
+import com.fliad.hikvision.modular.defense.acl.alarm.HikvisionAlarmManager;
+import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
 import com.sun.jna.Pointer;
+import org.noear.snack.ONode;
+import org.noear.snack.core.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 /**
  * TPS实时过车数据处理器
@@ -11,6 +22,12 @@ import org.slf4j.LoggerFactory;
  */
 public class TpsRealTimeAlarmHandler implements AlarmHandler {
     private static final Logger log = LoggerFactory.getLogger(TpsRealTimeAlarmHandler.class);
+
+    private final HikvisionAlarmManager alarmManager;
+
+    public TpsRealTimeAlarmHandler(HikvisionAlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
+    }
 
     @Override
     public void handle(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
@@ -72,6 +89,50 @@ public class TpsRealTimeAlarmHandler implements AlarmHandler {
                         "从上到下车流量: {}，从下到上车流量: {}，车头间距: {}米，车头时距: {}秒",
                 sbip, channel, detectTime, lane, speed, laneStateStr, downwardFlow, upwardFlow, spaceHeadway, timeHeadway);
 
+        // 构建排除byRes1字段的NET_DVR_TPS_PARAM结构体JSON
+        // 使用snack框架序列化数据
+        Options options = Options.def();
+        options.addEncoder(Date.class, (data, node) -> {
+            node.val().setString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data));
+        });
+
+        // TPS参数详细信息
+        java.util.Map<String, Object> tpsParamDetail = new java.util.HashMap<>();
+        tpsParamDetail.put("byStart", tpsParam.byStart);
+        tpsParamDetail.put("byCMD", tpsParam.byCMD);
+        tpsParamDetail.put("wSpaceHeadway", tpsParam.wSpaceHeadway);
+        tpsParamDetail.put("wDeviceID", tpsParam.wDeviceID);
+        tpsParamDetail.put("wDataLen", tpsParam.wDataLen);
+        tpsParamDetail.put("byLane", tpsParam.byLane);
+        tpsParamDetail.put("bySpeed", tpsParam.bySpeed);
+        tpsParamDetail.put("byLaneState", tpsParam.byLaneState);
+        tpsParamDetail.put("byQueueLen", tpsParam.byQueueLen);
+        tpsParamDetail.put("wLoopState", tpsParam.wLoopState);
+        tpsParamDetail.put("wStateMask", tpsParam.wStateMask);
+        tpsParamDetail.put("dwDownwardFlow", tpsParam.dwDownwardFlow);
+        tpsParamDetail.put("dwUpwardFlow", tpsParam.dwUpwardFlow);
+        tpsParamDetail.put("byJamLevel", tpsParam.byJamLevel);
+        tpsParamDetail.put("byVehicleDirection", tpsParam.byVehicleDirection);
+        tpsParamDetail.put("byJamFlow", tpsParam.byJamFlow);
+        tpsParamDetail.put("byChannelizationLane", tpsParam.byChannelizationLane);
+        tpsParamDetail.put("byVehicleType", tpsParam.byVehicleType);
+        tpsParamDetail.put("wTimeHeadway", tpsParam.wTimeHeadway);
+        tpsParamDetail.put("sbxh", alarmManager.getDeviceByIp(sbip).getDeviceNumber());
+        tpsParamDetail.put("detectTime", "detectTime");
+
+        log.info("TPS实时过车数据：{}",  ONode.stringify(tpsParamDetail, options));
+        // 将数据交给流程处理
+        try {
+            List<ResourceWorkflow> workflowList = alarmManager.getViidWorkflowService().findBySubscribeDetail("105");
+            for (ResourceWorkflow workflow : workflowList) {
+                TaskRunInput taskRunInput = new TaskRunInput();
+                taskRunInput.setSchema(workflow.getContent());
+                taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(tpsParamDetail, options)));
+                alarmManager.getFlowgramService().taskRun(false, taskRunInput, IdUtil.getSnowflakeNextIdStr());
+            }
+        } catch (Exception e) {
+            log.error("处理TPS实时过车数据流程时发生异常", e);
+        }
         // TODO: 这里应该将数据保存到数据库或发送到其他系统
         // 例如：tpsRealTimeInfoService.save(tpsRealTimeInfo);
     }

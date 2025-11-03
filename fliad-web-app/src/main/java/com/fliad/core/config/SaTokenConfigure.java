@@ -93,6 +93,8 @@ public class SaTokenConfigure {
             "/api/task/**",
             "/**/*.jpg",
             "/report/**",
+            "/report/**",
+            "/resource/workflow/detail"
     };
 
     /**

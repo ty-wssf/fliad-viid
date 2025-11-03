@@ -7367,7 +7367,7 @@ DVR实现巡航数据结构
     public static class NET_DVR_TPS_LANE_PARAM extends HIKSDKStructure {
         public byte byLane;             // 对应车道号
         public byte bySpeed;             // 车道过车平均速度
-        public byte[] byRes = new byte[2];             // 保留
+        public byte wArrivalFlow;       // 到达流量
         public int dwLightVehicle;      // 小型车数量
         public int dwMidVehicle;        // 中型车数量
         public int dwHeavyVehicle;      // 重型车数量
@@ -7375,7 +7375,13 @@ DVR实现巡航数据结构
         public int dwSpaceHeadway;     // 车头间距，以米来计算
         public float fSpaceOccupyRation; // 空间占有率，百分比计算,浮点数*1000
         public float fTimeOccupyRation;  // 时间占有率，百分比计算,浮点数*1000
+        public byte byStoppingTimes;     // 平级停车次数
+        public byte byQueueLen;          // 堵塞状态下排队长度（比如50米）
+        public byte byFlag;              // 上传标识：0-表示T1时间的统计结果，1-表示T2时间的统计
+        public byte byVehicelNum;        // 区域车辆数
+        public short wDelay;              // 平均延误
         public byte[] byRes1 = new byte[16];               // 保留
+        public int dwNonMotor;          // 非机动车数量
     }
 
     //TPS实时过车数据上传

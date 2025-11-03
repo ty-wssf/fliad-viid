@@ -1,14 +1,22 @@
 package com.fliad.hikvision.modular.defense.acl.alarm.handler;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import com.fliad.hikvision.modular.defense.acl.NetSDK.HCNetSDK;
+import com.fliad.hikvision.modular.defense.acl.alarm.HikvisionAlarmManager;
 import com.fliad.hikvision.modular.defense.acl.domain.TrafficFlowInfo;
+import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
 import com.sun.jna.Pointer;
+import org.noear.snack.ONode;
+import org.noear.snack.core.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,6 +25,12 @@ import java.util.UUID;
  */
 public class TpsStatisticsAlarmHandler implements AlarmHandler {
     private static final Logger log = LoggerFactory.getLogger(TpsStatisticsAlarmHandler.class);
+
+    private final HikvisionAlarmManager alarmManager;
+
+    public TpsStatisticsAlarmHandler(HikvisionAlarmManager alarmManager) {
+        this.alarmManager = alarmManager;
+    }
 
     @Override
     public void handle(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
@@ -60,7 +74,7 @@ public class TpsStatisticsAlarmHandler implements AlarmHandler {
             // 创建交通流量信息对象
             TrafficFlowInfo trafficFlowInfo = new TrafficFlowInfo();
             trafficFlowInfo.setLsh(UUID.randomUUID().toString().replace("-", ""));
-            trafficFlowInfo.setSbbh(sbip);
+            trafficFlowInfo.setSbbh(alarmManager.getDeviceByIp(sbip).getDeviceNumber());
             trafficFlowInfo.setCdh(laneParam.byLane); // 车道号
             
             // 设置统计时间
@@ -111,7 +125,7 @@ public class TpsStatisticsAlarmHandler implements AlarmHandler {
             trafficFlowInfo.setDscl(0);
             
             // 设置平均排队长度
-            // trafficFlowInfo.setPjpdcd((double) laneParam.byQueueLen);
+            trafficFlowInfo.setPjpdcd(laneParam.byQueueLen);
             
             // 设置时间
             trafficFlowInfo.setJrsj(new Date());
@@ -122,7 +136,20 @@ public class TpsStatisticsAlarmHandler implements AlarmHandler {
                     laneParam.byLane, laneParam.bySpeed, lightVehicle, midVehicle, heavyVehicle, 
                     laneParam.dwTimeHeadway, laneParam.dwSpaceHeadway, 
                     laneParam.fSpaceOccupyRation / 1000.0f, laneParam.fTimeOccupyRation / 1000.0f);
-            
+
+            // 配置ONode日期格式
+            Options options = Options.def();
+            options.addEncoder(Date.class, (data, node) -> {
+                node.val().setString(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(data));
+            });
+            log.info("车道统计数据：{}", ONode.stringify(trafficFlowInfo, options));
+            List<ResourceWorkflow> workflowList = alarmManager.getViidWorkflowService().findBySubscribeDetail("104");
+            for (ResourceWorkflow workflow : workflowList) {
+                TaskRunInput taskRunInput = new TaskRunInput();
+                taskRunInput.setSchema(workflow.getContent());
+                taskRunInput.setInputs(MapUtil.of("inputs", ONode.stringify(trafficFlowInfo, options)));
+                alarmManager.getFlowgramService().taskRun(false, taskRunInput, IdUtil.getSnowflakeNextIdStr());
+            }
             // TODO: 这里应该将 trafficFlowInfo 对象保存到数据库或发送到其他系统
             // 例如：trafficFlowInfoService.save(trafficFlowInfo);
         }

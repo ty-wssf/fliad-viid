@@ -113,6 +113,8 @@
 							</a-popconfirm>
 							<a-divider type="vertical" />
 							<a @click="installTemplate(record)">安装</a>
+							<a-divider type="vertical" />
+							<a @click="designWorkflowRef.onOpen(record)">设计工作流</a>
 						</template>
 					</template>
 				</s-table>
@@ -193,7 +195,7 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '220px'
+			width: '320px'
 		}
 	]
 

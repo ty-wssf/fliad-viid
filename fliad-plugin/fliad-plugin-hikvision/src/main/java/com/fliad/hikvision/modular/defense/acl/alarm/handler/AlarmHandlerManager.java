@@ -38,8 +38,8 @@ public class AlarmHandlerManager {
         handlers.put(HCNetSDK.COMM_UPLOAD_AIOP_PICTURE, new AiopPictureUploadHandler());
         handlers.put(HCNetSDK.COMM_FIREDETECTION_ALARM, new FireDetectionAlarmHandler());
         handlers.put(HCNetSDK.COMM_ALARMHOST_DATA_UPLOAD, new AlarmHostDataUploadHandler(alarmManager));
-        handlers.put(HCNetSDK.COMM_ALARM_TPS_STATISTICS, new TpsStatisticsAlarmHandler());
-        handlers.put(HCNetSDK.COMM_ALARM_TPS_REAL_TIME, new TpsRealTimeAlarmHandler());
+        handlers.put(HCNetSDK.COMM_ALARM_TPS_STATISTICS, new TpsStatisticsAlarmHandler(alarmManager));
+        handlers.put(HCNetSDK.COMM_ALARM_TPS_REAL_TIME, new TpsRealTimeAlarmHandler(alarmManager));
     }
 
     public void handleAlarm(int lCommand, HCNetSDK.NET_DVR_ALARMER pAlarmer, Pointer pAlarmInfo, int dwBufLen, Pointer pUser) {
