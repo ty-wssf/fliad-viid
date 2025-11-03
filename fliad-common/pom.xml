@@ -117,5 +117,11 @@
             <artifactId>solon-test-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-nop-api-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

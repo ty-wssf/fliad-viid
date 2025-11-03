@@ -33,6 +33,7 @@ import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
 import com.fliad.hikvision.modular.defense.service.HikvisionCameraService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 海康设备Service接口实现类
@@ -97,5 +98,30 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
             throw new CommonException("海康设备不存在，id值为：{}", id);
         }
         return viidHikvisionCamera;
+    }
+
+    @Tran
+    @Override
+    public void importDevices(List<Map<String, Object>> devices) {
+        for (Map<String, Object> deviceMap : devices) {
+            HikvisionCamera hikvisionCamera = new HikvisionCamera();
+            hikvisionCamera.setDeviceId((String) deviceMap.get("deviceId"));
+            hikvisionCamera.setName((String) deviceMap.get("name"));
+            hikvisionCamera.setIpAddr((String) deviceMap.get("ipAddr"));
+            
+            // 处理端口
+            hikvisionCamera.setPort((Integer) deviceMap.get("port"));
+
+            hikvisionCamera.setUsername((String) deviceMap.get("username"));
+            hikvisionCamera.setPassword((String) deviceMap.get("password"));
+            
+            // 处理启用状态
+            hikvisionCamera.setEnableStatus((Integer) deviceMap.get("enableStatus"));
+
+            // 处理在线状态
+            hikvisionCamera.setOnlineStatus(0);
+
+            this.save(hikvisionCamera);
+        }
     }
 }

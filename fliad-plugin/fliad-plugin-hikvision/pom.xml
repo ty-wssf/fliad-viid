@@ -48,6 +48,12 @@
             <groupId>org.noear</groupId>
             <artifactId>solon-aot</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-nop-ooxml-xlsx</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

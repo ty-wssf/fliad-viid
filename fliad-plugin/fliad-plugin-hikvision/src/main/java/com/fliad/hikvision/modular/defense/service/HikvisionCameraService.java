@@ -21,6 +21,7 @@ import com.fliad.hikvision.modular.defense.param.HikvisionCameraIdParam;
 import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 海康设备Service接口
@@ -77,4 +78,12 @@ public interface HikvisionCameraService extends IService<HikvisionCamera> {
      * @date 2025/09/27
      */
     HikvisionCamera queryEntity(String id);
+
+    /**
+     * 导入海康设备
+     *
+     * @author wyl
+     * @date 2025/09/27
+     */
+    void importDevices(List<Map<String, Object>> devices);
 }

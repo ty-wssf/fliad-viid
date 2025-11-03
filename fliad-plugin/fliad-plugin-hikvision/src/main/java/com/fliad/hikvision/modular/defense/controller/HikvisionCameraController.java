@@ -1,10 +1,16 @@
 package com.fliad.hikvision.modular.defense.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.hutool.core.io.IoUtil;
 import com.mybatisflex.core.paginate.Page;
+import io.nop.api.core.beans.ApiResponse;
+import io.nop.core.model.object.DynamicObject;
+import io.nop.core.resource.IResource;
+import io.nop.ooxml.xlsx.imp.XlsxObjectLoader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.noear.solon.annotation.*;
+import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Valid;
 import com.fliad.common.annotation.CommonLog;
@@ -16,6 +22,10 @@ import com.fliad.hikvision.modular.defense.param.HikvisionCameraEditParam;
 import com.fliad.hikvision.modular.defense.param.HikvisionCameraIdParam;
 import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
 import com.fliad.hikvision.modular.defense.service.HikvisionCameraService;
+
+import java.io.InputStream;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 海康布防控制器
@@ -89,7 +99,7 @@ public class HikvisionCameraController {
     @Post
     @Mapping("/hikvision/defense/delete")
     public CommonResult<String> delete(@NotEmpty(message = "集合不能为空")
-                                                   CommonValidList<HikvisionCameraIdParam> hikvisionCameraIdParamList) {
+                                       CommonValidList<HikvisionCameraIdParam> hikvisionCameraIdParamList) {
         hikvisionCameraService.delete(hikvisionCameraIdParamList);
         return CommonResult.ok();
     }
@@ -107,4 +117,42 @@ public class HikvisionCameraController {
     public CommonResult<HikvisionCamera> detail(HikvisionCameraIdParam hikvisionCameraIdParam) {
         return CommonResult.data(hikvisionCameraService.detail(hikvisionCameraIdParam));
     }
+
+    /**
+     * 导入海康设备
+     *
+     * @author wyl
+     * @date 2025/09/27
+     */
+    @ApiOperation("导入海康设备")
+    @CommonLog("导入海康设备")
+    // @SaCheckPermission("/hikvision/defense/import")
+    @Post
+    @Mapping("/import")
+    public CommonResult<String> importDevices(UploadedFile file) {
+        // 1. 检查上传文件
+        if (file == null || file.getContent() == null) {
+            return CommonResult.error("上传文件不能为空");
+        }
+
+        // 2. 将上传的文件转换为临时资源
+        String fileName = file.getName();
+        InputStream inputStream = file.getContent();
+        IResource resource = new io.nop.core.resource.impl.ByteArrayResource("/" + fileName, IoUtil.readBytes(inputStream), -1);
+
+        // 3. 使用XlsxObjectLoader解析Excel
+        String impPath = "/nop/excel/imp/hikvision.imp.xml";
+        XlsxObjectLoader loader = new XlsxObjectLoader(impPath);
+        Object result = loader.parseFromResource(resource);
+
+        // 4. 获取解析后的设备列表
+        DynamicObject obj = (DynamicObject) result;
+        List<DynamicObject> devices = (List<DynamicObject>) obj.prop_get("devices");
+
+        // 5. 批量保存到数据库
+        hikvisionCameraService.importDevices(devices.stream().map(DynamicObject::obj_propValues).collect(Collectors.toList()));
+
+        return CommonResult.ok("导入成功,共导入" + devices.size() + "条设备");
+    }
+
 }
