@@ -7,12 +7,15 @@ import com.mybatisflex.core.paginate.Page;
 import io.nop.api.core.beans.ApiResponse;
 import io.nop.core.model.object.DynamicObject;
 import io.nop.core.resource.IResource;
+import io.nop.core.resource.ResourceConstants;
+import io.nop.core.resource.VirtualFileSystem;
 import io.nop.excel.imp.ImportModelHelper;
 import io.nop.excel.imp.model.ImportModel;
 import io.nop.excel.model.ExcelWorkbook;
 import io.nop.ooxml.xlsx.imp.ImportModelToExportModel;
 import io.nop.ooxml.xlsx.imp.XlsxObjectLoader;
 import io.nop.ooxml.xlsx.output.ExcelTemplate;
+import io.nop.xlang.api.XLang;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.noear.solon.annotation.*;
@@ -30,6 +33,7 @@ import com.fliad.hikvision.modular.defense.param.HikvisionCameraIdParam;
 import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
 import com.fliad.hikvision.modular.defense.service.HikvisionCameraService;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -133,9 +137,9 @@ public class HikvisionCameraController {
      */
     @ApiOperation("导入海康设备")
     @CommonLog("导入海康设备")
-    // @SaCheckPermission("/hikvision/defense/import")
+    @SaCheckPermission("/hikvision/defense/add")
     @Post
-    @Mapping("/import")
+    @Mapping("/hikvision/defense/import")
     public CommonResult<String> importDevices(UploadedFile file) {
         // 1. 检查上传文件
         if (file == null || file.getContent() == null) {
@@ -159,14 +163,16 @@ public class HikvisionCameraController {
         // 5. 批量保存到数据库
         hikvisionCameraService.importDevices(devices.stream().map(DynamicObject::obj_propValues).collect(Collectors.toList()));
 
-        return CommonResult.ok("导入成功,共导入" + devices.size() + "条设备");
+        // return CommonResult.ok("导入成功,共导入" + devices.size() + "条设备");
+        return CommonResult.ok();
     }
 
-    @Get
-    @Mapping("/export-template")
-    public void exportTemplate(Context context) throws Exception {
+    @ApiOperation("导出海康设备模板")
+    @Post
+    @Mapping("/hikvision/defense/export-template")
+    public void exportTemplate(Context context) {
         // 1. 加载导入模型
-        String impPath = "/nop/hikvision/imp/hikvision-device.imp.xml";
+        String impPath = "/nop/excel/imp/hikvision.imp.xml";
         ImportModel importModel = ImportModelHelper.getImportModel(impPath);
 
         // 2. 转换为Excel模板
@@ -175,15 +181,10 @@ public class HikvisionCameraController {
 
         // 3. 生成Excel文件
         ExcelTemplate template = new ExcelTemplate(workbook);
+        byte[] bytes = template.generateBytes(XLang.newEvalScope());
 
-        // 4. 设置响应头
-        /*response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition", "attachment; filename=hikvision-device-template.xlsx");
-
-        context.re*/
-        // 5. 输出到响应流
-        // template.generateToStream(context.getOutputStream(), XLang.newEvalScope());
-        CommonDownloadUtil.download("hikvision-device-template.xlsx", new byte[]{}, context);
+        // 4. 输出到响应流
+        CommonDownloadUtil.download("海康设备模板.xlsx", bytes, context);
     }
 
 }

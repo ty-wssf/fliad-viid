@@ -24,5 +24,13 @@ export default {
 	// 获取海康布防详情
 	hikvisionDefenseDetail(data) {
 		return request('detail', data, 'get')
+	},
+	// 导出海康设备模板
+	hikvisionDefenseExportTemplate() {
+		return request('export-template', {}, 'post', { responseType: 'blob' })
+	},
+	// 导入海康设备
+	hikvisionDefenseImport(data) {
+		return request('import', data)
 	}
 }

@@ -38,7 +38,7 @@ public class GlobalErrorFilter implements Filter {
             log.error(">>> 状态类异常，请求地址：{}，具体信息：", CommonServletUtil.getRequest().url(), e);
             ctx.render(CommonResult.error(e.getMessage()));
         } catch (Throwable e) {
-            log.error("", e);
+            log.error("未知异常", e);
             if (e instanceof Exception) {
                 CommonResult<String> rst = GlobalExceptionUtil.getCommonResult((Exception) e);
                 ctx.render(rst);

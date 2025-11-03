@@ -68,6 +68,13 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
     @Tran
     @Override
     public void add(HikvisionCameraAddParam viidHikvisionCameraAddParam) {
+        // 检查deviceId唯一性
+        checkDeviceIdUnique(viidHikvisionCameraAddParam.getDeviceId(), null);
+        // 检查设备名称唯一性
+        checkDeviceNameUnique(viidHikvisionCameraAddParam.getName(), null);
+        // 检查设备IP地址唯一性
+        checkDeviceIpAddrUnique(viidHikvisionCameraAddParam.getIpAddr(), null);
+        
         HikvisionCamera viidHikvisionCamera = BeanUtil.toBean(viidHikvisionCameraAddParam, HikvisionCamera.class);
         this.save(viidHikvisionCamera);
     }
@@ -75,6 +82,13 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
     @Tran
     @Override
     public void edit(HikvisionCameraEditParam viidHikvisionCameraEditParam) {
+        // 检查deviceId唯一性
+        checkDeviceIdUnique(viidHikvisionCameraEditParam.getDeviceId(), viidHikvisionCameraEditParam.getId());
+        // 检查设备名称唯一性
+        checkDeviceNameUnique(viidHikvisionCameraEditParam.getName(), viidHikvisionCameraEditParam.getId());
+        // 检查设备IP地址唯一性
+        checkDeviceIpAddrUnique(viidHikvisionCameraEditParam.getIpAddr(), viidHikvisionCameraEditParam.getId());
+        
         HikvisionCamera viidHikvisionCamera = this.queryEntity(viidHikvisionCameraEditParam.getId());
         BeanUtil.copyProperties(viidHikvisionCameraEditParam, viidHikvisionCamera);
         this.updateById(viidHikvisionCamera);
@@ -104,10 +118,22 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
         for (Map<String, Object> deviceMap : devices) {
+            // 检查deviceId唯一性
+            String deviceId = (String) deviceMap.get("deviceId");
+            checkDeviceIdUnique(deviceId, null);
+            
+            // 检查设备名称唯一性
+            String name = (String) deviceMap.get("name");
+            checkDeviceNameUnique(name, null);
+            
+            // 检查设备IP地址唯一性
+            String ipAddr = (String) deviceMap.get("ipAddr");
+            checkDeviceIpAddrUnique(ipAddr, null);
+            
             HikvisionCamera hikvisionCamera = new HikvisionCamera();
-            hikvisionCamera.setDeviceId((String) deviceMap.get("deviceId"));
-            hikvisionCamera.setName((String) deviceMap.get("name"));
-            hikvisionCamera.setIpAddr((String) deviceMap.get("ipAddr"));
+            hikvisionCamera.setDeviceId(deviceId);
+            hikvisionCamera.setName(name);
+            hikvisionCamera.setIpAddr(ipAddr);
             
             // 处理端口
             hikvisionCamera.setPort((Integer) deviceMap.get("port"));
@@ -122,6 +148,72 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
             hikvisionCamera.setOnlineStatus(0);
 
             this.save(hikvisionCamera);
+        }
+    }
+    
+    /**
+     * 检查设备ID唯一性
+     *
+     * @param deviceId 设备ID
+     * @param excludeId 排除的ID（编辑时使用）
+     */
+    private void checkDeviceIdUnique(String deviceId, String excludeId) {
+        if (StrUtil.isBlank(deviceId)) {
+            return;
+        }
+        
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("DEVICE_ID", deviceId);
+        if (StrUtil.isNotBlank(excludeId)) {
+            queryWrapper.ne("ID", excludeId);
+        }
+        
+        if (this.exists(queryWrapper)) {
+            throw new CommonException("设备编号 {} 已存在", deviceId);
+        }
+    }
+    
+    /**
+     * 检查设备名称唯一性
+     *
+     * @param name 设备名称
+     * @param excludeId 排除的ID（编辑时使用）
+     */
+    private void checkDeviceNameUnique(String name, String excludeId) {
+        if (StrUtil.isBlank(name)) {
+            return;
+        }
+        
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("NAME", name);
+        if (StrUtil.isNotBlank(excludeId)) {
+            queryWrapper.ne("ID", excludeId);
+        }
+        
+        if (this.exists(queryWrapper)) {
+            throw new CommonException("设备名称 {} 已存在", name);
+        }
+    }
+    
+    /**
+     * 检查设备IP地址唯一性
+     *
+     * @param ipAddr 设备IP地址
+     * @param excludeId 排除的ID（编辑时使用）
+     */
+    private void checkDeviceIpAddrUnique(String ipAddr, String excludeId) {
+        if (StrUtil.isBlank(ipAddr)) {
+            return;
+        }
+        
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("IP_ADDR", ipAddr);
+        if (StrUtil.isNotBlank(excludeId)) {
+            queryWrapper.ne("ID", excludeId);
+        }
+        
+        if (this.exists(queryWrapper)) {
+            throw new CommonException("设备IP地址 {} 已存在", ipAddr);
         }
     }
 }

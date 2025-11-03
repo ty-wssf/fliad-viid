@@ -39,6 +39,14 @@
 						<template #icon><plus-outlined /></template>
 						新增
 					</a-button>
+					<a-button type="primary" @click="exportTemplate">
+						<template #icon><download-outlined /></template>
+						导出模板
+					</a-button>
+					<a-button type="primary" @click="showImportModal">
+						<template #icon><upload-outlined /></template>
+						导入
+					</a-button>
 					<xn-batch-button
 						v-if="hasPerm('hikvisionDefenseBatchDelete')"
 						buttonName="批量删除"
@@ -70,12 +78,37 @@
 		</s-table>
 	</a-card>
 	<Form ref="formRef" @successful="table.refresh(true)" />
+
+	<!-- 导入模态框 -->
+	<a-modal v-model:open="importModalVisible" title="导入海康设备" @ok="handleImport" :confirm-loading="importLoading" :after-close="resetImportForm">
+		<a-form :model="importFormState" ref="importFormRef">
+			<a-form-item label="选择文件" :rules="[{ required: true, message: '请选择要导入的文件' }]">
+				<a-upload-dragger name="file" :multiple="false" :max-count="1" :before-upload="beforeUpload" v-model:file-list="importFormState.fileList">
+					<p class="ant-upload-drag-icon">
+						<inbox-outlined />
+					</p>
+					<p class="ant-upload-text">点击或拖拽文件到此区域上传</p>
+					<p class="ant-upload-hint">仅支持.xlsx格式文件</p>
+				</a-upload-dragger>
+			</a-form-item>
+		</a-form>
+		<div style="margin-top: 10px">
+			<a-alert message="导入前请先下载模板文件，按照模板格式填写数据" type="info" show-icon>
+				<template #action>
+					<a-button size="small" type="primary" @click="exportTemplate">下载模板</a-button>
+				</template>
+			</a-alert>
+		</div>
+	</a-modal>
 </template>
 
 <script setup name="hikvisionDefense">
 	import { message } from 'ant-design-vue'
+	import { ref, reactive } from 'vue'
+	import { InboxOutlined } from '@ant-design/icons-vue'
 	import Form from './form.vue'
 	import hikvisionDefenseApi from '@/api/hikvision/hikvisionDefenseApi'
+	import downloadUtil from '@/utils/downloadUtil'
 	let searchFormState = reactive({})
 	const searchFormRef = ref()
 	const table = ref()
@@ -166,5 +199,70 @@
 			table.value.refresh(true)
 			message.success('删除成功')
 		})
+	}
+
+	// 导出模板
+	const exportTemplate = () => {
+		hikvisionDefenseApi.hikvisionDefenseExportTemplate().then(res => {
+			downloadUtil.resultDownload(res)
+		}).catch(error => {
+			message.error('导出模板失败: ' + error)
+		})
+	}
+
+	// 导入相关
+	const importModalVisible = ref(false)
+	const importLoading = ref(false)
+	const importFormRef = ref()
+	const importFormState = reactive({
+		fileList: []
+	})
+
+	// 显示导入模态框
+	const showImportModal = () => {
+		importModalVisible.value = true
+	}
+
+	// 上传前处理
+	const beforeUpload = (file) => {
+		const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+					   file.type === 'application/vnd.ms-excel' ||
+					   file.name.endsWith('.xlsx');
+		if (!isExcel) {
+			message.error('只能上传.xlsx格式的文件');
+			return false;
+		}
+		// 返回 false 阻止组件自动上传，我们会在 handleImport 中手动处理
+		return false;
+	}
+
+	// 处理导入
+	const handleImport = async () => {
+		try {
+			const file = importFormState.fileList[0]?.originFileObj;
+			if (!file) {
+				message.error('请选择要导入的文件');
+				return;
+			}
+
+			importLoading.value = true;
+
+			// 创建 FormData 对象
+			const formData = new FormData();
+			formData.append('file', file);
+
+			// 调用导入接口
+			hikvisionDefenseApi.hikvisionDefenseImport(formData);
+		} catch (error) {
+			// message.error('导入失败: ' + (error.message || error));
+		} finally {
+			importLoading.value = false;
+			importModalVisible.value = false
+		}
+	}
+
+	// 重置导入表单
+	const resetImportForm = () => {
+		importFormState.fileList = [];
 	}
 </script>

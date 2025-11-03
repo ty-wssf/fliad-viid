@@ -17,7 +17,7 @@
                 </field>
 
                 <field name="port" displayName="端口" mandatory="true">
-                    <schema stdDomain="int" min="80" max="65535"/>
+                    <schema stdDomain="int"/>
                 </field>
 
                 <field name="username" displayName="用户名" mandatory="true">
@@ -29,23 +29,18 @@
                 </field>
 
                 <field name="enableStatus" displayName="启用状态" mandatory="true" importDictLabel="true">
-                    <schema stdDomain="int" dict="ENABLE_STATUS" min="0" max="1">
+                    <schema stdDomain="int" dict="hikvision/enableStatus">
                         <validator>
                             <c:script><![CDATA[
                                 import io.nop.api.core.exceptions.NopException;
                                 import io.nop.excel.ExcelErrors;
                                 import org.slf4j.LoggerFactory;
 
-                                const LOG = LoggerFactory.getLogger("hikvision.import.validator");
-                                LOG.info("开始验证enableStatus字段,当前值: {}", value);
-
                                 if(value != 0 && value != 1) {
                                     LOG.error("enableStatus验证失败,值为: {}", value);
                                     throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
                                         .param("errorDesc", "启用状态必须为0(禁用)或1(启用),当前输入值:" + value);
                                 }
-
-                                LOG.info("enableStatus验证通过");
                             ]]></c:script>
                         </validator>
                     </schema>
