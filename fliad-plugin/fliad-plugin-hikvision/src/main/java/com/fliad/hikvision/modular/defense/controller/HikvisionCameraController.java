@@ -2,14 +2,21 @@ package com.fliad.hikvision.modular.defense.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
+import com.fliad.common.util.CommonDownloadUtil;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.api.core.beans.ApiResponse;
 import io.nop.core.model.object.DynamicObject;
 import io.nop.core.resource.IResource;
+import io.nop.excel.imp.ImportModelHelper;
+import io.nop.excel.imp.model.ImportModel;
+import io.nop.excel.model.ExcelWorkbook;
+import io.nop.ooxml.xlsx.imp.ImportModelToExportModel;
 import io.nop.ooxml.xlsx.imp.XlsxObjectLoader;
+import io.nop.ooxml.xlsx.output.ExcelTemplate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.noear.solon.annotation.*;
+import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.validation.annotation.NotEmpty;
 import org.noear.solon.validation.annotation.Valid;
@@ -153,6 +160,30 @@ public class HikvisionCameraController {
         hikvisionCameraService.importDevices(devices.stream().map(DynamicObject::obj_propValues).collect(Collectors.toList()));
 
         return CommonResult.ok("导入成功,共导入" + devices.size() + "条设备");
+    }
+
+    @Get
+    @Mapping("/export-template")
+    public void exportTemplate(Context context) throws Exception {
+        // 1. 加载导入模型
+        String impPath = "/nop/hikvision/imp/hikvision-device.imp.xml";
+        ImportModel importModel = ImportModelHelper.getImportModel(impPath);
+
+        // 2. 转换为Excel模板
+        ImportModelToExportModel converter = new ImportModelToExportModel();
+        ExcelWorkbook workbook = converter.build(importModel);
+
+        // 3. 生成Excel文件
+        ExcelTemplate template = new ExcelTemplate(workbook);
+
+        // 4. 设置响应头
+        /*response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setHeader("Content-Disposition", "attachment; filename=hikvision-device-template.xlsx");
+
+        context.re*/
+        // 5. 输出到响应流
+        // template.generateToStream(context.getOutputStream(), XLang.newEvalScope());
+        CommonDownloadUtil.download("hikvision-device-template.xlsx", new byte[]{}, context);
     }
 
 }
