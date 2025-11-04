@@ -94,7 +94,8 @@ public class SaTokenConfigure {
             "/**/*.jpg",
             "/report/**",
             "/report/**",
-            "/resource/workflow/detail"
+            "/resource/workflow/detail",
+            "/hikvision/defense/listen"
     };
 
     /**

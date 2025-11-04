@@ -1,6 +1,6 @@
 -- 海康布防启用配置，默认不启用
 INSERT INTO dev_config
-VALUES ('1980000000000000011', 'hikvision_defense_enabled', 'false', 'BIZ_DEFINE', '海康布防启用配置', 100, null,
+VALUES ('1980000000000000011', 'hikvision_defense', '0', 'BIZ_DEFINE', '海康布防启用配置', 100, null,
         'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
 
 -- 海康布防模块

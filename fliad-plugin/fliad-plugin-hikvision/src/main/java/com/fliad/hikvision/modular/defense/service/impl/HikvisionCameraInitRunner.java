@@ -51,134 +51,121 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
     private final List<HikvisionCamera> failedDevices = new CopyOnWriteArrayList<>();
 
     // 海康布防功能是否启用
-    private boolean hikvisionDefenseEnabled = false;
-
-    /**
-     * 检查海康布防功能是否启用
-     */
-    private void checkHikvisionDefenseEnabled() {
-        try {
-            if (devConfigApi != null) {
-                String configValue = devConfigApi.getValueByKey("hikvision_defense_enabled");
-                hikvisionDefenseEnabled = "true".equalsIgnoreCase(configValue);
-                log.info("海康布防功能启用状态: {}", hikvisionDefenseEnabled);
-            } else {
-                log.warn("DevConfigApi未注入，使用默认配置");
-                hikvisionDefenseEnabled = false;
-            }
-        } catch (Exception e) {
-            log.error("检查海康布防功能启用状态异常", e);
-            hikvisionDefenseEnabled = false;
-        }
-    }
+    private String hikvision_defense = "0";
 
     /**
      * 系统启动完成后执行初始化
      */
     @Override
     public void start() throws Throwable {
-        // 检查海康布防功能是否启用
-        checkHikvisionDefenseEnabled();
+        // 0: 不启用 1： 监听  2： 布防
+        hikvision_defense = devConfigApi.getValueByKey("hikvision_defense");
 
-        if (!hikvisionDefenseEnabled) {
-            log.info("海康布防功能未启用，跳过设备初始化");
-            return;
-        }
-
-        Solon.context().subBeansOfType(CommonCacheOperator.class, cacheOperator -> {
-            this.deviceStateManager = new DeviceStateManager(cacheOperator);
-            // 注册海康威视设备类型
-            deviceStateManager.registerDeviceType(DEVICE_TYPE, "device:online:hikvision:");
-            deviceStateManager.setDeviceTimeoutMillis(DEVICE_TYPE, 90 * 1000L); // 90秒超时
-            deviceStateManager.addListener(this);
-            deviceStateManager.enableScheduledCheck(DEVICE_TYPE);
-            try {
-                deviceStateManager.start();
-            } catch (Throwable e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        // 初始化海康威视报警管理器
-        hikvisionAlarmManager.init(deviceStateManager);
-
-        log.info("开始初始化海康威视设备...");
-
-        try {
-            // 查询所有启用的设备
-            List<HikvisionCamera> enabledCameras = viidHikvisionCameraService.list(
-                    viidHikvisionCameraService.query().eq("enable_status", 1)
-            );
-
-            log.info("找到 {} 个启用的海康威视设备", enabledCameras.size());
-
-            // 遍历所有启用的设备，进行登录和布防
-            for (HikvisionCamera camera : enabledCameras) {
+        if ("2".equals(hikvision_defense)) {
+            log.info("海康设备开启布防模式");
+            Solon.context().subBeansOfType(CommonCacheOperator.class, cacheOperator -> {
+                this.deviceStateManager = new DeviceStateManager(cacheOperator);
+                // 注册海康威视设备类型
+                deviceStateManager.registerDeviceType(DEVICE_TYPE, "device:online:hikvision:");
+                deviceStateManager.setDeviceTimeoutMillis(DEVICE_TYPE, 90 * 1000L); // 90秒超时
+                deviceStateManager.addListener(this);
+                deviceStateManager.enableScheduledCheck(DEVICE_TYPE);
                 try {
-                    ThreadUtil.safeSleep(500);
-                    String deviceId = camera.getId();
-                    String deviceNumber = camera.getDeviceId(); // 设备编号
-                    String ip = camera.getIpAddr();
-                    int port = camera.getPort();
-                    String username = camera.getUsername();
-                    String password = camera.getPassword();
-
-                    log.info("开始初始化设备: {} (设备编号: {}, IP: {})", deviceId, deviceNumber, ip);
-
-                    // 添加设备到报警管理器
-                    boolean added = hikvisionAlarmManager.addDevice(deviceId, deviceNumber, ip, port, username, password);
-                    if (!added) {
-                        log.warn("设备 {} 添加失败", deviceId);
-                        failedDevices.add(camera);
-                        // 标记设备为离线状态
-                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
-                        continue;
-                    }
-
-                    // 登录设备
-                    boolean loggedIn = hikvisionAlarmManager.loginDevice(deviceId);
-                    if (!loggedIn) {
-                        log.warn("设备 {} 登录失败", deviceId);
-                        failedDevices.add(camera);
-                        // 标记设备为离线状态
-                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
-                        continue;
-                    }
-
-                    // 布防
-                    int alarmHandle = hikvisionAlarmManager.setupAlarmChan(deviceId);
-                    if (alarmHandle == -1) {
-                        log.warn("设备 {} 布防失败", deviceId);
-                        failedDevices.add(camera);
-                        // 标记设备为离线状态
-                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
-                        continue;
-                    }
-
-                    // 记录成功初始化的设备
-                    initializedDevices.add(deviceId);
-                    // 标记设备为在线状态
-                    deviceStateManager.handleOnlineEvent(DEVICE_TYPE, deviceId);
-
-                    log.info("设备 {} 初始化成功", deviceId);
-                } catch (Exception e) {
-                    log.error("初始化设备 {} 时发生异常", camera.getId(), e);
-                    failedDevices.add(camera);
-                    // 标记设备为离线状态
-                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
+                    deviceStateManager.start();
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
                 }
-            }
+            });
 
-            log.info("海康威视设备初始化完成，成功: {} 个，失败: {} 个", initializedDevices.size(), failedDevices.size());
+            // 初始化海康威视报警管理器
+            hikvisionAlarmManager.init(deviceStateManager);
 
-            // 处理布防失败的设备，进行无限重试
-            if (!failedDevices.isEmpty()) {
-                log.info("开始处理布防失败的设备，将进行无限重试直到成功");
-                new Thread(this::processFailedDevices).start();
+            log.info("开始初始化海康威视设备...");
+
+            try {
+                // 查询所有启用的设备
+                List<HikvisionCamera> enabledCameras = viidHikvisionCameraService.list(
+                        viidHikvisionCameraService.query().eq("enable_status", 1)
+                );
+
+                log.info("找到 {} 个启用的海康威视设备", enabledCameras.size());
+
+                // 遍历所有启用的设备，进行登录和布防
+                for (HikvisionCamera camera : enabledCameras) {
+                    try {
+                        ThreadUtil.safeSleep(500);
+                        String deviceId = camera.getId();
+                        String deviceNumber = camera.getDeviceId(); // 设备编号
+                        String ip = camera.getIpAddr();
+                        int port = camera.getPort();
+                        String username = camera.getUsername();
+                        String password = camera.getPassword();
+
+                        log.info("开始初始化设备: {} (设备编号: {}, IP: {})", deviceId, deviceNumber, ip);
+
+                        // 添加设备到报警管理器
+                        boolean added = hikvisionAlarmManager.addDevice(deviceId, deviceNumber, ip, port, username, password);
+                        if (!added) {
+                            log.warn("设备 {} 添加失败", deviceId);
+                            failedDevices.add(camera);
+                            // 标记设备为离线状态
+                            deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
+                            continue;
+                        }
+
+                        // 登录设备
+                        boolean loggedIn = hikvisionAlarmManager.loginDevice(deviceId);
+                        if (!loggedIn) {
+                            log.warn("设备 {} 登录失败", deviceId);
+                            failedDevices.add(camera);
+                            // 标记设备为离线状态
+                            deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
+                            continue;
+                        }
+
+                        // 布防
+                        int alarmHandle = hikvisionAlarmManager.setupAlarmChan(deviceId);
+                        if (alarmHandle == -1) {
+                            log.warn("设备 {} 布防失败", deviceId);
+                            failedDevices.add(camera);
+                            // 标记设备为离线状态
+                            deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
+                            continue;
+                        }
+
+                        // 记录成功初始化的设备
+                        initializedDevices.add(deviceId);
+                        // 标记设备为在线状态
+                        deviceStateManager.handleOnlineEvent(DEVICE_TYPE, deviceId);
+
+                        log.info("设备 {} 初始化成功", deviceId);
+                    } catch (Exception e) {
+                        log.error("初始化设备 {} 时发生异常", camera.getId(), e);
+                        failedDevices.add(camera);
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
+                    }
+                }
+
+                log.info("海康威视设备初始化完成，成功: {} 个，失败: {} 个", initializedDevices.size(), failedDevices.size());
+
+                // 处理布防失败的设备，进行无限重试
+                if (!failedDevices.isEmpty()) {
+                    log.info("开始处理布防失败的设备，将进行无限重试直到成功");
+                    new Thread(this::processFailedDevices).start();
+                }
+            } catch (Exception e) {
+                log.error("初始化海康威视设备时发生异常", e);
             }
-        } catch (Exception e) {
-            log.error("初始化海康威视设备时发生异常", e);
+        } else if ("1".equals(hikvision_defense)) {
+            log.info("海康设备开启监听模式");
+            // 初始化海康威视报警管理器
+            hikvisionAlarmManager.init(deviceStateManager);
+            hikvisionAlarmManager.startListen("0.0.0.0", (short) 7201);
+        } else {
+            log.info("海康布防功能未启用，跳过设备初始化");
         }
+
     }
 
     /**
@@ -276,48 +263,48 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
      */
     @Override
     public void stop() throws Throwable {
-        if (!hikvisionDefenseEnabled) {
-            log.info("海康布防功能未启用，跳过资源清理");
-            return;
-        }
 
         log.info("开始清理海康威视设备资源...");
-
-        try {
-            if (deviceStateManager != null) {
-                deviceStateManager.stop();
-            }
-
-            // 创建已初始化设备列表的副本以避免并发修改
-            List<String> devicesToClean = new ArrayList<>(initializedDevices);
-
-            // 逆序遍历已初始化的设备，进行撤防和注销
-            for (String deviceId : devicesToClean) {
-                try {
-                    log.info("开始清理设备: {}", deviceId);
-
-                    // 撤防
-                    hikvisionAlarmManager.closeAlarmChan(deviceId);
-                    log.info("设备 {} 撤防完成", deviceId);
-
-                    // 注销设备
-                    hikvisionAlarmManager.logoutDevice(deviceId);
-                    log.info("设备 {} 注销完成", deviceId);
-
-                    // 标记设备为离线状态
-                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
-                } catch (Exception e) {
-                    log.error("清理设备 {} 时发生异常", deviceId, e);
+        if ("2".equals(hikvision_defense)) {
+            try {
+                if (deviceStateManager != null) {
+                    deviceStateManager.stop();
                 }
+
+                // 创建已初始化设备列表的副本以避免并发修改
+                List<String> devicesToClean = new ArrayList<>(initializedDevices);
+
+                // 逆序遍历已初始化的设备，进行撤防和注销
+                for (String deviceId : devicesToClean) {
+                    try {
+                        log.info("开始清理设备: {}", deviceId);
+
+                        // 撤防
+                        hikvisionAlarmManager.closeAlarmChan(deviceId);
+                        log.info("设备 {} 撤防完成", deviceId);
+
+                        // 注销设备
+                        hikvisionAlarmManager.logoutDevice(deviceId);
+                        log.info("设备 {} 注销完成", deviceId);
+
+                        // 标记设备为离线状态
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
+                    } catch (Exception e) {
+                        log.error("清理设备 {} 时发生异常", deviceId, e);
+                    }
+                }
+
+                // 清空已初始化设备列表
+                initializedDevices.clear();
+                hikvisionAlarmManager.destroy();
+                log.info("海康威视设备资源清理完成");
+            } catch (Exception e) {
+                log.error("清理海康威视设备资源时发生异常", e);
             }
-
-            // 清空已初始化设备列表
-            initializedDevices.clear();
-
-            log.info("海康威视设备资源清理完成");
-        } catch (Exception e) {
-            log.error("清理海康威视设备资源时发生异常", e);
+        } else if ("1".equals(hikvision_defense)) {
+            hikvisionAlarmManager.destroy();
         }
+
     }
 
     @Override

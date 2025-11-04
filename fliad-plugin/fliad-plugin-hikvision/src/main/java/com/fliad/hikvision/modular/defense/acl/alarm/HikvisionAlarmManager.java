@@ -1,6 +1,7 @@
 package com.fliad.hikvision.modular.defense.acl.alarm;
 
 import com.fliad.common.state.DeviceStateManager;
+import com.fliad.dev.api.DevConfigApi;
 import com.fliad.resource.modular.flowgram.service.FlowgramService;
 import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.fliad.hikvision.modular.defense.acl.NetSDK.HCNetSDK;
@@ -8,6 +9,7 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,8 @@ public class HikvisionAlarmManager {
     FlowgramService flowgramService;
     ResourceWorkflowService viidWorkflowService;
     DeviceStateManager deviceStateManager;
+    @Inject
+    private DevConfigApi devConfigApi;
 
     /**
      * 初始化SDK
