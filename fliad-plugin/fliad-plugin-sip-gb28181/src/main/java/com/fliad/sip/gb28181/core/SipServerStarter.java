@@ -37,6 +37,10 @@ public class SipServerStarter implements LifecycleBean {
      */
     @Override
     public void start() throws Throwable {
+        if (!sipConfig.isEnabled()) {
+            log.warn("SIP GB28181 Server is disabled");
+            return;
+        }
         if (started) {
             log.warn("SIP GB28181 Server is already started");
             return;
