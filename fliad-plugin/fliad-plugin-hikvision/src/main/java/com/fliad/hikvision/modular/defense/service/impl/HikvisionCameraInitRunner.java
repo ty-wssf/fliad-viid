@@ -267,31 +267,16 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
         log.info("开始清理海康威视设备资源...");
         if ("2".equals(hikvision_defense)) {
             try {
-                if (deviceStateManager != null) {
-                    deviceStateManager.stop();
-                }
-
                 // 创建已初始化设备列表的副本以避免并发修改
                 List<String> devicesToClean = new ArrayList<>(initializedDevices);
 
                 // 逆序遍历已初始化的设备，进行撤防和注销
                 for (String deviceId : devicesToClean) {
-                    try {
-                        log.info("开始清理设备: {}", deviceId);
-
-                        // 撤防
-                        hikvisionAlarmManager.closeAlarmChan(deviceId);
-                        log.info("设备 {} 撤防完成", deviceId);
-
-                        // 注销设备
-                        hikvisionAlarmManager.logoutDevice(deviceId);
-                        log.info("设备 {} 注销完成", deviceId);
-
-                        // 标记设备为离线状态
-                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
-                    } catch (Exception e) {
-                        log.error("清理设备 {} 时发生异常", deviceId, e);
-                    }
+                    // 标记设备为离线状态
+                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, deviceId);
+                }
+                if (deviceStateManager != null) {
+                    deviceStateManager.stop();
                 }
 
                 // 清空已初始化设备列表
