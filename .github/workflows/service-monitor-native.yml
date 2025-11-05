@@ -1,0 +1,83 @@
+# This workflow builds the fliad-service-monitor as a native Windows executable
+# using GraalVM native-image tool
+
+name: Build Service Monitor Native Image
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "fliad-service-monitor/**"
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "fliad-service-monitor/**"
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      # Cache Maven dependencies
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - uses: actions/checkout@v3
+      
+      - name: GitHub Action for GraalVM JDK 25
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+          cache: maven
+          components: 'native-image'
+
+      # Build the project and create the fat jar
+      - name: Build with Maven
+        run: |
+          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
+          mvn clean install --file pom.xml --no-transfer-progress
+          
+      # Build native image
+      - name: Build Native Image
+        run: |
+          cd fliad-service-monitor
+          mvn native:compile -Pnative,non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
+
+      # Package the artifacts
+      - name: Package artifacts
+        run: |
+          mkdir package
+          cp ./fliad-service-monitor/target/fliad-service-monitor.exe ./package/fliad-service-monitor.exe
+          cp ./fliad-service-monitor/target/classes/app.yml ./package/app.yml
+
+      # Upload artifacts
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fliad-service-monitor-windows-native
+          path: package
+          if-no-files-found: error
+
+      # Create release archive on tag
+      - name: Compress target directory
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          Compress-Archive -Path "package/*" -DestinationPath "fliad-service-monitor-windows-native.zip" -Force
+
+      - name: Create Release and Attach Artifact
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            fliad-service-monitor-windows-native.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.SECRET_TOKEN }}

@@ -78,6 +78,9 @@
 
         <!-- 主启动模块 -->
         <module>fliad-web-app</module>
+
+        <!-- 服务监控模块 -->
+        <module>fliad-service-monitor</module>
     </modules>
 
     <dependencyManagement>

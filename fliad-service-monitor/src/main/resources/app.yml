@@ -1,0 +1,8 @@
+# 服务监控配置文件
+services:
+  - name: "example-service"
+    command: "java -jar example-service.jar"
+    port: 8080
+  - name: "another-service"
+    command: "node app.js"
+    port: 3000
