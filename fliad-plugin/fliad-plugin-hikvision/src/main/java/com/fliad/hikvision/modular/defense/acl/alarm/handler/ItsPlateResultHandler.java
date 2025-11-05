@@ -28,24 +28,31 @@ public class ItsPlateResultHandler implements AlarmHandler {
             log.error("获取设备IP失败", e);
         }
         log.info("设备IP: {}，报警类型: 交通抓拍结果", sbip);
-        String MonitoringSiteID;
+        String MonitoringSiteID = "";
+        String sLicense = "";
+        byte VehicleType = 0;
         HCNetSDK.NET_ITS_PLATE_RESULT strItsPlateResult = new HCNetSDK.NET_ITS_PLATE_RESULT();
         strItsPlateResult.write();
         Pointer pItsPlateInfo = strItsPlateResult.getPointer();
         pItsPlateInfo.write(0, pAlarmInfo.getByteArray(0, strItsPlateResult.size()), 0, strItsPlateResult.size());
         strItsPlateResult.read();
         try {
-            String sLicense = new String(strItsPlateResult.struPlateInfo.sLicense, "GBK");
-            byte VehicleType = strItsPlateResult.byVehicleType;  //0-其他车辆，1-小型车，2-大型车，3- 行人触发，4- 二轮车触发，5- 三轮车触发，6- 机动车触发
-            MonitoringSiteID = new String(strItsPlateResult.byMonitoringSiteID);
-            System.out.println("车牌号：" + sLicense + ":车辆类型：" + VehicleType + ":布防点编号：" + MonitoringSiteID);
+            sLicense = new String(strItsPlateResult.struPlateInfo.sLicense, "GBK").trim();
+            VehicleType = strItsPlateResult.byVehicleType;  //0-其他车辆，1-小型车，2-大型车，3- 行人触发，4- 二轮车触发，5- 三轮车触发，6- 机动车触发
+            MonitoringSiteID = new String(strItsPlateResult.byMonitoringSiteID).trim();
         } catch (UnsupportedEncodingException e1) {
             // TODO Auto-generated catch block
-            e1.printStackTrace();
+            log.error("", e1);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("", e);
         }
+
+        // 车辆信息解析
+        short wSpeed = strItsPlateResult.struVehicleInfo.wSpeed; // 车速
+
+        log.info("车牌号：" + sLicense + ":车辆类型：" + VehicleType + ":布防点编号：" + MonitoringSiteID + ":车速：" + wSpeed);
+
         /**
          * 报警图片保存，车牌，车辆图片
          */

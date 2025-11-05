@@ -159,7 +159,39 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             }
         } else if ("1".equals(hikvision_defense)) {
             log.info("海康设备开启监听模式");
+            Solon.context().subBeansOfType(CommonCacheOperator.class, cacheOperator -> {
+                this.deviceStateManager = new DeviceStateManager(cacheOperator);
+                // 注册海康威视设备类型
+                deviceStateManager.registerDeviceType(DEVICE_TYPE, "device:online:hikvision:");
+                deviceStateManager.setDeviceTimeoutMillis(DEVICE_TYPE, 90 * 1000L); // 90秒超时
+                deviceStateManager.addListener(this);
+                deviceStateManager.enableScheduledCheck(DEVICE_TYPE);
+                try {
+                    deviceStateManager.start();
+                } catch (Throwable e) {
+                    throw new RuntimeException(e);
+                }
+            });
             // 初始化海康威视报警管理器
+            // 查询所有启用的设备
+            List<HikvisionCamera> enabledCameras = viidHikvisionCameraService.list(
+                    viidHikvisionCameraService.query().eq("enable_status", 1)
+            );
+            log.info("找到 {} 个启用的海康威视设备", enabledCameras.size());
+            for (HikvisionCamera camera : enabledCameras) {
+                String deviceId = camera.getId();
+                String deviceNumber = camera.getDeviceId(); // 设备编号
+                String ip = camera.getIpAddr();
+                int port = camera.getPort();
+                String username = camera.getUsername();
+                String password = camera.getPassword();
+
+                log.info("开始初始化设备: {} (设备编号: {}, IP: {})", deviceId, deviceNumber, ip);
+
+                // 添加设备到报警管理器
+                hikvisionAlarmManager.addDevice(deviceId, deviceNumber, ip, port, username, password);
+            }
+
             hikvisionAlarmManager.init(deviceStateManager);
             hikvisionAlarmManager.startListen("0.0.0.0", (short) 7201);
         } else {

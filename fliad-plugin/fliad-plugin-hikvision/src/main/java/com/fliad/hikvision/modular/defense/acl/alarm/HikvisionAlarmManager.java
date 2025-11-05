@@ -38,6 +38,7 @@ public class HikvisionAlarmManager {
 
     // 回调函数实例
     private HikvisionAlarmCallback alarmCallback;
+    private FMSGCallBack_V31 fmsgCallBackV31;
 
     FlowgramService flowgramService;
     ResourceWorkflowService viidWorkflowService;
@@ -73,13 +74,24 @@ public class HikvisionAlarmManager {
             // 设置日志
             hCNetSDK.NET_DVR_SetLogToFile(3, "./sdklog", false);
 
-            // 设置报警回调函数
-            alarmCallback = new HikvisionAlarmCallback(this);
-            if (!hCNetSDK.NET_DVR_SetDVRMessageCallBack_V30(alarmCallback, null)) {
-                log.error("设置回调函数失败，错误码: {}", hCNetSDK.NET_DVR_GetLastError());
-            } else {
-                log.info("设置回调函数成功");
+            String hikvision_defense = devConfigApi.getValueByKey("hikvision_defense");
+            if ("1".equals(hikvision_defense)) {
+                // 设置报警回调函数
+                alarmCallback = new HikvisionAlarmCallback(this);
+                if (!hCNetSDK.NET_DVR_SetDVRMessageCallBack_V30(alarmCallback, null)) {
+                    log.error("设置回调函数失败，错误码: {}", hCNetSDK.NET_DVR_GetLastError());
+                } else {
+                    log.info("设置回调函数成功");
+                }
+            } else if ("2".equals(hikvision_defense)) {
+                fmsgCallBackV31 = new FMSGCallBack_V31(this);
+                if (!hCNetSDK.NET_DVR_SetDVRMessageCallBack_V31(fmsgCallBackV31, null)) {
+                    log.error("设置回调函数失败，错误码: {}", hCNetSDK.NET_DVR_GetLastError());
+                } else {
+                    log.info("设置回调函数成功");
+                }
             }
+
 
             // 设置JSON透传报警数据和图片分离
             HCNetSDK.NET_DVR_LOCAL_GENERAL_CFG struLocalCfg = new HCNetSDK.NET_DVR_LOCAL_GENERAL_CFG();

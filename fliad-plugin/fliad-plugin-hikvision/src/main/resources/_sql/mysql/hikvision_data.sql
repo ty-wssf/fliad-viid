@@ -1,6 +1,6 @@
 -- 海康布防启用配置，默认不启用
 INSERT INTO dev_config
-VALUES ('1980000000000000011', 'hikvision_defense_enabled', 'false', 'BIZ_DEFINE', '海康布防启用配置', 100, null,
+VALUES ('1980000000000000011', 'hikvision_defense', '0', 'BIZ_DEFINE', '海康布防启用配置 0: 不启用 1： 监听  2： 布防', 100, null,
         'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
 
 -- 海康布防模块
@@ -12,24 +12,24 @@ VALUES ('1980000000000000022', '0', '海康布防', null, null, 'MENU', '1548901
 -- 海康设备管理功能资源
 -- 海康设备主菜单
 INSERT INTO sys_resource
-VALUES ('1980000000000000006', '1980000000000000022', '海康设备', 'hikvision', 'HIKVISION_DEFENSE_MANAGE', 'MENU',
-        '1548901111999773976', 'MENU', '/hikvision', 'hikvision/index', 'appstore-outlined', null,
+VALUES ('1980000000000000026', '1980000000000000022', '海康设备', 'hikvision', 'HIKVISION_DEFENSE_MANAGE', 'MENU',
+        '1548901111999773976', 'MENU', '/hikvision', 'hikvision/defense/index', 'appstore-outlined', null,
         'TRUE', 104, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 -- 海康布防操作按钮
 INSERT INTO sys_resource
-VALUES ('1980000000000000007', '1980000000000000006', '新增海康设备', null, 'hikvisionDefenseAdd', 'BUTTON', null,
+VALUES ('1980000000000000027', '1980000000000000026', '新增海康设备', null, 'hikvisionDefenseAdd', 'BUTTON', null,
         null,
         null, null, null, null, null, 1, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000008', '1980000000000000006', '编辑海康设备', null, 'hikvisionDefenseEdit', 'BUTTON', null,
+VALUES ('1980000000000000028', '1980000000000000026', '编辑海康设备', null, 'hikvisionDefenseEdit', 'BUTTON', null,
         null,
         null, null, null, null, null, 2, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null, null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000009', '1980000000000000006', '删除海康设备', null, 'hikvisionDefenseDelete', 'BUTTON', null,
+VALUES ('1980000000000000029', '1980000000000000026', '删除海康设备', null, 'hikvisionDefenseDelete', 'BUTTON', null,
         null, null, null, null, null, null, 3, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null,
         null);
 INSERT INTO sys_resource
-VALUES ('1980000000000000010', '1980000000000000006', '批量删除海康设备', null, 'hikvisionDefenseBatchDelete',
+VALUES ('1980000000000000030', '1980000000000000026', '批量删除海康设备', null, 'hikvisionDefenseBatchDelete',
         'BUTTON', null,
         null, null, null, null, null, null, 4, null, 'NOT_DELETE', '2025-09-27 10:00:00', '1543837863788879871', null,
         null);
@@ -41,8 +41,8 @@ VALUES ('3287000000000000050', '1570687866138206209', '1980000000000000022', 'SY
 
 -- 为业务管理员角色关联海康设备功能资源
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
-VALUES ('3287000000000000068', '1570687866138206209', '1980000000000000006', 'SYS_ROLE_HAS_RESOURCE',
-        '{"menuId":"1980000000000000006","buttonInfo":["1980000000000000007","1980000000000000008","1980000000000000009","1980000000000000010"]}');
+VALUES ('3287000000000000068', '1570687866138206209', '1980000000000000026', 'SYS_ROLE_HAS_RESOURCE',
+        '{"menuId":"1980000000000000026","buttonInfo":["1980000000000000027","1980000000000000028","1980000000000000029","1980000000000000030"]}');
 
 -- 为业务管理员角色关联海康布防所有权限标识
 INSERT INTO sys_relation (ID, OBJECT_ID, TARGET_ID, CATEGORY, EXT_JSON)
