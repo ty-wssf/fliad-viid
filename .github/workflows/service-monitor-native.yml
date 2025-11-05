@@ -37,18 +37,12 @@ jobs:
           distribution: 'graalvm'
           cache: maven
           components: 'native-image'
-
-      # Build the project and create the fat jar
-      - name: Build with Maven
-        run: |
-          set MAVEN_OPTS="-Duser.language=UTF-8 -Dfile.encoding=UTF-8"
-          mvn clean install --file pom.xml --no-transfer-progress
           
       # Build native image
       - name: Build Native Image
         run: |
           cd fliad-service-monitor
-          mvn native:compile -Pnative,non-jdk8 -DskipTests --file pom.xml --no-transfer-progress
+          mvn native:compile -Pnative -DskipTests --file pom.xml --no-transfer-progress
 
       # Package the artifacts
       - name: Package artifacts
