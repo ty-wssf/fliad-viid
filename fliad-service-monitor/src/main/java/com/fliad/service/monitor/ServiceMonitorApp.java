@@ -1,7 +1,9 @@
 package com.fliad.service.monitor;
 
 import org.noear.solon.Solon;
+import org.noear.solon.SolonApp;
 import org.noear.solon.annotation.SolonMain;
+import org.noear.solon.core.runtime.NativeDetector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +20,9 @@ public class ServiceMonitorApp {
     private static final Logger log = LoggerFactory.getLogger(ServiceMonitorApp.class);
 
     public static void main(String[] args) throws InterruptedException {
-        Solon.start(ServiceMonitorApp.class, args).block();
+        SolonApp app =Solon.start(ServiceMonitorApp.class, args);
+        if (NativeDetector.isNotAotRuntime()) {
+            app.block();
+        }
     }
 }
