@@ -567,7 +567,7 @@ public class ReportFunctions {
 
     @Description("根据base64字符串生成图片")
     @EvalMethod
-    public static ExcelImage IMAGE_FROM_BASE64(IEvalScope scope) {
+    public static ExcelImage IMAGE(IEvalScope scope) {
         IXptRuntime xptRt = IXptRuntime.fromScope(scope);
         ExpandedCell cell = xptRt.getCell();
         ExpandedSheet sheet = xptRt.getSheet();
@@ -581,35 +581,36 @@ public class ReportFunctions {
         anchor.setRowDelta(cell.getRowSpan());
         anchor.setColDelta(cell.getColSpan());
 
-        // 解析base64数据
-        String base64String = StringHelper.toString(value, "");
-        if (base64String.startsWith("data:image")) {
-            // 处理 data URI 格式 (如: data:image/png;base64,iVBORw0KG...)
-            int commaIndex = base64String.indexOf(',');
-            if (commaIndex > 0) {
-                base64String = base64String.substring(commaIndex + 1);
+        byte[] imageData = new byte[0];
+        if (value instanceof String) {
+            // 解析base64数据
+            String base64String = StringHelper.toString(value, "");
+            if (base64String.startsWith("data:image")) {
+                // 处理 data URI 格式 (如: data:image/png;base64,iVBORw0KG...)
+                int commaIndex = base64String.indexOf(',');
+                if (commaIndex > 0) {
+                    base64String = base64String.substring(commaIndex + 1);
+                }
             }
+
+            imageData = java.util.Base64.getDecoder().decode(base64String);
+        } else if (value instanceof byte[]) {
+            imageData = (byte[]) value;
         }
 
-        try {
-            byte[] imageData = java.util.Base64.getDecoder().decode(base64String);
-            image.setDataBytes(imageData);
+        image.setDataBytes(imageData);
 
-            // 设置图片宽度和高度
-            if (image.getWidth() <= 0) {
-                int colIndex = cell.getColIndex();
-                image.setWidth(sheet.getWidth(colIndex, colIndex + cell.getMergeAcross()));
-            }
-
-            if (image.getHeight() <= 0) {
-                int rowIndex = cell.getRowIndex();
-                image.setHeight(sheet.getHeight(rowIndex, rowIndex + cell.getMergeDown()));
-            }
-
-            return image;
-        } catch (Exception e) {
-            // 解码失败时返回null或处理错误
-            return null;
+        // 设置图片宽度和高度
+        if (image.getWidth() <= 0) {
+            int colIndex = cell.getColIndex();
+            image.setWidth(sheet.getWidth(colIndex, colIndex + cell.getMergeAcross()));
         }
+
+        if (image.getHeight() <= 0) {
+            int rowIndex = cell.getRowIndex();
+            image.setHeight(sheet.getHeight(rowIndex, rowIndex + cell.getMergeDown()));
+        }
+
+        return image;
     }
 }
