@@ -37,7 +37,7 @@ CREATE TABLE VEHICLE_TRAFFIC_RECORD
     cllx    VARCHAR(20)  DEFAULT NULL COMMENT '车辆类型，符合GA/T 16.4与GA/T 543.5要求',
     cwkc    VARCHAR(5)   DEFAULT NULL COMMENT '车外廓长，单位厘米，最长5位',
     clpp    VARCHAR(50)  DEFAULT NULL COMMENT '车辆品牌，符合GA/T 543.10要求',
-    csys    CHAR(1)      DEFAULT NULL COMMENT '车身颜色，符合GA/T 16.8与GA/T 543.5：A-白,B-灰,C-黄,D-粉,E-红,F-紫,G-绿,H-蓝,I-棕,J-黑',
+    csys    VARCHAR(2)      DEFAULT NULL COMMENT '车身颜色，符合GA/T 16.8与GA/T 543.5：A-白,B-灰,C-黄,D-粉,E-红,F-紫,G-绿,H-蓝,I-棕,J-黑',
     hpkxd   TINYINT      DEFAULT NULL COMMENT '号牌识别可信度，0~100%',
     mwhpkxd VARCHAR(200) DEFAULT NULL COMMENT '每位号牌识别可信度，格式如"苏-80,B-90,..."',
     cxkxd   TINYINT      DEFAULT NULL COMMENT '车型识别可信度，0~100%',

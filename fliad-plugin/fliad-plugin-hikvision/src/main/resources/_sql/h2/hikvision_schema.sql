@@ -36,7 +36,7 @@ CREATE TABLE VEHICLE_TRAFFIC_RECORD
     cllx    VARCHAR(20)  DEFAULT NULL,
     cwkc    VARCHAR(5)   DEFAULT NULL,
     clpp    VARCHAR(50)  DEFAULT NULL,
-    csys    CHAR(1)      DEFAULT NULL,
+    csys    VARCHAR(2)      DEFAULT NULL,
     hpkxd   TINYINT      DEFAULT NULL,
     mwhpkxd VARCHAR(200) DEFAULT NULL,
     cxkxd   TINYINT      DEFAULT NULL,
