@@ -43,6 +43,9 @@ public class ItsPlateResultHandler implements AlarmHandler {
     private static final String IMAGE_STORAGE_ROOT = "./pic/";
     // 图片路径
     private static final String imagePathPrefix = "image/";
+    
+    // 确保静态映射只添加一次
+    private static volatile boolean staticMappingAdded = false;
 
     // 定时清理任务执行器
     private static final ScheduledExecutorService cleanupExecutor = Executors.newScheduledThreadPool(1);
@@ -61,6 +64,21 @@ public class ItsPlateResultHandler implements AlarmHandler {
     public ItsPlateResultHandler(HikvisionAlarmManager alarmManager) {
         this.alarmManager = alarmManager;
         this.vehicleTrafficRecordMapper = Solon.context().getBean(VehicleTrafficRecordMapper.class);
+        
+        String hikvision_defense_image_path = Solon.context().getBean(DevConfigApi.class).getValueByKey("hikvision_defense_image_path");
+        if (hikvision_defense_image_path == null) {
+            hikvision_defense_image_path = IMAGE_STORAGE_ROOT;
+        }
+        
+        // 确保静态映射只添加一次
+        if (!staticMappingAdded) {
+            synchronized (ItsPlateResultHandler.class) {
+                if (!staticMappingAdded) {
+                    StaticMappings.add(imagePathPrefix, new FileStaticRepository(hikvision_defense_image_path));
+                    staticMappingAdded = true;
+                }
+            }
+        }
     }
 
     @Override
@@ -118,8 +136,6 @@ public class ItsPlateResultHandler implements AlarmHandler {
         if (hikvision_defense_image_gateway == null) {
             hikvision_defense_image_gateway = "http://127.0.0.1:" + Solon.cfg().serverPort() + "/";
         }
-
-        StaticMappings.add(imagePathPrefix, new FileStaticRepository(hikvision_defense_image_path));
 
         /**
          * 报警图片保存，车牌，车辆图片
