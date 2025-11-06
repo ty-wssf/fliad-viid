@@ -22,10 +22,13 @@ import io.nop.commons.util.CollectionHelper;
 import io.nop.commons.util.MathHelper;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
+import io.nop.excel.model.ExcelClientAnchor;
+import io.nop.excel.model.ExcelImage;
 import io.nop.report.core.XptConstants;
 import io.nop.report.core.engine.IXptRuntime;
 import io.nop.report.core.model.ExpandedCell;
 import io.nop.report.core.model.ExpandedCellSet;
+import io.nop.report.core.model.ExpandedSheet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -488,13 +491,20 @@ public class ReportFunctions {
                 double condValue = Double.parseDouble(condValueStr);
 
                 switch (op) {
-                    case ">": return numValue > condValue;
-                    case "<": return numValue < condValue;
-                    case ">=": return numValue >= condValue;
-                    case "<=": return numValue <= condValue;
-                    case "=": return numValue == condValue;
-                    case "<>": return numValue != condValue;
-                    default: return false;
+                    case ">":
+                        return numValue > condValue;
+                    case "<":
+                        return numValue < condValue;
+                    case ">=":
+                        return numValue >= condValue;
+                    case "<=":
+                        return numValue <= condValue;
+                    case "=":
+                        return numValue == condValue;
+                    case "<>":
+                        return numValue != condValue;
+                    default:
+                        return false;
                 }
             }
         } catch (Exception e) {
@@ -507,13 +517,20 @@ public class ReportFunctions {
 
         int comparison = valueStr.compareTo(condValueStr);
         switch (condition.replaceAll("[^<>=]", "")) {
-            case ">": return comparison > 0;
-            case "<": return comparison < 0;
-            case ">=": return comparison >= 0;
-            case "<=": return comparison <= 0;
-            case "=": return comparison == 0;
-            case "<>": return comparison != 0;
-            default: return false;
+            case ">":
+                return comparison > 0;
+            case "<":
+                return comparison < 0;
+            case ">=":
+                return comparison >= 0;
+            case "<=":
+                return comparison <= 0;
+            case "=":
+                return comparison == 0;
+            case "<>":
+                return comparison != 0;
+            default:
+                return false;
         }
     }
 
@@ -545,6 +562,54 @@ public class ReportFunctions {
         } else {
             // 偶数个元素，取中间两个值的平均
             return (numbers.get(size / 2 - 1) + numbers.get(size / 2)) / 2.0;
+        }
+    }
+
+    @Description("根据base64字符串生成图片")
+    @EvalMethod
+    public static ExcelImage IMAGE_FROM_BASE64(IEvalScope scope) {
+        IXptRuntime xptRt = IXptRuntime.fromScope(scope);
+        ExpandedCell cell = xptRt.getCell();
+        ExpandedSheet sheet = xptRt.getSheet();
+
+        Object value = cell.getValue();
+        if (StringHelper.isEmptyObject(value))
+            return null;
+
+        ExcelImage image = cell.makeImage();
+        ExcelClientAnchor anchor = image.makeAnchor();
+        anchor.setRowDelta(cell.getRowSpan());
+        anchor.setColDelta(cell.getColSpan());
+
+        // 解析base64数据
+        String base64String = StringHelper.toString(value, "");
+        if (base64String.startsWith("data:image")) {
+            // 处理 data URI 格式 (如: data:image/png;base64,iVBORw0KG...)
+            int commaIndex = base64String.indexOf(',');
+            if (commaIndex > 0) {
+                base64String = base64String.substring(commaIndex + 1);
+            }
+        }
+
+        try {
+            byte[] imageData = java.util.Base64.getDecoder().decode(base64String);
+            image.setDataBytes(imageData);
+
+            // 设置图片宽度和高度
+            if (image.getWidth() <= 0) {
+                int colIndex = cell.getColIndex();
+                image.setWidth(sheet.getWidth(colIndex, colIndex + cell.getMergeAcross()));
+            }
+
+            if (image.getHeight() <= 0) {
+                int rowIndex = cell.getRowIndex();
+                image.setHeight(sheet.getHeight(rowIndex, rowIndex + cell.getMergeDown()));
+            }
+
+            return image;
+        } catch (Exception e) {
+            // 解码失败时返回null或处理错误
+            return null;
         }
     }
 }
