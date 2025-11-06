@@ -12,7 +12,7 @@ import java.util.Date;
  * @author wyl
  * @date  2025/09/24 20:05
  */
-@Table(value = "resource_datasource")
+@Table(value = "RESOURCE_DATASOURCE")
 public class ResourceDatasource {
 
     /** ID */

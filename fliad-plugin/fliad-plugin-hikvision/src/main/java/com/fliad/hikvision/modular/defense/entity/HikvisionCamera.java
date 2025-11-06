@@ -25,7 +25,7 @@ import java.util.Date;
  * @author wyl
  * @date 2025/09/27
  **/
-@Table(value = "hikvision_camera")
+@Table(value = "HIKVISION_CAMERA")
 public class HikvisionCamera {
 
     /** ID */

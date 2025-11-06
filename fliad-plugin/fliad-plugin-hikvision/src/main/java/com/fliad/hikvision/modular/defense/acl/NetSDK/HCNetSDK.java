@@ -5127,7 +5127,15 @@ DVR实现巡航数据结构
         public short wMilliSec;
         public byte[] byRes1 = new byte[2];
 
-
+        public String getTime(){
+            String byMonthStr = byMonth < 10?"0"+byMonth:String.valueOf((int)byMonth);
+            String byDayStr = byDay < 10 ? "0"+byDay : String.valueOf((int)byDay);
+            String byHourStr = byHour < 10 ? "0"+byHour : String.valueOf((int)byHour);
+            String byMinuteStr = byMinute < 10 ? "0"+byMinute : String.valueOf((int)byMinute);
+            String bySecondStr = bySecond < 10 ? "0"+bySecond : String.valueOf((int)bySecond);
+            String wMilliSecStr = wMilliSec < 100 ? "0"+wMilliSec : String.valueOf((int)wMilliSec);
+            return wYear+byMonthStr+byDayStr+byHourStr+byMinuteStr+bySecondStr+wMilliSecStr;
+        }
     }
 
     public static class NET_ITS_PICTURE_INFO extends HIKSDKStructure {

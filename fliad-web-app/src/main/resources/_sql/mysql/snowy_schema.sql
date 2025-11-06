@@ -104,7 +104,6 @@ CREATE TABLE `CLIENT_USER`  (
 -- ----------------------------
 -- Table structure for DEV_CONFIG
 -- ----------------------------
-DROP TABLE IF EXISTS `DEV_CONFIG`;
 CREATE TABLE `DEV_CONFIG`  (
   `ID` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `CONFIG_KEY` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '配置键',

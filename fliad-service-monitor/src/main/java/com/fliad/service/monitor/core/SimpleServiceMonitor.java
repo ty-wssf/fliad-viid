@@ -246,7 +246,7 @@ public class SimpleServiceMonitor {
 
                 if (isRunning) {
                     // 服务正在运行
-                    log.debug("服务{}正在运行", serviceName);
+                    log.info("服务{}正在运行", serviceName);
                 } else {
                     // 服务已停止，尝试启动
                     log.warn("检测到服务{}已停止，准备启动服务", serviceName);
