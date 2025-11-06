@@ -30,7 +30,7 @@ public class ServiceMonitorLifecycle implements LifecycleBean {
         serviceMonitor = new SimpleServiceMonitor();
 
         // 设置检测间隔为10秒
-        serviceMonitor.setCheckIntervalMillis(10 * 1000L);
+        serviceMonitor.setCheckIntervalMillis(120 * 1000L);
 
         // 启动服务监控器
         serviceMonitor.start();
