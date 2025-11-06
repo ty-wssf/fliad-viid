@@ -43,7 +43,7 @@ public class ItsPlateResultHandler implements AlarmHandler {
     private static final String IMAGE_STORAGE_ROOT = "./pic/";
     // 图片路径
     private static final String imagePathPrefix = "image/";
-    
+
     // 确保静态映射只添加一次
     private static volatile boolean staticMappingAdded = false;
 
@@ -64,12 +64,12 @@ public class ItsPlateResultHandler implements AlarmHandler {
     public ItsPlateResultHandler(HikvisionAlarmManager alarmManager) {
         this.alarmManager = alarmManager;
         this.vehicleTrafficRecordMapper = Solon.context().getBean(VehicleTrafficRecordMapper.class);
-        
+
         String hikvision_defense_image_path = Solon.context().getBean(DevConfigApi.class).getValueByKey("hikvision_defense_image_path");
         if (hikvision_defense_image_path == null) {
             hikvision_defense_image_path = IMAGE_STORAGE_ROOT;
         }
-        
+
         // 确保静态映射只添加一次
         if (!staticMappingAdded) {
             synchronized (ItsPlateResultHandler.class) {
@@ -119,7 +119,7 @@ public class ItsPlateResultHandler implements AlarmHandler {
 
         log.info("车牌号：" + sLicense + ":车辆类型：" + VehicleType + ":布防点编号：" + MonitoringSiteID + ":车速：" + wSpeed);
 
-        json.set("gcsj", MonitoringSiteID);
+        json.set("gcsj", strItsPlateResult.struSnapFirstPicTime.getTime());
         json.set("sxjbh", alarmManager.getDeviceByIp(sbip).getDeviceNumber());
         json.set("hphm", sLicense);
         json.set("hpzl", strItsPlateResult.struPlateInfo.byPlateType);
@@ -127,6 +127,8 @@ public class ItsPlateResultHandler implements AlarmHandler {
         json.set("cllx", strItsPlateResult.struVehicleInfo.byVehicleType);
         json.set("csys", strItsPlateResult.struVehicleInfo.byColor);
         json.set("clsd", wSpeed);
+        json.set("cdh", strItsPlateResult.byDriveChan);
+        json.set("fxlx", strItsPlateResult.byCarDirectionType);
 
         String hikvision_defense_image_path = Solon.context().getBean(DevConfigApi.class).getValueByKey("hikvision_defense_image_path");
         String hikvision_defense_image_gateway = Solon.context().getBean(DevConfigApi.class).getValueByKey("hikvision_defense_image_gateway");
@@ -233,7 +235,9 @@ public class ItsPlateResultHandler implements AlarmHandler {
             record.setCsys(String.valueOf(strItsPlateResult.struVehicleInfo.byColor)); // 车身颜色
             record.setClsd((int) speed); // 车辆速度
             record.setSxjbh(alarmManager.getDeviceByIp(deviceIp).getDeviceNumber()); // 摄像机设备编号
-            record.setGcsj(new Date()); // 过车时间
+            record.setGcsj(DateUtil.parse(json.get("gcsj").getString(), "yyyyMMddHHmmssSSS")); // 过车时间
+            record.setCdh(json.get("cdh").getString());
+            record.setFxlx(json.get("fxlx").getString());
 
             // 图片URL
             if (json.contains("tp1")) {
