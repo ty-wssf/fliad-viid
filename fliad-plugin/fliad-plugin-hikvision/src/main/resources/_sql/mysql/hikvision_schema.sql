@@ -20,7 +20,7 @@ CREATE TABLE `HIKVISION_CAMERA`
   CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='海康布防表';
 
-CREATE TABLE vehicle_traffic_record
+CREATE TABLE VEHICLE_TRAFFIC_RECORD
 (
     id      varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
     kkbh    VARCHAR(50)  DEFAULT NULL COMMENT '卡口编号，符合GA/T 16.31与GA/T 543.10要求',

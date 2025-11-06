@@ -24,7 +24,7 @@ import java.util.Date;
  * @author wyl
  * @date  2025/08/14 16:24
  */
-@Table(value = "viid_cascade_platform")
+@Table(value = "VIID_CASCADE_PLATFORM")
 public class ViidCascadePlatform {
 
     /** 主键 */

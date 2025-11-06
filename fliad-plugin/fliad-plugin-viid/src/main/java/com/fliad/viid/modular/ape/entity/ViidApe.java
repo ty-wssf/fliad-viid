@@ -27,7 +27,7 @@ import java.util.Date;
  * @author wyl
  * @date  2025/09/19
  */
-@Table(value = "viid_ape")
+@Table(value = "VIID_APE")
 public class ViidApe {
 
     /** 主键ID */

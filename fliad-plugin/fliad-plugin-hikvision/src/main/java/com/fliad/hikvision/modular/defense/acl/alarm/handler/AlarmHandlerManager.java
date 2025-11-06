@@ -49,14 +49,15 @@ public class AlarmHandlerManager {
         } catch (Exception e) {
             log.error("获取设备IP失败", e);
         }
-        
+
         // 只有在能通过IP找到设备时才更新设备状态
         if (alarmManager.getDeviceByIp(sbip) != null) {
             alarmManager.getDeviceStateManager().handleOnlineEvent("hikvision", alarmManager.getDeviceByIp(sbip).getDeviceId());
         } else {
             log.warn("未找到IP为 {} 的设备信息", sbip);
+            return;
         }
-        
+
         AlarmHandler handler = handlers.get(lCommand);
         if (handler != null) {
             handler.handle(lCommand, pAlarmer, pAlarmInfo, dwBufLen, pUser);

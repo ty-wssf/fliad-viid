@@ -26,7 +26,7 @@ import java.util.Date;
  * @author wyl
  * @date 2025/09/22
  **/
-@Table(value = "viid_subscribe_notifications")
+@Table(value = "VIID_SUBSCRIBE_NOTIFICATIONS")
 public class ViidSubscribeNotifications {
 
     /** 主键 */
