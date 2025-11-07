@@ -32,5 +32,9 @@ export default {
 	// 导入海康设备
 	hikvisionDefenseImport(data) {
 		return request('import', data)
+	},
+	// 导出海康设备
+	hikvisionDefenseExport(data) {
+		return request('export', data, 'get', { responseType: 'blob' })
 	}
 }

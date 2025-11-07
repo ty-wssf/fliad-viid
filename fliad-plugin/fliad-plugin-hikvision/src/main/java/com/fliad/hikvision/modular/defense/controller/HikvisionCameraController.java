@@ -3,6 +3,7 @@ package com.fliad.hikvision.modular.defense.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import com.fliad.common.util.CommonDownloadUtil;
+import com.fliad.hikvision.modular.defense.param.*;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.api.core.beans.ApiResponse;
 import io.nop.core.model.object.DynamicObject;
@@ -19,6 +20,7 @@ import io.nop.xlang.api.XLang;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.noear.solon.annotation.*;
+import org.noear.solon.boot.web.MimeType;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import org.noear.solon.validation.annotation.NotEmpty;
@@ -27,13 +29,10 @@ import com.fliad.common.annotation.CommonLog;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.pojo.CommonValidList;
 import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraAddParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraEditParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraIdParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
 import com.fliad.hikvision.modular.defense.service.HikvisionCameraService;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -185,6 +184,13 @@ public class HikvisionCameraController {
 
         // 4. 输出到响应流
         CommonDownloadUtil.download("海康设备模板.xlsx", bytes, context);
+    }
+
+    @Get
+    @Produces(MimeType.APPLICATION_OCTET_STREAM_VALUE)
+    @Mapping("/hikvision/defense/export")
+    public void exportHikvisionDevice(HikvisionExportParam hikvisionExportParam, Context context) throws IOException {
+        hikvisionCameraService.exportHikvisionDevice(hikvisionExportParam, context);
     }
 
 }

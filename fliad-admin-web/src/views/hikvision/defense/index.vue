@@ -47,6 +47,10 @@
 						<template #icon><upload-outlined /></template>
 						导入
 					</a-button>
+					<a-button type="primary" @click="exportData">
+						<template #icon><download-outlined /></template>
+						导出
+					</a-button>
 					<xn-batch-button
 						v-if="hasPerm('hikvisionDefenseBatchDelete')"
 						buttonName="批量删除"
@@ -264,5 +268,15 @@
 	// 重置导入表单
 	const resetImportForm = () => {
 		importFormState.fileList = [];
+	}
+
+	// 导出数据
+	const exportData = () => {
+		const searchFormParam = JSON.parse(JSON.stringify(searchFormState))
+		hikvisionDefenseApi.hikvisionDefenseExport(searchFormParam).then(res => {
+			downloadUtil.resultDownload(res)
+		}).catch(error => {
+			message.error('导出失败: ' + error)
+		})
 	}
 </script>

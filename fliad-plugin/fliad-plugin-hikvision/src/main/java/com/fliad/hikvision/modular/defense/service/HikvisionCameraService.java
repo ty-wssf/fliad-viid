@@ -12,14 +12,13 @@
  */
 package com.fliad.hikvision.modular.defense.service;
 
+import com.fliad.hikvision.modular.defense.param.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
 import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraAddParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraEditParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraIdParam;
-import com.fliad.hikvision.modular.defense.param.HikvisionCameraPageParam;
+import org.noear.solon.core.handle.Context;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -86,4 +85,13 @@ public interface HikvisionCameraService extends IService<HikvisionCamera> {
      * @date 2025/09/27
      */
     void importDevices(List<Map<String, Object>> devices);
+
+    /**
+     * 导出海康设备
+     *
+     * @author wyl
+     * @date 2025/09/27
+     */
+    void exportHikvisionDevice(HikvisionExportParam hikvisionExportParam, Context ctx) throws IOException;
+
 }
