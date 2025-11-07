@@ -55,55 +55,17 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
-        <!-- pinyin4j -->
-        <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-        </dependency>
-
         <!-- ip2region -->
         <dependency>
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>
         </dependency>
 
-        <!-- easy-poi -->
-        <!--<dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>easypoi-solon-plugin</artifactId>
-        </dependency>-->
-
         <!-- knife4j -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-swagger2-knife4j</artifactId>
         </dependency>
-
-        <!-- easyexcel -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>poi-ooxml</artifactId>
-                    <groupId>org.apache.poi</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>poi-ooxml-schemas</artifactId>
-                    <groupId>org.apache.poi</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>poi</artifactId>
-                    <groupId>org.apache.poi</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- nashorn-core -->
-        <!--<dependency>
-            <groupId>org.openjdk.nashorn</groupId>
-            <artifactId>nashorn-core</artifactId>
-        </dependency>-->
 
         <dependency>
             <groupId>cn.dev33</groupId>

@@ -36,15 +36,6 @@ import cn.hutool.core.util.*;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.metadata.data.WriteCellData;
-import com.alibaba.excel.write.handler.CellWriteHandler;
-import com.alibaba.excel.write.handler.context.CellWriteHandlerContext;
-import com.alibaba.excel.write.metadata.style.WriteCellStyle;
-import com.alibaba.excel.write.metadata.style.WriteFont;
-import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
-import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
-import com.alibaba.excel.write.style.row.AbstractRowHeightStyleStrategy;
 import com.fliad.common.util.*;
 import com.fliad.sys.modular.user.param.*;
 import com.fliad.sys.modular.user.result.*;
@@ -1029,7 +1020,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Tran
     @Override
     public JSONObject importUser(UploadedFile file) {
-        try {
+        /*try {
             int successCount = 0;
             int errorCount = 0;
             JSONArray errorDetail = JSONUtil.createArray();
@@ -1057,7 +1048,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         } catch (Exception e) {
             log.error(">>> 用户导入失败：", e);
             throw new CommonException("用户导入失败");
-        }
+        }*/
+        return JSONUtil.createObj();
     }
 
     /**
