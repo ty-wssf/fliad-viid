@@ -33,7 +33,7 @@
 					<div v-if="selectedReportPath" style="margin-bottom: 16px;">
 						<a-button type="primary" @click="exportReport">导出XLSX</a-button>
 					</div>
-					<div v-if="reportHtml" v-html="reportHtml" class="report-preview scrollable-report"></div>
+					<div v-if="reportHtml" v-html="reportHtml" class="report-preview"></div>
 					<a-empty v-else description="请选择报表示例进行预览"/>
 				</a-card>
 			</a-col>
@@ -153,7 +153,8 @@ export default defineComponent({
 
 .report-preview {
 	min-height: 500px;
-	padding-right: 10px;
+	/* 解决滚动条遮挡内容的问题 */
+	overflow: auto;
 }
 
 .report-preview :deep(table) {
@@ -173,10 +174,7 @@ export default defineComponent({
 	font-weight: bold;
 }
 
-.scrollable-report {
-	max-height: calc(100vh - 200px);
-	overflow: auto;
-}
+/* 已移除 .scrollable-report 样式，合并到 .report-preview 中 */
 
 /* 美化滚动条样式，使其更符合Ant Design风格 */
 .scrollable-report::-webkit-scrollbar {
