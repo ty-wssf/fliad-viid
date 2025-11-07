@@ -611,6 +611,7 @@ public class ReportFunctions {
             image.setHeight(sheet.getHeight(rowIndex, rowIndex + cell.getMergeDown()));
         }
 
+        cell.setValue("");
         return image;
     }
 }
