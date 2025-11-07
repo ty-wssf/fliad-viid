@@ -49,7 +49,7 @@
 					</a-button>
 					<a-button type="primary" @click="exportData">
 						<template #icon><download-outlined /></template>
-						导出
+						批量导出
 					</a-button>
 					<xn-batch-button
 						v-if="hasPerm('hikvisionDefenseBatchDelete')"
