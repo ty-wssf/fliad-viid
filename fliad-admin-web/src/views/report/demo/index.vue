@@ -1,24 +1,34 @@
 <template>
 	<div class="report-demo-container">
 		<a-row :gutter="16">
-			<a-col :span="4">
-				<a-card title="报表示例列表" :bordered="false">
-					<a-tree
-						v-if="reportTreeData.length > 0"
-						:tree-data="reportTreeData"
-						:fieldNames="{ title: 'label', key: 'key', children: 'children' }"
-						@select="onSelectReport"
-						default-expand-all
-					>
-						<template #title="{ label }">
-							<span>{{ label }}</span>
-						</template>
-					</a-tree>
-					<a-empty v-else description="暂无报表示例"/>
+			<a-col :span="collapsed ? 1 : 4" class="left-panel">
+				<a-card :title="collapsed ? '' : '报表示例列表'" :bordered="false">
+					<template #extra>
+						<a-button type="text" size="small" @click="toggleCollapse">
+							<template #icon>
+								<menu-fold-outlined v-if="!collapsed" />
+								<menu-unfold-outlined v-else />
+							</template>
+						</a-button>
+					</template>
+					<div v-show="!collapsed">
+						<a-tree
+							v-if="reportTreeData.length > 0"
+							:tree-data="reportTreeData"
+							:fieldNames="{ title: 'label', key: 'key', children: 'children' }"
+							@select="onSelectReport"
+							default-expand-all
+						>
+							<template #title="{ label }">
+								<span>{{ label }}</span>
+							</template>
+						</a-tree>
+						<a-empty v-else description="暂无报表示例"/>
+					</div>
 				</a-card>
 			</a-col>
 
-			<a-col :span="20">
+			<a-col :span="collapsed ? 23 : 20">
 				<a-card :title="selectedReportName || '报表预览'" :bordered="false">
 					<div v-if="selectedReportPath" style="margin-bottom: 16px;">
 						<a-button type="primary" @click="exportReport">导出XLSX</a-button>
@@ -33,17 +43,28 @@
 
 <script>
 import {defineComponent, ref, onMounted} from 'vue'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import reportApi from '@/api/report/demo'
 import bizUserApi from "@/api/biz/bizUserApi";
 import downloadUtil from "@/utils/downloadUtil";
 
 export default defineComponent({
 	name: 'ReportDemo',
+	components: {
+		MenuFoldOutlined,
+		MenuUnfoldOutlined
+	},
 	setup() {
 		const reportTreeData = ref([])
 		const reportHtml = ref('')
 		const selectedReportName = ref('')
 		const selectedReportPath = ref('')
+		const collapsed = ref(false)
+
+		// 切换收缩状态
+		const toggleCollapse = () => {
+			collapsed.value = !collapsed.value
+		}
 
 		// 获取报表示例列表
 		const loadReportList = async () => {
@@ -110,6 +131,8 @@ export default defineComponent({
 			reportHtml,
 			selectedReportName,
 			selectedReportPath,
+			collapsed,
+			toggleCollapse,
 			onSelectReport,
 			exportReport
 		}
@@ -122,6 +145,10 @@ export default defineComponent({
 	padding: 16px;
 	background: #fff;
 	min-height: calc(100vh - 120px);
+}
+
+.left-panel {
+	transition: all 0.3s ease;
 }
 
 .report-preview {
