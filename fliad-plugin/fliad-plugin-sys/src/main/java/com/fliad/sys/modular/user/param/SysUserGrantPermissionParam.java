@@ -14,9 +14,9 @@ package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.noear.solon.validation.annotation.NotBlank;
+import org.noear.solon.validation.annotation.NotNull;
+import org.noear.solon.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,7 +33,7 @@ public class SysUserGrantPermissionParam {
     private String id;
 
     /** 授权权限信息 */
-    @Valid
+    @Validated
     @ApiModelProperty(value = "授权权限信息", required = true, position = 2)
     @NotNull(message = "grantInfoList不能为空")
     private List<SysUserGrantPermission> grantInfoList;

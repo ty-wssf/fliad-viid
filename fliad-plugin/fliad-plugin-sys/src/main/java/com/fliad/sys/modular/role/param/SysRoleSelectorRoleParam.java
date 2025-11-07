@@ -13,8 +13,6 @@
 package com.fliad.sys.modular.role.param;
 
 import io.swagger.annotations.ApiModelProperty;
-
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

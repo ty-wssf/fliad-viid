@@ -18,8 +18,8 @@ import com.fliad.biz.modular.index.param.BizIndexSlideshowListParam;
 import com.fliad.biz.modular.index.result.BizIndexNoticeListResult;
 import com.fliad.biz.modular.index.result.BizIndexSlideshowDetailResult;
 import com.fliad.biz.modular.index.result.BizIndexSlideshowListResult;
+import org.noear.solon.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -44,7 +44,7 @@ public interface BizIndexService {
      * @author yubaoshan
      * @date  2024/07/13 00:31
      */
-    List<BizIndexNoticeListResult> noticeListByLimit(@Valid BizIndexNoticeListParam bizIndexNoticeListParam);
+    List<BizIndexNoticeListResult> noticeListByLimit(@Validated BizIndexNoticeListParam bizIndexNoticeListParam);
 
     /**
      * 获取通知公告详情

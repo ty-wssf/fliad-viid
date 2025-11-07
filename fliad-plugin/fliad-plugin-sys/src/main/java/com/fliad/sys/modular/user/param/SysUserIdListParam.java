@@ -13,7 +13,8 @@
 package com.fliad.sys.modular.user.param;
 
 import io.swagger.annotations.ApiModelProperty;
-import javax.validation.constraints.NotNull;
+import org.noear.solon.validation.annotation.NotNull;
+
 import java.util.List;
 
 /**

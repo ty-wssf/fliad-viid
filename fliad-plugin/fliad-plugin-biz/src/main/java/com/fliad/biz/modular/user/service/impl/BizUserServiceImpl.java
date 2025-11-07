@@ -12,9 +12,6 @@
  */
 package com.fliad.biz.modular.user.service.impl;
 
-import cn.afterturn.easypoi.cache.manager.POICacheManager;
-import cn.afterturn.easypoi.entity.ImageEntity;
-import cn.afterturn.easypoi.word.WordExportUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
@@ -26,6 +23,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.PhoneUtil;
@@ -53,14 +51,10 @@ import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
 import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.tpl.ITemplateOutput;
-import io.nop.ooxml.docx.WordTemplate;
 import io.nop.report.core.engine.IReportEngine;
-import io.nop.report.docx.parse.XptWordTemplateParser;
 import io.nop.xlang.api.XLang;
-import org.noear.snack.ONode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
@@ -464,11 +458,18 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
             if (ObjectUtil.isEmpty(bizUserList)) {
                 throw new CommonException("无数据可导出");
             }
+            List<Map<String, Object>> list = new ArrayList<>();
+            for (int i = 0; i < bizUserList.size(); i++) {
+                Map<String, Object> map = BeanUtil.beanToMap(bizUserList.get(i));
+                int commaIndex = bizUserList.get(i).getAvatar().indexOf(',');
+                map.put("avatar_", java.util.Base64.getDecoder().decode(bizUserList.get(i).getAvatar().substring(commaIndex + 1)));
+                list.add(map);
+            }
 //            transService.transBatch(bizUserList);
             bizUserList = CollectionUtil.sort(bizUserList, Comparator.comparing(BizUser::getOrgId));
             ITemplateOutput output = reportEngine.getRenderer("/nop/report/biz/SNOWY系统B端人员信息清单.xpt.xlsx", "xlsx");
             IEvalScope scope = XLang.newEvalScope();
-            scope.setLocalValue("entity", ONode.deserialize(ONode.stringify(bizUserList)));
+            scope.setLocalValue("entity", list);
             tempFile = VirtualFileSystem.instance().getResource(ResourceConstants.RESOURCE_NS_TEMP + ":/demo/SNOWY系统B端人员信息清单.xlsx");
             output.generateToResource(tempFile, scope);
             IResource finalTempFile = tempFile;
@@ -490,69 +491,7 @@ public class BizUserServiceImpl extends ServiceImpl<BizUserMapper, BizUser> impl
 
     @Override
     public void exportUserInfo(BizUserIdParam bizUserIdParam, Context response) throws IOException {
-        File destTemplateFile = null;
-        File resultFile = null;
-        try {
-            BizUser bizUser = this.queryEntity(bizUserIdParam.getId());
-//            transService.transOne(bizUser);
-            // 读取模板流
-            InputStream inputStream = POICacheManager.getFile("userExportTemplate.docx");
-            // 创建一个临时模板
-            destTemplateFile = FileUtil.writeFromStream(inputStream, FileUtil.file(FileUtil.getTmpDir() +
-                    File.separator + "userExportTemplate.docx"));
-            // 构造填充的参数
-            Map<String, Object> map = BeanUtil.beanToMap(bizUser);
-            String avatarBase64;
-            if (ObjectUtil.isNotEmpty(bizUser.getAvatar())) {
-                avatarBase64 = bizUser.getAvatar();
-            } else {
-                avatarBase64 = CommonAvatarUtil.generateImg(bizUser.getName());
-            }
-            // 头像
-            ImageEntity imageEntity = new ImageEntity(base64ToByteArray(avatarBase64), 120, 160);
-            map.put("avatar", imageEntity);
-            if (ObjectUtil.isNotEmpty(bizUser.getBirthday())) {
-                try {
-                    // 年龄
-                    long age = cn.hutool.core.date.DateUtil.betweenYear(cn.hutool.core.date.DateUtil.parseDate(bizUser.getBirthday()), DateTime.now(), true);
-                    if (age != 0) {
-                        map.put("age", age + "岁");
-                    }
-                } catch (Exception ignored) {
-                }
-            }
-            // 导出时间
-            map.put("exportDateTime", DateUtil.format(DateTime.now(), DatePattern.CHINESE_DATE_PATTERN));
-            /*// 生成doc
-            XWPFDocument doc = WordExportUtil.exportWord07(destTemplateFile.getAbsolutePath(), map);
-            // 生成临时导出文件
-            resultFile = FileUtil.file(FileUtil.getTmpDir() + File.separator + "SNOWY系统B端人员信息_" + bizUser.getName() + ".docx");
-            // 写入
-            BufferedOutputStream outputStream = FileUtil.getOutputStream(resultFile);
-            doc.write(outputStream);
-            outputStream.close();*/
-            IResource resource = VirtualFileSystem.instance().getResource("/nop/report/biz/userExportTemplate.docx");
-            WordTemplate tpl = new XptWordTemplateParser().parseFromResource(resource);
-            IEvalScope scope = XLang.newEvalScope();
-            for (String key : map.keySet()) {
-                scope.setLocalValue(key, map.get(key));
-            }
-            resultFile = VirtualFileSystem.instance().getResource(ResourceConstants.RESOURCE_NS_TEMP + ":/demo/userExportTemplate" + IdUtil.getSnowflakeNextIdStr() + ".docx").toFile();
-            tpl.generateToFile(resultFile, scope);
-            // 下载
-            CommonDownloadUtil.download(resultFile, response);
-        } catch (Exception e) {
-            log.error(">>> 导出人员个人信息异常：", e);
-            CommonResponseUtil.renderError(response, "导出失败");
-        } finally {
-            // 删除临时文件
-            if (ObjectUtil.isNotEmpty(destTemplateFile)) {
-                FileUtil.del(destTemplateFile);
-            }
-            if (ObjectUtil.isNotEmpty(resultFile)) {
-                FileUtil.del(resultFile);
-            }
-        }
+
     }
 
     @Override

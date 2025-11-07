@@ -14,8 +14,8 @@ package com.fliad.biz.modular.dict.param;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.noear.solon.validation.annotation.NotBlank;
+import org.noear.solon.validation.annotation.NotNull;
 
-import javax.validation.constraints.NotNull;
 
 /**
  * 业务字典编辑参数

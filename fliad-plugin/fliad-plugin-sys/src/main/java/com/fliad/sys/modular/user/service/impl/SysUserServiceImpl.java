@@ -12,9 +12,6 @@
  */
 package com.fliad.sys.modular.user.service.impl;
 
-import cn.afterturn.easypoi.cache.manager.POICacheManager;
-import cn.afterturn.easypoi.entity.ImageEntity;
-import cn.afterturn.easypoi.word.WordExportUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.CircleCaptcha;
@@ -54,10 +51,9 @@ import com.fliad.sys.modular.user.result.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
+import org.noear.solon.core.util.ResourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Context;
@@ -66,7 +62,6 @@ import org.noear.solon.data.annotation.Tran;
 import com.fliad.auth.core.util.StpLoginUserUtil;
 import com.fliad.common.cache.CommonCacheOperator;
 import com.fliad.common.enums.CommonSortOrderEnum;
-import com.fliad.common.excel.CommonExcelCustomMergeStrategy;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.listener.CommonDataChangeEventCenter;
 import com.fliad.common.page.CommonPageRequest;
@@ -106,6 +101,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -213,7 +209,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public Page<SysUser> page(SysUserPageParam sysUserPageParam) {
-        QueryWrapper queryWrapper = new QueryWrapper(); 
+        QueryWrapper queryWrapper = new QueryWrapper();
         if (ObjectUtil.isNotEmpty(sysUserPageParam.getSearchKey())) {
             queryWrapper.and(i -> {
                 i.like(SysUser::getAccount, sysUserPageParam.getSearchKey()).or(e -> {
@@ -1015,7 +1011,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public void downloadImportUserTemplate(Context response) throws IOException {
         try {
-            InputStream inputStream = POICacheManager.getFile("userImportTemplate.xlsx");
+            URL url = ResourceUtil.findResource("classpath:userImportTemplate.xlsx");
+            if (url == null) {
+                log.error(">>> 获取用户导入模板失败：");
+                CommonResponseUtil.renderError(response, "获取用户导入模板失败");
+                return;
+            }
+            InputStream inputStream = url.openStream();
             byte[] bytes = IoUtil.readBytes(inputStream);
             CommonDownloadUtil.download("SNOWY系统B端用户导入模板.xlsx", bytes, response);
         } catch (Exception e) {
@@ -1187,7 +1189,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public void exportUser(SysUserExportParam sysUserExportParam, Context response) throws IOException {
-        File tempFile = null;
+        /*File tempFile = null;
         try {
             QueryWrapper queryWrapper = new QueryWrapper();
             if (ObjectUtil.isNotEmpty(sysUserExportParam.getUserIds())) {
@@ -1320,12 +1322,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             CommonResponseUtil.renderError(response, "用户导出失败");
         } finally {
             FileUtil.del(tempFile);
-        }
+        }*/
     }
 
     @Override
     public void exportUserInfo(SysUserIdParam sysUserIdParam, Context response) throws IOException {
-        File destTemplateFile = null;
+       /* File destTemplateFile = null;
         File resultFile = null;
         try {
             SysUser sysUser = this.queryEntity(sysUserIdParam.getId());
@@ -1380,7 +1382,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             if (ObjectUtil.isNotEmpty(resultFile)) {
                 FileUtil.del(resultFile);
             }
-        }
+        }*/
     }
 
 

@@ -14,8 +14,7 @@ package com.fliad.mobile.modular.resource.param.button;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.noear.solon.validation.annotation.NotBlank;
-
-import javax.validation.constraints.NotNull;
+import org.noear.solon.validation.annotation.NotNull;
 
 /**
  * 移动端按钮添加参数
