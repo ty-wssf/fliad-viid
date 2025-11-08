@@ -26,6 +26,7 @@
         <module>fliad-plugin-nop-report-docx</module>
         <module>fliad-plugin-nop-dao</module>
         <module>fliad-plugin-nop-antlr4-tool</module>
+        <module>fliad-plugin-nop-orm-model</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
