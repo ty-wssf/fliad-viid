@@ -28,6 +28,7 @@ import io.nop.commons.concurrent.executor.GlobalExecutors;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
 import io.nop.report.core.util.ExcelReportHelper;
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.data.annotation.Tran;
@@ -40,8 +41,10 @@ import com.fliad.hikvision.modular.defense.service.HikvisionCameraService;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -126,37 +129,52 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
     @Tran
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
+        // 先检查导入数据中是否存在重复的IP地址
+        Set<String> ipSet = new HashSet<>();
         for (Map<String, Object> deviceMap : devices) {
-            // 检查deviceId唯一性
-            String deviceId = (String) deviceMap.get("deviceId");
-            checkDeviceIdUnique(deviceId, null);
-
-            // 检查设备名称唯一性
-            String name = (String) deviceMap.get("name");
-            checkDeviceNameUnique(name, null);
-
-            // 检查设备IP地址唯一性
             String ipAddr = (String) deviceMap.get("ipAddr");
-            checkDeviceIpAddrUnique(ipAddr, null);
+            if (ipSet.contains(ipAddr)) {
+                throw new CommonException("导入数据中存在重复的IP地址: {}", ipAddr);
+            }
+            ipSet.add(ipAddr);
+        }
 
-            HikvisionCamera hikvisionCamera = new HikvisionCamera();
-            hikvisionCamera.setDeviceId(deviceId);
-            hikvisionCamera.setName(name);
-            hikvisionCamera.setIpAddr(ipAddr);
+        for (Map<String, Object> deviceMap : devices) {
+            // 获取设备信息
+            String deviceId = (String) deviceMap.get("deviceId");
+            String name = (String) deviceMap.get("name");
+            String ipAddr = (String) deviceMap.get("ipAddr");
 
-            // 处理端口
-            hikvisionCamera.setPort((Integer) deviceMap.get("port"));
+            // 根据IP地址查找现有设备
+            HikvisionCamera existingCamera = this.getOne(new QueryWrapper().eq("IP_ADDR", ipAddr));
 
-            hikvisionCamera.setUsername((String) deviceMap.get("username"));
-            hikvisionCamera.setPassword((String) deviceMap.get("password"));
+            if (existingCamera != null) {
+                // 如果IP地址已存在，则更新设备信息
+                // 检查deviceId唯一性，排除当前记录
+                checkDeviceIdUnique(deviceId, existingCamera.getId());
+                // 检查设备名称唯一性，排除当前记录
+                checkDeviceNameUnique(name, existingCamera.getId());
 
-            // 处理启用状态
-            hikvisionCamera.setEnableStatus((Integer) deviceMap.get("enableStatus"));
+                existingCamera = ONode.deserialize(ONode.load(existingCamera).setAll(deviceMap).toString(), HikvisionCamera.class);
 
-            // 处理在线状态
-            hikvisionCamera.setOnlineStatus(0);
+                // 保持在线状态不变
+                this.updateById(existingCamera);
+            } else {
+                // 如果IP地址不存在，则新增设备
+                // 检查deviceId唯一性
+                checkDeviceIdUnique(deviceId, null);
+                // 检查设备名称唯一性
+                checkDeviceNameUnique(name, null);
+                // 检查IP地址唯一性（仅在新增时检查）
+                checkDeviceIpAddrUnique(ipAddr, null);
 
-            this.save(hikvisionCamera);
+                HikvisionCamera hikvisionCamera = ONode.deserialize(ONode.stringify(deviceMap), HikvisionCamera.class);
+
+                // 处理在线状态
+                hikvisionCamera.setOnlineStatus(0);
+
+                this.save(hikvisionCamera);
+            }
         }
     }
 
