@@ -1,0 +1,727 @@
+package io.nop.dao.dialect.model._gen;
+
+import io.nop.commons.collections.KeyedList; //NOPMD NOSONAR - suppressed UnusedImports - Used for List Prop
+import io.nop.core.lang.json.IJsonHandler;
+import io.nop.dao.dialect.model.DialectFeatures;
+import io.nop.commons.util.ClassHelper;
+
+
+
+// tell cpd to start ignoring code - CPD-OFF
+/**
+ * generate from /nop/schema/orm/dialect.xdef <p>
+ * 
+ */
+@SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable",
+    "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S101","java:S1128","java:S1161"})
+public abstract class _DialectFeatures extends io.nop.core.resource.component.AbstractComponentModel {
+    
+    /**
+     *  
+     * xml name: supportBatchUpdate
+     * 
+     */
+    private Boolean _supportBatchUpdate ;
+    
+    /**
+     *  
+     * xml name: supportBatchUpdateCount
+     * 
+     */
+    private Boolean _supportBatchUpdateCount ;
+    
+    /**
+     *  
+     * xml name: supportDeleteFromJoin
+     * 
+     */
+    private Boolean _supportDeleteFromJoin ;
+    
+    /**
+     *  
+     * xml name: supportDeleteTableAlias
+     * delete语句是否允许表别名。例如 delete my_table a where ...
+     */
+    private Boolean _supportDeleteTableAlias ;
+    
+    /**
+     *  
+     * xml name: supportExecuteLargeUpdate
+     * 
+     */
+    private Boolean _supportExecuteLargeUpdate ;
+    
+    /**
+     *  
+     * xml name: supportFullJoin
+     * 
+     */
+    private Boolean _supportFullJoin ;
+    
+    /**
+     *  
+     * xml name: supportILike
+     * 
+     */
+    private Boolean _supportILike ;
+    
+    /**
+     *  
+     * xml name: supportLargeMaxRows
+     * 
+     */
+    private Boolean _supportLargeMaxRows ;
+    
+    /**
+     *  
+     * xml name: supportNullsFirst
+     * 对于不支持的数据库，可以通过
+     * order by if(isnull(field),0,1), field来模拟
+     */
+    private Boolean _supportNullsFirst ;
+    
+    /**
+     *  
+     * xml name: supportOutputForUpdate
+     * Update语句支持output子句
+     */
+    private Boolean _supportOutputForUpdate ;
+    
+    /**
+     *  
+     * xml name: supportQueryTimeout
+     * 
+     */
+    private Boolean _supportQueryTimeout ;
+    
+    /**
+     *  
+     * xml name: supportReturningForUpdate
+     * Update语句增加returning子句支持
+     */
+    private Boolean _supportReturningForUpdate ;
+    
+    /**
+     *  
+     * xml name: supportRightJoin
+     * 
+     */
+    private Boolean _supportRightJoin ;
+    
+    /**
+     *  
+     * xml name: supportRowValueConstructor
+     * 
+     */
+    private Boolean _supportRowValueConstructor ;
+    
+    /**
+     *  
+     * xml name: supportSavePoint
+     * 
+     */
+    private Boolean _supportSavePoint ;
+    
+    /**
+     *  
+     * xml name: supportSequence
+     * 
+     */
+    private Boolean _supportSequence ;
+    
+    /**
+     *  
+     * xml name: supportSomeSubQuery
+     * 
+     */
+    private Boolean _supportSomeSubQuery ;
+    
+    /**
+     *  
+     * xml name: supportTransaction
+     * 
+     */
+    private Boolean _supportTransaction ;
+    
+    /**
+     *  
+     * xml name: supportTruncateTable
+     * 
+     */
+    private Boolean _supportTruncateTable ;
+    
+    /**
+     *  
+     * xml name: supportUpdateFromJoin
+     * 
+     */
+    private Boolean _supportUpdateFromJoin ;
+    
+    /**
+     *  
+     * xml name: supportUpdateTableAlias
+     * update语句是否允许表别名。例如 update my_table a where ...
+     */
+    private Boolean _supportUpdateTableAlias ;
+    
+    /**
+     *  
+     * xml name: supportWithAsClause
+     * 
+     */
+    private Boolean _supportWithAsClause ;
+    
+    /**
+     *  
+     * xml name: useAsInFrom
+     * select xx from t as v 这种语句是否允许使用as，oracle不允许使用as
+     */
+    private Boolean _useAsInFrom ;
+    
+    /**
+     *  
+     * xml name: useGetStringForDate
+     * 使用ResultSet.getString来获取日期时间类型的值。
+     * h2数据库的Date类型读取存在问题。1899以前的日期按照Date读取会少一天，例如1899-02-03会变成1899-02-02。所以需要改成按照字符串格式读取
+     */
+    private Boolean _useGetStringForDate ;
+    
+    /**
+     * 
+     * xml name: supportBatchUpdate
+     *  
+     */
+    
+    public Boolean getSupportBatchUpdate(){
+      return _supportBatchUpdate;
+    }
+
+    
+    public void setSupportBatchUpdate(Boolean value){
+        checkAllowChange();
+        
+        this._supportBatchUpdate = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportBatchUpdateCount
+     *  
+     */
+    
+    public Boolean getSupportBatchUpdateCount(){
+      return _supportBatchUpdateCount;
+    }
+
+    
+    public void setSupportBatchUpdateCount(Boolean value){
+        checkAllowChange();
+        
+        this._supportBatchUpdateCount = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportDeleteFromJoin
+     *  
+     */
+    
+    public Boolean getSupportDeleteFromJoin(){
+      return _supportDeleteFromJoin;
+    }
+
+    
+    public void setSupportDeleteFromJoin(Boolean value){
+        checkAllowChange();
+        
+        this._supportDeleteFromJoin = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportDeleteTableAlias
+     *  delete语句是否允许表别名。例如 delete my_table a where ...
+     */
+    
+    public Boolean getSupportDeleteTableAlias(){
+      return _supportDeleteTableAlias;
+    }
+
+    
+    public void setSupportDeleteTableAlias(Boolean value){
+        checkAllowChange();
+        
+        this._supportDeleteTableAlias = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportExecuteLargeUpdate
+     *  
+     */
+    
+    public Boolean getSupportExecuteLargeUpdate(){
+      return _supportExecuteLargeUpdate;
+    }
+
+    
+    public void setSupportExecuteLargeUpdate(Boolean value){
+        checkAllowChange();
+        
+        this._supportExecuteLargeUpdate = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportFullJoin
+     *  
+     */
+    
+    public Boolean getSupportFullJoin(){
+      return _supportFullJoin;
+    }
+
+    
+    public void setSupportFullJoin(Boolean value){
+        checkAllowChange();
+        
+        this._supportFullJoin = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportILike
+     *  
+     */
+    
+    public Boolean getSupportILike(){
+      return _supportILike;
+    }
+
+    
+    public void setSupportILike(Boolean value){
+        checkAllowChange();
+        
+        this._supportILike = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportLargeMaxRows
+     *  
+     */
+    
+    public Boolean getSupportLargeMaxRows(){
+      return _supportLargeMaxRows;
+    }
+
+    
+    public void setSupportLargeMaxRows(Boolean value){
+        checkAllowChange();
+        
+        this._supportLargeMaxRows = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportNullsFirst
+     *  对于不支持的数据库，可以通过
+     * order by if(isnull(field),0,1), field来模拟
+     */
+    
+    public Boolean getSupportNullsFirst(){
+      return _supportNullsFirst;
+    }
+
+    
+    public void setSupportNullsFirst(Boolean value){
+        checkAllowChange();
+        
+        this._supportNullsFirst = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportOutputForUpdate
+     *  Update语句支持output子句
+     */
+    
+    public Boolean getSupportOutputForUpdate(){
+      return _supportOutputForUpdate;
+    }
+
+    
+    public void setSupportOutputForUpdate(Boolean value){
+        checkAllowChange();
+        
+        this._supportOutputForUpdate = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportQueryTimeout
+     *  
+     */
+    
+    public Boolean getSupportQueryTimeout(){
+      return _supportQueryTimeout;
+    }
+
+    
+    public void setSupportQueryTimeout(Boolean value){
+        checkAllowChange();
+        
+        this._supportQueryTimeout = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportReturningForUpdate
+     *  Update语句增加returning子句支持
+     */
+    
+    public Boolean getSupportReturningForUpdate(){
+      return _supportReturningForUpdate;
+    }
+
+    
+    public void setSupportReturningForUpdate(Boolean value){
+        checkAllowChange();
+        
+        this._supportReturningForUpdate = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportRightJoin
+     *  
+     */
+    
+    public Boolean getSupportRightJoin(){
+      return _supportRightJoin;
+    }
+
+    
+    public void setSupportRightJoin(Boolean value){
+        checkAllowChange();
+        
+        this._supportRightJoin = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportRowValueConstructor
+     *  
+     */
+    
+    public Boolean getSupportRowValueConstructor(){
+      return _supportRowValueConstructor;
+    }
+
+    
+    public void setSupportRowValueConstructor(Boolean value){
+        checkAllowChange();
+        
+        this._supportRowValueConstructor = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportSavePoint
+     *  
+     */
+    
+    public Boolean getSupportSavePoint(){
+      return _supportSavePoint;
+    }
+
+    
+    public void setSupportSavePoint(Boolean value){
+        checkAllowChange();
+        
+        this._supportSavePoint = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportSequence
+     *  
+     */
+    
+    public Boolean getSupportSequence(){
+      return _supportSequence;
+    }
+
+    
+    public void setSupportSequence(Boolean value){
+        checkAllowChange();
+        
+        this._supportSequence = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportSomeSubQuery
+     *  
+     */
+    
+    public Boolean getSupportSomeSubQuery(){
+      return _supportSomeSubQuery;
+    }
+
+    
+    public void setSupportSomeSubQuery(Boolean value){
+        checkAllowChange();
+        
+        this._supportSomeSubQuery = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportTransaction
+     *  
+     */
+    
+    public Boolean getSupportTransaction(){
+      return _supportTransaction;
+    }
+
+    
+    public void setSupportTransaction(Boolean value){
+        checkAllowChange();
+        
+        this._supportTransaction = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportTruncateTable
+     *  
+     */
+    
+    public Boolean getSupportTruncateTable(){
+      return _supportTruncateTable;
+    }
+
+    
+    public void setSupportTruncateTable(Boolean value){
+        checkAllowChange();
+        
+        this._supportTruncateTable = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportUpdateFromJoin
+     *  
+     */
+    
+    public Boolean getSupportUpdateFromJoin(){
+      return _supportUpdateFromJoin;
+    }
+
+    
+    public void setSupportUpdateFromJoin(Boolean value){
+        checkAllowChange();
+        
+        this._supportUpdateFromJoin = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportUpdateTableAlias
+     *  update语句是否允许表别名。例如 update my_table a where ...
+     */
+    
+    public Boolean getSupportUpdateTableAlias(){
+      return _supportUpdateTableAlias;
+    }
+
+    
+    public void setSupportUpdateTableAlias(Boolean value){
+        checkAllowChange();
+        
+        this._supportUpdateTableAlias = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: supportWithAsClause
+     *  
+     */
+    
+    public Boolean getSupportWithAsClause(){
+      return _supportWithAsClause;
+    }
+
+    
+    public void setSupportWithAsClause(Boolean value){
+        checkAllowChange();
+        
+        this._supportWithAsClause = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: useAsInFrom
+     *  select xx from t as v 这种语句是否允许使用as，oracle不允许使用as
+     */
+    
+    public Boolean getUseAsInFrom(){
+      return _useAsInFrom;
+    }
+
+    
+    public void setUseAsInFrom(Boolean value){
+        checkAllowChange();
+        
+        this._useAsInFrom = value;
+           
+    }
+
+    
+    /**
+     * 
+     * xml name: useGetStringForDate
+     *  使用ResultSet.getString来获取日期时间类型的值。
+     * h2数据库的Date类型读取存在问题。1899以前的日期按照Date读取会少一天，例如1899-02-03会变成1899-02-02。所以需要改成按照字符串格式读取
+     */
+    
+    public Boolean getUseGetStringForDate(){
+      return _useGetStringForDate;
+    }
+
+    
+    public void setUseGetStringForDate(Boolean value){
+        checkAllowChange();
+        
+        this._useGetStringForDate = value;
+           
+    }
+
+    
+
+    @Override
+    public void freeze(boolean cascade){
+        if(frozen()) return;
+        super.freeze(cascade);
+
+        if(cascade){ //NOPMD - suppressed EmptyControlStatement - Auto Gen Code
+        
+        }
+    }
+
+    @Override
+    protected void outputJson(IJsonHandler out){
+        super.outputJson(out);
+        
+        out.putNotNull("supportBatchUpdate",this.getSupportBatchUpdate());
+        out.putNotNull("supportBatchUpdateCount",this.getSupportBatchUpdateCount());
+        out.putNotNull("supportDeleteFromJoin",this.getSupportDeleteFromJoin());
+        out.putNotNull("supportDeleteTableAlias",this.getSupportDeleteTableAlias());
+        out.putNotNull("supportExecuteLargeUpdate",this.getSupportExecuteLargeUpdate());
+        out.putNotNull("supportFullJoin",this.getSupportFullJoin());
+        out.putNotNull("supportILike",this.getSupportILike());
+        out.putNotNull("supportLargeMaxRows",this.getSupportLargeMaxRows());
+        out.putNotNull("supportNullsFirst",this.getSupportNullsFirst());
+        out.putNotNull("supportOutputForUpdate",this.getSupportOutputForUpdate());
+        out.putNotNull("supportQueryTimeout",this.getSupportQueryTimeout());
+        out.putNotNull("supportReturningForUpdate",this.getSupportReturningForUpdate());
+        out.putNotNull("supportRightJoin",this.getSupportRightJoin());
+        out.putNotNull("supportRowValueConstructor",this.getSupportRowValueConstructor());
+        out.putNotNull("supportSavePoint",this.getSupportSavePoint());
+        out.putNotNull("supportSequence",this.getSupportSequence());
+        out.putNotNull("supportSomeSubQuery",this.getSupportSomeSubQuery());
+        out.putNotNull("supportTransaction",this.getSupportTransaction());
+        out.putNotNull("supportTruncateTable",this.getSupportTruncateTable());
+        out.putNotNull("supportUpdateFromJoin",this.getSupportUpdateFromJoin());
+        out.putNotNull("supportUpdateTableAlias",this.getSupportUpdateTableAlias());
+        out.putNotNull("supportWithAsClause",this.getSupportWithAsClause());
+        out.putNotNull("useAsInFrom",this.getUseAsInFrom());
+        out.putNotNull("useGetStringForDate",this.getUseGetStringForDate());
+    }
+
+    public DialectFeatures cloneInstance(){
+        DialectFeatures instance = newInstance();
+        this.copyTo(instance);
+        return instance;
+    }
+
+    protected void copyTo(DialectFeatures instance){
+        super.copyTo(instance);
+        
+        instance.setSupportBatchUpdate(this.getSupportBatchUpdate());
+        instance.setSupportBatchUpdateCount(this.getSupportBatchUpdateCount());
+        instance.setSupportDeleteFromJoin(this.getSupportDeleteFromJoin());
+        instance.setSupportDeleteTableAlias(this.getSupportDeleteTableAlias());
+        instance.setSupportExecuteLargeUpdate(this.getSupportExecuteLargeUpdate());
+        instance.setSupportFullJoin(this.getSupportFullJoin());
+        instance.setSupportILike(this.getSupportILike());
+        instance.setSupportLargeMaxRows(this.getSupportLargeMaxRows());
+        instance.setSupportNullsFirst(this.getSupportNullsFirst());
+        instance.setSupportOutputForUpdate(this.getSupportOutputForUpdate());
+        instance.setSupportQueryTimeout(this.getSupportQueryTimeout());
+        instance.setSupportReturningForUpdate(this.getSupportReturningForUpdate());
+        instance.setSupportRightJoin(this.getSupportRightJoin());
+        instance.setSupportRowValueConstructor(this.getSupportRowValueConstructor());
+        instance.setSupportSavePoint(this.getSupportSavePoint());
+        instance.setSupportSequence(this.getSupportSequence());
+        instance.setSupportSomeSubQuery(this.getSupportSomeSubQuery());
+        instance.setSupportTransaction(this.getSupportTransaction());
+        instance.setSupportTruncateTable(this.getSupportTruncateTable());
+        instance.setSupportUpdateFromJoin(this.getSupportUpdateFromJoin());
+        instance.setSupportUpdateTableAlias(this.getSupportUpdateTableAlias());
+        instance.setSupportWithAsClause(this.getSupportWithAsClause());
+        instance.setUseAsInFrom(this.getUseAsInFrom());
+        instance.setUseGetStringForDate(this.getUseGetStringForDate());
+    }
+
+    protected DialectFeatures newInstance(){
+        return (DialectFeatures) ClassHelper.newInstance(getClass());
+    }
+}
+ // resume CPD analysis - CPD-ON

@@ -24,6 +24,7 @@
         <module>fliad-plugin-nop-report-core</module>
         <module>fliad-plugin-nop-ooxml-docx</module>
         <module>fliad-plugin-nop-report-docx</module>
+        <module>fliad-plugin-nop-dao</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
