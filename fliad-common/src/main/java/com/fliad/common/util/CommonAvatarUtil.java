@@ -14,7 +14,7 @@ package com.fliad.common.util;
 
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.util.RandomUtil;
-import org.apache.commons.lang3.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -67,12 +67,12 @@ public class CommonAvatarUtil {
         String nameWritten = name;
         if (nameLength > 2) {
             // 如果用户输入的姓名大于等于3个字符，截取后面两位
-            if (isChinese(StringUtils.substring(name, 0, 1))) {
+            if (isChinese(StrUtil.sub(name, 0, 1))) {
                 // 截取倒数两位汉字
                 nameWritten = name.substring(nameLength - 2);
             } else {
                 // 截取前面的两个英文字母
-                nameWritten = StringUtils.substring(name, 0, 1).toUpperCase();
+                nameWritten = StrUtil.sub(name, 0, 1).toUpperCase();
             }
         }
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -84,8 +84,8 @@ public class CommonAvatarUtil {
         // 两个字及以上
         if(nameWritten.length() >= 2) {
             g2.setFont(new Font("微软雅黑", Font.BOLD, 30));
-            String firstWritten = StringUtils.substring(nameWritten, 0, 1);
-            String secondWritten = StringUtils.substring(nameWritten, 0, 2);
+            String firstWritten = StrUtil.sub(nameWritten, 0, 1);
+            String secondWritten = StrUtil.sub(nameWritten, 0, 2);
             // 两个中文 如 言曌
             if (isChinese(firstWritten) && isChinese(secondWritten)) {
                 g2.drawString(nameWritten, 20, 60);
