@@ -14,7 +14,20 @@
                 </field>
 
                 <field name="ipAddr" displayName="IP地址" mandatory="true">
-                    <schema stdDomain="string"/>
+                    <schema stdDomain="string">
+                        <validator>
+                            <c:script><![CDATA[
+                                import io.nop.api.core.exceptions.NopException;
+                                import io.nop.excel.ExcelErrors;
+                                import io.nop.commons.util.NetHelper;
+
+                                if(!NetHelper.isIpV4Address(value)) {
+                                    throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                                        .param("errorDesc", "IP地址格式不正确,应为标准IPv4格式(如192.168.1.1),当前输入值:" + value);
+                                }
+                            ]]></c:script>
+                        </validator>
+                    </schema>
                 </field>
 
                 <field name="port" displayName="端口" mandatory="true">

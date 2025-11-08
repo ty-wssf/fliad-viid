@@ -190,18 +190,22 @@
 		}
 		hikvisionDefenseApi.hikvisionDefenseDelete([param]).then(() => {
 			table.value.refresh(true)
-			message.success('删除成功')
 		})
 	}
 
 	// 批量删除海康布防
-	const deleteBatchHikvisionDefense = (ids) => {
-		const param = ids.map((id) => {
-			return { id: id }
+	const deleteBatchHikvisionDefense = () => {
+		if (selectedRowKeys.value.length < 1) {
+			message.warning('请选择一条或多条数据')
+			return false
+		}
+		const params = selectedRowKeys.value.map((m) => {
+			return {
+				id: m
+			}
 		})
-		hikvisionDefenseApi.hikvisionDefenseDelete(param).then(() => {
-			table.value.refresh(true)
-			message.success('删除成功')
+		hikvisionDefenseApi.hikvisionDefenseDelete(params).then(() => {
+			table.value.clearRefreshSelected()
 		})
 	}
 
@@ -256,7 +260,9 @@
 			formData.append('file', file);
 
 			// 调用导入接口
-			hikvisionDefenseApi.hikvisionDefenseImport(formData);
+			hikvisionDefenseApi.hikvisionDefenseImport(formData).then(res => {
+				table.value.refresh(true)
+			});
 		} catch (error) {
 			// message.error('导入失败: ' + (error.message || error));
 		} finally {
