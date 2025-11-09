@@ -1,0 +1,31 @@
+/**
+ * Copyright (c) 2017-2024 Nop Platform. All rights reserved.
+ * Author: canonical_entropy@163.com
+ * Blog:   https://www.zhihu.com/people/canonical-entropy
+ * Gitee:  https://gitee.com/canonical-entropy/nop-entropy
+ * Github: https://github.com/entropy-cloud/nop-entropy
+ */
+package io.nop.orm.dialect;
+
+import com.zaxxer.hikari.HikariDataSource;
+import io.nop.api.core.config.AppConfig;
+import io.nop.commons.metrics.GlobalMeterRegistry;
+import io.nop.orm.dao.TestJsonComponent;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
+
+@EnabledIfSystemProperty(named = "nop.test.docker.enabled", matches = "true")
+public class TestPostgreSqlJsonComponent extends TestJsonComponent {
+    protected HikariDataSource createDataSource() {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setMetricRegistry(GlobalMeterRegistry.instance());
+        ds.setDriverClassName("org.testcontainers.jdbc.ContainerDatabaseDriver");
+        // String timeZone = ZoneId.systemDefault().getId();
+        ds.setJdbcUrl("jdbc:tc:postgresql:latest:///test?TC_DAEMON=true");
+        ds.setUsername(AppConfig.var("nop.database.username", "test"));
+        ds.setPassword(AppConfig.var("nop.database.password", "test"));
+        ds.setMaximumPoolSize(2);
+        return ds;
+    }
+
+}

@@ -1,0 +1,420 @@
+package test.entity._gen;
+
+import io.nop.orm.model.IEntityModel;
+import io.nop.orm.support.DynamicOrmEntity;
+import io.nop.orm.support.OrmEntitySet; //NOPMD - suppressed UnusedImports - Auto Gen Code
+import io.nop.orm.IOrmEntitySet; //NOPMD - suppressed UnusedImports - Auto Gen Code
+import io.nop.api.core.convert.ConvertHelper;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
+
+import test.entity.DepartmentHsql;
+
+// tell cpd to start ignoring code - CPD-OFF
+/**
+ *  : TEST_DEPARTMENT_INFO_HSQL
+ */
+@SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable","java:S3008","java:S1602","java:S1128","java:S1161",
+        "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})
+public class _DepartmentHsql extends DynamicOrmEntity{
+    
+    /* : ID VARCHAR */
+    public static final String PROP_NAME_sid = "sid";
+    public static final int PROP_ID_sid = 1;
+    
+    /* : DEPT_NAME VARCHAR */
+    public static final String PROP_NAME_name = "name";
+    public static final int PROP_ID_name = 2;
+    
+    /* : LAYER_CODE VARCHAR */
+    public static final String PROP_NAME_layerCode = "layerCode";
+    public static final int PROP_ID_layerCode = 3;
+    
+    /* : layer_level INTEGER */
+    public static final String PROP_NAME_layerLevel = "layerLevel";
+    public static final int PROP_ID_layerLevel = 4;
+    
+    /* : PARENT_ID VARCHAR */
+    public static final String PROP_NAME_parentId = "parentId";
+    public static final int PROP_ID_parentId = 5;
+    
+
+    private static int _PROP_ID_BOUND = 6;
+
+    
+    /* relation:  */
+    public static final String PROP_NAME_parent = "parent";
+    
+    /* relation:  */
+    public static final String PROP_NAME_children = "children";
+    
+
+    protected static final List<String> PK_PROP_NAMES = Arrays.asList(PROP_NAME_sid);
+    protected static final int[] PK_PROP_IDS = new int[]{PROP_ID_sid};
+
+    private static final String[] PROP_ID_TO_NAME = new String[6];
+    private static final Map<String,Integer> PROP_NAME_TO_ID = new HashMap<>();
+    static{
+      
+          PROP_ID_TO_NAME[PROP_ID_sid] = PROP_NAME_sid;
+          PROP_NAME_TO_ID.put(PROP_NAME_sid, PROP_ID_sid);
+      
+          PROP_ID_TO_NAME[PROP_ID_name] = PROP_NAME_name;
+          PROP_NAME_TO_ID.put(PROP_NAME_name, PROP_ID_name);
+      
+          PROP_ID_TO_NAME[PROP_ID_layerCode] = PROP_NAME_layerCode;
+          PROP_NAME_TO_ID.put(PROP_NAME_layerCode, PROP_ID_layerCode);
+      
+          PROP_ID_TO_NAME[PROP_ID_layerLevel] = PROP_NAME_layerLevel;
+          PROP_NAME_TO_ID.put(PROP_NAME_layerLevel, PROP_ID_layerLevel);
+      
+          PROP_ID_TO_NAME[PROP_ID_parentId] = PROP_NAME_parentId;
+          PROP_NAME_TO_ID.put(PROP_NAME_parentId, PROP_ID_parentId);
+      
+    }
+
+    
+    /* : ID */
+    private String _sid;
+    
+    /* : DEPT_NAME */
+    private String _name;
+    
+    /* : LAYER_CODE */
+    private String _layerCode;
+    
+    /* : layer_level */
+    private Integer _layerLevel;
+    
+    /* : PARENT_ID */
+    private String _parentId;
+    
+
+    public _DepartmentHsql(){
+        // for debug
+    }
+
+    protected DepartmentHsql newInstance(){
+       return new DepartmentHsql();
+    }
+
+    @Override
+    public DepartmentHsql cloneInstance() {
+        DepartmentHsql entity = newInstance();
+        orm_forEachInitedProp((value, propId) -> {
+            entity.onInitProp(propId);
+        });
+        return entity;
+    }
+
+    @Override
+    public String orm_entityName() {
+      // 如果存在实体模型对象，则以模型对象上的设置为准
+      IEntityModel entityModel = orm_entityModel();
+      if(entityModel != null)
+          return entityModel.getName();
+      return "test.entity.DepartmentHsql";
+    }
+
+    @Override
+    public int orm_propIdBound(){
+      IEntityModel entityModel = orm_entityModel();
+      if(entityModel != null)
+          return entityModel.getPropIdBound();
+      return _PROP_ID_BOUND;
+    }
+
+    @Override
+    public Object orm_id() {
+    
+        return buildSimpleId(PROP_ID_sid);
+     
+    }
+
+    @Override
+    public boolean orm_isPrimary(int propId) {
+        
+            return propId == PROP_ID_sid;
+          
+    }
+
+    @Override
+    public String orm_propName(int propId) {
+        if(propId >= PROP_ID_TO_NAME.length)
+            return super.orm_propName(propId);
+        String propName = PROP_ID_TO_NAME[propId];
+        if(propName == null)
+           return super.orm_propName(propId);
+        return propName;
+    }
+
+    @Override
+    public int orm_propId(String propName) {
+        Integer propId = PROP_NAME_TO_ID.get(propName);
+        if(propId == null)
+            return super.orm_propId(propName);
+        return propId;
+    }
+
+    @Override
+    public Object orm_propValue(int propId) {
+        switch(propId){
+        
+            case PROP_ID_sid:
+               return getSid();
+        
+            case PROP_ID_name:
+               return getName();
+        
+            case PROP_ID_layerCode:
+               return getLayerCode();
+        
+            case PROP_ID_layerLevel:
+               return getLayerLevel();
+        
+            case PROP_ID_parentId:
+               return getParentId();
+        
+           default:
+              return super.orm_propValue(propId);
+        }
+    }
+
+    
+
+    @Override
+    public void orm_propValue(int propId, Object value){
+        switch(propId){
+        
+            case PROP_ID_sid:{
+               String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_sid));
+               }
+               setSid(typedValue);
+               break;
+            }
+        
+            case PROP_ID_name:{
+               String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_name));
+               }
+               setName(typedValue);
+               break;
+            }
+        
+            case PROP_ID_layerCode:{
+               String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_layerCode));
+               }
+               setLayerCode(typedValue);
+               break;
+            }
+        
+            case PROP_ID_layerLevel:{
+               Integer typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toInteger(value,
+                       err-> newTypeConversionError(PROP_NAME_layerLevel));
+               }
+               setLayerLevel(typedValue);
+               break;
+            }
+        
+            case PROP_ID_parentId:{
+               String typedValue = null;
+               if(value != null){
+                   typedValue = ConvertHelper.toString(value,
+                       err-> newTypeConversionError(PROP_NAME_parentId));
+               }
+               setParentId(typedValue);
+               break;
+            }
+        
+           default:
+              super.orm_propValue(propId,value);
+        }
+    }
+
+    @Override
+    public void orm_internalSet(int propId, Object value) {
+        switch(propId){
+        
+            case PROP_ID_sid:{
+               onInitProp(propId);
+               this._sid = (String)value;
+               orm_id(); // 如果是设置主键字段，则触发watcher
+               break;
+            }
+        
+            case PROP_ID_name:{
+               onInitProp(propId);
+               this._name = (String)value;
+               
+               break;
+            }
+        
+            case PROP_ID_layerCode:{
+               onInitProp(propId);
+               this._layerCode = (String)value;
+               
+               break;
+            }
+        
+            case PROP_ID_layerLevel:{
+               onInitProp(propId);
+               this._layerLevel = (Integer)value;
+               
+               break;
+            }
+        
+            case PROP_ID_parentId:{
+               onInitProp(propId);
+               this._parentId = (String)value;
+               
+               break;
+            }
+        
+           default:
+              super.orm_internalSet(propId,value);
+        }
+    }
+
+    
+    /**
+     * : ID
+     */
+    public String getSid(){
+         onPropGet(PROP_ID_sid);
+         return _sid;
+    }
+
+    /**
+     * : ID
+     */
+    public void setSid(String value){
+        if(onPropSet(PROP_ID_sid,value)){
+            this._sid = value;
+            internalClearRefs(PROP_ID_sid);
+            orm_id();
+        }
+    }
+    
+    /**
+     * : DEPT_NAME
+     */
+    public String getName(){
+         onPropGet(PROP_ID_name);
+         return _name;
+    }
+
+    /**
+     * : DEPT_NAME
+     */
+    public void setName(String value){
+        if(onPropSet(PROP_ID_name,value)){
+            this._name = value;
+            internalClearRefs(PROP_ID_name);
+            
+        }
+    }
+    
+    /**
+     * : LAYER_CODE
+     */
+    public String getLayerCode(){
+         onPropGet(PROP_ID_layerCode);
+         return _layerCode;
+    }
+
+    /**
+     * : LAYER_CODE
+     */
+    public void setLayerCode(String value){
+        if(onPropSet(PROP_ID_layerCode,value)){
+            this._layerCode = value;
+            internalClearRefs(PROP_ID_layerCode);
+            
+        }
+    }
+    
+    /**
+     * : layer_level
+     */
+    public Integer getLayerLevel(){
+         onPropGet(PROP_ID_layerLevel);
+         return _layerLevel;
+    }
+
+    /**
+     * : layer_level
+     */
+    public void setLayerLevel(Integer value){
+        if(onPropSet(PROP_ID_layerLevel,value)){
+            this._layerLevel = value;
+            internalClearRefs(PROP_ID_layerLevel);
+            
+        }
+    }
+    
+    /**
+     * : PARENT_ID
+     */
+    public String getParentId(){
+         onPropGet(PROP_ID_parentId);
+         return _parentId;
+    }
+
+    /**
+     * : PARENT_ID
+     */
+    public void setParentId(String value){
+        if(onPropSet(PROP_ID_parentId,value)){
+            this._parentId = value;
+            internalClearRefs(PROP_ID_parentId);
+            
+        }
+    }
+    
+    /**
+     * 
+     */
+    public DepartmentHsql getParent(){
+       return (DepartmentHsql)internalGetRefEntity(PROP_NAME_parent);
+    }
+
+    public void setParent(DepartmentHsql refEntity){
+   
+           if(refEntity == null){
+           
+                   this.setParentId(null);
+               
+           }else{
+           internalSetRefEntity(PROP_NAME_parent, refEntity,()->{
+           
+                           this.setParentId(refEntity.getSid());
+                       
+           });
+           }
+       
+    }
+       
+    private final OrmEntitySet<DepartmentHsql> _children = new OrmEntitySet<>(this, PROP_NAME_children,
+        DepartmentHsql.PROP_NAME_parent, null, DepartmentHsql.class);
+
+    /**
+     * 。 refPropName: parent, keyProp: {rel.keyProp}
+     */
+    public IOrmEntitySet<DepartmentHsql> getChildren(){
+       return _children;
+    }
+       
+}
+// resume CPD analysis - CPD-ON

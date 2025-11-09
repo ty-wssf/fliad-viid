@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<lib x:schema="/nop/schema/xlib.xdef" xmlns:x="/nop/schema/xdsl.xdef">
+    <tags>
+        <filter macro="true" outputMode="node">
+            <description><![CDATA[
+             将 <sql:filter> and o.fld = :param </sql:filter>变换为
+                <c:if test="${!_.isEmpty(param)}">
+                   and o.fld = ${param}
+                </c:if>
+            ]]></description>
+
+            <slot name="default" slotType="node"/>
+
+            <source>
+                <c:script>
+                    import io.nop.core.lang.sql.SqlHelper;
+                    import io.nop.core.lang.sql.SQL;
+
+                    const sb = SqlHelper.markNamedParam(slot_default.contentValue);
+                    const cond = sb.markers.map(marker=> "!_.isEmpty("+marker.name.$replace('.',"?.")+")").join(" and ");
+                    const sqlText = sb.renderText(marker =>{
+                    return "${" + marker.name.$replace('.',"?.") + "}";
+                    });
+                </c:script>
+
+                <c:if xpl:ignoreTag="true" test="${'$'}{${cond}}">
+                    ${sqlText}
+                </c:if>
+            </source>
+        </filter>
+
+        <fragment outputMode="sql">
+            <attr name="id" mandatory="true"/>
+            <attr name="sqlLibModel" implicit="true"/>
+
+            <description>嵌入当前sql-lib库中定义的SQL片段</description>
+
+            <source>
+                <c:unit>${sqlLibModel.buildFragment(id,$scope)}</c:unit>
+            </source>
+        </fragment>
+
+        <when-dialect conditionTag="true">
+            <attr name="name" mandatory="true"/>
+            <attr name="dialect" implicit="true" mandatory="true"/>
+
+            <description>当数据库方言类型为指定类型时返回true</description>
+
+            <source>
+                return dialect.name == name
+            </source>
+        </when-dialect>
+
+        <invoke>
+            <attr name="sqlName" mandatory="true"/>
+            <attr name="offset" type="Long" />
+            <attr name="limit" type="Long" />
+            <attr name="args"/>
+
+            <source>
+                import io.nop.api.core.beans.LongRangeBean;
+                const range = limit > 0 ? new LongRangeBean(offset, limit) : null;
+                const sqlLibManager = inject("nopSqlLibManager");
+                return sqlLibManager.invoke(sqlName, range, args, $scope);
+            </source>
+        </invoke>
+    </tags>
+</lib>

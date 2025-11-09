@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<orm x:schema="/nop/schema/orm/orm.xdef"
+     x:extends="base.orm.xml"
+     xmlns:x="/nop/schema/xdsl.xdef" xmlns:xpl="/nop/schema/xpl.xdef">
+    <x:gen-extends>
+        <pdman:GenOrm src="test.pdma.json" xpl:lib="/nop/orm/xlib/pdman.xlib"
+                      versionCol="REVISION"
+                      createrCol="CREATED_BY" createTimeCol="CREATED_TIME"
+                      updaterCol="UPDATED_BY" updateTimeCol="UPDATED_TIME"
+                      tenantCol="TENANT_ID"
+        />
+    </x:gen-extends>
+
+    <x:post-extends>
+        <orm-gen:JsonComponentSupport xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <domains>
+        <domain name="collegeId" displayName="collegeId" stdSqlType="VARCHAR" precision="50"/>
+    </domains>
+
+    <entities>
+        <entity name="io.nop.app.SimsClassFee" x:override="remove"/>
+
+        <entity name="io.nop.app.SimsClass" registerShortName="true">
+            <columns>
+                <column name="collegeId" propId="100" lazy="true"/>
+                <column name="jsonExt" code="JSON_EXT" propId="101" tagSet="json" stdSqlType="JSON"
+                        precision="4000"/>
+                <column name="byteField" code="BYTE_FIELD" propId="102" stdSqlType="TINYINT" stdDataType="int"/>
+            </columns>
+            <aliases>
+                <alias name="collegeName" propPath="simsCollege.collegeName" type="String"/>
+            </aliases>
+
+            <computes>
+                <compute name="collegeNameEx" type="String">
+                    <getter>
+                        return entity.collegeName + 'Ex';
+                    </getter>
+
+                    <setter>
+                        entity.collegeName = value.$removeTail('Ex')
+                    </setter>
+                </compute>
+            </computes>
+            <relations>
+                <to-one name="simsCollege" refEntityName="io.nop.app.SimsCollege" refPropName="simsClasses">
+                    <join>
+                        <on leftProp="collegeId" rightProp="collegeId"/>
+                    </join>
+                </to-one>
+
+                <!-- 使用非主键字段进行关联 -->
+                <to-one name="refByName" refEntityName="io.nop.app.SimsCollege" refPropName="refClasses"
+                        notGenCode="true">
+                    <join>
+                        <on leftProp="className" rightProp="collegeName"/>
+                    </join>
+                </to-one>
+            </relations>
+        </entity>
+
+        <entity name="io.nop.app.SimsCollege" registerShortName="true">
+            <columns>
+                <column name="collegeId" domain="collegeId"/>
+            </columns>
+
+            <relations>
+                <to-many name="ext" refEntityName="io.nop.app.SimsExtField" keyProp="fieldName" notGenCode="true">
+                    <join>
+                        <on leftProp="id" rightProp="entityId"/>
+                        <on leftValue="io.nop.app.SimsCollege" rightProp="entityName"/>
+                    </join>
+                </to-many>
+
+                <to-one name="collegeEx" refEntityName="io.nop.app.SimsCollegeEx" reverseDepends="true">
+                    <join>
+                        <on leftProp="collegeId" rightProp="sid"/>
+                    </join>
+                </to-one>
+            </relations>
+        </entity>
+
+        <entity name="io.nop.app.SimsCollegeEx" registerShortName="true" tableName="sims_college_ex">
+            <columns>
+                <column propId="1" name="sid" code="SID" stdSqlType="INTEGER" primary="true"/>
+                <column propId="2" name="extInfo" code="EXT_INFO" stdSqlType="VARCHAR" precision="10"/>
+            </columns>
+
+            <relations>
+                <to-one name="college" refEntityName="io.nop.app.SimsCollege">
+                    <join>
+                        <on leftProp="sid" rightProp="collegeId"/>
+                    </join>
+                </to-one>
+            </relations>
+        </entity>
+
+        <!-- 为SimsLesson增加全局缓存 -->
+        <entity name="io.nop.app.SimsLesson" useGlobalCache="true"/>
+
+        <entity name="io.nop.app.SimsExam" registerShortName="true">
+            <columns>
+                <!--
+                   增加额外的字段记录Decimal字段的动态可变小数位数。用于测试FloatingScaleDecimal组件对象
+                -->
+                <column name="examScoreScale" propId="20" code="EXAM_SCORE_SCALE" stdSqlType="TINYINT"/>
+
+                <!-- 标记字段需要加密存储 -->
+                <column name="examName" tagSet="enc"/>
+
+                <!-- 不生成java实体代码 -->
+                <column name="extField" propId="21" code="EXT_FIELD" stdSqlType="INTEGER" notGenCode="true"/>
+            </columns>
+
+            <components>
+                <component name="examScoreDecimal" className="io.nop.orm.component.FloatingScaleDecimal">
+                    <prop name="value" column="examScore"/>
+                    <prop name="scale" column="examScoreScale"/>
+                </component>
+            </components>
+
+            <aliases>
+                <alias name="examScoreNormalized" propPath="examScoreDecimal.normalizedValue" type="BigDecimal"/>
+                <alias name="extFldA" propPath="ext.fldA.string" type="String"/>
+                <alias name="extFldB" propPath="ext.fldB.boolean" type="Boolean" notGenCode="true"/>
+                <alias name="extFldC" propPath="ext.fldC.string" type="String"/>
+            </aliases>
+
+            <relations>
+                <to-many name="ext" refEntityName="io.nop.app.SimsExtField" keyProp="fieldName">
+                    <join>
+                        <on leftProp="id" rightProp="entityId"/>
+                        <on leftValue="io.nop.app.SimsExam" rightProp="entityName"/>
+                    </join>
+                </to-many>
+
+                <to-many name="examExt" refEntityName="io.nop.app.SimsExamExtField" keyProp="fieldName">
+                    <join>
+                        <on leftProp="examId" rightProp="examId"/>
+                    </join>
+                </to-many>
+
+                <to-one name="extRefCollege" refEntityName="SimsCollege">
+                    <join>
+                        <on leftProp="extFldC" rightProp="id"/>
+                    </join>
+                </to-one>
+
+                <to-one name="extRefCollege2" refEntityName="SimsCollege">
+                    <join>
+                        <on leftProp="extFldA" rightProp="id"/>
+                    </join>
+                </to-one>
+            </relations>
+        </entity>
+
+        <!--
+        针对所有实体的扩展字段表
+        -->
+        <entity name="io.nop.app.SimsExtField" tableName="SIMS_EXT_FIELD" kvTable="true" useTenant="true">
+            <columns>
+                <column name="entityName" code="ENTITY_NAME" stdSqlType="VARCHAR" precision="100"
+                        primary="true" mandatory="true" propId="1"/>
+                <column name="entityId" code="ENTITY_ID" stdSqlType="VARCHAR" precision="32"
+                        primary="true" mandatory="true" propId="2"/>
+                <column name="fieldName" code="FIELD_NAME" stdSqlType="VARCHAR" precision="100"
+                        primary="true" mandatory="true" propId="3"/>
+                <column name="fieldType" code="FIELD_TYPE" stdSqlType="INTEGER" propId="4"/>
+                <column name="decimalScale" code="DECIMAL_SCALE" stdSqlType="TINYINT" propId="5"/>
+                <column name="decimalValue" code="DECIMAL_VALUE" stdSqlType="DECIMAL" propId="6"
+                        precision="24" scale="8"/>
+                <column name="dateValue" code="DATE_VALUE" stdSqlType="DATE" propId="7"/>
+                <column name="timestampValue" code="TIMESTAMP_VALUE" stdSqlType="TIMESTAMP" propId="8"/>
+                <column name="stringValue" code="STRING_VALUE" stdSqlType="VARCHAR" precision="4000" propId="9"/>
+            </columns>
+        </entity>
+
+        <!--
+       只针对SimsExam表的扩展字段表
+       -->
+        <entity name="io.nop.app.SimsExamExtField" tableName="SIMS_EXAM_EXT_FIELD" kvTable="true" useTenant="true">
+            <columns>
+                <column name="examId" code="EXAM_ID" stdSqlType="VARCHAR" precision="32"
+                        primary="true" mandatory="true" propId="2"/>
+                <column name="fieldName" code="FIELD_NAME" stdSqlType="VARCHAR" precision="100"
+                        primary="true" mandatory="true" propId="3"/>
+                <column name="fieldType" code="FIELD_TYPE" stdSqlType="INTEGER" propId="4"/>
+                <column name="decimalScale" code="DECIMAL_SCALE" stdSqlType="TINYINT" propId="5"/>
+                <column name="decimalValue" code="DECIMAL_VALUE" stdSqlType="DECIMAL" propId="6"
+                        precision="24" scale="8"/>
+                <column name="dateValue" code="DATE_VALUE" stdSqlType="DATE" propId="7"/>
+                <column name="timestampValue" code="TIMESTAMP_VALUE" stdSqlType="TIMESTAMP" propId="8"/>
+                <column name="stringValue" code="STRING_VALUE" stdSqlType="VARCHAR" precision="4000" propId="9"/>
+            </columns>
+        </entity>
+
+        <entity name="io.nop.app.SimsMajor" useLogicalDelete="true" deleteFlagProp="delFlag">
+            <columns>
+                <column name="majorId" tagSet="seq" mandatory="true"/>
+                <column name="delFlag" code="DEL_FLAG" stdSqlType="TINYINT" propId="20" mandatory="true"/>
+            </columns>
+        </entity>
+
+        <entity name="io.nop.app.SimsInstruct">
+            <unique-keys>
+                <unique-key columns="classId,lessonId,teacherId" constraint="UK_SIMS_INSTRUCT" name="simsInstructKey"/>
+            </unique-keys>
+        </entity>
+
+
+        <!-- 学生表定义 -->
+        <entity name="Student" tableName="student" displayName="学生" className="io.nop.orm.support.DynamicOrmEntity">
+            <columns>
+                <column propId="1" name="studentId" code="student_id" displayName="学号" mandatory="true" primary="true"
+                        stdSqlType="INTEGER" precision="11" scale="0"/>
+                <column propId="2" name="name" code="name" displayName="姓名" mandatory="true" primary="false" stdSqlType="VARCHAR"
+                        precision="50" scale="0"/>
+            </columns>
+        </entity>
+        <!-- 课程表定义 -->
+        <entity name="Course" tableName="course" displayName="课程" className="io.nop.orm.support.DynamicOrmEntity">
+            <columns>
+                <column propId="1" name="courseId" code="course_id" displayName="课程号" mandatory="true" primary="true"
+                        stdSqlType="INTEGER" precision="11" scale="0"/>
+                <column propId="2" name="courseName" code="course_name" displayName="课程名" mandatory="true" primary="false"
+                        stdSqlType="VARCHAR" precision="100" scale="0"/>
+            </columns>
+        </entity>
+        <!-- 选课表定义 -->
+        <entity name="CourseSelection" tableName="course_selection" displayName="选课"
+                className="io.nop.orm.support.DynamicOrmEntity">
+            <columns>
+                <column propId="1" name="studentId" code="student_id" displayName="学号" mandatory="true" primary="true"
+                        stdSqlType="INTEGER" precision="11" scale="0" orm:ref-table="student"/>
+                <column propId="2" name="courseId" code="course_id" displayName="课程号" mandatory="true" primary="true"
+                        stdSqlType="INTEGER" precision="11" scale="0" orm:ref-table="course"/>
+            </columns>
+            <relations>
+                <to-one name="student" refEntityName="Student">
+                    <join>
+                        <on leftProp="studentId" rightProp="studentId"/>
+                    </join>
+                </to-one>
+                <to-one name="course" refEntityName="Course">
+                    <join>
+                        <on leftProp="courseId" rightProp="courseId"/>
+                    </join>
+                </to-one>
+            </relations>
+        </entity>
+        <!-- 关注的学生表定义 -->
+        <entity name="StudentFollow" tableName="student_follow" displayName="关注的学生"
+                className="io.nop.orm.support.DynamicOrmEntity">
+            <columns>
+                <column propId="4" name="sid" code="sid" mandatory="true" primary="true" stdSqlType="INTEGER" />
+                <column propId="1" name="studentId" code="student_id" displayName="学号" mandatory="true" primary="false"
+                        stdSqlType="INTEGER" precision="11" scale="0" orm:ref-table="student"/>
+                <column propId="2" name="followTime" code="follow_time" displayName="关注时间" mandatory="true" primary="false"
+                        stdSqlType="DATETIME" precision="0" scale="0"/>
+                <column propId="3" name="followerId" code="follower_id" displayName="关注人" mandatory="true" primary="false"
+                        stdSqlType="INTEGER" precision="11" scale="0" />
+            </columns>
+            <relations>
+                <to-one name="student" refEntityName="Student">
+                    <join>
+                        <on leftProp="studentId" rightProp="studentId"/>
+                    </join>
+                </to-one>
+
+            </relations>
+        </entity>
+
+
+    </entities>
+</orm>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<lib x:schema="/nop/schema/xlib.xdef" x:extends="ddl.xlib" xmlns:x="/nop/schema/xdsl.xdef" >
+    <tags>
+        <AddComment>
+            <source>
+                <thisLib:TableComment table="${table}" xpl:return="tableComment"/>
+                <c:if test="${tableComment}"><![CDATA[
+   ALTER TABLE ${dialect.escapeSQLName(table.tableName)} COMMENT ${dialect.getStringLiteral(tableComment)};
+                ]]></c:if>
+
+                <!--                <c:for var="col" items="${table.columns}">-->
+                <!--                    <thisLib:ColumnComment col="${col}" xpl:return="colComment"/>-->
+                <!--                    <c:if test="${colComment}">-->
+                <!--                        ALTER TABLE ${dialect.escapeSQLName(table.tableName)} MODIFY ${dialect.escapeSQLName(col.code)}-->
+                <!--                        COMMENT ${dialect.getStringLiteral(colComment)};-->
+                <!--                    </c:if>-->
+                <!--                </c:for>-->
+            </source>
+        </AddComment>
+
+        <ColNullDef>
+            <source>
+                <c:unit><![CDATA[ ${col.mandatory and !allNullable ? 'NOT NULL' : 'NULL'} ]]></c:unit>
+            </source>
+        </ColNullDef>
+
+        <DefaultValue>
+            <attr name="col" implicit="true"/>
+            <attr name="dialect" implicit="true"/>
+            <attr name="allNullable" type="Boolean" implicit="true"/>
+            <source x:override="prepend">
+                <c:if test="${!col.defaultValue and col.stdSqlType.toString() == 'TIMESTAMP' and col.mandatory and !allNullable}">
+                    <c:unit><![CDATA[ DEFAULT CURRENT_TIMESTAMP(3) ]]></c:unit>
+                    <c:script>
+                        return;
+                    </c:script>
+                </c:if>
+
+                <c:if test="${col.defaultValue and col.stdSqlType.toString() == 'DATE'}">
+                    <c:unit><![CDATA[ default '${col.normalizedDefaultValue}' ]]></c:unit>
+                    <c:script>return;</c:script>
+                </c:if>
+            </source>
+        </DefaultValue>
+
+        <ColCommentDef>
+            <source>
+                <thisLib:ColumnComment col="${col}" xpl:return="colComment"/>
+                <c:unit><![CDATA[   COMMENT ${dialect.getStringLiteral(colComment)}]]></c:unit>
+            </source>
+        </ColCommentDef>
+
+
+        <AddTenantIdToPrimaryKey outputMode="text">
+            <attr name="table" type="io.nop.orm.model.IEntityModel"/>
+            <attr name="dialect" type="io.nop.dao.dialect.IDialect"/>
+
+            <source>
+                <c:unit>alter table ${dialect.escapeSQLName(table.tableName)} drop primary key</c:unit>
+                <c:unit>;&#10;</c:unit>
+                <c:unit>alter table ${dialect.escapeSQLName(table.tableName)} add primary key (NOP_TENANT_ID, ${
+                table.compositePk ? table.idProp.columns.map(col=> dialect.escapeSQLName(col.code)).join(',') : dialect.escapeSQLName(table.idProp.code)})</c:unit>
+            </source>
+        </AddTenantIdToPrimaryKey>
+    </tags>
+</lib>

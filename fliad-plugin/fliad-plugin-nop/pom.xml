@@ -29,6 +29,7 @@
         <module>fliad-plugin-nop-orm-model</module>
         <module>fliad-plugin-nop-codegen</module>
         <module>fliad-plugin-nop-orm-eql</module>
+        <module>fliad-plugin-nop-orm</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>

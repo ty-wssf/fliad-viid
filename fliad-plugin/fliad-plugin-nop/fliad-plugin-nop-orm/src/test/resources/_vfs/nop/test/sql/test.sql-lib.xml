@@ -1,0 +1,104 @@
+<sql-lib x:schema="/nop/schema/orm/sql-lib.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+         xmlns:sql="sql" xmlns:c="c" xmlns:xpl="xpl">
+
+
+    <sqls>
+        <sql name="select" sqlMethod="findFirst" rowType="io.nop.orm.entity.MyEntity" colNameCamelCase="true">
+            <fields>
+                <field name="my_date" stdSqlType="DATE"/>
+            </fields>
+            <source> 
+                select d as my_date, a,b,c
+                from my_entity
+                where id = ${id}
+            </source>
+        </sql>
+
+        <sql name="selectPage" sqlMethod="findPage" colNameCamelCase="true">
+            <source>
+                select 'x' as `a'b`, 'y' as ` u``v`, a,b as my_data
+                from my_entity
+            </source>
+        </sql>
+
+        <sql name="insert">
+            <source>
+                insert into my_entity(a,b,c,d)
+                values (${a},${b},'a',${d})
+            </source>
+        </sql>
+
+        <sql name="update">
+            <source>
+                update my_entity
+                set a = ${a},
+                b = ${b}
+                where id = ${id}
+            </source>
+        </sql>
+
+        <sql name="delete">
+            <source>
+                delete my_entity
+                where id = ${id}
+            </source>
+        </sql>
+
+        <eql name="testComplexParams">
+            <source>
+                <c:import from="/nop/orm/xlib/sql.xlib"/>
+                select o
+                from io.nop.app.SimsClass o
+                where 1=1
+                <sql:filter xpl:dump="true">and o.classId in (:data.ids)</sql:filter>
+                <sql:filter>and o.classId = :data.unknownParam</sql:filter>
+            </source>
+        </eql>
+
+        <eql name="findBySqlFilter">
+            <!--
+            validate-input用于引入自动验证所需的输入数据
+            -->
+            <validate-input>
+               return {
+                    ids: [1,2,3]
+                }
+            </validate-input>
+
+            <batchLoadSelection>
+                simsCollege { simsClasses }
+            </batchLoadSelection>
+
+            <source>
+                <c:import from="/nop/orm/xlib/sql.xlib"/>
+                select o
+                from io.nop.app.SimsClass o
+                where 1=1
+                <sql:filter>and o.classId in (:ids)</sql:filter>
+                <sql:filter>and o.classId = :unknownParam</sql:filter>
+            </source>
+        </eql>
+
+        <query name="testDql">
+            <source>
+                <!--
+                等价于 DQL语句, 统计每个学校的班级个数
+                select shortName, simsClasses.count(count) as classCount
+                from SimsCollege
+                -->
+                <fields>
+                    <field name="shortName"/>
+                    <field owner="simsClasses" name="id" aggFunc="count" alias="classCount"/>
+                </fields>
+                <sourceName>io.nop.app.SimsCollege</sourceName>
+            </source>
+        </query>
+
+        <eql name="demo_dict">
+            <source>
+                select o.collegeId as value, o.collegeName as label
+                from SimsCollege o
+            </source>
+        </eql>
+    </sqls>
+</sql-lib>
