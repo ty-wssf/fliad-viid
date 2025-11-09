@@ -171,8 +171,8 @@ public class ResourceHelper {
     }
 
     public static void checkValidModuleName(String moduleName) {
-        if (!isValidModuleName(moduleName))
-            throw new NopException(ERR_RESOURCE_INVALID_MODULE_NAME).param(ARG_MODULE_NAME, moduleName);
+        /*if (!isValidModuleName(moduleName))
+            throw new NopException(ERR_RESOURCE_INVALID_MODULE_NAME).param(ARG_MODULE_NAME, moduleName);*/
     }
 
     public static boolean isValidModuleId(String moduleId) {
