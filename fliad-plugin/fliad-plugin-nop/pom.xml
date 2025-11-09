@@ -28,6 +28,7 @@
         <module>fliad-plugin-nop-antlr4-tool</module>
         <module>fliad-plugin-nop-orm-model</module>
         <module>fliad-plugin-nop-codegen</module>
+        <module>fliad-plugin-nop-orm-eql</module>
     </modules>
 
     <artifactId>fliad-plugin-nop</artifactId>
