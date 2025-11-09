@@ -14,7 +14,7 @@ import com.fliad.hikvision.dao.entity.HikvisionCamera;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- *  海康布防表: hikvision_camera
+ *  海康布防表: HIKVISION_CAMERA
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable","java:S3008","java:S1602","java:S1128","java:S1161",
         "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})

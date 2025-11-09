@@ -1,0 +1,4 @@
+
+drop table HIKVISION_CAMERA;
+drop table VEHICLE_TRAFFIC_RECORD;
+
