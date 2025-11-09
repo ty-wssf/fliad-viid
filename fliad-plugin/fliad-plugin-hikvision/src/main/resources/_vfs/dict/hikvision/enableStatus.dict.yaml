@@ -1,6 +1,15 @@
+# __XGEN_FORCE_OVERRIDE__
 label: 启用状态
+locale: zh-CN
+valueType: int
+description: 
 options:
+
   - label: 启用
     value: 1
+    description: 
+  
   - label: 禁用
     value: 0
+    description: 
+  

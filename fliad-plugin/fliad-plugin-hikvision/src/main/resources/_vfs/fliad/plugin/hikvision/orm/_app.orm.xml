@@ -14,6 +14,13 @@
         <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
     </x:gen-extends>
 
+    <dicts>
+        <dict label="启用状态" name="hikvision/enableStatus" valueType="int">
+            <option label="启用" value="1"/>
+            <option label="禁用" value="0"/>
+        </dict>
+    </dicts>
+
     <entities>
         <entity className="com.fliad.hikvision.dao.entity.HikvisionCamera" displayName="海康布防表"
                 name="com.fliad.hikvision.dao.entity.HikvisionCamera" registerShortName="true"
