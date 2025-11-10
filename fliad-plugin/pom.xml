@@ -47,5 +47,6 @@
         <module>fliad-plugin-nop</module>
         <module>fliad-plugin-hikvision</module>
         <module>fliad-plugin-report</module>
+        <module>fliad-plugin-dahua</module>
     </modules>
 </project>
