@@ -16,7 +16,7 @@ CREATE TABLE DAHUA_CAMERA(
 );
 
 
-      COMMENT ON TABLE DAHUA_CAMERA IS '海康布防表';
+      COMMENT ON TABLE DAHUA_CAMERA IS '大华设备表';
                 
       COMMENT ON COLUMN DAHUA_CAMERA.ID IS '主键';
                     
