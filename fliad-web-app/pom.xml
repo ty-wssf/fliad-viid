@@ -284,6 +284,11 @@
             <artifactId>fliad-plugin-hikvision</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-dahua</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.fliad</groupId>
