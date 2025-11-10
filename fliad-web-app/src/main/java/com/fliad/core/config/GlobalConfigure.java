@@ -18,6 +18,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.fliad.common.pojo.ListenerEntity;
 import com.mybatisflex.core.FlexGlobalConfig;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
@@ -152,8 +153,8 @@ public class GlobalConfigure {
         config.setDeletedValueOfLogicDelete("DELETED");
         config.setNormalValueOfLogicDelete("NOT_DELETE");
 
-        config.registerInsertListener(customMetaObjectListener, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class);
-        config.registerUpdateListener(customMetaObjectListener, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class
+        config.registerInsertListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class);
+        config.registerUpdateListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class
         );
     }
 

@@ -12,6 +12,7 @@
  */
 package com.fliad.dahua.modular.defense.entity;
 
+import com.fliad.common.pojo.ListenerEntity;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.Table;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +27,7 @@ import java.util.Date;
  * @date 2025/09/27
  **/
 @Table(value = "DAHUA_CAMERA")
-public class DahuaCamera {
+public class DahuaCamera extends ListenerEntity {
 
     /** ID */
     @Id

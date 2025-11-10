@@ -18,10 +18,10 @@ import com.mybatisflex.annotation.InsertListener;
 import com.mybatisflex.annotation.UpdateListener;
 import org.noear.solon.Solon;
 import com.fliad.common.enums.CommonDeleteFlagEnum;
-import com.fliad.common.pojo.CommonEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.function.Supplier;
 
@@ -41,16 +41,11 @@ public class CustomMetaObjectListener implements UpdateListener, InsertListener 
     @Override
     public void onInsert(Object entity) {
         try {
-            if (ObjectUtil.isNotNull(entity) && entity instanceof CommonEntity) {
-                CommonEntity commonEntity = (CommonEntity) entity;
-                Date current = ObjectUtil.isNotNull(commonEntity.getCreateTime())
-                        ? commonEntity.getCreateTime() : new Date();
-                commonEntity.setCreateTime(current);
-                // 当前已登录 且 创建人为空 则填充
-                if (ObjectUtil.isNull(commonEntity.getCreateUser())) {
-                    commonEntity.setCreateUser(this.getUserId());
-                }
-                commonEntity.setDeleteFlag(EnumUtil.toString(CommonDeleteFlagEnum.NOT_DELETE));
+            if (ObjectUtil.isNotNull(entity)) {
+                setDateField(entity, "createTime", false);
+                setDateField(entity, "updateTime", false);
+                setUserIdField(entity, "createUser");
+                setDeleteFlagField(entity);
             }
         } catch (Exception e) {
             printException("新增注入", e);
@@ -63,19 +58,66 @@ public class CustomMetaObjectListener implements UpdateListener, InsertListener 
     @Override
     public void onUpdate(Object entity) {
         try {
-            if (ObjectUtil.isNotNull(entity) && entity instanceof CommonEntity) {
-                CommonEntity commonEntity = (CommonEntity) entity;
-                Date current = ObjectUtil.isNotNull(commonEntity.getUpdateTime())
-                        ? commonEntity.getUpdateTime() : new Date();
-                commonEntity.setUpdateTime(current);
-
-                // 当前已登录 且 更新人为空 则填充
-                if (ObjectUtil.isNull(commonEntity.getUpdateUser())) {
-                    commonEntity.setUpdateUser(this.getUserId());
-                }
+            if (ObjectUtil.isNotNull(entity)) {
+                setDateField(entity, "updateTime", false);
+                setUserIdField(entity, "updateUser");
             }
         } catch (Exception e) {
             printException("修改注入", e);
+        }
+    }
+
+    /**
+     * 设置日期字段
+     *
+     * @param entity    实体对象
+     * @param fieldName 字段名
+     * @param isForce   是否强制设置（不管是否已有值）
+     */
+    private void setDateField(Object entity, String fieldName, boolean isForce) {
+        try {
+            Field field = entity.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            if (isForce || ObjectUtil.isNull(field.get(entity))) {
+                field.set(entity, new Date());
+            }
+        } catch (Exception e) {
+            // 忽略异常，字段可能不存在
+        }
+    }
+
+    /**
+     * 设置用户ID字段
+     *
+     * @param entity    实体对象
+     * @param fieldName 字段名
+     */
+    private void setUserIdField(Object entity, String fieldName) {
+        try {
+            Field field = entity.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            if (ObjectUtil.isNull(field.get(entity))) {
+                field.set(entity, this.getUserId());
+            }
+        } catch (Exception e) {
+            // 忽略异常，字段可能不存在
+        }
+    }
+
+    /**
+     * 设置删除标志字段
+     *
+     * @param entity 实体对象
+     */
+    private void setDeleteFlagField(Object entity) {
+        try {
+            Field field = entity.getClass().getDeclaredField("deleteFlag");
+            field.setAccessible(true);
+            if (ObjectUtil.isNull(field.get(entity))) {
+                field.set(entity, EnumUtil.toString(CommonDeleteFlagEnum.NOT_DELETE));
+            }
+        } catch (Exception e) {
+            // 忽略异常，字段可能不存在
         }
     }
 
