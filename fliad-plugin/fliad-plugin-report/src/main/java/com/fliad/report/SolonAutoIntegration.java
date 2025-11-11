@@ -1,6 +1,8 @@
 package com.fliad.report;
 
-import com.fliad.report.service.SolonInitializer;
+import com.fliad.report.service.SolonBeanContainer;
+import io.nop.api.core.ioc.BeanContainer;
+import io.nop.core.initialize.CoreInitialization;
 import org.noear.solon.core.AppContext;
 import org.noear.solon.core.Plugin;
 
@@ -12,7 +14,13 @@ public class SolonAutoIntegration implements Plugin {
 
     @Override
     public void start(AppContext context) throws Throwable {
-        context.beanMake(SolonInitializer.class);
+        BeanContainer.registerInstance(new SolonBeanContainer(context));
+        CoreInitialization.initialize();
+    }
+
+    @Override
+    public void stop() throws Throwable {
+        CoreInitialization.destroy();
     }
 
 }

@@ -20,6 +20,21 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fliad.common.pojo.ListenerEntity;
 import com.mybatisflex.core.FlexGlobalConfig;
+import io.nop.api.core.ioc.BeanContainer;
+import io.nop.commons.cache.CacheConfig;
+import io.nop.commons.cache.LocalCacheProvider;
+import io.nop.dao.api.DaoProvider;
+import io.nop.dao.api.IDaoProvider;
+import io.nop.dao.jdbc.IJdbcTemplate;
+import io.nop.dao.jdbc.impl.JdbcFactory;
+import io.nop.dao.seq.UuidSequenceGenerator;
+import io.nop.dao.txn.ITransactionTemplate;
+import io.nop.orm.IOrmSessionFactory;
+import io.nop.orm.IOrmTemplate;
+import io.nop.orm.dao.OrmDaoProvider;
+import io.nop.orm.factory.DefaultOrmColumnBinderEnhancer;
+import io.nop.orm.factory.OrmSessionFactoryBean;
+import io.nop.orm.impl.OrmTemplateImpl;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
@@ -41,6 +56,7 @@ import com.fliad.sys.modular.index.result.SysIndexMessageDetailResult;
 import com.fliad.sys.modular.index.result.SysIndexOpLogListResult;
 import com.fliad.sys.modular.index.result.SysIndexVisLogListResult;
 
+import javax.sql.DataSource;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -156,6 +172,39 @@ public class GlobalConfigure {
         config.registerInsertListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class);
         config.registerUpdateListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class
         );
+    }
+
+    @Bean
+    public IJdbcTemplate jdbcTemplate(DataSource dataSource) {
+        JdbcFactory factory = new JdbcFactory();
+        ITransactionTemplate transactionTemplate = factory.newTransactionTemplate(dataSource);
+        return factory.newJdbcTemplate(transactionTemplate);
+    }
+
+    @Bean
+    protected IOrmSessionFactory ormSessionFactory(IJdbcTemplate jdbcTemplate) {
+        OrmSessionFactoryBean factoryBean = new OrmSessionFactoryBean();
+        factoryBean.setJdbcTemplate(jdbcTemplate);
+        factoryBean.setBeanProvider(BeanContainer.instance());
+        factoryBean.setGlobalCache(new LocalCacheProvider("global", CacheConfig.newConfig(1000)));
+        factoryBean.setSequenceGenerator(new UuidSequenceGenerator());
+        factoryBean.setColumnBinderEnhancer(new DefaultOrmColumnBinderEnhancer());
+
+        factoryBean.init();
+
+        return factoryBean.getObject();
+    }
+
+    @Bean
+    public IOrmTemplate ormTemplate(IOrmSessionFactory sessionFactory) {
+        return new OrmTemplateImpl(sessionFactory);
+    }
+
+    @Bean
+    public IDaoProvider daoProvider(IOrmTemplate ormTemplate) {
+        OrmDaoProvider daoProvider = new OrmDaoProvider(ormTemplate);
+        DaoProvider.registerInstance(daoProvider);
+        return daoProvider;
     }
 
 }
