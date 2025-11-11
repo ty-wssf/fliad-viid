@@ -101,6 +101,18 @@
 					</a-form-item>
 				</a-col>
 			</a-row>
+			<a-row :gutter="24">
+				<a-col :span="24">
+					<a-form-item label="脚本过滤器：" name="scriptFilter">
+						<a-textarea
+							v-model:value="formData.scriptFilter"
+							placeholder="(((age > 18 AND salary < 5000) OR (NOT isMarried)) AND label IN ['aa','bb'] AND title NOT IN ['cc','dd']) OR vip=='l3'"
+							:auto-size="{ minRows: 6, maxRows: 12 }"
+							allow-clear
+						/>
+					</a-form-item>
+				</a-col>
+			</a-row>
 		</a-form>
 		<template #footer>
 			<a-button style="margin-right: 8px" @click="onClose">关闭</a-button>
@@ -249,7 +261,7 @@ const onSubmit = () => {
 		const formDataParam = cloneDeep(formData.value)
 		// 如果是rabbitmq类型，构造config对象
 		if (formDataParam.type === 'rabbitmq') {
-			formDataParam.content = JSON.stringify({
+			const config = {
 				host: formDataParam.rabbitmqHost,
 				port: formDataParam.rabbitmqPort,
 				username: formDataParam.rabbitmqUsername,
@@ -257,7 +269,8 @@ const onSubmit = () => {
 				exchange: formDataParam.rabbitmqExchange,
 				routingKey: formDataParam.rabbitmqRoutingKey,
 				queueName: formDataParam.rabbitmqQueueName
-			})
+			}
+			formDataParam.content = JSON.stringify(config)
 			// 删除临时字段
 			delete formDataParam.rabbitmqHost
 			delete formDataParam.rabbitmqPort

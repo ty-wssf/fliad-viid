@@ -1,7 +1,7 @@
 -- ----------------------------
 -- Records of viid_datasource
 -- ----------------------------
-INSERT INTO `RESOURCE_DATASOURCE` VALUES ('328661015419015168', 1, '订阅RabbitMQ数据模版', '102', 'rabbitmq', '1', '{\"host\":\"127.0.0.1\",\"port\":5672,\"username\":\"xxx\",\"password\":\"xxx\",\"exchange\":\"BCHT_ITS_DATA\",\"routingKey\":\"test\",\"queueName\":\"test\"}', NULL, NULL, NULL, NULL, 'DISABLED');
+INSERT INTO `RESOURCE_DATASOURCE` VALUES ('328661015419015168', 1, '订阅RabbitMQ数据模版', '102', 'rabbitmq', '1', '{\"host\":\"127.0.0.1\",\"port\":5672,\"username\":\"xxx\",\"password\":\"xxx\",\"exchange\":\"BCHT_ITS_DATA\",\"routingKey\":\"test\",\"queueName\":\"test\"}', NULL, NULL, NULL, NULL, 'DISABLED', NULL);
 
 -- ----------------------------
 -- Records of viid_workflow

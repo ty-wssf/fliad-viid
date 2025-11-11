@@ -50,6 +50,10 @@ public class ResourceDatasourceAddParam {
     @ApiModelProperty(value = "是否是模板", position = 7)
     private Boolean isTemplate;
 
+    /** 脚本过滤器 */
+    @ApiModelProperty(value = "脚本过滤器", position = 8)
+    private String scriptFilter;
+
     public String getTitle() {
         return title;
     }
@@ -96,5 +100,13 @@ public class ResourceDatasourceAddParam {
 
     public void setIsTemplate(Boolean isTemplate) {
         this.isTemplate = isTemplate;
+    }
+
+    public String getScriptFilter() {
+        return scriptFilter;
+    }
+
+    public void setScriptFilter(String scriptFilter) {
+        this.scriptFilter = scriptFilter;
     }
 }

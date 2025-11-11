@@ -37,6 +37,7 @@ CREATE TABLE `RESOURCE_DATASOURCE`
     `UPDATE_TIME` datetime                                                      NULL DEFAULT NULL COMMENT '修改时间',
     `UPDATE_USER` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '修改用户',
     `STATUS`      varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '状态',
+    `SCRIPT_FILTER` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NULL DEFAULT NULL COMMENT '脚本过滤器',
     PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB
   CHARACTER SET = utf8mb4

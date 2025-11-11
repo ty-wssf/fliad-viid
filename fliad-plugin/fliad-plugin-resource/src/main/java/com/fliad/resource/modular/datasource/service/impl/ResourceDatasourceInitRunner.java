@@ -27,6 +27,7 @@ import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.noear.solon.expression.snel.SnEL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,7 +191,22 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
 
                 try {
                     // 处理接收到的消息
-                    processMessage(message, datasource);
+                    if (StrUtil.isNotBlank(datasource.getScriptFilter())) {
+                        Map<String, Object> context = ONode.deserialize(message);
+                        Object result = SnEL.eval(datasource.getScriptFilter(), context);
+                        // 如果result是布尔类型
+                        if (result instanceof Boolean) {
+                            if ((Boolean) result) {
+                                processMessage(message, datasource);
+                            } else  {
+                                log.info("脚本过滤器结果为false，不处理消息");
+                            }
+                        } else {
+                            log.warn("脚本过滤器结果不是布尔类型");
+                        }
+                    } else {
+                        processMessage(message, datasource);
+                    }
 
                     // 手动确认消息
                     channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
