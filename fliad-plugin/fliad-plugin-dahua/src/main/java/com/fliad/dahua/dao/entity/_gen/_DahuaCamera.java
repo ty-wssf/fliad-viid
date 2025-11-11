@@ -14,7 +14,7 @@ import com.fliad.dahua.dao.entity.DahuaCamera;
 
 // tell cpd to start ignoring code - CPD-OFF
 /**
- *  海康布防表: DAHUA_CAMERA
+ *  大华设备表: DAHUA_CAMERA
  */
 @SuppressWarnings({"PMD.UselessOverridingMethod","PMD.UnusedLocalVariable","java:S3008","java:S1602","java:S1128","java:S1161",
         "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})
@@ -48,11 +48,11 @@ public class _DahuaCamera extends DynamicOrmEntity{
     public static final String PROP_NAME_password = "password";
     public static final int PROP_ID_password = 7;
     
-    /* 启用状态：1=启用，0=禁用: ENABLE_STATUS BOOLEAN */
+    /* 启用状态：1=启用，0=禁用: ENABLE_STATUS VARCHAR */
     public static final String PROP_NAME_enableStatus = "enableStatus";
     public static final int PROP_ID_enableStatus = 8;
     
-    /* 在线状态：1=在线，0=离线: ONLINE_STATUS BOOLEAN */
+    /* 在线状态：1=在线，0=离线: ONLINE_STATUS VARCHAR */
     public static final String PROP_NAME_onlineStatus = "onlineStatus";
     public static final int PROP_ID_onlineStatus = 9;
     
@@ -134,10 +134,10 @@ public class _DahuaCamera extends DynamicOrmEntity{
     private java.lang.String _password;
     
     /* 启用状态：1=启用，0=禁用: ENABLE_STATUS */
-    private java.lang.Boolean _enableStatus;
+    private java.lang.String _enableStatus;
     
     /* 在线状态：1=在线，0=离线: ONLINE_STATUS */
-    private java.lang.Boolean _onlineStatus;
+    private java.lang.String _onlineStatus;
     
     /* 创建时间: CREATE_TIME */
     private java.time.LocalDateTime _createTime;
@@ -334,9 +334,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_enableStatus:{
-               java.lang.Boolean typedValue = null;
+               java.lang.String typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toBoolean(value,
+                   typedValue = ConvertHelper.toString(value,
                        err-> newTypeConversionError(PROP_NAME_enableStatus));
                }
                setEnableStatus(typedValue);
@@ -344,9 +344,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_onlineStatus:{
-               java.lang.Boolean typedValue = null;
+               java.lang.String typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toBoolean(value,
+                   typedValue = ConvertHelper.toString(value,
                        err-> newTypeConversionError(PROP_NAME_onlineStatus));
                }
                setOnlineStatus(typedValue);
@@ -433,14 +433,14 @@ public class _DahuaCamera extends DynamicOrmEntity{
         
             case PROP_ID_enableStatus:{
                onInitProp(propId);
-               this._enableStatus = (java.lang.Boolean)value;
+               this._enableStatus = (java.lang.String)value;
                
                break;
             }
         
             case PROP_ID_onlineStatus:{
                onInitProp(propId);
-               this._onlineStatus = (java.lang.Boolean)value;
+               this._onlineStatus = (java.lang.String)value;
                
                break;
             }
@@ -601,7 +601,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 启用状态：1=启用，0=禁用: ENABLE_STATUS
      */
-    public final java.lang.Boolean getEnableStatus(){
+    public final java.lang.String getEnableStatus(){
          onPropGet(PROP_ID_enableStatus);
          return _enableStatus;
     }
@@ -609,7 +609,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 启用状态：1=启用，0=禁用: ENABLE_STATUS
      */
-    public final void setEnableStatus(java.lang.Boolean value){
+    public final void setEnableStatus(java.lang.String value){
         if(onPropSet(PROP_ID_enableStatus,value)){
             this._enableStatus = value;
             internalClearRefs(PROP_ID_enableStatus);
@@ -620,7 +620,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 在线状态：1=在线，0=离线: ONLINE_STATUS
      */
-    public final java.lang.Boolean getOnlineStatus(){
+    public final java.lang.String getOnlineStatus(){
          onPropGet(PROP_ID_onlineStatus);
          return _onlineStatus;
     }
@@ -628,7 +628,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 在线状态：1=在线，0=离线: ONLINE_STATUS
      */
-    public final void setOnlineStatus(java.lang.Boolean value){
+    public final void setOnlineStatus(java.lang.String value){
         if(onPropSet(PROP_ID_onlineStatus,value)){
             this._onlineStatus = value;
             internalClearRefs(PROP_ID_onlineStatus);

@@ -41,10 +41,10 @@
                 <column code="PASSWORD" displayName="密码" mandatory="true" name="password" precision="128" propId="7"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="ENABLE_STATUS" defaultValue="1" displayName="启用状态：1=启用，0=禁用" mandatory="true"
-                        name="enableStatus" propId="8" stdDataType="boolean" stdSqlType="BOOLEAN"
+                        name="enableStatus" precision="1" propId="8" stdDataType="string" stdSqlType="VARCHAR"
                         ext:dict="hikvision/enableStatus"/>
                 <column code="ONLINE_STATUS" defaultValue="0" displayName="在线状态：1=在线，0=离线" mandatory="true"
-                        name="onlineStatus" propId="9" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                        name="onlineStatus" precision="1" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="CREATE_TIME" displayName="创建时间" mandatory="true" name="createTime" propId="10"
                         stdDataType="datetime" stdSqlType="DATETIME"/>
                 <column code="UPDATE_TIME" displayName="更新时间" mandatory="true" name="updateTime" propId="11"
