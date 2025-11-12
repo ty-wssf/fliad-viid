@@ -10,6 +10,5 @@ import com.sun.jna.Pointer;
  * @date 2022/3/8 14:05
  */
 public class PointerSize extends NetSDKLib.SdkStructure {
-    public Pointer          pointer;
+    public Pointer pointer;
 }
-

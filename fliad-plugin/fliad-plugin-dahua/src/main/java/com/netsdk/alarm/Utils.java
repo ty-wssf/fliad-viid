@@ -1,5 +1,6 @@
-package com.netsdk.lib;
+package com.netsdk.alarm;
 
+import com.netsdk.lib.NetSDKLib;
 import com.sun.jna.IntegerType;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;

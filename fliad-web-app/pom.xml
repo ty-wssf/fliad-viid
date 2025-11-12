@@ -344,12 +344,12 @@
 
     <build>
         <plugins>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-maven-plugin</artifactId>
-            </plugin>-->
+            </plugin>
             <!-- 配置打包插件（设置主类，并打包成胖包） -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
@@ -359,7 +359,7 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
-                        <!-- 此处，要改成自己的程序入口（即 main 函数类） -->
+                        &lt;!&ndash; 此处，要改成自己的程序入口（即 main 函数类） &ndash;&gt;
                         <manifest>
                             <mainClass>com.fliad.Application</mainClass>
                         </manifest>
@@ -374,7 +374,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 

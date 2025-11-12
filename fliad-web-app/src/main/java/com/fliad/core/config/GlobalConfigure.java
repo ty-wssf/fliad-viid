@@ -182,7 +182,7 @@ public class GlobalConfigure {
     }
 
     @Bean
-    protected IOrmSessionFactory ormSessionFactory(IJdbcTemplate jdbcTemplate) {
+    public IOrmSessionFactory ormSessionFactory(IJdbcTemplate jdbcTemplate) {
         OrmSessionFactoryBean factoryBean = new OrmSessionFactoryBean();
         factoryBean.setJdbcTemplate(jdbcTemplate);
         factoryBean.setBeanProvider(BeanContainer.instance());

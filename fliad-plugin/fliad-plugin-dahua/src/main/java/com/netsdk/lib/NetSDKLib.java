@@ -1,5 +1,6 @@
 package com.netsdk.lib;
 
+import com.netsdk.alarm.Utils;
 import com.netsdk.lib.structure.*;
 import com.sun.jna.*;
 

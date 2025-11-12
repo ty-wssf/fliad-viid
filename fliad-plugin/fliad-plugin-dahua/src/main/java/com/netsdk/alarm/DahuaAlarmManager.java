@@ -1,8 +1,6 @@
 package com.netsdk.alarm;
 
-import com.netsdk.common.ErrorCode;
 import com.netsdk.lib.NetSDKLib;
-import com.netsdk.lib.ToolKits;
 import com.sun.jna.Native;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
