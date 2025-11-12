@@ -21,6 +21,8 @@ import com.fliad.dahua.dao.entity.DahuaCamera;
 import com.fliad.dahua.param.DahuaCameraIdParam;
 import com.fliad.dahua.param.DahuaCameraPageParam;
 import com.fliad.dahua.param.DahuaExportParam;
+import com.fliad.dahua.service.impl.EntityCopyHelper;
+import com.fliad.dahua.util.ImportUtil;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
@@ -61,6 +63,8 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
     UniqueValidator uniqueValidator;
     @Inject
     IOrmTemplate ormTemplate;
+    @Inject
+    ImportUtil importUtil;
 
     @Override
     public Page<Map<String, Object>> page(DahuaCameraPageParam viidDahuaCameraPageParam) {
@@ -151,68 +155,7 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
     @Tran
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
-        ormTemplate.runInSession(() -> {
-            IEntityDao<DahuaCamera> dao = DaoProvider.instance().daoFor(DahuaCamera.class);
-            IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
-
-            List<DahuaCamera> saveList = new ArrayList<>();
-            List<DahuaCamera> updateList = new ArrayList<>();
-
-            // 提取所有包含主键的设备，用于批量查询
-            List<String> existIds = new ArrayList<>();
-            for (Map<String, Object> deviceMap : devices) {
-                if (deviceMap.containsKey("id_") && deviceMap.get("id_") != null) {
-                    existIds.add(deviceMap.get("id_").toString());
-                }
-            }
-
-            // 批量查询已存在的设备
-            Map<String, DahuaCamera> existDevices = new HashMap<>();
-            if (!existIds.isEmpty()) {
-                List<DahuaCamera> entities = dao.findAllByQuery(new QueryBean().addFilter(FilterBeans.in("id_", existIds)));
-                existDevices = entities.stream().collect(Collectors.toMap(
-                        DahuaCamera::getId_,
-                        entity -> entity
-                ));
-            }
-
-            // 分类处理设备数据
-            for (Map<String, Object> deviceMap : devices) {
-                if (deviceMap.containsKey("id_") && deviceMap.get("id_") != null) {
-                    // 更新已存在的设备
-                    String id = deviceMap.get("id_").toString();
-                    DahuaCamera oldEntity = existDevices.get(id);
-                    if (oldEntity != null) {
-                        DahuaCamera newEntity = dao.newEntity();
-                        newEntity.orm_restoreValues(deviceMap);
-                        EntityCopyHelper.copyProperties(newEntity, oldEntity);
-                        uniqueValidator.checkUniqueForUpdate(oldEntity, objMeta, "DahuaCamera");
-                        updateList.add(oldEntity);
-                    } else {
-                        // ID存在但在数据库中找不到，作为新设备保存
-                        DahuaCamera device = dao.newEntity();
-                        device.orm_restoreValues(deviceMap);
-                        uniqueValidator.checkUniqueForSave(device, objMeta, "DahuaCamera");
-                        saveList.add(device);
-                    }
-                } else {
-                    // 新建设备
-                    DahuaCamera device = dao.newEntity();
-                    device.orm_restoreValues(deviceMap);
-                    // 添加前校验唯一性
-                    uniqueValidator.checkUniqueForSave(device, objMeta, "DahuaCamera");
-                    saveList.add(device);
-                }
-            }
-
-            // 保存和更新设备
-            if (!saveList.isEmpty()) {
-                dao.batchSaveEntities(saveList);
-            }
-            if (!updateList.isEmpty()) {
-                dao.batchUpdateEntities(updateList);
-            }
-        });
+        importUtil.importEntities(DahuaCamera.class, "/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta", devices);
     }
 
     @Override

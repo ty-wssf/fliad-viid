@@ -96,8 +96,6 @@ public class DahuaCameraController {
     public CommonResult<String> edit(Map<String, Object> data) {
         data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_createTime);
         data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_updateTime);
-        data.put(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_, data.get(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_.replace("_", "")));
-        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_.replace("_", ""));
         com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).newEntity();
         dahuaCamera.orm_restoreValues(data);
         dahuaCameraService.edit(dahuaCamera);

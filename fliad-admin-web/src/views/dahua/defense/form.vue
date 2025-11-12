@@ -1,6 +1,6 @@
 <template>
 	<a-drawer
-		:title="formData.id ? '编辑大华布防' : '增加大华布防'"
+		:title="formData.id_ ? '编辑大华布防' : '增加大华布防'"
 		:width="700"
 		:visible="visible"
 		:destroy-on-close="true"
@@ -104,7 +104,7 @@
 			.then(() => {
 				submitLoading.value = true
 				const formDataParam = cloneDeep(formData.value)
-				dahuaDefenseApi.dahuaDefenseSubmitForm(formDataParam, formDataParam.id ? true : false).then(() => {
+				dahuaDefenseApi.dahuaDefenseSubmitForm(formDataParam, formDataParam.id_ ? true : false).then(() => {
 					onClose()
 					emit('successful')
 				}).finally(() => {

@@ -29,7 +29,7 @@
 			:data="loadData"
 			:alert="options.alert.show"
 			bordered
-			:row-key="(record) => record.id"
+			:row-key="(record) => record.id_"
 			:tool-config="toolConfig"
 			:row-selection="options.rowSelection"
 		>
@@ -184,7 +184,7 @@
 	// 删除大华布防
 	const deleteDahuaDefense = (record) => {
 		const param = [{
-			id: record.id
+			id: record.id_
 		}]
 		dahuaDefenseApi.dahuaDefenseDelete(param).then(() => {
 			table.value.refresh(true)
