@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-dahua" ext:entityPackageName="com.fliad.dahua.dao.entity"
+     ext:basePackageName="com.fliad.dahua" ext:appName="plugin-dahua" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <dicts>
+        <dict label="启用状态" name="dahua/enableStatus" valueType="int">
+            <option label="启用" value="1"/>
+            <option label="禁用" value="0"/>
+        </dict>
+    </dicts>
+
+    <entities>
+        <entity className="com.fliad.dahua.dao.entity.DahuaCamera" displayName="大华设备表"
+                name="com.fliad.dahua.dao.entity.DahuaCamera" registerShortName="true" tableName="DAHUA_CAMERA">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEVICE_ID" displayName="设备编号" name="deviceId" precision="64" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="设备名称" mandatory="true" name="name" precision="128" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IP_ADDR" displayName="设备IP地址" mandatory="true" name="ipAddr" precision="64" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PORT" displayName="端口号" mandatory="true" name="port" propId="5" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="USERNAME" displayName="用户名" mandatory="true" name="username" precision="64" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PASSWORD" displayName="密码" mandatory="true" name="password" precision="128" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENABLE_STATUS" defaultValue="1" displayName="启用状态：1=启用，0=禁用" mandatory="true"
+                        name="enableStatus" precision="1" propId="8" stdDataType="string" stdSqlType="VARCHAR"
+                        ext:dict="dahua/enableStatus"/>
+                <column code="ONLINE_STATUS" defaultValue="0" displayName="在线状态：1=在线，0=离线" mandatory="true"
+                        name="onlineStatus" precision="1" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" mandatory="true" name="createTime" propId="10"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="UPDATE_TIME" displayName="更新时间" mandatory="true" name="updateTime" propId="11"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+            </columns>
+            <unique-keys>
+                <unique-key columns="name" constraint="IDX_DAHUA_CAMERA_NAME" name="IDX_DAHUA_CAMERA_NAME"/>
+            </unique-keys>
+        </entity>
+    </entities>
+</orm>

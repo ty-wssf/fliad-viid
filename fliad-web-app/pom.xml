@@ -286,7 +286,7 @@
         </dependency>
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-dahua</artifactId>
+            <artifactId>plugin-dahua</artifactId>
             <version>${project.version}</version>
         </dependency>
 

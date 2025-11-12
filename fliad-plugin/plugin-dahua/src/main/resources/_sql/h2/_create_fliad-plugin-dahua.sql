@@ -1,0 +1,42 @@
+
+CREATE TABLE DAHUA_CAMERA(
+  ID VARCHAR(20) NOT NULL  COMMENT '主键' ,
+  DEVICE_ID VARCHAR(64)   COMMENT '设备编号' ,
+  NAME VARCHAR(128) NOT NULL  COMMENT '设备名称' ,
+  IP_ADDR VARCHAR(64) NOT NULL  COMMENT '设备IP地址' ,
+  PORT INTEGER NOT NULL  COMMENT '端口号' ,
+  USERNAME VARCHAR(64) NOT NULL  COMMENT '用户名' ,
+  PASSWORD VARCHAR(128) NOT NULL  COMMENT '密码' ,
+  ENABLE_STATUS VARCHAR(1) default '1'  NOT NULL  COMMENT '启用状态：1=启用，0=禁用' ,
+  ONLINE_STATUS VARCHAR(1) default '0'  NOT NULL  COMMENT '在线状态：1=在线，0=离线' ,
+  CREATE_TIME DATETIME NOT NULL  COMMENT '创建时间' ,
+  UPDATE_TIME DATETIME NOT NULL  COMMENT '更新时间' ,
+  constraint IDX_DAHUA_CAMERA_NAME unique (NAME),
+  constraint PK_DAHUA_CAMERA primary key (ID)
+);
+
+
+      COMMENT ON TABLE DAHUA_CAMERA IS '大华设备表';
+                
+      COMMENT ON COLUMN DAHUA_CAMERA.ID IS '主键';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.DEVICE_ID IS '设备编号';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.NAME IS '设备名称';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.IP_ADDR IS '设备IP地址';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.PORT IS '端口号';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.USERNAME IS '用户名';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.PASSWORD IS '密码';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.ENABLE_STATUS IS '启用状态：1=启用，0=禁用';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.ONLINE_STATUS IS '在线状态：1=在线，0=离线';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.CREATE_TIME IS '创建时间';
+                    
+      COMMENT ON COLUMN DAHUA_CAMERA.UPDATE_TIME IS '更新时间';
+                    

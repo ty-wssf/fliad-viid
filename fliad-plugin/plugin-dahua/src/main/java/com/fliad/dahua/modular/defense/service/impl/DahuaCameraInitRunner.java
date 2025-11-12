@@ -1,9 +1,12 @@
 package com.fliad.dahua.modular.defense.service.impl;
 
-import com.fliad.dahua.modular.defense.entity.DahuaCamera;
+import com.fliad.dahua.dao.entity.DahuaCamera;
 import com.fliad.dahua.modular.defense.service.DahuaCameraService;
 import com.netsdk.alarm.DahuaAlarmManager;
 import com.netsdk.alarm.DahuaAnalyzerDataCallBack;
+import io.nop.api.core.beans.query.QueryBean;
+import io.nop.dao.api.DaoProvider;
+import io.nop.dao.api.IEntityDao;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
@@ -33,9 +36,10 @@ public class DahuaCameraInitRunner implements LifecycleBean {
         log.info("开始初始化大华设备...");
 
         // 查询所有启用的设备
-        List<DahuaCamera> cameras = dahuaCameraService.list(
-                dahuaCameraService.query().eq("enable_status", 1)
-        );
+        IEntityDao<com.fliad.dahua.dao.entity.DahuaCamera> dahuaCameraDao = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class);
+        QueryBean query = new QueryBean();
+        query.addFilterCondition(DahuaCamera.PROP_NAME_enableStatus, "eq", "1");
+        List<com.fliad.dahua.dao.entity.DahuaCamera> cameras = dahuaCameraDao.findAllByQuery(query);
         if (cameras.isEmpty()) {
             log.info("未配置大华摄像头设备，跳过初始化");
             return;
@@ -55,15 +59,15 @@ public class DahuaCameraInitRunner implements LifecycleBean {
         dahuaAlarmManager.setAnalyzerDataCallback(new DahuaAnalyzerDataCallBack(dahuaAlarmManager));
 
         // 初始化所有设备
-        for (DahuaCamera camera : cameras) {
+        for (com.fliad.dahua.dao.entity.DahuaCamera camera : cameras) {
             try {
-                String deviceId = camera.getId();
+                String deviceId = camera.getId_();
                 String deviceNumber = camera.getDeviceId(); // 设备编号
                 String ip = camera.getIpAddr();
 
                 // 添加设备到管理器
                 dahuaAlarmManager.addDevice(
-                        camera.getId(),
+                        camera.getId_(),
                         camera.getDeviceId(),
                         camera.getIpAddr(),
                         camera.getPort(),
@@ -85,7 +89,7 @@ public class DahuaCameraInitRunner implements LifecycleBean {
 
                 log.info("设备 {} 初始化成功", deviceId);
             } catch (Exception e) {
-                log.error("初始化设备 {} 时发生异常", camera.getId(), e);
+                log.error("初始化设备 {} 时发生异常", camera.getId_(), e);
             }
         }
     }
