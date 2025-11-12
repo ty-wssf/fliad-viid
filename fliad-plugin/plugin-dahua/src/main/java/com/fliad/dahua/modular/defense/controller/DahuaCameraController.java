@@ -5,11 +5,9 @@ import cn.hutool.core.io.IoUtil;
 import com.fliad.common.util.CommonDownloadUtil;
 import com.fliad.dahua.modular.defense.param.*;
 import com.mybatisflex.core.paginate.Page;
-import io.nop.api.core.beans.ApiResponse;
 import io.nop.core.model.object.DynamicObject;
 import io.nop.core.resource.IResource;
-import io.nop.core.resource.ResourceConstants;
-import io.nop.core.resource.VirtualFileSystem;
+import io.nop.dao.api.DaoProvider;
 import io.nop.excel.imp.ImportModelHelper;
 import io.nop.excel.imp.model.ImportModel;
 import io.nop.excel.model.ExcelWorkbook;
@@ -31,10 +29,10 @@ import com.fliad.common.pojo.CommonValidList;
 import com.fliad.dahua.modular.defense.entity.DahuaCamera;
 import com.fliad.dahua.modular.defense.service.DahuaCameraService;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -76,8 +74,10 @@ public class DahuaCameraController {
     @SaCheckPermission("/dahua/defense/add")
     @Post
     @Mapping("/dahua/defense/add")
-    public CommonResult<String> add(DahuaCameraAddParam dahuaCameraAddParam) {
-        dahuaCameraService.add(dahuaCameraAddParam);
+    public CommonResult<String> add(Map<String, Object> data) {
+        com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).newEntity();
+        dahuaCamera.orm_restoreValues(data);
+        dahuaCameraService.add(dahuaCamera);
         return CommonResult.ok();
     }
 

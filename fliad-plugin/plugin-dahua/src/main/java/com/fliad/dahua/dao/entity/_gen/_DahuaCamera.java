@@ -48,19 +48,19 @@ public class _DahuaCamera extends DynamicOrmEntity{
     public static final String PROP_NAME_password = "password";
     public static final int PROP_ID_password = 7;
     
-    /* 启用状态：1=启用，0=禁用: ENABLE_STATUS VARCHAR */
+    /* 启用状态：1=启用，0=禁用: ENABLE_STATUS INTEGER */
     public static final String PROP_NAME_enableStatus = "enableStatus";
     public static final int PROP_ID_enableStatus = 8;
     
-    /* 在线状态：1=在线，0=离线: ONLINE_STATUS VARCHAR */
+    /* 在线状态：1=在线，0=离线: ONLINE_STATUS INTEGER */
     public static final String PROP_NAME_onlineStatus = "onlineStatus";
     public static final int PROP_ID_onlineStatus = 9;
     
-    /* 创建时间: CREATE_TIME DATETIME */
+    /* 创建时间: CREATE_TIME TIMESTAMP */
     public static final String PROP_NAME_createTime = "createTime";
     public static final int PROP_ID_createTime = 10;
     
-    /* 更新时间: UPDATE_TIME DATETIME */
+    /* 更新时间: UPDATE_TIME TIMESTAMP */
     public static final String PROP_NAME_updateTime = "updateTime";
     public static final int PROP_ID_updateTime = 11;
     
@@ -134,16 +134,16 @@ public class _DahuaCamera extends DynamicOrmEntity{
     private java.lang.String _password;
     
     /* 启用状态：1=启用，0=禁用: ENABLE_STATUS */
-    private java.lang.String _enableStatus;
+    private java.lang.Integer _enableStatus;
     
     /* 在线状态：1=在线，0=离线: ONLINE_STATUS */
-    private java.lang.String _onlineStatus;
+    private java.lang.Integer _onlineStatus;
     
     /* 创建时间: CREATE_TIME */
-    private java.time.LocalDateTime _createTime;
+    private java.sql.Timestamp _createTime;
     
     /* 更新时间: UPDATE_TIME */
-    private java.time.LocalDateTime _updateTime;
+    private java.sql.Timestamp _updateTime;
     
 
     public _DahuaCamera(){
@@ -334,9 +334,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_enableStatus:{
-               java.lang.String typedValue = null;
+               java.lang.Integer typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toString(value,
+                   typedValue = ConvertHelper.toInteger(value,
                        err-> newTypeConversionError(PROP_NAME_enableStatus));
                }
                setEnableStatus(typedValue);
@@ -344,9 +344,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_onlineStatus:{
-               java.lang.String typedValue = null;
+               java.lang.Integer typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toString(value,
+                   typedValue = ConvertHelper.toInteger(value,
                        err-> newTypeConversionError(PROP_NAME_onlineStatus));
                }
                setOnlineStatus(typedValue);
@@ -354,9 +354,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_createTime:{
-               java.time.LocalDateTime typedValue = null;
+               java.sql.Timestamp typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toLocalDateTime(value,
+                   typedValue = ConvertHelper.toTimestamp(value,
                        err-> newTypeConversionError(PROP_NAME_createTime));
                }
                setCreateTime(typedValue);
@@ -364,9 +364,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
             }
         
             case PROP_ID_updateTime:{
-               java.time.LocalDateTime typedValue = null;
+               java.sql.Timestamp typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toLocalDateTime(value,
+                   typedValue = ConvertHelper.toTimestamp(value,
                        err-> newTypeConversionError(PROP_NAME_updateTime));
                }
                setUpdateTime(typedValue);
@@ -433,28 +433,28 @@ public class _DahuaCamera extends DynamicOrmEntity{
         
             case PROP_ID_enableStatus:{
                onInitProp(propId);
-               this._enableStatus = (java.lang.String)value;
+               this._enableStatus = (java.lang.Integer)value;
                
                break;
             }
         
             case PROP_ID_onlineStatus:{
                onInitProp(propId);
-               this._onlineStatus = (java.lang.String)value;
+               this._onlineStatus = (java.lang.Integer)value;
                
                break;
             }
         
             case PROP_ID_createTime:{
                onInitProp(propId);
-               this._createTime = (java.time.LocalDateTime)value;
+               this._createTime = (java.sql.Timestamp)value;
                
                break;
             }
         
             case PROP_ID_updateTime:{
                onInitProp(propId);
-               this._updateTime = (java.time.LocalDateTime)value;
+               this._updateTime = (java.sql.Timestamp)value;
                
                break;
             }
@@ -601,7 +601,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 启用状态：1=启用，0=禁用: ENABLE_STATUS
      */
-    public final java.lang.String getEnableStatus(){
+    public final java.lang.Integer getEnableStatus(){
          onPropGet(PROP_ID_enableStatus);
          return _enableStatus;
     }
@@ -609,7 +609,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 启用状态：1=启用，0=禁用: ENABLE_STATUS
      */
-    public final void setEnableStatus(java.lang.String value){
+    public final void setEnableStatus(java.lang.Integer value){
         if(onPropSet(PROP_ID_enableStatus,value)){
             this._enableStatus = value;
             internalClearRefs(PROP_ID_enableStatus);
@@ -620,7 +620,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 在线状态：1=在线，0=离线: ONLINE_STATUS
      */
-    public final java.lang.String getOnlineStatus(){
+    public final java.lang.Integer getOnlineStatus(){
          onPropGet(PROP_ID_onlineStatus);
          return _onlineStatus;
     }
@@ -628,7 +628,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 在线状态：1=在线，0=离线: ONLINE_STATUS
      */
-    public final void setOnlineStatus(java.lang.String value){
+    public final void setOnlineStatus(java.lang.Integer value){
         if(onPropSet(PROP_ID_onlineStatus,value)){
             this._onlineStatus = value;
             internalClearRefs(PROP_ID_onlineStatus);
@@ -639,7 +639,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 创建时间: CREATE_TIME
      */
-    public final java.time.LocalDateTime getCreateTime(){
+    public final java.sql.Timestamp getCreateTime(){
          onPropGet(PROP_ID_createTime);
          return _createTime;
     }
@@ -647,7 +647,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 创建时间: CREATE_TIME
      */
-    public final void setCreateTime(java.time.LocalDateTime value){
+    public final void setCreateTime(java.sql.Timestamp value){
         if(onPropSet(PROP_ID_createTime,value)){
             this._createTime = value;
             internalClearRefs(PROP_ID_createTime);
@@ -658,7 +658,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 更新时间: UPDATE_TIME
      */
-    public final java.time.LocalDateTime getUpdateTime(){
+    public final java.sql.Timestamp getUpdateTime(){
          onPropGet(PROP_ID_updateTime);
          return _updateTime;
     }
@@ -666,7 +666,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 更新时间: UPDATE_TIME
      */
-    public final void setUpdateTime(java.time.LocalDateTime value){
+    public final void setUpdateTime(java.sql.Timestamp value){
         if(onPropSet(PROP_ID_updateTime,value)){
             this._updateTime = value;
             internalClearRefs(PROP_ID_updateTime);

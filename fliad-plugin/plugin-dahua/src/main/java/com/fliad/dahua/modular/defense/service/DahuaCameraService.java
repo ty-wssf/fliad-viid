@@ -44,7 +44,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    void add(DahuaCameraAddParam viidDahuaCameraAddParam);
+    void add(com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera);
 
     /**
      * 编辑大华设备

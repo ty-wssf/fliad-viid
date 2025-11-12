@@ -21,12 +21,34 @@
         </dict>
     </dicts>
 
+    <domains>
+        <domain name="userName" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="image" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="email" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="phone" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="roleId" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="userId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="deptId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="boolFlag" stdSqlType="TINYINT"/>
+        <domain name="json-128K" precision="131072" stdDomain="json" stdSqlType="VARCHAR"/>
+        <domain name="remark" precision="1" stdSqlType="VARCHAR"/>
+        <domain name="version" stdSqlType="INTEGER"/>
+        <domain name="createTime" stdSqlType="TIMESTAMP"/>
+        <domain name="createdBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="updateTime" stdSqlType="TIMESTAMP"/>
+        <domain name="updatedBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="delFlag" stdSqlType="BOOLEAN"/>
+        <domain name="mediumtext" precision="16777215" stdSqlType="VARCHAR"/>
+        <domain name="wfAction" precision="200" stdSqlType="VARCHAR"/>
+    </domains>
+
     <entities>
-        <entity className="com.fliad.dahua.dao.entity.DahuaCamera" displayName="大华设备表"
-                name="com.fliad.dahua.dao.entity.DahuaCamera" registerShortName="true" tableName="DAHUA_CAMERA">
+        <entity className="com.fliad.dahua.dao.entity.DahuaCamera" createTimeProp="createTime" displayName="大华设备表"
+                name="com.fliad.dahua.dao.entity.DahuaCamera" registerShortName="true" tableName="DAHUA_CAMERA"
+                updateTimeProp="updateTime">
             <columns>
-                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
-                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="32" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
                 <column code="DEVICE_ID" displayName="设备编号" name="deviceId" precision="64" propId="2"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="NAME" displayName="设备名称" mandatory="true" name="name" precision="128" propId="3"
@@ -40,14 +62,14 @@
                 <column code="PASSWORD" displayName="密码" mandatory="true" name="password" precision="128" propId="7"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="ENABLE_STATUS" defaultValue="1" displayName="启用状态：1=启用，0=禁用" mandatory="true"
-                        name="enableStatus" precision="1" propId="8" stdDataType="string" stdSqlType="VARCHAR"
+                        name="enableStatus" precision="1" propId="8" stdDataType="int" stdSqlType="INTEGER"
                         ext:dict="dahua/enableStatus"/>
                 <column code="ONLINE_STATUS" defaultValue="0" displayName="在线状态：1=在线，0=离线" mandatory="true"
-                        name="onlineStatus" precision="1" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
-                <column code="CREATE_TIME" displayName="创建时间" mandatory="true" name="createTime" propId="10"
-                        stdDataType="datetime" stdSqlType="DATETIME"/>
-                <column code="UPDATE_TIME" displayName="更新时间" mandatory="true" name="updateTime" propId="11"
-                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                        name="onlineStatus" precision="1" propId="9" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="CREATE_TIME" displayName="创建时间" domain="createTime" mandatory="true" name="createTime"
+                        propId="10" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+                <column code="UPDATE_TIME" displayName="更新时间" domain="updateTime" mandatory="true" name="updateTime"
+                        propId="11" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
             </columns>
             <unique-keys>
                 <unique-key columns="name" constraint="IDX_DAHUA_CAMERA_NAME" name="IDX_DAHUA_CAMERA_NAME"/>

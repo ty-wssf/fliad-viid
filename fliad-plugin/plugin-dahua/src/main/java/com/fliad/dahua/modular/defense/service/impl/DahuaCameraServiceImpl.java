@@ -27,6 +27,7 @@ import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.concurrent.executor.GlobalExecutors;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
+import io.nop.dao.api.DaoProvider;
 import io.nop.report.core.util.ExcelReportHelper;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
@@ -79,17 +80,15 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
     }
 
     @Tran
-    @Override
-    public void add(DahuaCameraAddParam viidDahuaCameraAddParam) {
+    public void add(com.fliad.dahua.dao.entity.DahuaCamera viidDahuaCamera) {
         // 检查deviceId唯一性
-        checkDeviceIdUnique(viidDahuaCameraAddParam.getDeviceId(), null);
+        checkDeviceIdUnique(viidDahuaCamera.getDeviceId(), null);
         // 检查设备名称唯一性
-        checkDeviceNameUnique(viidDahuaCameraAddParam.getName(), null);
+        checkDeviceNameUnique(viidDahuaCamera.getName(), null);
         // 检查设备IP地址唯一性
-        checkDeviceIpAddrUnique(viidDahuaCameraAddParam.getIpAddr(), null);
+        checkDeviceIpAddrUnique(viidDahuaCamera.getIpAddr(), null);
+        DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).saveEntity(viidDahuaCamera);
 
-        DahuaCamera viidDahuaCamera = BeanUtil.toBean(viidDahuaCameraAddParam, DahuaCamera.class);
-        this.save(viidDahuaCamera);
     }
 
     @Tran
