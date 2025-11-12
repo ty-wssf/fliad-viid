@@ -48,11 +48,7 @@ import com.fliad.dahua.modular.defense.mapper.DahuaCameraMapper;
 import com.fliad.dahua.modular.defense.service.DahuaCameraService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -143,74 +139,43 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
     @Tran
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
-        // 先检查导入数据中是否存在重复的IP地址
-        Set<String> ipSet = new HashSet<>();
-        for (Map<String, Object> deviceMap : devices) {
-            String ipAddr = (String) deviceMap.get("ipAddr");
-            if (ipSet.contains(ipAddr)) {
-                throw new CommonException("导入数据中存在重复的IP地址: {}", ipAddr);
+        ormTemplate.runInSession(() -> {
+            IEntityDao<com.fliad.dahua.dao.entity.DahuaCamera> dao = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class);
+            IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
+
+            List<com.fliad.dahua.dao.entity.DahuaCamera> list = new ArrayList<>();
+            for (Map<String, Object> deviceMap : devices) {
+                com.fliad.dahua.dao.entity.DahuaCamera device = dao.newEntity();
+                device.orm_restoreValues(deviceMap);
+                // 保存前校验唯一性
+                uniqueValidator.checkUniqueForSave(device, objMeta, "DahuaCamera");
+                list.add(device);
             }
-            ipSet.add(ipAddr);
-        }
-
-        for (Map<String, Object> deviceMap : devices) {
-            // 获取设备信息
-            String deviceId = (String) deviceMap.get("deviceId");
-            String name = (String) deviceMap.get("name");
-            String ipAddr = (String) deviceMap.get("ipAddr");
-
-            // 根据IP地址查找现有设备
-            DahuaCamera existingCamera = this.getOne(new QueryWrapper().eq("IP_ADDR", ipAddr));
-
-            if (existingCamera != null) {
-                // 如果IP地址已存在，则更新设备信息
-                // 检查deviceId唯一性，排除当前记录
-                /*checkDeviceIdUnique(deviceId, existingCamera.getId());
-                // 检查设备名称唯一性，排除当前记录
-                checkDeviceNameUnique(name, existingCamera.getId());*/
-
-                existingCamera = ONode.deserialize(ONode.load(existingCamera).setAll(deviceMap).toString(), DahuaCamera.class);
-
-                // 保持在线状态不变
-                this.updateById(existingCamera);
-            } else {
-                // 如果IP地址不存在，则新增设备
-                // 检查deviceId唯一性
-                /*checkDeviceIdUnique(deviceId, null);
-                // 检查设备名称唯一性
-                checkDeviceNameUnique(name, null);
-                // 检查IP地址唯一性（仅在新增时检查）
-                checkDeviceIpAddrUnique(ipAddr, null);*/
-
-                DahuaCamera dahuaCamera = ONode.deserialize(ONode.stringify(deviceMap), DahuaCamera.class);
-
-                // 处理在线状态
-                dahuaCamera.setOnlineStatus(0);
-
-                this.save(dahuaCamera);
-            }
-        }
+            // 保存设备
+            dao.batchSaveEntities(list);
+        });
     }
 
     @Override
     public void exportDahuaDevice(DahuaExportParam dahuaExportParam, Context ctx) throws IOException {
-        QueryWrapper queryWrapper = new QueryWrapper();
+        QueryBean queryBean = new QueryBean();
         if (ObjectUtil.isNotEmpty(dahuaExportParam.getDeviceId())) {
-            queryWrapper.like("DEVICE_ID", dahuaExportParam.getDeviceId());
+            queryBean.addFilter(FilterBeans.like("deviceId", dahuaExportParam.getDeviceId()));
         }
         if (ObjectUtil.isNotEmpty(dahuaExportParam.getName())) {
-            queryWrapper.like("NAME", dahuaExportParam.getName());
+            queryBean.addFilter(FilterBeans.like("name", dahuaExportParam.getName()));
         }
         if (ObjectUtil.isNotEmpty(dahuaExportParam.getIpAddr())) {
-            queryWrapper.like("IP_ADDR", dahuaExportParam.getIpAddr());
+            queryBean.addFilter(FilterBeans.like("ipAddr", dahuaExportParam.getIpAddr()));
         }
         if (ObjectUtil.isAllNotEmpty(dahuaExportParam.getSortField(), dahuaExportParam.getSortOrder())) {
             CommonSortOrderEnum.validate(dahuaExportParam.getSortOrder());
-            queryWrapper.orderBy(StrUtil.toUnderlineCase(dahuaExportParam.getSortField()), dahuaExportParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
+            queryBean.addOrderField(StrUtil.toUnderlineCase(dahuaExportParam.getSortField()), 
+                !dahuaExportParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
         } else {
-            queryWrapper.orderBy("ID", false);
+            queryBean.addOrderField("id", true);
         }
-        List<DahuaCamera> list = this.list(queryWrapper);
+        List<com.fliad.dahua.dao.entity.DahuaCamera> list = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).findAllByQuery(queryBean);
         Map<String, Object> bean = new HashMap<>();
         bean.put("devices", list);
         IResource resource = ResourceHelper.getTempResource("download");
