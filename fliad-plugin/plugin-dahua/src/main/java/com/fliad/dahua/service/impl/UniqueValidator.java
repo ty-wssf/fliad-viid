@@ -6,8 +6,6 @@ import io.nop.dao.api.IEntityDao;
 import io.nop.orm.IOrmEntity;
 import io.nop.xlang.xmeta.IObjMeta;
 import io.nop.xlang.xmeta.impl.ObjKeyModel;
-import org.noear.solon.annotation.Component;
-import org.noear.solon.annotation.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +18,13 @@ import static com.fliad.dahua.service.impl.BizErrors.*;
  * 通用唯一性校验工具类
  * 不依赖 CrudBizModel，可独立使用
  */
-@Component
 public class UniqueValidator {
 
-    @Inject
-    IDaoProvider daoProvider;
+    private static IDaoProvider daoProvider;
+
+    public static void setDaoProvider(IDaoProvider daoProvider) {
+        UniqueValidator.daoProvider = daoProvider;
+    }
 
     /**
      * 保存前的唯一性校验
@@ -33,9 +33,13 @@ public class UniqueValidator {
      * @param objMeta    实体的元数据模型
      * @param bizObjName 业务对象名称（用于错误提示）
      */
-    public <T extends IOrmEntity> void checkUniqueForSave(T entity, IObjMeta objMeta, String bizObjName) {
+    public static <T extends IOrmEntity> void checkUniqueForSave(T entity, IObjMeta objMeta, String bizObjName) {
         if (objMeta.getKeys() == null || objMeta.getKeys().isEmpty()) {
             return;
+        }
+
+        if (daoProvider == null) {
+            throw new IllegalStateException("DaoProvider未初始化，请先调用setDaoProvider方法");
         }
 
         IEntityDao<T> dao = (IEntityDao<T>) daoProvider.daoFor(entity.getClass());
@@ -80,9 +84,13 @@ public class UniqueValidator {
      * @param objMeta    实体的元数据模型
      * @param bizObjName 业务对象名称（用于错误提示）
      */
-    public <T extends IOrmEntity> void checkUniqueForUpdate(T entity, IObjMeta objMeta, String bizObjName) {
+    public static <T extends IOrmEntity> void checkUniqueForUpdate(T entity, IObjMeta objMeta, String bizObjName) {
         if (objMeta.getKeys() == null || objMeta.getKeys().isEmpty()) {
             return;
+        }
+
+        if (daoProvider == null) {
+            throw new IllegalStateException("DaoProvider未初始化，请先调用setDaoProvider方法");
         }
 
         IEntityDao<T> dao = (IEntityDao<T>) daoProvider.daoFor(entity.getClass());
@@ -120,7 +128,7 @@ public class UniqueValidator {
     /**
      * 检查实体的指定属性是否有任何一个被修改过
      */
-    private <T extends IOrmEntity> boolean isAnyPropDirty(T entity, Set<String> propNames) {
+    private static <T extends IOrmEntity> boolean isAnyPropDirty(T entity, Set<String> propNames) {
         for (String propName : propNames) {
             int propId = entity.orm_propId(propName);
             if (propId < 0) {

@@ -9,8 +9,6 @@ import io.nop.orm.IOrmTemplate;
 import io.nop.orm.support.OrmEntity;
 import io.nop.xlang.xmeta.IObjMeta;
 import io.nop.xlang.xmeta.SchemaLoader;
-import org.noear.solon.annotation.Component;
-import org.noear.solon.annotation.Inject;
 import com.fliad.dahua.service.impl.EntityCopyHelper;
 import com.fliad.dahua.service.impl.UniqueValidator;
 
@@ -26,14 +24,14 @@ import java.util.stream.Collectors;
  * @author wyl
  * @since 2025/09/27
  */
-@Component
 public class ImportUtil {
 
-    @Inject
-    IOrmTemplate ormTemplate;
+    private static IOrmTemplate ormTemplate;
+    private static UniqueValidator uniqueValidator = new UniqueValidator();
 
-    @Inject
-    UniqueValidator uniqueValidator;
+    public static void setOrmTemplate(IOrmTemplate ormTemplate) {
+        ImportUtil.ormTemplate = ormTemplate;
+    }
 
     /**
      * 通用批量导入方法
@@ -43,7 +41,11 @@ public class ImportUtil {
      * @param dataList    数据列表
      * @param <T>         实体类型
      */
-    public <T extends OrmEntity> void importEntities(Class<T> entityClass, String xmetaPath, List<Map<String, Object>> dataList) {
+    public static <T extends OrmEntity> void importEntities(Class<T> entityClass, String xmetaPath, List<Map<String, Object>> dataList) {
+        if (ormTemplate == null) {
+            throw new IllegalStateException("OrmTemplate未初始化，请先调用setOrmTemplate方法");
+        }
+        
         ormTemplate.runInSession(() -> {
             IEntityDao<T> dao = DaoProvider.instance().daoFor(entityClass);
             IObjMeta objMeta = SchemaLoader.loadXMeta(xmetaPath);

@@ -60,11 +60,7 @@ import java.util.stream.Collectors;
 public class DahuaCameraServiceImpl implements DahuaCameraService {
 
     @Inject
-    UniqueValidator uniqueValidator;
-    @Inject
     IOrmTemplate ormTemplate;
-    @Inject
-    ImportUtil importUtil;
 
     @Override
     public Page<Map<String, Object>> page(DahuaCameraPageParam viidDahuaCameraPageParam) {
@@ -108,7 +104,7 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
         // 从路径加载
         IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
         // 保存前校验唯一性
-        uniqueValidator.checkUniqueForSave(viidDahuaCamera, objMeta, "DahuaCamera");
+        UniqueValidator.checkUniqueForSave(viidDahuaCamera, objMeta, "DahuaCamera");
         DaoProvider.instance().daoFor(DahuaCamera.class).saveEntity(viidDahuaCamera);
 
     }
@@ -123,7 +119,7 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
             DahuaCamera oldEntity = dao.requireEntityById(viidDahuaCamera.getId_());
 
             // 更新前校验唯一性
-            uniqueValidator.checkUniqueForUpdate(viidDahuaCamera, objMeta, "DahuaCamera");
+            UniqueValidator.checkUniqueForUpdate(viidDahuaCamera, objMeta, "DahuaCamera");
 
             EntityCopyHelper.copyProperties(viidDahuaCamera, oldEntity);
         });
@@ -155,7 +151,7 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
     @Tran
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
-        importUtil.importEntities(DahuaCamera.class, "/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta", devices);
+        ImportUtil.importEntities(DahuaCamera.class, "/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta", devices);
     }
 
     @Override
