@@ -22,15 +22,22 @@ import com.fliad.dahua.modular.defense.param.*;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
+import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.WebContentBean;
+import io.nop.api.core.beans.query.QueryBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.concurrent.executor.GlobalExecutors;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
 import io.nop.dao.api.DaoProvider;
+import io.nop.dao.api.IEntityDao;
+import io.nop.orm.IOrmTemplate;
 import io.nop.report.core.util.ExcelReportHelper;
+import io.nop.xlang.xmeta.IObjMeta;
+import io.nop.xlang.xmeta.SchemaLoader;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.data.annotation.Tran;
 import com.fliad.common.enums.CommonSortOrderEnum;
@@ -58,6 +65,11 @@ import java.util.stream.Collectors;
 @Component
 public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, DahuaCamera> implements DahuaCameraService {
 
+    @Inject
+    UniqueValidator uniqueValidator;
+    @Inject
+    IOrmTemplate ormTemplate;
+
     @Override
     public Page<DahuaCamera> page(DahuaCameraPageParam viidDahuaCameraPageParam) {
         QueryWrapper queryWrapper = new QueryWrapper();
@@ -81,45 +93,47 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
 
     @Tran
     public void add(com.fliad.dahua.dao.entity.DahuaCamera viidDahuaCamera) {
-        // 检查deviceId唯一性
-        checkDeviceIdUnique(viidDahuaCamera.getDeviceId(), null);
-        // 检查设备名称唯一性
-        checkDeviceNameUnique(viidDahuaCamera.getName(), null);
-        // 检查设备IP地址唯一性
-        checkDeviceIpAddrUnique(viidDahuaCamera.getIpAddr(), null);
+        // 从路径加载
+        IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
+        // 保存前校验唯一性
+        uniqueValidator.checkUniqueForSave(viidDahuaCamera, objMeta, "DahuaCamera");
         DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).saveEntity(viidDahuaCamera);
 
     }
 
     @Tran
     @Override
-    public void edit(DahuaCameraEditParam viidDahuaCameraEditParam) {
-        // 检查deviceId唯一性
-        checkDeviceIdUnique(viidDahuaCameraEditParam.getDeviceId(), viidDahuaCameraEditParam.getId());
-        // 检查设备名称唯一性
-        checkDeviceNameUnique(viidDahuaCameraEditParam.getName(), viidDahuaCameraEditParam.getId());
-        // 检查设备IP地址唯一性
-        checkDeviceIpAddrUnique(viidDahuaCameraEditParam.getIpAddr(), viidDahuaCameraEditParam.getId());
+    public void edit(com.fliad.dahua.dao.entity.DahuaCamera viidDahuaCamera) {
+        ormTemplate.runInSession(() -> {
+            IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
 
-        DahuaCamera viidDahuaCamera = this.queryEntity(viidDahuaCameraEditParam.getId());
-        BeanUtil.copyProperties(viidDahuaCameraEditParam, viidDahuaCamera);
-        this.updateById(viidDahuaCamera);
+            IEntityDao<com.fliad.dahua.dao.entity.DahuaCamera> dao = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class);
+            com.fliad.dahua.dao.entity.DahuaCamera oldEntity = dao.requireEntityById(viidDahuaCamera.getId_());
+
+            // 更新前校验唯一性
+            uniqueValidator.checkUniqueForUpdate(viidDahuaCamera, objMeta, "DahuaCamera");
+
+            EntityCopyHelper.copyProperties(viidDahuaCamera, oldEntity);
+        });
     }
 
     @Tran
     @Override
     public void delete(List<DahuaCameraIdParam> viidDahuaCameraIdParamList) {
-        this.removeByIds(CollStreamUtil.toList(viidDahuaCameraIdParamList, DahuaCameraIdParam::getId));
+        ormTemplate.runInSession(() -> {
+            DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class)
+                    .deleteAllByIds(CollStreamUtil.toList(viidDahuaCameraIdParamList, DahuaCameraIdParam::getId));
+        });
     }
 
     @Override
-    public DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam) {
-        return this.queryEntity(viidDahuaCameraIdParam.getId());
+    public com.fliad.dahua.dao.entity.DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam) {
+        return DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).getEntityById(viidDahuaCameraIdParam.getId());
     }
 
     @Override
-    public DahuaCamera queryEntity(String id) {
-        DahuaCamera viidDahuaCamera = this.getById(id);
+    public com.fliad.dahua.dao.entity.DahuaCamera queryEntity(String id) {
+        com.fliad.dahua.dao.entity.DahuaCamera viidDahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).getEntityById(id);
         if (ObjectUtil.isEmpty(viidDahuaCamera)) {
             throw new CommonException("大华设备不存在，id值为：{}", id);
         }
@@ -151,9 +165,9 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
             if (existingCamera != null) {
                 // 如果IP地址已存在，则更新设备信息
                 // 检查deviceId唯一性，排除当前记录
-                checkDeviceIdUnique(deviceId, existingCamera.getId());
+                /*checkDeviceIdUnique(deviceId, existingCamera.getId());
                 // 检查设备名称唯一性，排除当前记录
-                checkDeviceNameUnique(name, existingCamera.getId());
+                checkDeviceNameUnique(name, existingCamera.getId());*/
 
                 existingCamera = ONode.deserialize(ONode.load(existingCamera).setAll(deviceMap).toString(), DahuaCamera.class);
 
@@ -162,11 +176,11 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
             } else {
                 // 如果IP地址不存在，则新增设备
                 // 检查deviceId唯一性
-                checkDeviceIdUnique(deviceId, null);
+                /*checkDeviceIdUnique(deviceId, null);
                 // 检查设备名称唯一性
                 checkDeviceNameUnique(name, null);
                 // 检查IP地址唯一性（仅在新增时检查）
-                checkDeviceIpAddrUnique(ipAddr, null);
+                checkDeviceIpAddrUnique(ipAddr, null);*/
 
                 DahuaCamera dahuaCamera = ONode.deserialize(ONode.stringify(deviceMap), DahuaCamera.class);
 
@@ -218,69 +232,4 @@ public class DahuaCameraServiceImpl extends ServiceImpl<DahuaCameraMapper, Dahua
 
     }
 
-    /**
-     * 检查设备ID唯一性
-     *
-     * @param deviceId  设备ID
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceIdUnique(String deviceId, String excludeId) {
-        if (StrUtil.isBlank(deviceId)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("DEVICE_ID", deviceId);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备编号 {} 已存在", deviceId);
-        }
-    }
-
-    /**
-     * 检查设备名称唯一性
-     *
-     * @param name      设备名称
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceNameUnique(String name, String excludeId) {
-        if (StrUtil.isBlank(name)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("NAME", name);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备名称 {} 已存在", name);
-        }
-    }
-
-    /**
-     * 检查设备IP地址唯一性
-     *
-     * @param ipAddr    设备IP地址
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceIpAddrUnique(String ipAddr, String excludeId) {
-        if (StrUtil.isBlank(ipAddr)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("IP_ADDR", ipAddr);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备IP地址 {} 已存在", ipAddr);
-        }
-    }
 }

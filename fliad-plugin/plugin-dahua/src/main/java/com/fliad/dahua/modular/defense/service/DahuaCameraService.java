@@ -52,7 +52,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    void edit(DahuaCameraEditParam viidDahuaCameraEditParam);
+    void edit(com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera);
 
     /**
      * 删除大华设备
@@ -68,7 +68,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam);
+    com.fliad.dahua.dao.entity.DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam);
 
     /**
      * 获取大华设备详情
@@ -76,7 +76,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    DahuaCamera queryEntity(String id);
+    com.fliad.dahua.dao.entity.DahuaCamera queryEntity(String id);
 
     /**
      * 导入大华设备

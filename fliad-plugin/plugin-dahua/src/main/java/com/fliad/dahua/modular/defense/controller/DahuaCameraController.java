@@ -92,8 +92,14 @@ public class DahuaCameraController {
     @SaCheckPermission("/dahua/defense/edit")
     @Post
     @Mapping("/dahua/defense/edit")
-    public CommonResult<String> edit(DahuaCameraEditParam dahuaCameraEditParam) {
-        dahuaCameraService.edit(dahuaCameraEditParam);
+    public CommonResult<String> edit(Map<String, Object> data) {
+        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_createTime);
+        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_updateTime);
+        data.put(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_, data.get(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_.replace("_", "")));
+        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_id_.replace("_", ""));
+        com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).newEntity();
+        dahuaCamera.orm_restoreValues(data);
+        dahuaCameraService.edit(dahuaCamera);
         return CommonResult.ok();
     }
 
@@ -124,7 +130,7 @@ public class DahuaCameraController {
     @SaCheckPermission("/dahua/defense/detail")
     @Get
     @Mapping("/dahua/defense/detail")
-    public CommonResult<DahuaCamera> detail(DahuaCameraIdParam dahuaCameraIdParam) {
+    public CommonResult<com.fliad.dahua.dao.entity.DahuaCamera> detail(DahuaCameraIdParam dahuaCameraIdParam) {
         return CommonResult.data(dahuaCameraService.detail(dahuaCameraIdParam));
     }
 
