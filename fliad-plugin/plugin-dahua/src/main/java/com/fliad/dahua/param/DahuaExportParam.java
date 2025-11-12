@@ -1,4 +1,4 @@
-package com.fliad.dahua.modular.defense.param;
+package com.fliad.dahua.param;
 
 import io.swagger.annotations.ApiModelProperty;
 

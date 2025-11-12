@@ -1,4 +1,4 @@
-package com.fliad.dahua.modular.defense.service.impl;
+package com.fliad.dahua.service.impl;
 
 import io.nop.api.core.exceptions.NopException;
 import io.nop.dao.api.IDaoProvider;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.fliad.dahua.modular.defense.service.impl.BizErrors.*;
+import static com.fliad.dahua.service.impl.BizErrors.*;
 
 
 /**

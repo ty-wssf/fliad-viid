@@ -10,50 +10,63 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.dahua.modular.defense.param;
+package com.fliad.dahua.param;
 
 import io.swagger.annotations.ApiModelProperty;
 import org.noear.solon.validation.annotation.NotBlank;
 
 /**
- * 大华设备添加参数
+ * 大华设备编辑参数
  *
  * @author wyl
  * @date 2025/09/27
  */
-public class DahuaCameraAddParam {
+public class DahuaCameraEditParam {
+
+    /** ID */
+    @ApiModelProperty(value = "ID", required = true, position = 1)
+    @NotBlank(message = "ID不能为空")
+    private String id;
 
     /** 设备编号 */
-    @ApiModelProperty(value = "设备编号", position = 1)
+    @ApiModelProperty(value = "设备编号", position = 2)
     private String deviceId;
 
     /** 设备名称 */
-    @ApiModelProperty(value = "设备名称", required = true, position = 2)
+    @ApiModelProperty(value = "设备名称", required = true, position = 3)
     @NotBlank(message = "设备名称不能为空")
     private String name;
 
     /** 设备IP地址 */
-    @ApiModelProperty(value = "设备IP地址", required = true, position = 2)
+    @ApiModelProperty(value = "设备IP地址", required = true, position = 3)
     @NotBlank(message = "设备IP地址不能为空")
     private String ipAddr;
 
     /** 端口号 */
-    @ApiModelProperty(value = "端口号", required = true, position = 3)
+    @ApiModelProperty(value = "端口号", required = true, position = 4)
     private Integer port;
 
     /** 用户名 */
-    @ApiModelProperty(value = "用户名", required = true, position = 4)
+    @ApiModelProperty(value = "用户名", required = true, position = 5)
     @NotBlank(message = "用户名不能为空")
     private String username;
 
     /** 密码 */
-    @ApiModelProperty(value = "密码", required = true, position = 5)
+    @ApiModelProperty(value = "密码", required = true, position = 6)
     @NotBlank(message = "密码不能为空")
     private String password;
 
     /** 启用状态：1=启用，0=禁用 */
-    @ApiModelProperty(value = "启用状态：1=启用，0=禁用", position = 6)
-    private Integer enableStatus = 1;
+    @ApiModelProperty(value = "启用状态：1=启用，0=禁用", position = 7)
+    private Integer enableStatus;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getDeviceId() {
         return deviceId;

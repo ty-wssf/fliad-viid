@@ -1,4 +1,4 @@
-package com.fliad.dahua.modular.defense.service.impl;
+package com.fliad.dahua.service.impl;
 
 import io.nop.core.reflect.ReflectionManager;
 import io.nop.core.reflect.bean.IBeanModel;

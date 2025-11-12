@@ -16,7 +16,9 @@
     </x:post-extends>
 
     <keys>
+        <key name="IDX_DAHUA_CAMERA_DEVICE_ID" props="deviceId"/>
         <key name="IDX_DAHUA_CAMERA_NAME" props="name"/>
+        <key name="IDX_DAHUA_CAMERA_IP_ADDR" props="ipAddr"/>
     </keys>
 
     <props>

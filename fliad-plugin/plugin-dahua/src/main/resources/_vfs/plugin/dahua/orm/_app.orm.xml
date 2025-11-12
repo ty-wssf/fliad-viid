@@ -72,7 +72,9 @@
                         propId="11" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
             </columns>
             <unique-keys>
+                <unique-key columns="deviceId" constraint="IDX_DAHUA_CAMERA_DEVICE_ID" name="IDX_DAHUA_CAMERA_DEVICE_ID"/>
                 <unique-key columns="name" constraint="IDX_DAHUA_CAMERA_NAME" name="IDX_DAHUA_CAMERA_NAME"/>
+                <unique-key columns="ipAddr" constraint="IDX_DAHUA_CAMERA_IP_ADDR" name="IDX_DAHUA_CAMERA_IP_ADDR"/>
             </unique-keys>
         </entity>
     </entities>

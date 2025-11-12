@@ -10,12 +10,13 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.dahua.modular.defense.service;
+package com.fliad.dahua.service;
 
-import com.fliad.dahua.modular.defense.param.*;
+import com.fliad.dahua.dao.entity.DahuaCamera;
+import com.fliad.dahua.param.DahuaCameraIdParam;
+import com.fliad.dahua.param.DahuaCameraPageParam;
+import com.fliad.dahua.param.DahuaExportParam;
 import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.core.service.IService;
-import com.fliad.dahua.modular.defense.entity.DahuaCamera;
 import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ import java.util.Map;
  * @author wyl
  * @date 2025/09/27
  **/
-public interface DahuaCameraService extends IService<DahuaCamera> {
+public interface DahuaCameraService {
 
     /**
      * 获取大华设备分页
@@ -36,7 +37,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    Page<DahuaCamera> page(DahuaCameraPageParam viidDahuaCameraPageParam);
+    Page<Map<String, Object>> page(DahuaCameraPageParam viidDahuaCameraPageParam);
 
     /**
      * 添加大华设备
@@ -44,7 +45,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    void add(com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera);
+    void add(DahuaCamera dahuaCamera);
 
     /**
      * 编辑大华设备
@@ -52,7 +53,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    void edit(com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera);
+    void edit(DahuaCamera dahuaCamera);
 
     /**
      * 删除大华设备
@@ -68,7 +69,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    com.fliad.dahua.dao.entity.DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam);
+    DahuaCamera detail(DahuaCameraIdParam viidDahuaCameraIdParam);
 
     /**
      * 获取大华设备详情
@@ -76,7 +77,7 @@ public interface DahuaCameraService extends IService<DahuaCamera> {
      * @author wyl
      * @date 2025/09/27
      */
-    com.fliad.dahua.dao.entity.DahuaCamera queryEntity(String id);
+    DahuaCamera queryEntity(String id);
 
     /**
      * 导入大华设备

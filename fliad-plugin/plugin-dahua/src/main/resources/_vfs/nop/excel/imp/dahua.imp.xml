@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <imp x:schema="/nop/schema/excel/imp.xdef" xmlns:x="/nop/schema/xdsl.xdef"
-     templatePath="hikvision.template.xlsx">
+     templatePath="dahua.template.xlsx">
     <sheets>
         <sheet name="海康设备" field="devices" list="true">
             <fields>
+                <field name="id_" displayName="主键" mandatory="false">
+                    <schema stdDomain="string"/>
+                </field>
+
                 <field name="deviceId" displayName="设备编号" mandatory="true">
                     <schema stdDomain="string"/>
                 </field>

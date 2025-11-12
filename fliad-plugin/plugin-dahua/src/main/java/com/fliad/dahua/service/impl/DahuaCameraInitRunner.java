@@ -1,7 +1,7 @@
-package com.fliad.dahua.modular.defense.service.impl;
+package com.fliad.dahua.service.impl;
 
 import com.fliad.dahua.dao.entity.DahuaCamera;
-import com.fliad.dahua.modular.defense.service.DahuaCameraService;
+import com.fliad.dahua.service.DahuaCameraService;
 import com.netsdk.alarm.DahuaAlarmManager;
 import com.netsdk.alarm.DahuaAnalyzerDataCallBack;
 import io.nop.api.core.beans.query.QueryBean;

@@ -1,9 +1,11 @@
-package com.fliad.dahua.modular.defense.controller;
+package com.fliad.dahua.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import com.fliad.common.util.CommonDownloadUtil;
-import com.fliad.dahua.modular.defense.param.*;
+import com.fliad.dahua.param.DahuaCameraIdParam;
+import com.fliad.dahua.param.DahuaCameraPageParam;
+import com.fliad.dahua.param.DahuaExportParam;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.core.model.object.DynamicObject;
 import io.nop.core.resource.IResource;
@@ -26,8 +28,7 @@ import org.noear.solon.validation.annotation.Valid;
 import com.fliad.common.annotation.CommonLog;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.pojo.CommonValidList;
-import com.fliad.dahua.modular.defense.entity.DahuaCamera;
-import com.fliad.dahua.modular.defense.service.DahuaCameraService;
+import com.fliad.dahua.service.DahuaCameraService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,7 +60,7 @@ public class DahuaCameraController {
     @SaCheckPermission("/dahua/defense/page")
     @Get
     @Mapping("/dahua/defense/page")
-    public CommonResult<Page<DahuaCamera>> page(DahuaCameraPageParam dahuaCameraPageParam) {
+    public CommonResult<Page<Map<String, Object>>> page(DahuaCameraPageParam dahuaCameraPageParam) {
         return CommonResult.data(dahuaCameraService.page(dahuaCameraPageParam));
     }
 

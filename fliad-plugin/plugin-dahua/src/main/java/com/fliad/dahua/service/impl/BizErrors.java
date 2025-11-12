@@ -5,7 +5,7 @@
  * Gitee:  https://gitee.com/canonical-entropy/nop-entropy
  * Github: https://github.com/entropy-cloud/nop-entropy
  */
-package com.fliad.dahua.modular.defense.service.impl;
+package com.fliad.dahua.service.impl;
 
 import io.nop.api.core.exceptions.ErrorCode;
 
