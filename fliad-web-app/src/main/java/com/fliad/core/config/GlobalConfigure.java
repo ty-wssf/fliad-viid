@@ -19,6 +19,8 @@ import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fliad.common.pojo.ListenerEntity;
+import com.fliad.dahua.service.impl.UniqueValidator;
+import com.fliad.dahua.util.ImportUtil;
 import com.mybatisflex.core.FlexGlobalConfig;
 import io.nop.api.core.ioc.BeanContainer;
 import io.nop.commons.cache.CacheConfig;
@@ -205,6 +207,12 @@ public class GlobalConfigure {
         OrmDaoProvider daoProvider = new OrmDaoProvider(ormTemplate);
         DaoProvider.registerInstance(daoProvider);
         return daoProvider;
+    }
+
+    @Bean
+    public void initDahuaUtils(@Inject IOrmTemplate ormTemplate, @Inject IDaoProvider daoProvider) {
+        ImportUtil.setOrmTemplate(ormTemplate);
+        UniqueValidator.setDaoProvider(daoProvider);
     }
 
 }

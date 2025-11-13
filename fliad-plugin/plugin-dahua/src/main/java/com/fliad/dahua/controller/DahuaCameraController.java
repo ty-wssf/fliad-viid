@@ -3,11 +3,13 @@ package com.fliad.dahua.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import com.fliad.common.util.CommonDownloadUtil;
+import com.fliad.dahua.dao.entity.DahuaCamera;
 import com.fliad.dahua.param.DahuaCameraIdParam;
 import com.fliad.dahua.param.DahuaCameraPageParam;
 import com.fliad.dahua.param.DahuaExportParam;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.core.model.object.DynamicObject;
+import io.nop.core.reflect.bean.BeanTool;
 import io.nop.core.resource.IResource;
 import io.nop.dao.api.DaoProvider;
 import io.nop.excel.imp.ImportModelHelper;
@@ -76,8 +78,8 @@ public class DahuaCameraController {
     @Post
     @Mapping("/dahua/defense/add")
     public CommonResult<String> add(Map<String, Object> data) {
-        com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).newEntity();
-        dahuaCamera.orm_restoreValues(data);
+        DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(DahuaCamera.class).newEntity();
+        BeanTool.instance().setProperties(dahuaCamera, data);
         dahuaCameraService.add(dahuaCamera);
         return CommonResult.ok();
     }
@@ -94,9 +96,9 @@ public class DahuaCameraController {
     @Post
     @Mapping("/dahua/defense/edit")
     public CommonResult<String> edit(Map<String, Object> data) {
-        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_createTime);
-        data.remove(com.fliad.dahua.dao.entity.DahuaCamera.PROP_NAME_updateTime);
-        com.fliad.dahua.dao.entity.DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(com.fliad.dahua.dao.entity.DahuaCamera.class).newEntity();
+        data.remove(DahuaCamera.PROP_NAME_createTime);
+        data.remove(DahuaCamera.PROP_NAME_updateTime);
+        DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(DahuaCamera.class).newEntity();
         dahuaCamera.orm_restoreValues(data);
         dahuaCameraService.edit(dahuaCamera);
         return CommonResult.ok();
