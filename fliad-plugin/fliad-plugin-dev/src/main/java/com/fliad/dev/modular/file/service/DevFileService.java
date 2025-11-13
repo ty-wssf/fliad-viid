@@ -14,6 +14,7 @@ package com.fliad.dev.modular.file.service;
 
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
+import org.noear.snack.ONode;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.core.handle.UploadedFile;
 import com.fliad.dev.modular.file.entity.DevFile;
@@ -47,7 +48,7 @@ public interface DevFileService extends IService<DevFile> {
      * @author xuyuxiang
      * @date 2022/4/22 15:53
      **/
-    String uploadReturnUrl(String engine, UploadedFile file);
+    String uploadReturnUrl(String engine, UploadedFile file, ONode extraParam);
 
     /**
      * 文件分页列表接口

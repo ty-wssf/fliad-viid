@@ -82,7 +82,7 @@ public class DevFileController {
     @Post
     @Mapping("/dev/file/uploadDynamicReturnUrl")
     public CommonResult<String> uploadDynamicReturnUrl(UploadedFile file) {
-        return CommonResult.data(devFileService.uploadReturnUrl(devConfigApi.getValueByKey(SNOWY_SYS_DEFAULT_FILE_ENGINE_KEY), file));
+        return CommonResult.data(devFileService.uploadReturnUrl(devConfigApi.getValueByKey(SNOWY_SYS_DEFAULT_FILE_ENGINE_KEY), file, null));
     }
 
     /**
@@ -110,7 +110,7 @@ public class DevFileController {
     @Post
     @Mapping("/dev/file/uploadLocalReturnUrl")
     public CommonResult<String> uploadLocalReturnUrl(UploadedFile file) {
-        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.LOCAL.getValue(), file));
+        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.LOCAL.getValue(), file, null));
     }
 
     /**
@@ -138,7 +138,7 @@ public class DevFileController {
     @Post
     @Mapping("/dev/file/uploadAliyunReturnUrl")
     public CommonResult<String> uploadAliyunReturnUrl(UploadedFile file) {
-        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.ALIYUN.getValue(), file));
+        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.ALIYUN.getValue(), file, null));
     }
 
     /**
@@ -166,7 +166,7 @@ public class DevFileController {
     @Post
     @Mapping("/dev/file/uploadTencentReturnUrl")
     public CommonResult<String> uploadTencentReturnUrl(UploadedFile file) {
-        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.TENCENT.getValue(), file));
+        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.TENCENT.getValue(), file, null));
     }
 
     /**
@@ -194,7 +194,7 @@ public class DevFileController {
     @Post
     @Mapping("/dev/file/uploadMinioReturnUrl")
     public CommonResult<String> uploadMinioReturnUrl(UploadedFile file) {
-        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.MINIO.getValue(), file));
+        return CommonResult.data(devFileService.uploadReturnUrl(DevFileEngineTypeEnum.MINIO.getValue(), file, null));
     }
 
     /**

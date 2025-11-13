@@ -2,6 +2,7 @@ package com.fliad.dahua.service.impl;
 
 import com.fliad.dahua.dao.entity.DahuaCamera;
 import com.fliad.dahua.service.DahuaCameraService;
+import com.fliad.dev.modular.file.provider.DevFileApiProvider;
 import com.netsdk.alarm.DahuaAlarmManager;
 import com.netsdk.alarm.DahuaAnalyzerDataCallBack;
 import io.nop.api.core.beans.query.QueryBean;
@@ -26,6 +27,8 @@ public class DahuaCameraInitRunner implements LifecycleBean {
 
     @Inject
     private DahuaCameraService dahuaCameraService;
+    @Inject
+    DevFileApiProvider devFileApiProvider;
     DahuaAlarmManager dahuaAlarmManager = null;
 
     /**
@@ -56,7 +59,7 @@ public class DahuaCameraInitRunner implements LifecycleBean {
 
         dahuaAlarmManager = new DahuaAlarmManager();
 
-        dahuaAlarmManager.setAnalyzerDataCallback(new DahuaAnalyzerDataCallBack(dahuaAlarmManager));
+        dahuaAlarmManager.setAnalyzerDataCallback(new DahuaAnalyzerDataCallBack(dahuaAlarmManager, devFileApiProvider));
 
         // 初始化所有设备
         for (com.fliad.dahua.dao.entity.DahuaCamera camera : cameras) {

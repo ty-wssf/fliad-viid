@@ -12,6 +12,7 @@
  */
 package com.fliad.dev.modular.file.provider;
 
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.core.handle.UploadedFile;
@@ -33,8 +34,8 @@ public class DevFileApiProvider implements DevFileApi {
     private DevFileService devFileService;
 
     @Override
-    public String storageFileWithReturnUrlLocal(UploadedFile file) {
-        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.LOCAL.getValue(), file);
+    public String storageFileWithReturnUrlLocal(UploadedFile file, ONode extraParam) {
+        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.LOCAL.getValue(), file, extraParam);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class DevFileApiProvider implements DevFileApi {
 
     @Override
     public String storageFileWithReturnUrlAliyun(UploadedFile file) {
-        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.ALIYUN.getValue(), file);
+        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.ALIYUN.getValue(), file, null);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class DevFileApiProvider implements DevFileApi {
 
     @Override
     public String storageFileWithReturnUrlTencent(UploadedFile file) {
-        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.TENCENT.getValue(), file);
+        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.TENCENT.getValue(), file, null);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class DevFileApiProvider implements DevFileApi {
 
     @Override
     public String storageFileWithReturnUrlMinio(UploadedFile file) {
-        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.MINIO.getValue(), file);
+        return devFileService.uploadReturnUrl(DevFileEngineTypeEnum.MINIO.getValue(), file, null);
     }
 
     @Override

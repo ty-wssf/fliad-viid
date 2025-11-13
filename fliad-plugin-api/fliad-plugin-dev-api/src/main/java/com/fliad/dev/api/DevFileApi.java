@@ -13,6 +13,7 @@
 package com.fliad.dev.api;
 
 
+import org.noear.snack.ONode;
 import org.noear.solon.core.handle.UploadedFile;
 
 /**
@@ -32,7 +33,7 @@ public interface DevFileApi {
      * @author xuyuxiang
      * @date 2022/6/22 17:44
      **/
-    String storageFileWithReturnUrlLocal(UploadedFile file);
+    String storageFileWithReturnUrlLocal(UploadedFile file, ONode extraParam);
 
     /**
      * 上传文件返回Id

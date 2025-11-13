@@ -12,6 +12,8 @@
  */
 package com.fliad.dev.modular.file.service.impl;
 
+import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
@@ -25,6 +27,7 @@ import cn.hutool.core.util.StrUtil;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
+import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Context;
@@ -66,12 +69,12 @@ public class DevFileServiceImpl extends ServiceImpl<DevFileMapper, DevFile> impl
 
     @Override
     public String uploadReturnId(String engine, UploadedFile file) {
-        return this.storageFile(engine, file, true);
+        return this.storageFile(engine, file, true, null);
     }
 
     @Override
-    public String uploadReturnUrl(String engine, UploadedFile file) {
-        return this.storageFile(engine, file, false);
+    public String uploadReturnUrl(String engine, UploadedFile file, ONode extraParam) {
+        return this.storageFile(engine, file, false, extraParam);
     }
 
     @Override
@@ -100,23 +103,28 @@ public class DevFileServiceImpl extends ServiceImpl<DevFileMapper, DevFile> impl
 
     @Override
     public void download(DevFileIdParam devFileIdParam, Context ctx) throws IOException {
-        DevFile devFile;
-        try {
-            devFile = this.queryEntity(devFileIdParam.getId());
-        } catch (Exception e) {
-            CommonResponseUtil.renderError(ctx, e.getMessage());
-            return;
+        if (StrUtil.isEmptyIfStr(devFileIdParam.getPath())) {
+            DevFile devFile;
+            try {
+                devFile = this.queryEntity(devFileIdParam.getId());
+            } catch (Exception e) {
+                CommonResponseUtil.renderError(ctx, e.getMessage());
+                return;
+            }
+            if (!devFile.getEngine().equals(DevFileEngineTypeEnum.LOCAL.getValue())) {
+                CommonResponseUtil.renderError(ctx, "非本地文件不支持此方式下载，id值为：" + devFile.getId());
+                return;
+            }
+            File file = FileUtil.file(devFile.getStoragePath());
+            if (!FileUtil.exist(file)) {
+                CommonResponseUtil.renderError(ctx, "找不到存储的文件，id值为：" + devFile.getId());
+                return;
+            }
+            CommonDownloadUtil.download(devFile.getName(), IoUtil.readBytes(FileUtil.getInputStream(file)), ctx);
+        } else {
+            File file = FileUtil.file(Base64Decoder.decodeStr(devFileIdParam.getPath()));
+            CommonDownloadUtil.download(file.getName(), IoUtil.readBytes(FileUtil.getInputStream(file)), ctx);
         }
-        if (!devFile.getEngine().equals(DevFileEngineTypeEnum.LOCAL.getValue())) {
-            CommonResponseUtil.renderError(ctx, "非本地文件不支持此方式下载，id值为：" + devFile.getId());
-            return;
-        }
-        File file = FileUtil.file(devFile.getStoragePath());
-        if (!FileUtil.exist(file)) {
-            CommonResponseUtil.renderError(ctx, "找不到存储的文件，id值为：" + devFile.getId());
-            return;
-        }
-        CommonDownloadUtil.download(devFile.getName(), IoUtil.readBytes(FileUtil.getInputStream(file)), ctx);
     }
 
     @Override
@@ -130,7 +138,7 @@ public class DevFileServiceImpl extends ServiceImpl<DevFileMapper, DevFile> impl
      * @author xuyuxiang
      * @date 2022/6/16 16:24
      **/
-    private String storageFile(String engine, UploadedFile file, boolean returnFileId) {
+    private String storageFile(String engine, UploadedFile file, boolean returnFileId, ONode extraParam) {
 
         // 如果引擎为空，默认使用本地
         if (ObjectUtil.isEmpty(engine)) {
@@ -171,62 +179,76 @@ public class DevFileServiceImpl extends ServiceImpl<DevFileMapper, DevFile> impl
             throw new CommonException("不支持的文件引擎：{}", engine);
         }
 
-        // 将文件信息保存到数据库
-        DevFile devFile = new DevFile();
+        // 是否持久化到数据库
+        if (extraParam != null && extraParam.contains("persistence") && !extraParam.get("persistence").getBoolean()) {
+            if (engine.equals(DevFileEngineTypeEnum.LOCAL.getValue())) {
+                String apiUrl = commonProperties.getBackendUrl();
+                if (ObjectUtil.isEmpty(apiUrl)) {
+                    throw new CommonException("后端域名地址未正确配置：snowy.config.common.backend-url为空");
+                }
+                // 将存储路径加密拼接到下载地址
+                return apiUrl + "/dev/file/download?path=" + Base64Encoder.encode(storageUrl) + "&id=" + fileId;
+            } else {
+                return storageUrl;
+            }
+        } else {
+            // 将文件信息保存到数据库
+            DevFile devFile = new DevFile();
 
-        // 设置文件id
-        devFile.setId(fileId);
+            // 设置文件id
+            devFile.setId(fileId);
 
-        // 设置存储引擎类型
-        devFile.setEngine(engine);
-        devFile.setBucket(bucketName);
-        devFile.setName(file.getName());
-        String suffix = ObjectUtil.isNotEmpty(file.getName()) ? StrUtil.subAfter(file.getName(),
-                StrUtil.DOT, true) : null;
-        devFile.setSuffix(suffix);
-        devFile.setSizeKb(Convert.toStr(NumberUtil.div(new BigDecimal(file.getContentSize()), BigDecimal.valueOf(1024))
-                .setScale(0, BigDecimal.ROUND_HALF_UP)));
-        devFile.setSizeInfo(FileUtil.readableFileSize(file.getContentSize()));
-        devFile.setObjName(ObjectUtil.isNotEmpty(devFile.getSuffix()) ? fileId + StrUtil.DOT + devFile.getSuffix() : null);
-        // 如果是图片，则压缩生成缩略图
-        if (ObjectUtil.isNotEmpty(suffix)) {
-            if (isPic(suffix)) {
-                try {
-                    byte[] bytes = IoUtil.readBytes(file.getContent());
-                    devFile.setThumbnail(ImgUtil.toBase64DataUri(ImgUtil.scale(ImgUtil.toImage(bytes),
-                            100, 100, null), suffix));
-                } catch (Exception ignored) {
+            // 设置存储引擎类型
+            devFile.setEngine(engine);
+            devFile.setBucket(bucketName);
+            devFile.setName(file.getName());
+            String suffix = ObjectUtil.isNotEmpty(file.getName()) ? StrUtil.subAfter(file.getName(),
+                    StrUtil.DOT, true) : null;
+            devFile.setSuffix(suffix);
+            devFile.setSizeKb(Convert.toStr(NumberUtil.div(new BigDecimal(file.getContentSize()), BigDecimal.valueOf(1024))
+                    .setScale(0, BigDecimal.ROUND_HALF_UP)));
+            devFile.setSizeInfo(FileUtil.readableFileSize(file.getContentSize()));
+            devFile.setObjName(ObjectUtil.isNotEmpty(devFile.getSuffix()) ? fileId + StrUtil.DOT + devFile.getSuffix() : null);
+            // 如果是图片，则压缩生成缩略图
+            if (ObjectUtil.isNotEmpty(suffix)) {
+                if (isPic(suffix)) {
+                    try {
+                        byte[] bytes = IoUtil.readBytes(file.getContent());
+                        devFile.setThumbnail(ImgUtil.toBase64DataUri(ImgUtil.scale(ImgUtil.toImage(bytes),
+                                100, 100, null), suffix));
+                    } catch (Exception ignored) {
+                    }
                 }
             }
-        }
-        // 存储路径
-        devFile.setStoragePath(storageUrl);
+            // 存储路径
+            devFile.setStoragePath(storageUrl);
 
-        // 定义下载地址
-        String downloadUrl;
+            // 定义下载地址
+            String downloadUrl;
 
-        // 下载路径，注意：本地文件下载地址设置为下载接口地址 + 文件id
-        if (engine.equals(DevFileEngineTypeEnum.LOCAL.getValue())) {
-            String apiUrl = commonProperties.getBackendUrl();
-            if (ObjectUtil.isEmpty(apiUrl)) {
-                throw new CommonException("后端域名地址未正确配置：snowy.config.common.backend-url为空");
+            // 下载路径，注意：本地文件下载地址设置为下载接口地址 + 文件id
+            if (engine.equals(DevFileEngineTypeEnum.LOCAL.getValue())) {
+                String apiUrl = commonProperties.getBackendUrl();
+                if (ObjectUtil.isEmpty(apiUrl)) {
+                    throw new CommonException("后端域名地址未正确配置：snowy.config.common.backend-url为空");
+                }
+                downloadUrl = apiUrl + "/dev/file/download?id=" + fileId;
+                devFile.setDownloadPath(downloadUrl);
+            } else {
+                // 阿里云、腾讯云、MINIO可以直接使用存储地址（公网）作为下载地址
+                downloadUrl = storageUrl;
+                devFile.setDownloadPath(devFile.getStoragePath());
             }
-            downloadUrl = apiUrl + "/dev/file/download?id=" + fileId;
-            devFile.setDownloadPath(downloadUrl);
-        } else {
-            // 阿里云、腾讯云、MINIO可以直接使用存储地址（公网）作为下载地址
-            downloadUrl = storageUrl;
-            devFile.setDownloadPath(devFile.getStoragePath());
-        }
 
-        this.save(devFile);
+            this.save(devFile);
 
-        // 如果是返回id则返回文件id
-        if (returnFileId) {
-            return fileId;
-        } else {
-            // 否则返回下载地址
-            return downloadUrl;
+            // 如果是返回id则返回文件id
+            if (returnFileId) {
+                return fileId;
+            } else {
+                // 否则返回下载地址
+                return downloadUrl;
+            }
         }
     }
 

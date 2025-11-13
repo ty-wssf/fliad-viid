@@ -1,12 +1,18 @@
 package com.netsdk.alarm;
 
+import cn.hutool.core.io.IoUtil;
+import com.fliad.dev.modular.file.provider.DevFileApiProvider;
 import com.netsdk.lib.NetSDKLib;
 import com.netsdk.lib.structure.DEV_EVENT_TRAFFICJUNCTION_INFO;
 import com.sun.jna.Pointer;
 import org.noear.snack.ONode;
+import org.noear.snack.core.utils.IOUtil;
+import org.noear.solon.core.handle.FileBase;
+import org.noear.solon.core.handle.UploadedFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -16,9 +22,11 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
     private static final Logger log = LoggerFactory.getLogger(DahuaAnalyzerDataCallBack.class);
 
     private final DahuaAlarmManager dahuaAlarmManager;
+    private final DevFileApiProvider devFileApiProvider;
 
-    public DahuaAnalyzerDataCallBack(DahuaAlarmManager dahuaAlarmManager) {
+    public DahuaAnalyzerDataCallBack(DahuaAlarmManager dahuaAlarmManager, DevFileApiProvider devFileApiProvider) {
         this.dahuaAlarmManager = dahuaAlarmManager;
+        this.devFileApiProvider = devFileApiProvider;
     }
 
     @Override
@@ -57,6 +65,13 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                     trafficInfo.set("m_FileLength", msg.stuObject.stPicInfo.dwFileLenth);
                     // trafficInfo.set("m_BoundingBox", msg.stuObject.BoundingBox);
                     trafficInfo.set("nNumOfCycling", msg.stuNonMotor.nNumOfCycling);
+                    trafficInfo.set("byHelmet", msg.byHelmet);
+                    trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
+
+                    byte[] img_array = pBuffer.getByteArray(0, dwBufSize);
+                    UploadedFile file = new UploadedFile("image/jpeg", IoUtil.toStream(img_array), "1.jpg");
+                    String url = devFileApiProvider.storageFileWithReturnUrlLocal(file, new ONode().asObject().set("persistence", false));
+                    trafficInfo.set("tpurl", url);
                     log.info("交通路口事件解析结果: {}", trafficInfo);
                     break;
                 default:
