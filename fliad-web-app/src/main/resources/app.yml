@@ -44,6 +44,7 @@ solon.logging.logger:
 solon.serialization.json:
   dateAsTimeZone: 'GMT+8'
   dateAsFormat: 'yyyy-MM-dd HH:mm:ss'
+  longAsString: true #将long型转为字符串输出 （默认为false）
 
 #########################################
 # mybatis-flex configuration

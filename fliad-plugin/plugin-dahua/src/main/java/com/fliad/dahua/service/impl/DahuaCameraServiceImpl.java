@@ -118,10 +118,10 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
             IEntityDao<DahuaCamera> dao = DaoProvider.instance().daoFor(DahuaCamera.class);
             DahuaCamera oldEntity = dao.requireEntityById(viidDahuaCamera.getId_());
 
-            // 更新前校验唯一性
-            UniqueValidator.checkUniqueForUpdate(viidDahuaCamera, objMeta, "DahuaCamera");
-
             EntityCopyHelper.copyProperties(viidDahuaCamera, oldEntity);
+
+            // 更新前校验唯一性
+            UniqueValidator.checkUniqueForUpdate(oldEntity, objMeta, "DahuaCamera");
         });
     }
 

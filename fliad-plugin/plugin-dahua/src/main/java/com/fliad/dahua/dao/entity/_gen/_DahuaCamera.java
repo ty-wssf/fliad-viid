@@ -20,7 +20,7 @@ import com.fliad.dahua.dao.entity.DahuaCamera;
         "PMD.UnnecessaryFullyQualifiedName","PMD.EmptyControlStatement","java:S116","java:S115","java:S101","java:S3776"})
 public class _DahuaCamera extends DynamicOrmEntity{
     
-    /* 主键: ID VARCHAR */
+    /* 主键: ID BIGINT */
     public static final String PROP_NAME_id_ = "id_";
     public static final int PROP_ID_id_ = 1;
     
@@ -113,7 +113,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
 
     
     /* 主键: ID */
-    private java.lang.String _id_;
+    private java.lang.Long _id_;
     
     /* 设备编号: DEVICE_ID */
     private java.lang.String _deviceId;
@@ -264,9 +264,9 @@ public class _DahuaCamera extends DynamicOrmEntity{
         switch(propId){
         
             case PROP_ID_id_:{
-               java.lang.String typedValue = null;
+               java.lang.Long typedValue = null;
                if(value != null){
-                   typedValue = ConvertHelper.toString(value,
+                   typedValue = ConvertHelper.toLong(value,
                        err-> newTypeConversionError(PROP_NAME_id_));
                }
                setId_(typedValue);
@@ -384,7 +384,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
         
             case PROP_ID_id_:{
                onInitProp(propId);
-               this._id_ = (java.lang.String)value;
+               this._id_ = (java.lang.Long)value;
                orm_id(); // 如果是设置主键字段，则触发watcher
                break;
             }
@@ -468,7 +468,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 主键: ID
      */
-    public final java.lang.String getId_(){
+    public final java.lang.Long getId_(){
          onPropGet(PROP_ID_id_);
          return _id_;
     }
@@ -476,7 +476,7 @@ public class _DahuaCamera extends DynamicOrmEntity{
     /**
      * 主键: ID
      */
-    public final void setId_(java.lang.String value){
+    public final void setId_(java.lang.Long value){
         if(onPropSet(PROP_ID_id_,value)){
             this._id_ = value;
             internalClearRefs(PROP_ID_id_);

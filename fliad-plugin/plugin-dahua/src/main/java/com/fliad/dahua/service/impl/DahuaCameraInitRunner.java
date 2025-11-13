@@ -64,13 +64,13 @@ public class DahuaCameraInitRunner implements LifecycleBean {
         // 初始化所有设备
         for (com.fliad.dahua.dao.entity.DahuaCamera camera : cameras) {
             try {
-                String deviceId = camera.getId_();
+                String deviceId = String.valueOf(camera.getId_());
                 String deviceNumber = camera.getDeviceId(); // 设备编号
                 String ip = camera.getIpAddr();
 
                 // 添加设备到管理器
                 dahuaAlarmManager.addDevice(
-                        camera.getId_(),
+                        String.valueOf(camera.getId_()),
                         camera.getDeviceId(),
                         camera.getIpAddr(),
                         camera.getPort(),

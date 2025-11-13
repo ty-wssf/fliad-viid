@@ -99,7 +99,7 @@ public class DahuaCameraController {
         data.remove(DahuaCamera.PROP_NAME_createTime);
         data.remove(DahuaCamera.PROP_NAME_updateTime);
         DahuaCamera dahuaCamera = DaoProvider.instance().daoFor(DahuaCamera.class).newEntity();
-        dahuaCamera.orm_restoreValues(data);
+        BeanTool.instance().setProperties(dahuaCamera, data);
         dahuaCameraService.edit(dahuaCamera);
         return CommonResult.ok();
     }

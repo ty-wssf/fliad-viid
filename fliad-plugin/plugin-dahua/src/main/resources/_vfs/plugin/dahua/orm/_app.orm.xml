@@ -47,8 +47,8 @@
                 name="com.fliad.dahua.dao.entity.DahuaCamera" registerShortName="true" tableName="DAHUA_CAMERA"
                 updateTimeProp="updateTime">
             <columns>
-                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="32" primary="true" propId="1"
-                        stdDataType="string" stdSqlType="VARCHAR" tagSet="seq"/>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT" tagSet="seq"/>
                 <column code="DEVICE_ID" displayName="设备编号" name="deviceId" precision="64" propId="2"
                         stdDataType="string" stdSqlType="VARCHAR"/>
                 <column code="NAME" displayName="设备名称" mandatory="true" name="name" precision="128" propId="3"
