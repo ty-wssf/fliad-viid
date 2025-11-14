@@ -28,6 +28,8 @@ import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.concurrent.executor.GlobalExecutors;
+import io.nop.core.reflect.ReflectionManager;
+import io.nop.core.reflect.bean.IBeanModel;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
 import io.nop.dao.api.DaoProvider;
@@ -92,7 +94,14 @@ public class DahuaCameraServiceImpl implements DahuaCameraService {
         queryBean.setLimit(viidDahuaCameraPageParam.getSize());
         List<DahuaCamera> entities = dao.findPageByQuery(queryBean);
 
-        page.setRecords(entities.stream().map(OrmEntity::orm_initedValues).collect(Collectors.toList()));
+        // 转换成Map
+        page.setRecords(entities.stream().map((entity) -> {
+            Map<String, Object> map = new HashMap<>();
+            entity.orm_entityModel().getAllProps().forEach((key, propModel) -> {
+                map.put(key, entity.prop_get(key));
+            });
+            return map;
+        }).collect(Collectors.toList()));
         // 设置总数，这里需要另外查询
         page.setTotalRow(dao.countByQuery(queryBean));
 
