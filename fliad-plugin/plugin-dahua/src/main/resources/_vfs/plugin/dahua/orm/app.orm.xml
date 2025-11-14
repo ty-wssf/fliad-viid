@@ -1,6 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<orm x:schema="/nop/schema/orm/orm.xdef" x:extends="_app.orm.xml" xmlns:x="/nop/schema/xdsl.xdef"
+<?xml version="1.0" encoding="UTF-8"?>
+<orm x:schema="/nop/schema/orm/orm.xdef"
+     x:extends="_app.orm.xml"
+     xmlns:x="/nop/schema/xdsl.xdef"
      xmlns:xpl="/nop/schema/xpl.xdef">
 
-    <entities/>
+    <entities>
+        <entity name="com.fliad.dahua.dao.entity.DahuaCamera">
+            <columns>
+
+            </columns>
+
+            <!-- 使用computed属性代替 -->
+            <computes>
+                <compute name="status_label" 
+                         type="String" 
+                         notGenCode="true">
+                    <getter>
+                        <![CDATA[
+                        import io.nop.core.dict.DictProvider;
+                        import io.nop.api.core.beans.DictBean;
+
+                        // 填充enableStatus字段的字典翻译
+                        if (entity.enableStatus != null) {
+                            let dict = DictProvider.instance().getDict(null, "dahua/enableStatus", null, null);
+                            if (dict != null) {
+                                let option = dict.getOptionByValue(entity.enableStatus);
+                                if (option != null) {
+                                    return option.label;
+                                }
+                            }
+                        }
+                        ]]>
+                    </getter>
+                </compute>
+            </computes>
+        </entity>
+    </entities>
 </orm>

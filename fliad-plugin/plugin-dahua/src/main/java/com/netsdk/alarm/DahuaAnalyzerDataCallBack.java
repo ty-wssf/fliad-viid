@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 大华设备智能分析数据回调处理类
@@ -50,23 +53,12 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                     } catch (UnsupportedEncodingException e) {
                         log.error("解析交通路口事件号牌号码异常", e);
                     }
-                    trafficInfo.set("m_PlateType", new String(msg.stTrafficCar.szPlateType).trim());
-                    trafficInfo.set("m_FileCount", String.valueOf(msg.stuFileInfo.bCount));
-                    trafficInfo.set("m_FileIndex", String.valueOf(msg.stuFileInfo.bIndex));
-                    trafficInfo.set("m_GroupID", String.valueOf(msg.stuFileInfo.nGroupId));
-                    trafficInfo.set("m_IllegalPlace", ToolKits.GetPointerDataToByteArr(msg.stTrafficCar.szDeviceAddress));
-                    trafficInfo.set("m_LaneNumber", String.valueOf(msg.nLane));
-                    trafficInfo.set("m_PlateColor", new String(msg.stTrafficCar.szPlateColor).trim());
-                    trafficInfo.set("m_VehicleColor", new String(msg.stTrafficCar.szVehicleColor).trim());
-                    trafficInfo.set("m_VehicleType", new String(msg.stuVehicle.szObjectSubType).trim());
-                    trafficInfo.set("m_Utc", msg.UTC.toStringTime());
-                    trafficInfo.set("m_bPicEnble", msg.stuObject.bPicEnble);
-                    trafficInfo.set("m_OffSet", msg.stuObject.stPicInfo.dwOffSet);
-                    trafficInfo.set("m_FileLength", msg.stuObject.stPicInfo.dwFileLenth);
-                    // trafficInfo.set("m_BoundingBox", msg.stuObject.BoundingBox);
+
                     trafficInfo.set("nNumOfCycling", msg.stuNonMotor.nNumOfCycling);
-                    trafficInfo.set("byHelmet", msg.byHelmet);
-                    trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
+
+                    // 帽子类型
+                    trafficInfo.set("emCap", Arrays.stream(msg.stuNonMotor.stuRiderList).map(rider -> rider.emCap).collect(Collectors.toList()).subList(0, msg.stuNonMotor.nNumOfCycling));
+                    // trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
 
                     byte[] img_array = pBuffer.getByteArray(0, dwBufSize);
                     UploadedFile file = new UploadedFile("image/jpeg", IoUtil.toStream(img_array), "1.jpg");
