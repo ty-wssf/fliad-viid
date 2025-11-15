@@ -33,7 +33,16 @@
 					<div v-if="selectedReportPath" style="margin-bottom: 16px;">
 						<a-button type="primary" @click="exportReport">导出XLSX</a-button>
 					</div>
-					<div v-if="reportHtml" v-html="reportHtml" class="report-preview"></div>
+					<!-- 使用 iframe 替代原来的 v-html 方式 -->
+					<div v-if="iframeSrc" class="report-preview">
+						<iframe 
+							:key="iframeKey"
+							:src="iframeSrc" 
+							class="report-iframe" 
+							frameborder="0"
+							@load="onIframeLoad"
+						></iframe>
+					</div>
 					<a-empty v-else description="请选择报表示例进行预览"/>
 				</a-card>
 			</a-col>
@@ -47,6 +56,7 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue'
 import reportApi from '@/api/report/demo'
 import bizUserApi from "@/api/biz/bizUserApi";
 import downloadUtil from "@/utils/downloadUtil";
+import sysConfig from '@/config/index'
 
 export default defineComponent({
 	name: 'ReportDemo',
@@ -56,7 +66,8 @@ export default defineComponent({
 	},
 	setup() {
 		const reportTreeData = ref([])
-		const reportHtml = ref('')
+		const iframeSrc = ref('')
+		const iframeKey = ref(0)
 		const selectedReportName = ref('')
 		const selectedReportPath = ref('')
 		const collapsed = ref(false)
@@ -84,24 +95,28 @@ export default defineComponent({
 			if (node.value) {
 				selectedReportName.value = node.label
 				selectedReportPath.value = node.value
-				await renderReport(node.value)
+				// 使用 iframe 方式加载报表
+				renderReportWithIframe(node.value)
 			}
 		}
 
-		// 渲染报表
-		const renderReport = async (reportPath) => {
-			try {
-				// 可以在这里传递报表需要的参数
-				const params = {
-					reportName: reportPath
-				}
-
-				const res = await reportApi.renderHtml(params)
-
-				reportHtml.value = res
-			} catch (err) {
-				console.error('渲染报表失败:', err)
-				reportHtml.value = '<div style="color: red;">报表渲染失败</div>'
+		// 使用 iframe 渲染报表
+		const renderReportWithIframe = (reportPath) => {
+			// 构造后端 renderHtmlGet 接口的 URL
+			const baseUrl = sysConfig.API_URL || ''
+			const newSrc = `${baseUrl}/report/renderHtml?reportName=${encodeURIComponent(reportPath)}`
+			
+			// 如果 iframeSrc 已经有值，则强制刷新 iframe
+			if (iframeSrc.value) {
+				iframeSrc.value = ''
+				// 使用 nextTick 确保 DOM 更新后再设置新值
+				setTimeout(() => {
+					iframeSrc.value = newSrc
+					iframeKey.value++
+				}, 0)
+			} else {
+				iframeSrc.value = newSrc
+				iframeKey.value++
 			}
 		}
 
@@ -126,15 +141,22 @@ export default defineComponent({
 			loadReportList()
 		})
 
+		// iframe 加载完成事件
+		const onIframeLoad = () => {
+			console.log('iframe 加载完成')
+		}
+
 		return {
 			reportTreeData,
-			reportHtml,
+			iframeSrc,
+			iframeKey,
 			selectedReportName,
 			selectedReportPath,
 			collapsed,
 			toggleCollapse,
 			onSelectReport,
-			exportReport
+			exportReport,
+			onIframeLoad
 		}
 	}
 })
@@ -155,6 +177,11 @@ export default defineComponent({
 	min-height: 500px;
 	/* 解决滚动条遮挡内容的问题 */
 	overflow: auto;
+}
+
+.report-iframe {
+	width: 100%;
+	height: 800px;
 }
 
 .report-preview :deep(table) {

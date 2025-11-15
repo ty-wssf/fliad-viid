@@ -176,15 +176,15 @@ public class GlobalConfigure {
         );
     }
 
-    @Bean
-    public IJdbcTemplate jdbcTemplate(DataSource dataSource) {
+    @Bean("nopJdbcTemplate")
+    public IJdbcTemplate nopJdbcTemplate(DataSource dataSource) {
         JdbcFactory factory = new JdbcFactory();
         ITransactionTemplate transactionTemplate = factory.newTransactionTemplate(dataSource);
         return factory.newJdbcTemplate(transactionTemplate);
     }
 
     @Bean
-    public IOrmSessionFactory ormSessionFactory(IJdbcTemplate jdbcTemplate) {
+    public IOrmSessionFactory ormSessionFactory(@Inject("nopJdbcTemplate") IJdbcTemplate jdbcTemplate) {
         OrmSessionFactoryBean factoryBean = new OrmSessionFactoryBean();
         factoryBean.setJdbcTemplate(jdbcTemplate);
         factoryBean.setBeanProvider(BeanContainer.instance());
