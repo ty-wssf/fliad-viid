@@ -2,6 +2,7 @@ package com.fliad.dahua.service.impl;
 
 import com.fliad.dahua.dao.entity.DahuaCamera;
 import com.fliad.dahua.service.DahuaCameraService;
+import com.fliad.dev.api.DevConfigApi;
 import com.fliad.dev.modular.file.provider.DevFileApiProvider;
 import com.netsdk.alarm.DahuaAlarmManager;
 import com.netsdk.alarm.DahuaAnalyzerDataCallBack;
@@ -29,13 +30,24 @@ public class DahuaCameraInitRunner implements LifecycleBean {
     private DahuaCameraService dahuaCameraService;
     @Inject
     DevFileApiProvider devFileApiProvider;
+    @Inject
+    private DevConfigApi devConfigApi;
     DahuaAlarmManager dahuaAlarmManager = null;
+    // 大华布防功能是否启用
+    private String dahua_defense = "0";
 
     /**
      * 系统启动完成后执行初始化
      */
     @Override
     public void start() throws Throwable {
+        // 0: 不启用 1： 监听  2： 布防
+        dahua_defense = devConfigApi.getValueByKey("hikvision_defense");
+        if ("0".equals(dahua_defense)) {
+            log.info("大华布防功能未启用，跳过设备初始化");
+            return;
+        }
+
         log.info("开始初始化大华设备...");
 
         // 查询所有启用的设备

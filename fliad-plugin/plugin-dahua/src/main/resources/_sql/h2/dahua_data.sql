@@ -1,12 +1,6 @@
 -- 大华布防启用配置，默认不启用
 INSERT INTO DEV_CONFIG
-VALUES ('2980000000000000012', 'dahua_defense', '0', 'BIZ_DEFINE', '大华布防启用配置 0: 不启用 1： 监听  2： 布防', 100, null,
-        'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
-INSERT INTO DEV_CONFIG
-VALUES ('2980000000000000112', 'dahua_defense_image_path', './pic', 'BIZ_DEFINE', '大华布防图片路径', 100, null,
-        'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
-INSERT INTO DEV_CONFIG
-VALUES ('2980000000000000212', 'dahua_defense_image_gateway', 'http://127.0.0.1:82/', 'BIZ_DEFINE', '大华布防图片访问网关', 100, null,
+VALUES ('2980000000000000012', 'dahua_defense', '0', 'BIZ_DEFINE', '大华布防启用配置 0: 不启用 1： 布防', 100, null,
         'NOT_DELETE', '2025-10-11 10:00:00', '1543837863788879871', null, null);
 
 -- 大华布防模块
