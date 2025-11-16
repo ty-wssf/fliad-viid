@@ -3,6 +3,7 @@ package com.fliad.dahua.util;
 import cn.hutool.core.util.ObjectUtil;
 import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
+import io.nop.core.reflect.bean.BeanTool;
 import io.nop.dao.api.DaoProvider;
 import io.nop.dao.api.IEntityDao;
 import io.nop.orm.IOrmTemplate;
@@ -77,7 +78,7 @@ public class ImportUtil {
                     T oldEntity = existEntities.get(id);
                     if (oldEntity != null) {
                         T newEntity = dao.newEntity();
-                        newEntity.orm_restoreValues(dataMap);
+                        BeanTool.instance().setProperties(newEntity, dataMap);
                         EntityCopyHelper.copyProperties(newEntity, oldEntity);
                         // 更新前校验唯一性
                         uniqueValidator.checkUniqueForUpdate(oldEntity, objMeta, entityClass.getSimpleName());
@@ -85,7 +86,7 @@ public class ImportUtil {
                     } else {
                         // ID存在但在数据库中找不到，作为新实体保存
                         T entity = dao.newEntity();
-                        entity.orm_restoreValues(dataMap);
+                        BeanTool.instance().setProperties(entity, dataMap);
                         // 保存前校验唯一性
                         uniqueValidator.checkUniqueForSave(entity, objMeta, entityClass.getSimpleName());
                         saveList.add(entity);

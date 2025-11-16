@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <imp x:schema="/nop/schema/excel/imp.xdef" xmlns:x="/nop/schema/xdsl.xdef"
-     templatePath="dahua.template.xlsx">
+     templatePath="dahua.template.xlsx" xmlns:c="c" xmlns:xpt="xpt">
     <sheets>
         <sheet name="海康设备" field="devices" list="true">
             <fields>
