@@ -1,7 +1,0 @@
-label: 显示模式
-locale: zh-CN
-options:
-  - label: 卡片
-    value: card
-  - label: 表格
-    value: table
