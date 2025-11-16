@@ -8,7 +8,12 @@ import { CodeEditor } from '@flowgram.ai/form-materials';
 import { Divider } from '@douyinfe/semi-ui';
 
 import { useIsSidebar, useNodeRenderContext } from '../../../hooks';
-import { FormItem } from '../../../form-components';
+
+// Map our supported languages to the editor's language identifiers
+const languageMap = {
+  javascript: 'javascript',
+  xlang: 'xlang',
+};
 
 export function Code() {
   const isSidebar = useIsSidebar();
@@ -22,13 +27,21 @@ export function Code() {
     <>
       <Divider />
       <Field<string> name="script.content">
-        {({ field }) => (
-          <CodeEditor
-            languageId="typescript"
-            value={field.value}
-            onChange={(value) => field.onChange(value)}
-            readonly={readonly}
-          />
+        {({ field: contentField }) => (
+          <Field<string> name="script.language">
+            {({ field: languageField }) => {
+              const languageId = languageMap[languageField.value as keyof typeof languageMap] || 'javascript';
+
+              return (
+                <CodeEditor
+                  languageId={languageId}
+                  value={contentField.value}
+                  onChange={(value) => contentField.onChange(value)}
+                  readonly={readonly}
+                />
+              );
+            }}
+          </Field>
         )}
       </Field>
     </>

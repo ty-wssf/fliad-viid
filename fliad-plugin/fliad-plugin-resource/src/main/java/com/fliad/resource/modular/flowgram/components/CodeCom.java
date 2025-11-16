@@ -1,6 +1,8 @@
 package com.fliad.resource.modular.flowgram.components;
 
 import com.fliad.resource.modular.flowgram.domain.TaskReportOutput;
+import io.nop.core.lang.eval.IEvalScope;
+import io.nop.xlang.api.XLang;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.expression.snel.SnEL;
@@ -26,33 +28,49 @@ public class CodeCom implements TaskComponent {
 
         TaskReportOutput report = context.getAs("report");
         Map<String, Object> inputsData = new HashMap<>();
-        ONode.load(node.getMetas()).select("data.inputsValues").forEach((key, value) -> {
-            if ("ref".equals(value.get("type").getString())) {
-                String nodeID = value.get("content").get(0).getString();
+        ONode.load(node.getMetas()).select("data.inputsValues").forEach((key, v) -> {
+            if ("ref".equals(v.get("type").getString())) {
+                String nodeID = v.get("content").get(0).getString();
 
-                inputsData.put(key, SnEL.eval(value.get("content").get(1).getString(), report.getNodeStatus(nodeID).getLastSnapshot().getOutputs()));
-            } else if ("constant".equals(value.get("type").getString())) {
-                inputsData.put(key, value.get("content").getString());
+                inputsData.put(key, SnEL.eval(v.get("content").get(1).getString(), report.getNodeStatus(nodeID).getLastSnapshot().getOutputs()));
+            } else if ("constant".equals(v.get("type").getString())) {
+                inputsData.put(key, v.get("content").getString());
             }
         });
-        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
 
-        // 将输入数据放入脚本引擎上下文中
-        inputsData.forEach(scriptEngine::put);
-        // scriptEngine.put("params", inputsData);
-        scriptEngine.put("log", log);
-        scriptEngine.put("utils", new Facade());
-
-        Object result = scriptEngine.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
-
-        // 根据result类型决定如何放入context
-        if (result instanceof Map) {
-            context.put("output", result);
+        if ("xlang".equals(ONode.load(node.getMetas()).select("data.script.language").getString())) {
+            IEvalScope scope = XLang.newEvalScope();
+            scope.setLocalValues(inputsData);
+            Object result = XLang.newCompileTool().allowUnregisteredScopeVar(true)
+                    .compileFullExpr(null,
+                            ONode.load(node.getMetas()).select("data.script.content").getString()).invoke(scope);
+            if (result instanceof Map) {
+                context.put("output", result);
+            } else {
+                Map<String, Object> resultMap = new HashMap<>();
+                resultMap.put("result", result);
+                context.put("output", resultMap);
+            }
         } else {
-            Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("result", result);
-            context.put("output", resultMap);
+            ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+            ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
+
+            // 将输入数据放入脚本引擎上下文中
+            inputsData.forEach(scriptEngine::put);
+            // scriptEngine.put("params", inputsData);
+            scriptEngine.put("log", log);
+            scriptEngine.put("utils", new Facade());
+
+            Object result = scriptEngine.eval(ONode.load(node.getMetas()).select("data.script.content").getString());
+
+            // 根据result类型决定如何放入context
+            if (result instanceof Map) {
+                context.put("output", result);
+            } else {
+                Map<String, Object> resultMap = new HashMap<>();
+                resultMap.put("result", result);
+                context.put("output", resultMap);
+            }
         }
     }
 }

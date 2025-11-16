@@ -40,6 +40,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-nop-xlang</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-flow</artifactId>
         </dependency>

@@ -11,6 +11,7 @@ import { CodeNodeJSON } from './types';
 import { Outputs } from './components/outputs';
 import { Inputs } from './components/inputs';
 import { Code } from './components/code';
+import { LanguageSelector } from './components/language-selector';
 import { defaultFormMeta } from '../default-form-meta';
 
 export const FormRender = ({ form }: FormRenderProps<CodeNodeJSON>) => (
@@ -18,6 +19,7 @@ export const FormRender = ({ form }: FormRenderProps<CodeNodeJSON>) => (
     <FormHeader />
     <FormContent>
       <Inputs />
+      <LanguageSelector />
       <Code />
       <Outputs />
     </FormContent>

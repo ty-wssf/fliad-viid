@@ -6,6 +6,8 @@
 import { FlowNodeJSON } from '@flowgram.ai/free-layout-editor';
 import { IFlowValue, IJsonSchema } from '@flowgram.ai/form-materials';
 
+export type SupportedLanguage = 'javascript' | 'xlang';
+
 export interface CodeNodeJSON extends FlowNodeJSON {
   data: {
     title: string;
@@ -13,7 +15,7 @@ export interface CodeNodeJSON extends FlowNodeJSON {
     inputs: IJsonSchema<'object'>;
     outputs: IJsonSchema<'object'>;
     script: {
-      language: 'javascript';
+      language: SupportedLanguage;
       content: string;
     };
   };

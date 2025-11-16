@@ -2,7 +2,6 @@
 <orm x:schema="/nop/schema/orm/orm.xdef"
      x:extends="_app.orm.xml"
      xmlns:x="/nop/schema/xdsl.xdef" xmlns:c="c">
-     xmlns:xpl="/nop/schema/xpl.xdef">
 
     <entities>
         <entity name="com.fliad.dahua.dao.entity.DahuaCamera">
