@@ -3,6 +3,7 @@
 #########################################
 server.port: 82
 solon.app.name: fliad-viid
+solon.debug: 0
 
 #########################################
 # request configuration
