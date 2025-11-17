@@ -10,7 +10,10 @@ import io.nop.core.lang.xml.parse.XNodeParser;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
 import io.nop.core.resource.VirtualFileSystem;
+import io.nop.xlang.api.ExprEvalAction;
 import io.nop.xlang.api.XLang;
+import io.nop.xlang.api.XplModel;
+import io.nop.xlang.ast.XLangOutputMode;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
@@ -144,38 +147,89 @@ public class CodeCom implements TaskComponent {
         }
     }
 
-    /**
-     * 执行XLang脚本
-     */
     private Object executeXlangScript(Node node, Map<String, Object> inputsData, String scriptContent) {
         IEvalScope scope = XLang.newEvalScope();
         scope.setLocalValues(inputsData);
 
         String scriptPath = "/nop/debug/" + node.getId() + ".xpl";
+
         if (Solon.cfg().isDebugMode()) {
-            // 使用临时文件管理，确保资源清理
+            // 调试模式:以文件为主
             File scriptFile = new File(ResourceHelper.getOverrideVFsDir().getAbsoluteFile() + scriptPath);
 
             if (!scriptFile.exists()) {
-                // 确保目录存在并创建临时文件
                 FileUtil.mkdir(scriptFile.getParentFile());
                 FileUtil.writeString(scriptContent, scriptFile, StandardCharsets.UTF_8);
             }
-            IResource resource = VirtualFileSystem.instance().getResource(scriptPath);
-            XNode xnode = XNodeParser.instance().parseFromResource(resource);
 
-            return XLang.newCompileTool()
-                    .allowUnregisteredScopeVar(true)
-                    .compileTagBody(xnode)
-                    .invoke(scope);
+            // 从文件读取内容并解析 outputMode
+            IResource resource = VirtualFileSystem.instance().getResource(scriptPath);
+            String fileContent = resource.readText();
+            XNode xnode = XNodeParser.instance().parseFromText(resource.location(), fileContent);
+            XLangOutputMode outputMode = getOutputModeFromNode(xnode);
+
+            // 使用解析出的 outputMode 来编译模型
+            XplModel model = XLang.parseXpl(resource, outputMode);
+
+            return executeByOutputMode(model, scope, outputMode);
         } else {
+            // 非调试模式:从内存内容解析
             XNode xnode = XNodeParser.instance().parseFromText(SourceLocation.fromPath(scriptPath), scriptContent);
-            return XLang.newCompileTool()
+            XLangOutputMode outputMode = getOutputModeFromNode(xnode);
+
+            ExprEvalAction action = XLang.newCompileTool()
                     .allowUnregisteredScopeVar(true)
-                    .compileTagBody(xnode)
-                    .invoke(scope);
+                    .compileTagBody(xnode, outputMode);
+
+            return executeByOutputMode(action, scope, outputMode);
+        }
+    }
+
+    /**
+     * 从 XNode 中提取 outputMode 属性
+     */
+    private XLangOutputMode getOutputModeFromNode(XNode node) {
+        // 检查根节点的 xpl:outputMode 属性
+        String outputModeStr = node.attrText("outputMode");
+        if (outputModeStr != null) {
+            XLangOutputMode mode = XLangOutputMode.fromText(outputModeStr);
+            if (mode != null) {
+                return mode;
+            }
         }
 
+        // 如果没有显式指定,使用默认值 html (与 XplModelParser 保持一致)
+        return XLangOutputMode.none;
+    }
+
+    /**
+     * 根据 outputMode 选择正确的执行方法
+     */
+    private Object executeByOutputMode(ExprEvalAction action, IEvalScope scope, XLangOutputMode outputMode) {
+        switch (outputMode) {
+            case none:
+                // 不允许输出,返回执行结果
+                return action.invoke(scope);
+
+            case text:
+            case html:
+            case xml:
+                // 输出文本格式
+                return action.generateText(scope);
+
+            case node:
+            case xjson:
+                // 输出 XNode 对象
+                return action.generateNode(scope);
+
+            case sql:
+                // SQL 模式也返回文本,但包含参数信息
+                return action.generateText(scope);
+
+            default:
+                // 默认使用 invoke
+                return action.invoke(scope);
+        }
     }
 
     /**
