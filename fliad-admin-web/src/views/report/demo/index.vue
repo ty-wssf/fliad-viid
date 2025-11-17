@@ -45,7 +45,7 @@
 				</a-card>
 			</a-col>
 
-			<a-col :span="collapsed ? 22 : 18" class="right-panel">
+			<a-col :span="collapsed ? 22 : 19" class="right-panel">
 				<a-card
 					:title="selectedReportName || '报表预览'"
 					:bordered="false"
