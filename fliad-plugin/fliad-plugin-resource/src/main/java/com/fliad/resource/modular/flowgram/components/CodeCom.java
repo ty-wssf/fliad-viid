@@ -156,10 +156,11 @@ public class CodeCom implements TaskComponent {
             // 使用临时文件管理，确保资源清理
             File scriptFile = new File(ResourceHelper.getOverrideVFsDir().getAbsoluteFile() + scriptPath);
 
-            // 确保目录存在并创建临时文件
-            FileUtil.mkdir(scriptFile.getParentFile());
-            FileUtil.writeString(scriptContent, scriptFile, StandardCharsets.UTF_8);
-
+            if (!scriptFile.exists()) {
+                // 确保目录存在并创建临时文件
+                FileUtil.mkdir(scriptFile.getParentFile());
+                FileUtil.writeString(scriptContent, scriptFile, StandardCharsets.UTF_8);
+            }
             IResource resource = VirtualFileSystem.instance().getResource(scriptPath);
             XNode xnode = XNodeParser.instance().parseFromResource(resource);
 

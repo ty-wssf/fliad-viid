@@ -26,7 +26,6 @@ import io.nop.orm.eql.binder.IOrmColumnBinderEnhancer;
 import io.nop.orm.loader.IQueryExecutor;
 import io.nop.orm.sql.IEntityFilterProvider;
 import io.nop.orm.support.DynamicOrmEntity;
-import javafx.beans.NamedArg;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.lang.Nullable;
 
@@ -210,7 +209,7 @@ public class SessionFactoryConfig {
     }
 
     @Inject
-    public void setGlobalCache(@NamedArg("nopOrmGlobalCacheProvider") ICacheProvider globalCache) {
+    public void setGlobalCache(@Inject("nopOrmGlobalCacheProvider") ICacheProvider globalCache) {
         this.globalCache = globalCache;
     }
 
