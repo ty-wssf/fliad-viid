@@ -348,7 +348,7 @@ public class ImportDataCollector implements ITableDataEventListener {
     }
 
     private SourceLocation getLocation(String sheetName, int rowIndex, int colIndex) {
-        String path = "<sheet>";
+        String path = "/sheet";
         return new SourceLocation(path, 0, 0, 0, 0, sheetName, CellPosition.toABString(rowIndex, colIndex), null);
     }
 }
