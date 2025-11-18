@@ -52,11 +52,11 @@
         </prop>
         <prop name="enableStatus" displayName="启用状态：1=启用，0=禁用" propId="8" mandatory="true" queryable="true"
               sortable="true" insertable="true" updatable="true" defaultValue="1">
-            <schema type="java.lang.String" precision="1" dict="hikvision/enableStatus"/>
+            <schema type="java.lang.Integer" precision="1" dict="hikvision/enableStatus"/>
         </prop>
         <prop name="onlineStatus" displayName="在线状态：1=在线，0=离线" propId="9" mandatory="true" queryable="true"
               sortable="true" insertable="true" updatable="true" defaultValue="0">
-            <schema type="java.lang.String" precision="1"/>
+            <schema type="java.lang.Integer" precision="1"/>
         </prop>
         <prop name="createTime" displayName="创建时间" propId="10" mandatory="true" queryable="true" sortable="true"
               insertable="false" updatable="false">

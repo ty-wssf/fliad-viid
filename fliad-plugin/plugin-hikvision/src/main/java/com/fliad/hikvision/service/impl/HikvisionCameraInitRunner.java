@@ -345,7 +345,7 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             ormTemplate.runInSession(() -> {
                 HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.queryEntity(deviceId);
                 if (viidHikvisionCamera != null) {
-                    viidHikvisionCamera.setOnlineStatus("1");
+                    viidHikvisionCamera.setOnlineStatus(1);
                 }
             });
         }
@@ -358,7 +358,7 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             ormTemplate.runInSession(() -> {
                 HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.queryEntity(deviceId);
                 if (viidHikvisionCamera != null) {
-                    viidHikvisionCamera.setOnlineStatus("0");
+                    viidHikvisionCamera.setOnlineStatus(0);
                 }
             });
         }
