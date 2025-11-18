@@ -25,7 +25,7 @@ import org.noear.solon.validation.annotation.Valid;
 import com.fliad.common.annotation.CommonLog;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.pojo.CommonValidList;
-import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
+import com.fliad.hikvision.entity.HikvisionCamera;
 import com.fliad.hikvision.service.HikvisionCameraService;
 
 import java.io.IOException;

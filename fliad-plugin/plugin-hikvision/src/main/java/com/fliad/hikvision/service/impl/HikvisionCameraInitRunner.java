@@ -6,7 +6,7 @@ import com.fliad.common.state.DeviceStateManager;
 import com.fliad.common.state.MultiDeviceStatusChangeListener;
 import com.fliad.dev.api.DevConfigApi;
 import com.fliad.hikvision.acl.alarm.HikvisionAlarmManager;
-import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
+import com.fliad.hikvision.entity.HikvisionCamera;
 import com.fliad.hikvision.service.HikvisionCameraService;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;

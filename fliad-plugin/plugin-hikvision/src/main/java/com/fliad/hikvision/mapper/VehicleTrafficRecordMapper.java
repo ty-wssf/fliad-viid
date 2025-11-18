@@ -13,7 +13,7 @@
 package com.fliad.hikvision.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.fliad.hikvision.modular.defense.entity.VehicleTrafficRecord;
+import com.fliad.hikvision.entity.VehicleTrafficRecord;
 
 /**
  * 车辆通行记录Mapper接口

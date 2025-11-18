@@ -15,7 +15,7 @@ package com.fliad.hikvision.service;
 import com.fliad.hikvision.param.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
+import com.fliad.hikvision.entity.HikvisionCamera;
 import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;

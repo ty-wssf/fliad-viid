@@ -13,7 +13,7 @@
 package com.fliad.hikvision.mapper;
 
 import com.mybatisflex.core.BaseMapper;
-import com.fliad.hikvision.modular.defense.entity.HikvisionCamera;
+import com.fliad.hikvision.entity.HikvisionCamera;
 
 /**
  * 海康设备Mapper接口

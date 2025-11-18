@@ -5,7 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import com.fliad.dev.api.DevConfigApi;
 import com.fliad.hikvision.acl.NetSDK.HCNetSDK;
 import com.fliad.hikvision.acl.alarm.HikvisionAlarmManager;
-import com.fliad.hikvision.modular.defense.entity.VehicleTrafficRecord;
+import com.fliad.hikvision.entity.VehicleTrafficRecord;
 import com.fliad.hikvision.mapper.VehicleTrafficRecordMapper;
 import com.sun.jna.Pointer;
 import org.noear.snack.ONode;
