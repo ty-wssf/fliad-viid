@@ -1,0 +1,32 @@
+<interceptor x:schema="/nop/schema/orm/orm-interceptor.xdef">
+    <entity name="com.fliad.dahua.dao.entity.DahuaCamera">
+        <pre-save id="validateDahuaCameraSave">
+            <source>
+                <c:script><![CDATA[
+                    import io.nop.api.core.exceptions.NopException;
+                    import io.nop.excel.ExcelErrors;
+                    import io.nop.commons.util.NetHelper;
+
+                    if(!NetHelper.isIpV4Address(entity.ipAddr)) {
+                        throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                            .param("errorDesc", "IP地址格式不正确,应为标准IPv4格式(如192.168.1.1),当前输入值:" + entity.ipAddr);
+                    }
+                ]]></c:script>
+            </source>
+        </pre-save>
+        <pre-update id="validateDahuaCameraUpdate">
+            <source>
+                <c:script><![CDATA[
+                    import io.nop.api.core.exceptions.NopException;
+                    import io.nop.excel.ExcelErrors;
+                    import io.nop.commons.util.NetHelper;
+
+                    if(!NetHelper.isIpV4Address(entity.ipAddr)) {
+                        throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                            .param("errorDesc", "IP地址格式不正确,应为标准IPv4格式(如192.168.1.1),当前输入值:" + entity.ipAddr);
+                    }
+                ]]></c:script>
+            </source>
+        </pre-update>
+    </entity>
+</interceptor>

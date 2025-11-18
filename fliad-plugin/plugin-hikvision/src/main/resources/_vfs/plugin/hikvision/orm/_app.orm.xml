@@ -73,6 +73,10 @@
             </columns>
             <unique-keys>
                 <unique-key columns="name" constraint="IDX_HIKVISION_CAMERA_NAME" name="IDX_HIKVISION_CAMERA_NAME"/>
+                <unique-key columns="ipAddr" constraint="IDX_HIKVISION_CAMERA_IP_ADDR"
+                            name="IDX_HIKVISION_CAMERA_IP_ADDR"/>
+                <unique-key columns="deviceId" constraint="IDX_HIKVISION_CAMERA_DEVICE_ID"
+                            name="IDX_HIKVISION_CAMERA_DEVICE_ID"/>
             </unique-keys>
         </entity>
         <entity className="com.fliad.hikvision.dao.entity.VehicleTrafficRecord" displayName="车辆通行记录信息表"

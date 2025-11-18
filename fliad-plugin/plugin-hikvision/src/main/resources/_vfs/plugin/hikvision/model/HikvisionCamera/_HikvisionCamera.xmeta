@@ -17,6 +17,8 @@
 
     <keys>
         <key name="IDX_HIKVISION_CAMERA_NAME" props="name"/>
+        <key name="IDX_HIKVISION_CAMERA_IP_ADDR" props="ipAddr"/>
+        <key name="IDX_HIKVISION_CAMERA_DEVICE_ID" props="deviceId"/>
     </keys>
 
     <props>
