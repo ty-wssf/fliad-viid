@@ -19,7 +19,7 @@ import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fliad.common.pojo.ListenerEntity;
-import com.fliad.dahua.service.impl.UniqueValidator;
+import io.nop.orm.utils.UniqueValidator;
 import com.fliad.dahua.util.ImportUtil;
 import com.mybatisflex.core.FlexGlobalConfig;
 import io.nop.api.core.ioc.BeanContainer;

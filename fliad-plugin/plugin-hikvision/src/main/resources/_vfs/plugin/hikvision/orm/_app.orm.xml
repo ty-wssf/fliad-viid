@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-hikvision" ext:entityPackageName="com.fliad.hikvision.dao.entity"
+     ext:basePackageName="com.fliad.hikvision" ext:appName="plugin-hikvision" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <dicts>
+        <dict label="启用状态" name="hikvision/enableStatus" valueType="int">
+            <option label="启用" value="1"/>
+            <option label="禁用" value="0"/>
+        </dict>
+    </dicts>
+
+    <domains>
+        <domain name="userName" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="image" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="email" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="phone" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="roleId" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="userId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="deptId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="boolFlag" stdSqlType="TINYINT"/>
+        <domain name="json-128K" precision="131072" stdDomain="json" stdSqlType="VARCHAR"/>
+        <domain name="remark" precision="1" stdSqlType="VARCHAR"/>
+        <domain name="version" stdSqlType="INTEGER"/>
+        <domain name="createTime" stdSqlType="TIMESTAMP"/>
+        <domain name="createdBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="updateTime" stdSqlType="TIMESTAMP"/>
+        <domain name="updatedBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="delFlag" stdSqlType="BOOLEAN"/>
+        <domain name="mediumtext" precision="16777215" stdSqlType="VARCHAR"/>
+        <domain name="wfAction" precision="200" stdSqlType="VARCHAR"/>
+    </domains>
+
+    <entities>
+        <entity className="com.fliad.hikvision.dao.entity.HikvisionCamera" createTimeProp="createTime"
+                displayName="海康布防表" name="com.fliad.hikvision.dao.entity.HikvisionCamera" registerShortName="true"
+                tableName="HIKVISION_CAMERA" updateTimeProp="updateTime">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT" tagSet="seq"/>
+                <column code="DEVICE_ID" displayName="设备编号" name="deviceId" precision="64" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="设备名称" mandatory="true" name="name" precision="128" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IP_ADDR" displayName="设备IP地址" mandatory="true" name="ipAddr" precision="64" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PORT" displayName="端口号" mandatory="true" name="port" propId="5" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="USERNAME" displayName="用户名" mandatory="true" name="username" precision="64" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PASSWORD" displayName="密码" mandatory="true" name="password" precision="128" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENABLE_STATUS" defaultValue="1" displayName="启用状态：1=启用，0=禁用" mandatory="true"
+                        name="enableStatus" precision="1" propId="8" stdDataType="string" stdSqlType="VARCHAR"
+                        ext:dict="hikvision/enableStatus"/>
+                <column code="ONLINE_STATUS" defaultValue="0" displayName="在线状态：1=在线，0=离线" mandatory="true"
+                        name="onlineStatus" precision="1" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" domain="createTime" mandatory="true" name="createTime"
+                        propId="10" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+                <column code="UPDATE_TIME" displayName="更新时间" domain="updateTime" mandatory="true" name="updateTime"
+                        propId="11" stdDataType="timestamp" stdSqlType="TIMESTAMP"/>
+            </columns>
+            <unique-keys>
+                <unique-key columns="name" constraint="IDX_HIKVISION_CAMERA_NAME" name="IDX_HIKVISION_CAMERA_NAME"/>
+            </unique-keys>
+        </entity>
+        <entity className="com.fliad.hikvision.dao.entity.VehicleTrafficRecord" displayName="车辆通行记录信息表"
+                name="com.fliad.hikvision.dao.entity.VehicleTrafficRecord" registerShortName="true"
+                tableName="VEHICLE_TRAFFIC_RECORD">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="KKBH" displayName="卡口编号，符合GA/T 16.31与GA/T 543.10要求" name="kkbh" precision="50" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FXLX" displayName="方向类型" name="fxlx" precision="20" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CDH" displayName="车道号" name="cdh" precision="10" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="GCSJ" displayName="过车时间，格式yyyy-mm-dd hh24:mi:ss" name="gcsj" propId="5"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="WFDM" displayName="违法行为，符合GA/T 16.31与GA/T 543.5要求" name="wfdm" precision="20" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HPHM" displayName="号牌号码，符合GA/T 543.5要求，无牌等用&quot;-&quot;表示" mandatory="true" name="hphm"
+                        precision="20" propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HPZL" displayName="号牌种类，符合GA/T 16.7与GA/T 543.5要求：01-大型汽车,02-小型汽车,...,99-其他号牌"
+                        mandatory="true" name="hpzl" precision="2" propId="8" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HPYS" displayName="号牌颜色，符合GB 1.1-2009：0-白色,1-黄色,2-蓝色,3-黑色,4-绿色,5-未识别,9-其他颜色"
+                        mandatory="true" name="hpys" propId="9" stdDataType="byte" stdSqlType="TINYINT"/>
+                <column code="FZHPHM" displayName="辅助号牌号码，无牌等用&quot;-&quot;表示" name="fzhphm" precision="20" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FZHPZL" displayName="辅助号牌种类，符合GA/T 16.7与GA/T 543.5要求" name="fzhpzl" precision="2"
+                        propId="11" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FZHPYS" displayName="辅助号牌颜色：0-白色,1-黄色,2-蓝色,3-黑色,4-绿色,5-未识别,9-其他颜色" name="fzhpys"
+                        propId="12" stdDataType="byte" stdSqlType="TINYINT"/>
+                <column code="CLLX" displayName="车辆类型，符合GA/T 16.4与GA/T 543.5要求" name="cllx" precision="20" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CWKC" displayName="车外廓长，单位厘米，最长5位" name="cwkc" precision="5" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CLPP" displayName="车辆品牌，符合GA/T 543.10要求" name="clpp" precision="50" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CSYS" displayName="车身颜色，符合GA/T 16.8与GA/T 543.5：A-白,B-灰,C-黄,D-粉,E-红,F-紫,G-绿,H-蓝,I-棕,J-黑"
+                        name="csys" precision="2" propId="16" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HPKXD" displayName="号牌识别可信度，0~100%" name="hpkxd" propId="17" stdDataType="byte"
+                        stdSqlType="TINYINT"/>
+                <column code="MWHPKXD" displayName="每位号牌识别可信度，格式如&quot;苏-80,B-90,...&quot;" name="mwhpkxd"
+                        precision="200" propId="18" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CXKXD" displayName="车型识别可信度，0~100%" name="cxkxd" propId="19" stdDataType="byte"
+                        stdSqlType="TINYINT"/>
+                <column code="PPKXD" displayName="品牌识别可信度，0~100%" name="ppkxd" propId="20" stdDataType="byte"
+                        stdSqlType="TINYINT"/>
+                <column code="XWTZ" displayName="行为特征，1-不系安全带;2-拨打电话;...多个用分号分隔" name="xwtz" precision="50" propId="21"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TPLJ" displayName="图片路径" name="tplj" precision="255" propId="22" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TP1" displayName="通行图片1" name="tp1" precision="255" propId="23" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TP2" displayName="通行图片2" name="tp2" precision="255" propId="24" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TP3" displayName="通行图片3" name="tp3" precision="255" propId="25" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TZTP" displayName="特征图片" name="tztp" precision="255" propId="26" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="JSRTP" displayName="驾驶人图片" name="jsrtp" precision="255" propId="27" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CLSD" displayName="车辆速度，单位km/h" name="clsd" propId="28" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="TID" displayName="rfid标签芯片识别号" name="tid" precision="50" propId="29" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="ZKRS" displayName="载客人数" name="zkrs" propId="30" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="CID" displayName="rfid标识卡号码" name="cid" precision="50" propId="31" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SXJBH" displayName="摄像机设备编号" name="sxjbh" precision="50" propId="32" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

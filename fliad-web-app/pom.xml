@@ -281,7 +281,7 @@
 
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-hikvision</artifactId>
+            <artifactId>plugin-hikvision</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

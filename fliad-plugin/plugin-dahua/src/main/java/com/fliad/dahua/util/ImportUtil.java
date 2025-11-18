@@ -1,6 +1,5 @@
 package com.fliad.dahua.util;
 
-import cn.hutool.core.util.ObjectUtil;
 import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
 import io.nop.core.reflect.bean.BeanTool;
@@ -10,8 +9,8 @@ import io.nop.orm.IOrmTemplate;
 import io.nop.orm.support.OrmEntity;
 import io.nop.xlang.xmeta.IObjMeta;
 import io.nop.xlang.xmeta.SchemaLoader;
-import com.fliad.dahua.service.impl.EntityCopyHelper;
-import com.fliad.dahua.service.impl.UniqueValidator;
+import io.nop.orm.utils.EntityCopyHelper;
+import io.nop.orm.utils.UniqueValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

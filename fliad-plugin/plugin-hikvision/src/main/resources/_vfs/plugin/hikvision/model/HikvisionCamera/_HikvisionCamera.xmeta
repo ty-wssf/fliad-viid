@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="海康布防表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.hikvision.dao.entity.HikvisionCamera</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys>
+        <key name="IDX_HIKVISION_CAMERA_NAME" props="name"/>
+    </keys>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" tagSet="seq" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="false" graphql:type="String">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="deviceId" displayName="设备编号" propId="2" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="name" displayName="设备名称" propId="3" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="ipAddr" displayName="设备IP地址" propId="4" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="port" displayName="端口号" propId="5" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="username" displayName="用户名" propId="6" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="password" displayName="密码" propId="7" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="enableStatus" displayName="启用状态：1=启用，0=禁用" propId="8" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true" defaultValue="1">
+            <schema type="java.lang.String" precision="1" dict="hikvision/enableStatus"/>
+        </prop>
+        <prop name="onlineStatus" displayName="在线状态：1=在线，0=离线" propId="9" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true" defaultValue="0">
+            <schema type="java.lang.String" precision="1"/>
+        </prop>
+        <prop name="createTime" displayName="创建时间" propId="10" mandatory="true" queryable="true" sortable="true"
+              insertable="false" updatable="false">
+            <schema domain="createTime" type="java.sql.Timestamp"/>
+        </prop>
+        <prop name="updateTime" displayName="更新时间" propId="11" mandatory="true" queryable="true" sortable="true"
+              insertable="false" updatable="false">
+            <schema domain="updateTime" type="java.sql.Timestamp"/>
+        </prop>
+    </props>
+</meta>

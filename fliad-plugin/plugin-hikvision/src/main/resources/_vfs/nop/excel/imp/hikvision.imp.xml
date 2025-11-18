@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<imp x:schema="/nop/schema/excel/imp.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     templatePath="hikvision.template.xlsx" xmlns:c="c">
+    <sheets>
+        <sheet name="海康设备" field="devices" list="true">
+            <fields>
+                <field name="deviceId" displayName="设备编号" mandatory="true">
+                    <schema stdDomain="string"/>
+                </field>
+
+                <field name="name" displayName="设备名称" mandatory="true">
+                    <schema stdDomain="string"/>
+                </field>
+
+                <field name="ipAddr" displayName="IP地址" mandatory="true">
+                    <schema stdDomain="string">
+                        <validator>
+                            <c:script><![CDATA[
+                                import io.nop.api.core.exceptions.NopException;
+                                import io.nop.excel.ExcelErrors;
+                                import io.nop.commons.util.NetHelper;
+
+                                if(!NetHelper.isIpV4Address(value)) {
+                                    throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                                        .param("errorDesc", "IP地址格式不正确,应为标准IPv4格式(如192.168.1.1),当前输入值:" + value);
+                                }
+                            ]]></c:script>
+                        </validator>
+                    </schema>
+                </field>
+
+                <field name="port" displayName="端口" mandatory="true">
+                    <schema stdDomain="int"/>
+                </field>
+
+                <field name="username" displayName="用户名" mandatory="true">
+                    <schema stdDomain="string"/>
+                </field>
+
+                <field name="password" displayName="密码" mandatory="true">
+                    <schema stdDomain="string"/>
+                </field>
+
+                <field name="enableStatus" displayName="启用状态" mandatory="true" importDictLabel="true">
+                    <schema stdDomain="int" dict="hikvision/enableStatus"/>
+                </field>
+            </fields>
+        </sheet>
+    </sheets>
+
+    <validator>
+        <c:script><![CDATA[
+            import io.nop.api.core.exceptions.NopException;
+            import io.nop.excel.ExcelErrors;
+
+            // 唯一性校验
+            const devices = record.devices;
+            const ipAddrSet = new Set();
+            const deviceIdSet = new Set();
+            const nameSet = new Set();
+
+            for(let device of devices) {
+                if(ipAddrSet.contains(device.ipAddr)) {
+                    throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                                            .param("errorDesc", "IP地址字段重复值：" + device.ipAddr);
+                }
+                
+                if(deviceIdSet.contains(device.deviceId)) {
+                    throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                                            .param("errorDesc", "设备编号字段重复值：" + device.deviceId);
+                }
+                
+                if(nameSet.contains(device.name)) {
+                    throw new NopException(ExcelErrors.ERR_IMPORT_FIELD_VALUE_VALIDATE_FAIL)
+                                            .param("errorDesc", "设备名称字段重复值：" + device.name);
+                }
+                
+                ipAddrSet.add(device.ipAddr);
+                deviceIdSet.add(device.deviceId);
+                nameSet.add(device.name);
+            }
+        ]]></c:script>
+    </validator>
+</imp>
