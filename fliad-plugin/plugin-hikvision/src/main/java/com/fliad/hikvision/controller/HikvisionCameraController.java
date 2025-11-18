@@ -3,6 +3,7 @@ package com.fliad.hikvision.controller;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.io.IoUtil;
 import com.fliad.common.util.CommonDownloadUtil;
+import com.fliad.hikvision.dao.entity.HikvisionCamera;
 import com.fliad.hikvision.param.*;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.core.model.object.DynamicObject;
@@ -25,7 +26,6 @@ import org.noear.solon.validation.annotation.Valid;
 import com.fliad.common.annotation.CommonLog;
 import com.fliad.common.pojo.CommonResult;
 import com.fliad.common.pojo.CommonValidList;
-import com.fliad.hikvision.entity.HikvisionCamera;
 import com.fliad.hikvision.service.HikvisionCameraService;
 
 import java.io.IOException;

@@ -1,13 +1,23 @@
 package com.fliad.hikvision.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import com.fliad.common.cache.CommonCacheOperator;
 import com.fliad.common.state.DeviceStateManager;
 import com.fliad.common.state.MultiDeviceStatusChangeListener;
 import com.fliad.dev.api.DevConfigApi;
 import com.fliad.hikvision.acl.alarm.HikvisionAlarmManager;
-import com.fliad.hikvision.entity.HikvisionCamera;
+import com.fliad.hikvision.dao.entity.HikvisionCamera;
 import com.fliad.hikvision.service.HikvisionCameraService;
+import io.nop.api.core.beans.query.QueryBean;
+import io.nop.core.reflect.bean.BeanTool;
+import io.nop.dao.api.DaoProvider;
+import io.nop.dao.api.IEntityDao;
+import io.nop.orm.IOrmTemplate;
+import io.nop.orm.utils.EntityCopyHelper;
+import io.nop.orm.utils.UniqueValidator;
+import io.nop.xlang.xmeta.IObjMeta;
+import io.nop.xlang.xmeta.SchemaLoader;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
@@ -41,6 +51,9 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
 
     @Inject
     private DevConfigApi devConfigApi;
+
+    @Inject
+    private IOrmTemplate ormTemplate;
 
     private DeviceStateManager deviceStateManager;
 
@@ -84,17 +97,17 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
 
             try {
                 // 查询所有启用的设备
-                List<HikvisionCamera> enabledCameras = viidHikvisionCameraService.list(
-                        viidHikvisionCameraService.query().eq("enable_status", 1)
-                );
-
+                IEntityDao<HikvisionCamera> dahuaCameraDao = DaoProvider.instance().daoFor(HikvisionCamera.class);
+                QueryBean query = new QueryBean();
+                query.addFilterCondition(HikvisionCamera.PROP_NAME_enableStatus, "eq", "1");
+                List<HikvisionCamera> enabledCameras = dahuaCameraDao.findAllByQuery(query);
                 log.info("找到 {} 个启用的海康威视设备", enabledCameras.size());
 
                 // 遍历所有启用的设备，进行登录和布防
                 for (HikvisionCamera camera : enabledCameras) {
                     try {
                         ThreadUtil.safeSleep(500);
-                        String deviceId = camera.getId();
+                        String deviceId = String.valueOf(camera.getId_());
                         String deviceNumber = camera.getDeviceId(); // 设备编号
                         String ip = camera.getIpAddr();
                         int port = camera.getPort();
@@ -140,10 +153,10 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
 
                         log.info("设备 {} 初始化成功", deviceId);
                     } catch (Exception e) {
-                        log.error("初始化设备 {} 时发生异常", camera.getId(), e);
+                        log.error("初始化设备 {} 时发生异常", camera.getId_(), e);
                         failedDevices.add(camera);
                         // 标记设备为离线状态
-                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
+                        deviceStateManager.handleOfflineEvent(DEVICE_TYPE, String.valueOf(camera.getId_()));
                     }
                 }
 
@@ -174,12 +187,13 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             });
             // 初始化海康威视报警管理器
             // 查询所有启用的设备
-            List<HikvisionCamera> enabledCameras = viidHikvisionCameraService.list(
-                    viidHikvisionCameraService.query().eq("enable_status", 1)
-            );
+            IEntityDao<HikvisionCamera> dahuaCameraDao = DaoProvider.instance().daoFor(HikvisionCamera.class);
+            QueryBean query = new QueryBean();
+            query.addFilterCondition(HikvisionCamera.PROP_NAME_enableStatus, "eq", "1");
+            List<HikvisionCamera> enabledCameras = dahuaCameraDao.findAllByQuery(query);
             log.info("找到 {} 个启用的海康威视设备", enabledCameras.size());
             for (HikvisionCamera camera : enabledCameras) {
-                String deviceId = camera.getId();
+                String deviceId = String.valueOf(camera.getId_());
                 String deviceNumber = camera.getDeviceId(); // 设备编号
                 String ip = camera.getIpAddr();
                 int port = camera.getPort();
@@ -212,9 +226,9 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             // 解决设备信息调整后可以实时更新的问题
             List<HikvisionCamera> currentFailedDevices = new CopyOnWriteArrayList<>();
             for (HikvisionCamera failedDevice : failedDevices) {
-                HikvisionCamera camera = viidHikvisionCameraService.getById(failedDevice.getId());
-                hikvisionAlarmManager.removeDevice(failedDevice.getId());
-                hikvisionAlarmManager.addDevice(camera.getId(), camera.getDeviceId(), camera.getIpAddr(), camera.getPort(), camera.getUsername(), camera.getPassword());
+                HikvisionCamera camera = viidHikvisionCameraService.queryEntity(String.valueOf(failedDevice.getId_()));
+                hikvisionAlarmManager.removeDevice(String.valueOf(failedDevice.getId_()));
+                hikvisionAlarmManager.addDevice(String.valueOf(failedDevice.getId_()), camera.getDeviceId(), camera.getIpAddr(), camera.getPort(), camera.getUsername(), camera.getPassword());
                 currentFailedDevices.add(camera);
             }
             // 清空失败列表，准备重新添加本轮仍然失败的设备
@@ -225,7 +239,7 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
             for (HikvisionCamera camera : currentFailedDevices) {
                 try {
                     ThreadUtil.safeSleep(500);
-                    String deviceId = camera.getId();
+                    String deviceId = String.valueOf(camera.getId_());
                     String deviceNumber = camera.getDeviceId(); // 设备编号
                     String ip = camera.getIpAddr();
 
@@ -265,10 +279,10 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
                     deviceStateManager.handleOnlineEvent(DEVICE_TYPE, deviceId);
                     log.info("设备 {} 重试初始化成功", deviceId);
                 } catch (Exception e) {
-                    log.error("重试初始化设备 {} 时发生异常", camera.getId(), e);
+                    log.error("重试初始化设备 {} 时发生异常", camera.getId_(), e);
                     stillFailedDevices.add(camera);
                     // 标记设备为离线状态
-                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, camera.getId());
+                    deviceStateManager.handleOfflineEvent(DEVICE_TYPE, String.valueOf(camera.getId_()));
                 }
             }
 
@@ -328,23 +342,25 @@ public class HikvisionCameraInitRunner implements LifecycleBean, MultiDeviceStat
     public void onDeviceOnline(String deviceType, String deviceId) {
         if (deviceType.equals(DEVICE_TYPE)) {
             // 更新ViidHikvisionCamera实体在数据库的状态
-            HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.getById(deviceId);
-            if (viidHikvisionCamera != null) {
-                viidHikvisionCamera.setOnlineStatus(1);
-                viidHikvisionCameraService.updateById(viidHikvisionCamera);
-            }
+            ormTemplate.runInSession(() -> {
+                HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.queryEntity(deviceId);
+                if (viidHikvisionCamera != null) {
+                    viidHikvisionCamera.setOnlineStatus("1");
+                }
+            });
         }
     }
 
     @Override
     public void onDeviceOffline(String deviceType, String deviceId) {
         if (deviceType.equals(DEVICE_TYPE)) {
-            // 删除ViidHikvisionCamera实体在数据库的状态
-            HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.getById(deviceId);
-            if (viidHikvisionCamera != null) {
-                viidHikvisionCamera.setOnlineStatus(0);
-                viidHikvisionCameraService.updateById(viidHikvisionCamera);
-            }
+            // 更新ViidHikvisionCamera实体在数据库的状态
+            ormTemplate.runInSession(() -> {
+                HikvisionCamera viidHikvisionCamera = viidHikvisionCameraService.queryEntity(deviceId);
+                if (viidHikvisionCamera != null) {
+                    viidHikvisionCamera.setOnlineStatus("0");
+                }
+            });
         }
     }
 }

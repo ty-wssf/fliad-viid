@@ -18,10 +18,12 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fliad.common.util.CommonDownloadUtil;
+import com.fliad.hikvision.dao.entity.HikvisionCamera;
 import com.fliad.hikvision.param.*;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.paginate.Page;
-import com.mybatisflex.solon.service.impl.ServiceImpl;
+import io.nop.api.core.beans.FilterBeans;
+import io.nop.api.core.beans.query.QueryBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.concurrent.executor.GlobalExecutors;
 import io.nop.core.reflect.bean.BeanTool;
@@ -29,19 +31,21 @@ import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceHelper;
 import io.nop.dao.api.DaoProvider;
 import io.nop.dao.api.IEntityDao;
+import io.nop.orm.IOrmTemplate;
+import io.nop.orm.utils.EntityCopyHelper;
+import io.nop.orm.utils.ImportUtil;
 import io.nop.orm.utils.UniqueValidator;
 import io.nop.report.core.util.ExcelReportHelper;
 import io.nop.xlang.xmeta.IObjMeta;
 import io.nop.xlang.xmeta.SchemaLoader;
 import org.noear.snack.ONode;
 import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Context;
 import org.noear.solon.data.annotation.Tran;
 import com.fliad.common.enums.CommonSortOrderEnum;
 import com.fliad.common.exception.CommonException;
 import com.fliad.common.page.CommonPageRequest;
-import com.fliad.hikvision.entity.HikvisionCamera;
-import com.fliad.hikvision.mapper.HikvisionCameraMapper;
 import com.fliad.hikvision.service.HikvisionCameraService;
 
 import java.io.IOException;
@@ -51,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * 海康设备Service接口实现类
@@ -59,38 +64,58 @@ import java.util.concurrent.TimeUnit;
  * @date 2025/09/27
  **/
 @Component
-public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMapper, HikvisionCamera> implements HikvisionCameraService {
+public class HikvisionCameraServiceImpl implements HikvisionCameraService {
+
+    @Inject
+    IOrmTemplate ormTemplate;
 
     @Override
-    public Page<HikvisionCamera> page(HikvisionCameraPageParam viidHikvisionCameraPageParam) {
-        QueryWrapper queryWrapper = new QueryWrapper();
-        if (ObjectUtil.isNotEmpty(viidHikvisionCameraPageParam.getDeviceId())) {
-            queryWrapper.like("DEVICE_ID", viidHikvisionCameraPageParam.getDeviceId());
+    public Page<HikvisionCamera> page(HikvisionCameraPageParam hikvisionCameraPageParam) {
+        QueryBean queryBean = new QueryBean();
+        if (ObjectUtil.isNotEmpty(hikvisionCameraPageParam.getDeviceId())) {
+            queryBean.addFilter(FilterBeans.like("deviceId", hikvisionCameraPageParam.getDeviceId()));
         }
-        if (ObjectUtil.isNotEmpty(viidHikvisionCameraPageParam.getName())) {
-            queryWrapper.like("NAME", viidHikvisionCameraPageParam.getName());
+        if (ObjectUtil.isNotEmpty(hikvisionCameraPageParam.getName())) {
+            queryBean.addFilter(FilterBeans.like("name", hikvisionCameraPageParam.getName()));
         }
-        if (ObjectUtil.isNotEmpty(viidHikvisionCameraPageParam.getIpAddr())) {
-            queryWrapper.like("IP_ADDR", viidHikvisionCameraPageParam.getIpAddr());
+        if (ObjectUtil.isNotEmpty(hikvisionCameraPageParam.getIpAddr())) {
+            queryBean.addFilter(FilterBeans.like("ipAddr", hikvisionCameraPageParam.getIpAddr()));
         }
-        if (ObjectUtil.isAllNotEmpty(viidHikvisionCameraPageParam.getSortField(), viidHikvisionCameraPageParam.getSortOrder())) {
-            CommonSortOrderEnum.validate(viidHikvisionCameraPageParam.getSortOrder());
-            queryWrapper.orderBy(StrUtil.toUnderlineCase(viidHikvisionCameraPageParam.getSortField()), viidHikvisionCameraPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
+        if (ObjectUtil.isAllNotEmpty(hikvisionCameraPageParam.getSortField(), hikvisionCameraPageParam.getSortOrder())) {
+            CommonSortOrderEnum.validate(hikvisionCameraPageParam.getSortOrder());
+            queryBean.addOrderField(StrUtil.toUnderlineCase(hikvisionCameraPageParam.getSortField()),
+                    !hikvisionCameraPageParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
         } else {
-            queryWrapper.orderBy("ID", false);
+            queryBean.addOrderField("id", true);
         }
-        return this.page(CommonPageRequest.defaultPage(), queryWrapper);
+
+        // 使用nop-orm的分页方法替换原有的MyBatis-Flex分页
+        com.mybatisflex.core.paginate.Page<HikvisionCamera> page = new com.mybatisflex.core.paginate.Page<>();
+        page.setPageNumber(hikvisionCameraPageParam.getCurrent());
+        page.setPageSize(hikvisionCameraPageParam.getSize());
+
+        IEntityDao<HikvisionCamera> dao = DaoProvider.instance().daoFor(HikvisionCamera.class);
+        queryBean.setOffset((long) (hikvisionCameraPageParam.getCurrent() - 1) * hikvisionCameraPageParam.getSize());
+        queryBean.setLimit(hikvisionCameraPageParam.getSize());
+        List<HikvisionCamera> entities = dao.findPageByQuery(queryBean);
+
+        // 转换成Map
+        page.setRecords(entities);
+        // 设置总数，这里需要另外查询
+        page.setTotalRow(dao.countByQuery(queryBean));
+
+        return page;
     }
 
     @Tran
     @Override
     public void add(HikvisionCameraAddParam viidHikvisionCameraAddParam) {
-        IEntityDao<com.fliad.hikvision.dao.entity.HikvisionCamera> dao = DaoProvider.instance().daoFor(com.fliad.hikvision.dao.entity.HikvisionCamera.class);
+        IEntityDao<com.fliad.hikvision.dao.entity.HikvisionCamera> dao = DaoProvider.instance().daoFor(HikvisionCamera.class);
         com.fliad.hikvision.dao.entity.HikvisionCamera entity = dao.newEntity();
         BeanTool.instance().setProperties(entity, BeanUtil.beanToMap(viidHikvisionCameraAddParam));
 
         // 从路径加载
-        IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/dahua/model/DahuaCamera/DahuaCamera.xmeta");
+        IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/hikvision/model/HikvisionCamera/HikvisionCamera.xmeta");
         // 保存前校验唯一性
         UniqueValidator.checkUniqueForSave(entity, objMeta, "HikvisionCamera");
         dao.saveEntity(entity);
@@ -99,109 +124,70 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
     @Tran
     @Override
     public void edit(HikvisionCameraEditParam viidHikvisionCameraEditParam) {
-        // 检查deviceId唯一性
-        checkDeviceIdUnique(viidHikvisionCameraEditParam.getDeviceId(), viidHikvisionCameraEditParam.getId());
-        // 检查设备名称唯一性
-        checkDeviceNameUnique(viidHikvisionCameraEditParam.getName(), viidHikvisionCameraEditParam.getId());
-        // 检查设备IP地址唯一性
-        checkDeviceIpAddrUnique(viidHikvisionCameraEditParam.getIpAddr(), viidHikvisionCameraEditParam.getId());
+        ormTemplate.runInSession(() -> {
+            IObjMeta objMeta = SchemaLoader.loadXMeta("/plugin/hikvision/model/HikvisionCamera/HikvisionCamera.xmeta");
 
-        HikvisionCamera viidHikvisionCamera = this.queryEntity(viidHikvisionCameraEditParam.getId());
-        BeanUtil.copyProperties(viidHikvisionCameraEditParam, viidHikvisionCamera);
-        this.updateById(viidHikvisionCamera);
+            IEntityDao<com.fliad.hikvision.dao.entity.HikvisionCamera> dao = DaoProvider.instance().daoFor(HikvisionCamera.class);
+            com.fliad.hikvision.dao.entity.HikvisionCamera oldEntity = dao.requireEntityById(viidHikvisionCameraEditParam.getId());
+
+            com.fliad.hikvision.dao.entity.HikvisionCamera newEntity = dao.newEntity();
+            BeanTool.instance().setProperties(newEntity, BeanUtil.beanToMap(viidHikvisionCameraEditParam));
+            EntityCopyHelper.copyProperties(newEntity, oldEntity);
+
+            // 更新前校验唯一性
+            UniqueValidator.checkUniqueForUpdate(oldEntity, objMeta, "DahuaCamera");
+        });
     }
 
     @Tran
     @Override
     public void delete(List<HikvisionCameraIdParam> viidHikvisionCameraIdParamList) {
-        this.removeByIds(CollStreamUtil.toList(viidHikvisionCameraIdParamList, HikvisionCameraIdParam::getId));
+        ormTemplate.runInSession(() -> {
+            DaoProvider.instance().daoFor(HikvisionCamera.class)
+                    .deleteAllByIds(CollStreamUtil.toList(viidHikvisionCameraIdParamList, HikvisionCameraIdParam::getId));
+        });
     }
 
     @Override
     public HikvisionCamera detail(HikvisionCameraIdParam viidHikvisionCameraIdParam) {
-        return this.queryEntity(viidHikvisionCameraIdParam.getId());
+        return DaoProvider.instance().daoFor(HikvisionCamera.class).getEntityById(viidHikvisionCameraIdParam.getId());
     }
 
     @Override
     public HikvisionCamera queryEntity(String id) {
-        HikvisionCamera viidHikvisionCamera = this.getById(id);
-        if (ObjectUtil.isEmpty(viidHikvisionCamera)) {
+        HikvisionCamera hikvisionCamera = DaoProvider.instance().daoFor(HikvisionCamera.class).getEntityById(id);
+        if (ObjectUtil.isEmpty(hikvisionCamera)) {
             throw new CommonException("海康设备不存在，id值为：{}", id);
         }
-        return viidHikvisionCamera;
+        return hikvisionCamera;
     }
 
     @Tran
     @Override
     public void importDevices(List<Map<String, Object>> devices) {
-        // 先检查导入数据中是否存在重复的IP地址
-        Set<String> ipSet = new HashSet<>();
-        for (Map<String, Object> deviceMap : devices) {
-            String ipAddr = (String) deviceMap.get("ipAddr");
-            if (ipSet.contains(ipAddr)) {
-                throw new CommonException("导入数据中存在重复的IP地址: {}", ipAddr);
-            }
-            ipSet.add(ipAddr);
-        }
-
-        for (Map<String, Object> deviceMap : devices) {
-            // 获取设备信息
-            String deviceId = (String) deviceMap.get("deviceId");
-            String name = (String) deviceMap.get("name");
-            String ipAddr = (String) deviceMap.get("ipAddr");
-
-            // 根据IP地址查找现有设备
-            HikvisionCamera existingCamera = this.getOne(new QueryWrapper().eq("IP_ADDR", ipAddr));
-
-            if (existingCamera != null) {
-                // 如果IP地址已存在，则更新设备信息
-                // 检查deviceId唯一性，排除当前记录
-                checkDeviceIdUnique(deviceId, existingCamera.getId());
-                // 检查设备名称唯一性，排除当前记录
-                checkDeviceNameUnique(name, existingCamera.getId());
-
-                existingCamera = ONode.deserialize(ONode.load(existingCamera).setAll(deviceMap).toString(), HikvisionCamera.class);
-
-                // 保持在线状态不变
-                this.updateById(existingCamera);
-            } else {
-                // 如果IP地址不存在，则新增设备
-                // 检查deviceId唯一性
-                checkDeviceIdUnique(deviceId, null);
-                // 检查设备名称唯一性
-                checkDeviceNameUnique(name, null);
-                // 检查IP地址唯一性（仅在新增时检查）
-                checkDeviceIpAddrUnique(ipAddr, null);
-
-                HikvisionCamera hikvisionCamera = ONode.deserialize(ONode.stringify(deviceMap), HikvisionCamera.class);
-
-                // 处理在线状态
-                hikvisionCamera.setOnlineStatus(0);
-
-                this.save(hikvisionCamera);
-            }
-        }
+        ImportUtil.importEntities(HikvisionCamera.class, "/plugin/hikvision/model/HikvisionCamera/HikvisionCamera.xmeta", devices);
     }
 
     @Override
-    public void exportHikvisionDevice(HikvisionExportParam hikvisionExportParam, Context ctx) throws IOException {
-        QueryWrapper queryWrapper = new QueryWrapper();
+    public void exportHikvisionDevice(HikvisionExportParam hikvisionExportParam, Context ctx) {
+        QueryBean queryBean = new QueryBean();
         if (ObjectUtil.isNotEmpty(hikvisionExportParam.getDeviceId())) {
-            queryWrapper.like("DEVICE_ID", hikvisionExportParam.getDeviceId());
+            queryBean.addFilter(FilterBeans.like("deviceId", hikvisionExportParam.getDeviceId()));
         }
         if (ObjectUtil.isNotEmpty(hikvisionExportParam.getName())) {
-            queryWrapper.like("NAME", hikvisionExportParam.getName());
+            queryBean.addFilter(FilterBeans.like("name", hikvisionExportParam.getName()));
         }
         if (ObjectUtil.isNotEmpty(hikvisionExportParam.getIpAddr())) {
-            queryWrapper.like("IP_ADDR", hikvisionExportParam.getIpAddr());
+            queryBean.addFilter(FilterBeans.like("ipAddr", hikvisionExportParam.getIpAddr()));
         }
         if (ObjectUtil.isAllNotEmpty(hikvisionExportParam.getSortField(), hikvisionExportParam.getSortOrder())) {
             CommonSortOrderEnum.validate(hikvisionExportParam.getSortOrder());
-            queryWrapper.orderBy(StrUtil.toUnderlineCase(hikvisionExportParam.getSortField()), hikvisionExportParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
+            queryBean.addOrderField(StrUtil.toUnderlineCase(hikvisionExportParam.getSortField()),
+                    !hikvisionExportParam.getSortOrder().equals(CommonSortOrderEnum.ASC.getValue()));
         } else {
-            queryWrapper.orderBy("ID", false);
+            queryBean.addOrderField("id", true);
         }
-        List<HikvisionCamera> list = this.list(queryWrapper);
+        List<HikvisionCamera> list = DaoProvider.instance().daoFor(HikvisionCamera.class).findAllByQuery(queryBean);
         Map<String, Object> bean = new HashMap<>();
         bean.put("devices", list);
         IResource resource = ResourceHelper.getTempResource("download");
@@ -223,69 +209,4 @@ public class HikvisionCameraServiceImpl extends ServiceImpl<HikvisionCameraMappe
 
     }
 
-    /**
-     * 检查设备ID唯一性
-     *
-     * @param deviceId  设备ID
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceIdUnique(String deviceId, String excludeId) {
-        if (StrUtil.isBlank(deviceId)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("DEVICE_ID", deviceId);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备编号 {} 已存在", deviceId);
-        }
-    }
-
-    /**
-     * 检查设备名称唯一性
-     *
-     * @param name      设备名称
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceNameUnique(String name, String excludeId) {
-        if (StrUtil.isBlank(name)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("NAME", name);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备名称 {} 已存在", name);
-        }
-    }
-
-    /**
-     * 检查设备IP地址唯一性
-     *
-     * @param ipAddr    设备IP地址
-     * @param excludeId 排除的ID（编辑时使用）
-     */
-    private void checkDeviceIpAddrUnique(String ipAddr, String excludeId) {
-        if (StrUtil.isBlank(ipAddr)) {
-            return;
-        }
-
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq("IP_ADDR", ipAddr);
-        if (StrUtil.isNotBlank(excludeId)) {
-            queryWrapper.ne("ID", excludeId);
-        }
-
-        if (this.exists(queryWrapper)) {
-            throw new CommonException("设备IP地址 {} 已存在", ipAddr);
-        }
-    }
 }

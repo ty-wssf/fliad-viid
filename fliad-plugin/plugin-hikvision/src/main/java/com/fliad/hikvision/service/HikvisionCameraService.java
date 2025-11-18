@@ -12,10 +12,10 @@
  */
 package com.fliad.hikvision.service;
 
+import com.fliad.hikvision.dao.entity.HikvisionCamera;
 import com.fliad.hikvision.param.*;
 import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
-import com.fliad.hikvision.entity.HikvisionCamera;
 import org.noear.solon.core.handle.Context;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.Map;
  * @author wyl
  * @date 2025/09/27
  **/
-public interface HikvisionCameraService extends IService<HikvisionCamera> {
+public interface HikvisionCameraService {
 
     /**
      * 获取海康设备分页

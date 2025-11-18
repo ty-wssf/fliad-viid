@@ -1,4 +1,4 @@
-package com.fliad.dahua.util;
+package io.nop.orm.utils;
 
 import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
@@ -9,8 +9,6 @@ import io.nop.orm.IOrmTemplate;
 import io.nop.orm.support.OrmEntity;
 import io.nop.xlang.xmeta.IObjMeta;
 import io.nop.xlang.xmeta.SchemaLoader;
-import io.nop.orm.utils.EntityCopyHelper;
-import io.nop.orm.utils.UniqueValidator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

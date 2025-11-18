@@ -19,8 +19,9 @@ import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fliad.common.pojo.ListenerEntity;
+import io.nop.orm.support.DynamicOrmEntity;
 import io.nop.orm.utils.UniqueValidator;
-import com.fliad.dahua.util.ImportUtil;
+import io.nop.orm.utils.ImportUtil;
 import com.mybatisflex.core.FlexGlobalConfig;
 import io.nop.api.core.ioc.BeanContainer;
 import io.nop.commons.cache.CacheConfig;
@@ -37,6 +38,7 @@ import io.nop.orm.dao.OrmDaoProvider;
 import io.nop.orm.factory.DefaultOrmColumnBinderEnhancer;
 import io.nop.orm.factory.OrmSessionFactoryBean;
 import io.nop.orm.impl.OrmTemplateImpl;
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Configuration;
@@ -44,6 +46,7 @@ import org.noear.solon.annotation.Init;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.handle.Action;
 import org.noear.solon.core.handle.Context;
+import org.noear.solon.serialization.snack3.SnackStringSerializer;
 import org.noear.solon.web.staticfiles.StaticMappings;
 import org.noear.solon.web.staticfiles.repository.ClassPathStaticRepository;
 import com.fliad.common.annotation.CommonNoRepeat;
@@ -60,7 +63,9 @@ import com.fliad.sys.modular.index.result.SysIndexVisLogListResult;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Snowy配置
@@ -213,6 +218,21 @@ public class GlobalConfigure {
     public void initDahuaUtils(@Inject IOrmTemplate ormTemplate, @Inject IDaoProvider daoProvider) {
         ImportUtil.setOrmTemplate(ormTemplate);
         UniqueValidator.setDaoProvider(daoProvider);
+    }
+
+    @Bean
+    public void config(SnackStringSerializer serializer) {
+        //::序列化（用于渲染输出）
+        serializer.addEncoder(DynamicOrmEntity.class, (data, node) -> {
+            data.orm_entityModel().getAllProps().forEach((key, propModel) -> {
+                // 如果值是Long类型转化为字符串
+                if ("java.lang.Long".equals(propModel.getJavaTypeName())) {
+                    node.set(key, data.prop_get(key).toString());
+                } else {
+                    node.set(key, data.prop_get(key));
+                }
+            });
+        });
     }
 
 }

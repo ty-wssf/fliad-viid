@@ -22,7 +22,7 @@ import com.fliad.dahua.param.DahuaCameraIdParam;
 import com.fliad.dahua.param.DahuaCameraPageParam;
 import com.fliad.dahua.param.DahuaExportParam;
 import io.nop.orm.utils.EntityCopyHelper;
-import com.fliad.dahua.util.ImportUtil;
+import io.nop.orm.utils.ImportUtil;
 import com.mybatisflex.core.paginate.Page;
 import io.nop.api.core.beans.FilterBeans;
 import io.nop.api.core.beans.query.QueryBean;
