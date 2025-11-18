@@ -82,7 +82,13 @@
 
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-nop-api-core</artifactId>
+            <artifactId>fliad-plugin-nop-report-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-nop-orm</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="关系" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.dev.dao.entity.DevRelation</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="Id" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="objectId" displayName="对象ID" propId="2" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="targetId" displayName="目标ID" propId="3" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="category" displayName="分类" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="extJson" displayName="扩展信息" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+    </props>
+</meta>

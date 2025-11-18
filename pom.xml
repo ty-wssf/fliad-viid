@@ -165,28 +165,28 @@
             <!-- fliad-plugin-auth -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-auth</artifactId>
+                <artifactId>plugin-auth</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-biz -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-biz</artifactId>
+                <artifactId>plugin-biz</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-client -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-client</artifactId>
+                <artifactId>plugin-client</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-dev -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-dev</artifactId>
+                <artifactId>plugin-dev</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
@@ -200,14 +200,14 @@
             <!-- fliad-plugin-mobile -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-mobile</artifactId>
+                <artifactId>plugin-mobile</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <!-- fliad-plugin-sys -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-sys</artifactId>
+                <artifactId>plugin-sys</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 

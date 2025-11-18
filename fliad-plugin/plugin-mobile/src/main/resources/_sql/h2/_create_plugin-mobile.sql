@@ -1,0 +1,65 @@
+
+CREATE TABLE MOBILE_RESOURCE(
+  ID VARCHAR(20) NOT NULL  COMMENT '主键' ,
+  PARENT_ID VARCHAR(255)   COMMENT '父ID' ,
+  TITLE VARCHAR(255)   COMMENT '名称' ,
+  CODE VARCHAR(255)   COMMENT '编码' ,
+  CATEGORY VARCHAR(255)   COMMENT '分类' ,
+  MODULE VARCHAR(255)   COMMENT '模块' ,
+  MENU_TYPE VARCHAR(255)   COMMENT '菜单类型' ,
+  PATH VARCHAR(255)   COMMENT '路径' ,
+  ICON VARCHAR(255)   COMMENT '图标' ,
+  COLOR VARCHAR(255)   COMMENT '颜色' ,
+  REG_TYPE VARCHAR(255)   COMMENT '规则类型' ,
+  STATUS VARCHAR(255)   COMMENT '可用状态' ,
+  SORT_CODE INTEGER   COMMENT '排序码' ,
+  EXT_JSON CLOB   COMMENT '扩展信息' ,
+  DELETE_FLAG VARCHAR(255)   COMMENT '删除标志' ,
+  CREATE_TIME DATETIME   COMMENT '创建时间' ,
+  CREATE_USER VARCHAR(20)   COMMENT '创建用户' ,
+  UPDATE_TIME DATETIME   COMMENT '修改时间' ,
+  UPDATE_USER VARCHAR(20)   COMMENT '修改用户' ,
+  constraint PK_MOBILE_RESOURCE primary key (ID)
+);
+
+
+      COMMENT ON TABLE MOBILE_RESOURCE IS '移动资源';
+                
+      COMMENT ON COLUMN MOBILE_RESOURCE.ID IS '主键';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.PARENT_ID IS '父ID';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.TITLE IS '名称';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CODE IS '编码';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CATEGORY IS '分类';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.MODULE IS '模块';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.MENU_TYPE IS '菜单类型';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.PATH IS '路径';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.ICON IS '图标';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.COLOR IS '颜色';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.REG_TYPE IS '规则类型';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.STATUS IS '可用状态';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.SORT_CODE IS '排序码';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.EXT_JSON IS '扩展信息';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.DELETE_FLAG IS '删除标志';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CREATE_TIME IS '创建时间';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CREATE_USER IS '创建用户';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.UPDATE_TIME IS '修改时间';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.UPDATE_USER IS '修改用户';
+                    

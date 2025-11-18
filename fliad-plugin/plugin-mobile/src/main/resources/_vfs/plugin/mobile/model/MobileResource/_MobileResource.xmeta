@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="移动资源" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.mobile.dao.entity.MobileResource</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="parentId" displayName="父ID" propId="2" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="title" displayName="名称" propId="3" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="code" displayName="编码" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="category" displayName="分类" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="module" displayName="模块" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="menuType" displayName="菜单类型" propId="7" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="path" displayName="路径" propId="8" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="icon" displayName="图标" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="color" displayName="颜色" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="regType" displayName="规则类型" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="status" displayName="可用状态" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="sortCode" displayName="排序码" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="extJson" displayName="扩展信息" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="deleteFlag" displayName="删除标志" propId="15" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="createTime" displayName="创建时间" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="createUser" displayName="创建用户" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="updateTime" displayName="修改时间" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateUser" displayName="修改用户" propId="19" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+    </props>
+</meta>

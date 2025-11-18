@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="日志" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.dev.dao.entity.DevLog</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="category" displayName="日志分类" propId="2" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="name" displayName="日志名称" propId="3" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="exeStatus" displayName="执行状态" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="exeMessage" displayName="具体消息" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="opIp" displayName="操作ip" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="opAddress" displayName="操作地址" propId="7" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="opBrowser" displayName="操作浏览器" propId="8" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="opOs" displayName="操作系统" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="className" displayName="类名称" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="methodName" displayName="方法名称" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="reqMethod" displayName="请求方式" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="reqUrl" displayName="请求地址" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="paramJson" displayName="请求参数" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="resultJson" displayName="返回结果" propId="15" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="opTime" displayName="操作时间" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="opUser" displayName="操作人姓名" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="signData" displayName="签名数据" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="createTime" displayName="创建时间" propId="19" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="createUser" displayName="创建用户" propId="20" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="updateTime" displayName="修改时间" propId="21" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateUser" displayName="修改用户" propId="22" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+    </props>
+</meta>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-auth" ext:entityPackageName="com.fliad.auth.dao.entity"
+     ext:basePackageName="com.fliad.auth" ext:appName="plugin-auth" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.auth.dao.entity.AuthThirdUser" displayName="三方用户"
+                name="com.fliad.auth.dao.entity.AuthThirdUser" registerShortName="true" tableName="AUTH_THIRD_USER">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="THIRD_ID" displayName="三方用户id" name="thirdId" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="USER_ID" displayName="系统用户id" name="userId" precision="20" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="AVATAR" displayName="头像" name="avatar" propId="4" stdDataType="string" stdSqlType="CLOB"/>
+                <column code="NAME" displayName="姓名" name="name" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NICKNAME" displayName="昵称" name="nickname" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="GENDER" displayName="性别" name="gender" precision="255" propId="7" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="9" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="13" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

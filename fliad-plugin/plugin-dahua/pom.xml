@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-dev</artifactId>
+            <artifactId>plugin-dev</artifactId>
         </dependency>
 
         <dependency>

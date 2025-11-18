@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="Dahuanonmotorvehicle" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.dahua.dao.entity.DahuaNonMotorVehicle</entityName>
+
+    <primaryKey>absscore</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="absscore" displayName="Absscore" propId="1" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="accompanynumber" displayName="Accompanynumber" propId="2" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="accompanynumberreliability" displayName="Accompanynumberreliability" propId="3" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="age" displayName="Age" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="agegroup" displayName="Agegroup" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="agegroupreliability" displayName="Agegroupreliability" propId="6" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="agelowerlimit" displayName="Agelowerlimit" propId="7" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="agereliability" displayName="Agereliability" propId="8" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="ageuplimit" displayName="Ageuplimit" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="algorithmversion" displayName="Algorithmversion" propId="10" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="50"/>
+        </prop>
+        <prop name="alias" displayName="Alias" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="appendant" displayName="Appendant" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="appendantdescription" displayName="Appendantdescription" propId="13" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="baby" displayName="Baby" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bag1reliability" displayName="Bag1reliability" propId="15" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="bag1style" displayName="Bag1style" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bag2reliability" displayName="Bag2reliability" propId="17" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="bag2style" displayName="Bag2style" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bag3reliability" displayName="Bag3reliability" propId="19" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="bag3style" displayName="Bag3style" propId="20" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bagcolor" displayName="Bagcolor" propId="21" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bagstyle" displayName="Bagstyle" propId="22" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="bagstylereliability" displayName="Bagstylereliability" propId="23" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="behavior" displayName="Behavior" propId="24" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="behaviordescription" displayName="Behaviordescription" propId="25" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="bodyfeature" displayName="Bodyfeature" propId="26" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="bodyspeciallmark" displayName="Bodyspeciallmark" propId="27" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="bodytype" displayName="Bodytype" propId="28" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="cacheimgurl" displayName="Cacheimgurl" propId="29" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="cacheplateimgurl" displayName="Cacheplateimgurl" propId="30" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="cachetargetimgurl" displayName="Cachetargetimgurl" propId="31" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="capcolor" displayName="Capcolor" propId="32" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="capcolorreliability" displayName="Capcolorreliability" propId="33" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="capstyle" displayName="Capstyle" propId="34" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="capstylereliability" displayName="Capstylereliability" propId="35" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="captime" displayName="Captime" propId="36" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="channelcode" displayName="Channelcode" propId="37" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="channelid" displayName="Channelid" propId="38" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="chineseaccentcode" displayName="Chineseaccentcode" propId="39" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="coatcolor" displayName="Coatcolor" propId="40" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="coatcolorreliability" displayName="Coatcolorreliability" propId="41" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="coatlength" displayName="Coatlength" propId="42" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="coatlengthreliability" displayName="Coatlengthreliability" propId="43" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="coatstyle" displayName="Coatstyle" propId="44" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="coatstylereliability" displayName="Coatstylereliability" propId="45" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="coattexture" displayName="Coattexture" propId="46" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="coattexturereliability" displayName="Coattexturereliability" propId="47" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="completescore" displayName="Completescore" propId="48" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="corpseconditioncode" displayName="Corpseconditioncode" propId="49" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="crimecharactercode" displayName="Crimecharactercode" propId="50" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="crimemethod" displayName="Crimemethod" propId="51" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="criminalinvolvedcode" displayName="Criminalinvolvedcode" propId="52" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="datasource" displayName="Datasource" propId="53" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="datatracetag" displayName="Datatracetag" propId="54" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="detaineesidentity" displayName="Detaineesidentity" propId="55" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="detaineesspecialidentity" displayName="Detaineesspecialidentity" propId="56" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="detectobject" displayName="Detectobject" propId="57" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="detectionscore" displayName="Detectionscore" propId="58" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="detentionhousecode" displayName="Detentionhousecode" propId="59" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="devicecode" displayName="Devicecode" propId="60" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="deviceid" displayName="Deviceid" propId="61" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="emclasstype" displayName="Emclasstype" propId="62" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="escapedcriminalnumber" displayName="Escapedcriminalnumber" propId="63" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="event" displayName="Event" propId="64" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="50"/>
+        </prop>
+        <prop name="extrecordid" displayName="Extrecordid" propId="65" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="extrecordsource" displayName="Extrecordsource" propId="66" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="extractedflag" displayName="Extractedflag" propId="67" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="facedirect" displayName="Facedirect" propId="68" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="facedirectreliability" displayName="Facedirectreliability" propId="69" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="facestyle" displayName="Facestyle" propId="70" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="facialfeature" displayName="Facialfeature" propId="71" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="featuredata" displayName="Featuredata" propId="72" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="featureid" displayName="Featureid" propId="73" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="gender" displayName="Gender" propId="74" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="genderreliability" displayName="Genderreliability" propId="75" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="gesture" displayName="Gesture" propId="76" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="glasscolor" displayName="Glasscolor" propId="77" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="glassstyle" displayName="Glassstyle" propId="78" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="habitualmovemen" displayName="Habitualmovemen" propId="79" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="haircolor" displayName="Haircolor" propId="80" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="hairstyle" displayName="Hairstyle" propId="81" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="hairstylereliability" displayName="Hairstylereliability" propId="82" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hairtype" displayName="Hairtype" propId="83" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasbag" displayName="Hasbag" propId="84" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasbagreliability" displayName="Hasbagreliability" propId="85" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasbasket" displayName="Hasbasket" propId="86" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hascarrierbag" displayName="Hascarrierbag" propId="87" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hascarrystuff" displayName="Hascarrystuff" propId="88" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hascart" displayName="Hascart" propId="89" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasdownbody" displayName="Hasdownbody" propId="90" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasdownbodyreliability" displayName="Hasdownbodyreliability" propId="91" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="haserrordetect" displayName="Haserrordetect" propId="92" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hashead" displayName="Hashead" propId="93" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasheadreliability" displayName="Hasheadreliability" propId="94" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasmirror" displayName="Hasmirror" propId="95" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasraincoat" displayName="Hasraincoat" propId="96" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasrespirator" displayName="Hasrespirator" propId="97" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hastrunk" displayName="Hastrunk" propId="98" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasvehicle" displayName="Hasvehicle" propId="99" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasvest" displayName="Hasvest" propId="100" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hasvestreliability" displayName="Hasvestreliability" propId="101" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hat" displayName="Hat" propId="102" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="hatreliability" displayName="Hatreliability" propId="103" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="heightlowerlimit" displayName="Heightlowerlimit" propId="104" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="heightuplimit" displayName="Heightuplimit" propId="105" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="humanlist" displayName="Humanlist" propId="106" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="idnumber" displayName="Idnumber" propId="107" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="idtype" displayName="Idtype" propId="108" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="imgheight" displayName="Imgheight" propId="109" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="imgurl" displayName="Imgurl" propId="110" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="imgwidth" displayName="Imgwidth" propId="111" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="immigranttypecode" displayName="Immigranttypecode" propId="112" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="infokind" displayName="Infokind" propId="113" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="injureddegree" displayName="Injureddegree" propId="114" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="iqascore" displayName="Iqascore" propId="115" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="iscriminalinvolved" displayName="Iscriminalinvolved" propId="116" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="isdetainees" displayName="Isdetainees" propId="117" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="isdriver" displayName="Isdriver" propId="118" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="isforeigner" displayName="Isforeigner" propId="119" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="isnoncomplete" displayName="Isnoncomplete" propId="120" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="issuspectedterrorist" displayName="Issuspectedterrorist" propId="121" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="issuspiciousperson" displayName="Issuspiciousperson" propId="122" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="isvictim" displayName="Isvictim" propId="123" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="jobcategory" displayName="Jobcategory" propId="124" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="locationmarktime" displayName="Locationmarktime" propId="125" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="mask" displayName="Mask" propId="126" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="maskcolor" displayName="Maskcolor" propId="127" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="membertypecode" displayName="Membertypecode" propId="128" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="name" displayName="Name" propId="129" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nationalitycode" displayName="Nationalitycode" propId="130" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nativecitycode" displayName="Nativecitycode" propId="131" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nonvehicleumbrellacolor" displayName="Nonvehicleumbrellacolor" propId="132" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="nonvehicleumbrellatype" displayName="Nonvehicleumbrellatype" propId="133" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="nonvehicleumbrellatypereliability" displayName="Nonvehicleumbrellatypereliability" propId="134"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="objsize" displayName="Objsize" propId="135" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="objectsubtype" displayName="Objectsubtype" propId="136" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="passenger" displayName="Passenger" propId="137" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="passporttype" displayName="Passporttype" propId="138" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="personappeartime" displayName="Personappeartime" propId="139" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="personbottom" displayName="Personbottom" propId="140" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="persondisappeartime" displayName="Persondisappeartime" propId="141" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="personimgid" displayName="Personimgid" propId="142" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="personleft" displayName="Personleft" propId="143" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="personorg" displayName="Personorg" propId="144" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="personright" displayName="Personright" propId="145" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="persontop" displayName="Persontop" propId="146" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="physicalfeature" displayName="Physicalfeature" propId="147" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="picrecordid" displayName="Picrecordid" propId="148" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="platebottom" displayName="Platebottom" propId="149" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="platecolor" displayName="Platecolor" propId="150" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="plateimgurl" displayName="Plateimgurl" propId="151" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="plateleft" displayName="Plateleft" propId="152" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="platenum" displayName="Platenum" propId="153" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="plateright" displayName="Plateright" propId="154" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="platetop" displayName="Platetop" propId="155" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="posture" displayName="Posture" propId="156" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="posturereliability" displayName="Posturereliability" propId="157" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="prevmsgrecordid" displayName="Prevmsgrecordid" propId="158" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="qescore" displayName="Qescore" propId="159" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="raincoatreliability" displayName="Raincoatreliability" propId="160" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="recordid" displayName="Recordid" propId="161" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="relatedface" displayName="Relatedface" propId="162" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="relatedgait" displayName="Relatedgait" propId="163" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="relatednonvehicle" displayName="Relatednonvehicle" propId="164" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="relatednonvehiclelist" displayName="Relatednonvehiclelist" propId="165" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="relatedperson" displayName="Relatedperson" propId="166" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="reliablity" displayName="Reliablity" propId="167" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="residenceadmindivision" displayName="Residenceadmindivision" propId="168" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="respiratorcolor" displayName="Respiratorcolor" propId="169" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="rfidinfo" displayName="Rfidinfo" propId="170" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="ridervehicle" displayName="Ridervehicle" propId="171" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="snumber" displayName="Snumber" propId="172" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="scarfcolor" displayName="Scarfcolor" propId="173" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="shoescolor" displayName="Shoescolor" propId="174" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="shoesstyle" displayName="Shoesstyle" propId="175" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="skincolor" displayName="Skincolor" propId="176" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="sourceid" displayName="Sourceid" propId="177" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="status" displayName="Status" propId="178" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="suspectedterroristnumber" displayName="Suspectedterroristnumber" propId="179" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="targetimgurl" displayName="Targetimgurl" propId="180" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="traceserviceinputtime" displayName="Traceserviceinputtime" propId="181" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="tracethingsinputtime" displayName="Tracethingsinputtime" propId="182" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="trouserscolor" displayName="Trouserscolor" propId="183" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="trouserscolorreliability" displayName="Trouserscolorreliability" propId="184" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="trouserslen" displayName="Trouserslen" propId="185" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="trouserslenreliability" displayName="Trouserslenreliability" propId="186" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="trousersstyle" displayName="Trousersstyle" propId="187" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="uid" displayName="Uid" propId="188" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="umbrella" displayName="Umbrella" propId="189" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="umbrellacolor" displayName="Umbrellacolor" propId="190" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="umbrellareliability" displayName="Umbrellareliability" propId="191" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="uniformstyle" displayName="Uniformstyle" propId="192" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="uniformstylereliability" displayName="Uniformstylereliability" propId="193" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="usedname" displayName="Usedname" propId="194" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="userchannelcode" displayName="Userchannelcode" propId="195" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="vehiclecolor" displayName="Vehiclecolor" propId="196" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="vehicletype" displayName="Vehicletype" propId="197" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="vehicletypereliability" displayName="Vehicletypereliability" propId="198" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="vendor" displayName="Vendor" propId="199" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="victimtype" displayName="Victimtype" propId="200" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+    </props>
+</meta>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="用户" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.sys.dao.entity.SysUser</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="Id" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="avatar" displayName="头像" propId="2" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="signature" displayName="签名" propId="3" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="account" displayName="账号" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="password" displayName="密码" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="name" displayName="姓名" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nickname" displayName="昵称" propId="7" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="gender" displayName="性别" propId="8" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="age" displayName="年龄" propId="9" queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="birthday" displayName="出生日期" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nation" displayName="民族" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="nativePlace" displayName="籍贯" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="homeAddress" displayName="家庭住址" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="mailingAddress" displayName="通信地址" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="idCardType" displayName="证件类型" propId="15" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="idCardNumber" displayName="证件号码" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="cultureLevel" displayName="文化程度" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="politicalOutlook" displayName="政治面貌" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="college" displayName="毕业院校" propId="19" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="education" displayName="学历" propId="20" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="eduLength" displayName="学制" propId="21" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="degree" displayName="学位" propId="22" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="phone" displayName="手机" propId="23" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="email" displayName="邮箱" propId="24" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="homeTel" displayName="家庭电话" propId="25" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="officeTel" displayName="办公电话" propId="26" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="emergencyContact" displayName="紧急联系人" propId="27" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="emergencyPhone" displayName="紧急联系人电话" propId="28" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="emergencyAddress" displayName="紧急联系人地址" propId="29" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="empNo" displayName="员工编号" propId="30" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="entryDate" displayName="入职日期" propId="31" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="orgId" displayName="机构id" propId="32" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="positionId" displayName="职位id" propId="33" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="positionLevel" displayName="职级" propId="34" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="directorId" displayName="主管id" propId="35" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="positionJson" displayName="兼任信息" propId="36" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="lastLoginIp" displayName="上次登录ip" propId="37" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="lastLoginAddress" displayName="上次登录地点" propId="38" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="lastLoginTime" displayName="上次登录时间" propId="39" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="lastLoginDevice" displayName="上次登录设备" propId="40" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="latestLoginIp" displayName="最新登录ip" propId="41" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="latestLoginAddress" displayName="最新登录地点" propId="42" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="latestLoginTime" displayName="最新登录时间" propId="43" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="latestLoginDevice" displayName="最新登录设备" propId="44" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="userStatus" displayName="用户状态" propId="45" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="sortCode" displayName="排序码" propId="46" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="extJson" displayName="扩展信息" propId="47" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="deleteFlag" displayName="删除标志" propId="48" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="255"/>
+        </prop>
+        <prop name="createTime" displayName="创建时间" propId="49" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="createUser" displayName="创建用户" propId="50" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="updateTime" displayName="修改时间" propId="51" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateUser" displayName="修改用户" propId="52" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+    </props>
+</meta>

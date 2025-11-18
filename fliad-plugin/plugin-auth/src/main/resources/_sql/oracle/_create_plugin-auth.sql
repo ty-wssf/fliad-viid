@@ -1,0 +1,50 @@
+
+CREATE TABLE AUTH_THIRD_USER(
+  ID VARCHAR2(20) NOT NULL ,
+  THIRD_ID VARCHAR2(255)  ,
+  USER_ID VARCHAR2(20)  ,
+  AVATAR CLOB  ,
+  NAME VARCHAR2(255)  ,
+  NICKNAME VARCHAR2(255)  ,
+  GENDER VARCHAR2(255)  ,
+  CATEGORY VARCHAR2(255)  ,
+  EXT_JSON CLOB  ,
+  DELETE_FLAG VARCHAR2(255)  ,
+  CREATE_TIME DATE  ,
+  CREATE_USER VARCHAR2(20)  ,
+  UPDATE_TIME DATE  ,
+  UPDATE_USER VARCHAR2(20)  ,
+  constraint PK_AUTH_THIRD_USER primary key (ID)
+);
+
+
+      COMMENT ON TABLE AUTH_THIRD_USER IS '三方用户';
+                
+      COMMENT ON COLUMN AUTH_THIRD_USER.ID IS 'Id';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.THIRD_ID IS '三方用户id';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.USER_ID IS '系统用户id';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.AVATAR IS '头像';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.NAME IS '姓名';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.NICKNAME IS '昵称';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.GENDER IS '性别';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.CATEGORY IS '分类';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.EXT_JSON IS '扩展信息';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.DELETE_FLAG IS '删除标志';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.CREATE_TIME IS '创建时间';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.CREATE_USER IS '创建用户';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.UPDATE_TIME IS '修改时间';
+                    
+      COMMENT ON COLUMN AUTH_THIRD_USER.UPDATE_USER IS '修改用户';
+                    

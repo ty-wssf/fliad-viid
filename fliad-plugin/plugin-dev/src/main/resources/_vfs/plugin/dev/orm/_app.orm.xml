@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-dev" ext:entityPackageName="com.fliad.dev.dao.entity"
+     ext:basePackageName="com.fliad.dev.dao.entity" ext:appName="plugin-dev" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <domains>
+        <domain name="userName" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="image" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="email" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="phone" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="roleId" precision="100" stdSqlType="VARCHAR"/>
+        <domain name="userId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="deptId" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="boolFlag" stdSqlType="TINYINT"/>
+        <domain name="json-128K" precision="131072" stdDomain="json" stdSqlType="VARCHAR"/>
+        <domain name="remark" precision="1" stdSqlType="VARCHAR"/>
+        <domain name="version" stdSqlType="INTEGER"/>
+        <domain name="createTime" stdSqlType="TIMESTAMP"/>
+        <domain name="createdBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="updateTime" stdSqlType="TIMESTAMP"/>
+        <domain name="updatedBy" precision="50" stdSqlType="VARCHAR"/>
+        <domain name="delFlag" stdSqlType="BOOLEAN"/>
+        <domain name="mediumtext" precision="16777215" stdSqlType="VARCHAR"/>
+        <domain name="wfAction" precision="200" stdSqlType="VARCHAR"/>
+    </domains>
+
+    <entities>
+        <entity className="com.fliad.dev.dao.entity.DevConfig" displayName="配置"
+                name="com.fliad.dev.dao.entity.DevConfig" registerShortName="true" tableName="DEV_CONFIG">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CONFIG_KEY" displayName="配置键" name="configKey" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CONFIG_VALUE" displayName="配置值" name="configValue" propId="3" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="REMARK" displayName="备注" name="remark" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序码" name="sortCode" propId="6" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="7" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="9" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevDict" displayName="字典" name="com.fliad.dev.dao.entity.DevDict"
+                registerShortName="true" tableName="DEV_DICT">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PARENT_ID" displayName="父id" name="parentId" precision="20" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DICT_LABEL" displayName="字典文字" name="dictLabel" precision="255" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DICT_VALUE" displayName="字典值" name="dictValue" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序码" name="sortCode" propId="6" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="7" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="9" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevEmail" displayName="邮件" name="com.fliad.dev.dao.entity.DevEmail"
+                registerShortName="true" tableName="DEV_EMAIL">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENGINE" displayName="邮件引擎" name="engine" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SEND_ACCOUNT" displayName="发件人邮箱" name="sendAccount" precision="255" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SEND_USER" displayName="发件人昵称" name="sendUser" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RECEIVE_ACCOUNTS" displayName="接收人" name="receiveAccounts" precision="65535" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBJECT" displayName="邮件主题" name="subject" precision="65535" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CONTENT" displayName="邮件正文" name="content" propId="7" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="TAG_NAME" displayName="标签名" name="tagName" precision="255" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TEMPLATE_NAME" displayName="模板名" name="templateName" precision="65535" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TEMPLATE_PARAM" displayName="发送参数" name="templateParam" precision="65535" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RECEIPT_INFO" displayName="回执信息" name="receiptInfo" propId="11" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="12" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="14" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevFile" displayName="文件" name="com.fliad.dev.dao.entity.DevFile"
+                registerShortName="true" tableName="DEV_FILE">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENGINE" displayName="存储引擎" name="engine" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="BUCKET" displayName="存储桶" name="bucket" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="文件名称" name="name" precision="65535" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SUFFIX" displayName="文件后缀" name="suffix" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SIZE_KB" displayName="文件大小kb" name="sizeKb" propId="6" stdDataType="long"
+                        stdSqlType="BIGINT"/>
+                <column code="SIZE_INFO" displayName="文件大小（格式化后）" name="sizeInfo" precision="255" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OBJ_NAME" displayName="文件的对象名（唯一名称）" name="objName" precision="65535" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STORAGE_PATH" displayName="文件存储路径" name="storagePath" precision="65535" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DOWNLOAD_PATH" displayName="文件下载路径" name="downloadPath" precision="65535" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="THUMBNAIL" displayName="图片缩略图" name="thumbnail" propId="11" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="12" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="14" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevJob" displayName="定时任务" name="com.fliad.dev.dao.entity.DevJob"
+                registerShortName="true" tableName="DEV_JOB">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="名称" name="name" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CODE" displayName="编码" name="code" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="ACTION_CLASS" displayName="任务类名" name="actionClass" precision="255" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CRON_EXPRESSION" displayName="cron表达式" name="cronExpression" precision="255" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="JOB_STATUS" displayName="任务状态" name="jobStatus" precision="255" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序码" name="sortCode" propId="8" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="9" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="13" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevLog" displayName="日志" name="com.fliad.dev.dao.entity.DevLog"
+                registerShortName="true" tableName="DEV_LOG">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="日志分类" name="category" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="日志名称" name="name" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXE_STATUS" displayName="执行状态" name="exeStatus" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXE_MESSAGE" displayName="具体消息" name="exeMessage" propId="5" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="OP_IP" displayName="操作ip" name="opIp" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="OP_ADDRESS" displayName="操作地址" name="opAddress" precision="255" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OP_BROWSER" displayName="操作浏览器" name="opBrowser" precision="255" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OP_OS" displayName="操作系统" name="opOs" precision="255" propId="9" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CLASS_NAME" displayName="类名称" name="className" precision="255" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="METHOD_NAME" displayName="方法名称" name="methodName" precision="255" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="REQ_METHOD" displayName="请求方式" name="reqMethod" precision="255" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="REQ_URL" displayName="请求地址" name="reqUrl" propId="13" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="PARAM_JSON" displayName="请求参数" name="paramJson" propId="14" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="RESULT_JSON" displayName="返回结果" name="resultJson" propId="15" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="OP_TIME" displayName="操作时间" name="opTime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="OP_USER" displayName="操作人姓名" name="opUser" precision="255" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SIGN_DATA" displayName="签名数据" name="signData" propId="18" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="19" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="20"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="21" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="22"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevMessage" displayName="站内信"
+                name="com.fliad.dev.dao.entity.DevMessage" registerShortName="true" tableName="DEV_MESSAGE">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SUBJECT" displayName="主题" name="subject" precision="65535" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CONTENT" displayName="正文" name="content" propId="4" stdDataType="string" stdSqlType="CLOB"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="5" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="7" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="9" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevRelation" displayName="关系"
+                name="com.fliad.dev.dao.entity.DevRelation" registerShortName="true" tableName="DEV_RELATION">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OBJECT_ID" displayName="对象ID" name="objectId" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TARGET_ID" displayName="目标ID" name="targetId" precision="255" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="5" stdDataType="string"
+                        stdSqlType="CLOB"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevSlideshow" displayName="轮播图"
+                name="com.fliad.dev.dao.entity.DevSlideshow" registerShortName="true" tableName="DEV_SLIDESHOW">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="标题" name="title" precision="200" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PLACE" displayName="展示位置" name="place" precision="500" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="IMAGE" displayName="图片" name="image" precision="200" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PATH_DETAILS" displayName="路径详情" name="pathDetails" precision="500" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="状态" name="status" precision="10" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序" name="sortCode" propId="7" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="8" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="10" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="12" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="更新用户" name="updateUser" precision="20" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.dev.dao.entity.DevSms" displayName="短信" name="com.fliad.dev.dao.entity.DevSms"
+                registerShortName="true" tableName="DEV_SMS">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENGINE" displayName="短信引擎" name="engine" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PHONE_NUMBERS" displayName="手机号" name="phoneNumbers" precision="65535" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SIGN_NAME" displayName="短信签名" name="signName" precision="65535" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TEMPLATE_CODE" displayName="模板编码" name="templateCode" precision="65535" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TEMPLATE_PARAM" displayName="发送参数" name="templateParam" precision="65535" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RECEIPT_INFO" displayName="回执信息" name="receiptInfo" propId="7" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="8" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="10" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="12" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

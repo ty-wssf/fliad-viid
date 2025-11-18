@@ -16,25 +16,25 @@
 
     <modules>
         <!-- 登录鉴权插件 -->
-        <module>fliad-plugin-auth</module>
+        <module>plugin-auth</module>
 
         <!-- 业务功能插件 -->
-        <module>fliad-plugin-biz</module>
+        <module>plugin-biz</module>
 
         <!-- C端功能插件 -->
-        <module>fliad-plugin-client</module>
+        <module>plugin-client</module>
 
         <!-- 开发工具插件 -->
-        <module>fliad-plugin-dev</module>
+        <module>plugin-dev</module>
 
         <!-- 代码生成插件 -->
         <!--<module>fliad-plugin-gen</module>-->
 
         <!-- 移动端管理插件 -->
-        <module>fliad-plugin-mobile</module>
+        <module>plugin-mobile</module>
 
         <!-- 系统功能插件 -->
-        <module>fliad-plugin-sys</module>
+        <module>plugin-sys</module>
 
         <!-- 视图库 -->
         <module>fliad-plugin-viid</module>

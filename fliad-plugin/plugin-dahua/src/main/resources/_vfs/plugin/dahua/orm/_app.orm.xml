@@ -77,5 +77,411 @@
                 <unique-key columns="ipAddr" constraint="IDX_DAHUA_CAMERA_IP_ADDR" name="IDX_DAHUA_CAMERA_IP_ADDR"/>
             </unique-keys>
         </entity>
+        <entity className="com.fliad.dahua.dao.entity.DahuaNonMotorVehicle" displayName="Dahuanonmotorvehicle"
+                name="com.fliad.dahua.dao.entity.DahuaNonMotorVehicle" registerShortName="true"
+                tableName="DAHUA_NON_MOTOR_VEHICLE">
+            <columns>
+                <column code="ABSSCORE" displayName="Absscore" name="absscore" primary="true" propId="1"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ACCOMPANYNUMBER" displayName="Accompanynumber" name="accompanynumber" propId="2"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ACCOMPANYNUMBERRELIABILITY" displayName="Accompanynumberreliability"
+                        name="accompanynumberreliability" propId="3" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="AGE" displayName="Age" name="age" propId="4" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="AGEGROUP" displayName="Agegroup" name="agegroup" propId="5" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="AGEGROUPRELIABILITY" displayName="Agegroupreliability" name="agegroupreliability"
+                        propId="6" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="AGELOWERLIMIT" displayName="Agelowerlimit" name="agelowerlimit" propId="7"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="AGERELIABILITY" displayName="Agereliability" name="agereliability" propId="8"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="AGEUPLIMIT" displayName="Ageuplimit" name="ageuplimit" propId="9" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ALGORITHMVERSION" displayName="Algorithmversion" name="algorithmversion" precision="50"
+                        propId="10" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ALIAS" displayName="Alias" name="alias" precision="255" propId="11" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="APPENDANT" displayName="Appendant" name="appendant" precision="10" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="APPENDANTDESCRIPTION" displayName="Appendantdescription" name="appendantdescription"
+                        precision="65535" propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BABY" displayName="Baby" name="baby" precision="10" propId="14" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="BAG1RELIABILITY" displayName="Bag1reliability" name="bag1reliability" propId="15"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="BAG1STYLE" displayName="Bag1style" name="bag1style" precision="10" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BAG2RELIABILITY" displayName="Bag2reliability" name="bag2reliability" propId="17"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="BAG2STYLE" displayName="Bag2style" name="bag2style" precision="10" propId="18"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BAG3RELIABILITY" displayName="Bag3reliability" name="bag3reliability" propId="19"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="BAG3STYLE" displayName="Bag3style" name="bag3style" precision="10" propId="20"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BAGCOLOR" displayName="Bagcolor" name="bagcolor" precision="10" propId="21"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BAGSTYLE" displayName="Bagstyle" name="bagstyle" precision="10" propId="22"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BAGSTYLERELIABILITY" displayName="Bagstylereliability" name="bagstylereliability"
+                        propId="23" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="BEHAVIOR" displayName="Behavior" name="behavior" precision="65535" propId="24"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BEHAVIORDESCRIPTION" displayName="Behaviordescription" name="behaviordescription"
+                        precision="65535" propId="25" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BODYFEATURE" displayName="Bodyfeature" name="bodyfeature" precision="65535" propId="26"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BODYSPECIALLMARK" displayName="Bodyspeciallmark" name="bodyspeciallmark" precision="65535"
+                        propId="27" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BODYTYPE" displayName="Bodytype" name="bodytype" precision="255" propId="28"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CACHEIMGURL" displayName="Cacheimgurl" name="cacheimgurl" precision="65535" propId="29"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CACHEPLATEIMGURL" displayName="Cacheplateimgurl" name="cacheplateimgurl" precision="65535"
+                        propId="30" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CACHETARGETIMGURL" displayName="Cachetargetimgurl" name="cachetargetimgurl"
+                        precision="65535" propId="31" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CAPCOLOR" displayName="Capcolor" name="capcolor" precision="10" propId="32"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CAPCOLORRELIABILITY" displayName="Capcolorreliability" name="capcolorreliability"
+                        propId="33" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="CAPSTYLE" displayName="Capstyle" name="capstyle" precision="10" propId="34"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CAPSTYLERELIABILITY" displayName="Capstylereliability" name="capstylereliability"
+                        propId="35" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="CAPTIME" displayName="Captime" name="captime" propId="36" stdDataType="long"
+                        stdSqlType="BIGINT"/>
+                <column code="CHANNELCODE" displayName="Channelcode" name="channelcode" precision="100" propId="37"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CHANNELID" displayName="Channelid" name="channelid" precision="100" propId="38"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CHINESEACCENTCODE" displayName="Chineseaccentcode" name="chineseaccentcode"
+                        precision="255" propId="39" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COATCOLOR" displayName="Coatcolor" name="coatcolor" precision="10" propId="40"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COATCOLORRELIABILITY" displayName="Coatcolorreliability" name="coatcolorreliability"
+                        propId="41" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="COATLENGTH" displayName="Coatlength" name="coatlength" precision="10" propId="42"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COATLENGTHRELIABILITY" displayName="Coatlengthreliability" name="coatlengthreliability"
+                        propId="43" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="COATSTYLE" displayName="Coatstyle" name="coatstyle" precision="10" propId="44"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COATSTYLERELIABILITY" displayName="Coatstylereliability" name="coatstylereliability"
+                        propId="45" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="COATTEXTURE" displayName="Coattexture" name="coattexture" precision="10" propId="46"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COATTEXTURERELIABILITY" displayName="Coattexturereliability" name="coattexturereliability"
+                        propId="47" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="COMPLETESCORE" displayName="Completescore" name="completescore" propId="48"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="CORPSECONDITIONCODE" displayName="Corpseconditioncode" name="corpseconditioncode"
+                        precision="255" propId="49" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CRIMECHARACTERCODE" displayName="Crimecharactercode" name="crimecharactercode"
+                        precision="255" propId="50" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CRIMEMETHOD" displayName="Crimemethod" name="crimemethod" precision="65535" propId="51"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CRIMINALINVOLVEDCODE" displayName="Criminalinvolvedcode" name="criminalinvolvedcode"
+                        precision="255" propId="52" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DATASOURCE" displayName="Datasource" name="datasource" propId="53" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="DATATRACETAG" displayName="Datatracetag" name="datatracetag" precision="65535" propId="54"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DETAINEESIDENTITY" displayName="Detaineesidentity" name="detaineesidentity"
+                        precision="255" propId="55" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DETAINEESSPECIALIDENTITY" displayName="Detaineesspecialidentity"
+                        name="detaineesspecialidentity" precision="255" propId="56" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="DETECTOBJECT" displayName="Detectobject" name="detectobject" propId="57" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="DETECTIONSCORE" displayName="Detectionscore" name="detectionscore" propId="58"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="DETENTIONHOUSECODE" displayName="Detentionhousecode" name="detentionhousecode"
+                        precision="255" propId="59" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEVICECODE" displayName="Devicecode" name="devicecode" precision="255" propId="60"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEVICEID" displayName="Deviceid" name="deviceid" precision="100" propId="61"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EMCLASSTYPE" displayName="Emclasstype" name="emclasstype" propId="62" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ESCAPEDCRIMINALNUMBER" displayName="Escapedcriminalnumber" name="escapedcriminalnumber"
+                        precision="255" propId="63" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EVENT" displayName="Event" name="event" precision="50" propId="64" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXTRECORDID" displayName="Extrecordid" name="extrecordid" precision="255" propId="65"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXTRECORDSOURCE" displayName="Extrecordsource" name="extrecordsource" propId="66"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="EXTRACTEDFLAG" displayName="Extractedflag" name="extractedflag" propId="67"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="FACEDIRECT" displayName="Facedirect" name="facedirect" propId="68" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="FACEDIRECTRELIABILITY" displayName="Facedirectreliability" name="facedirectreliability"
+                        propId="69" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="FACESTYLE" displayName="Facestyle" name="facestyle" precision="255" propId="70"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FACIALFEATURE" displayName="Facialfeature" name="facialfeature" precision="65535"
+                        propId="71" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FEATUREDATA" displayName="Featuredata" name="featuredata" precision="65535" propId="72"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FEATUREID" displayName="Featureid" name="featureid" precision="100" propId="73"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="GENDER" displayName="Gender" name="gender" propId="74" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="GENDERRELIABILITY" displayName="Genderreliability" name="genderreliability" propId="75"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="GESTURE" displayName="Gesture" name="gesture" precision="10" propId="76"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="GLASSCOLOR" displayName="Glasscolor" name="glasscolor" precision="10" propId="77"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="GLASSSTYLE" displayName="Glassstyle" name="glassstyle" precision="255" propId="78"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HABITUALMOVEMEN" displayName="Habitualmovemen" name="habitualmovemen" precision="10"
+                        propId="79" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HAIRCOLOR" displayName="Haircolor" name="haircolor" precision="255" propId="80"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HAIRSTYLE" displayName="Hairstyle" name="hairstyle" precision="10" propId="81"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HAIRSTYLERELIABILITY" displayName="Hairstylereliability" name="hairstylereliability"
+                        propId="82" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HAIRTYPE" displayName="Hairtype" name="hairtype" propId="83" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASBAG" displayName="Hasbag" name="hasbag" propId="84" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASBAGRELIABILITY" displayName="Hasbagreliability" name="hasbagreliability" propId="85"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASBASKET" displayName="Hasbasket" name="hasbasket" propId="86" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASCARRIERBAG" displayName="Hascarrierbag" name="hascarrierbag" propId="87"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASCARRYSTUFF" displayName="Hascarrystuff" name="hascarrystuff" propId="88"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASCART" displayName="Hascart" name="hascart" propId="89" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASDOWNBODY" displayName="Hasdownbody" name="hasdownbody" propId="90" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASDOWNBODYRELIABILITY" displayName="Hasdownbodyreliability" name="hasdownbodyreliability"
+                        propId="91" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASERRORDETECT" displayName="Haserrordetect" name="haserrordetect" propId="92"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASHEAD" displayName="Hashead" name="hashead" propId="93" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASHEADRELIABILITY" displayName="Hasheadreliability" name="hasheadreliability" propId="94"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASMIRROR" displayName="Hasmirror" name="hasmirror" propId="95" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASRAINCOAT" displayName="Hasraincoat" name="hasraincoat" propId="96" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASRESPIRATOR" displayName="Hasrespirator" name="hasrespirator" propId="97"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HASTRUNK" displayName="Hastrunk" name="hastrunk" propId="98" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASVEHICLE" displayName="Hasvehicle" name="hasvehicle" propId="99" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASVEST" displayName="Hasvest" name="hasvest" propId="100" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="HASVESTRELIABILITY" displayName="Hasvestreliability" name="hasvestreliability"
+                        propId="101" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HAT" displayName="Hat" name="hat" propId="102" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HATRELIABILITY" displayName="Hatreliability" name="hatreliability" propId="103"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HEIGHTLOWERLIMIT" displayName="Heightlowerlimit" name="heightlowerlimit" propId="104"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HEIGHTUPLIMIT" displayName="Heightuplimit" name="heightuplimit" propId="105"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="HUMANLIST" displayName="Humanlist" name="humanlist" precision="65535" propId="106"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IDNUMBER" displayName="Idnumber" name="idnumber" precision="255" propId="107"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IDTYPE" displayName="Idtype" name="idtype" precision="255" propId="108"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IMGHEIGHT" displayName="Imgheight" name="imgheight" propId="109" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="IMGURL" displayName="Imgurl" name="imgurl" precision="65535" propId="110"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IMGWIDTH" displayName="Imgwidth" name="imgwidth" propId="111" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="IMMIGRANTTYPECODE" displayName="Immigranttypecode" name="immigranttypecode"
+                        precision="255" propId="112" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="INFOKIND" displayName="Infokind" name="infokind" propId="113" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="INJUREDDEGREE" displayName="Injureddegree" name="injureddegree" precision="10"
+                        propId="114" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IQASCORE" displayName="Iqascore" name="iqascore" propId="115" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ISCRIMINALINVOLVED" displayName="Iscriminalinvolved" name="iscriminalinvolved"
+                        propId="116" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ISDETAINEES" displayName="Isdetainees" name="isdetainees" propId="117" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ISDRIVER" displayName="Isdriver" name="isdriver" propId="118" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ISFOREIGNER" displayName="Isforeigner" name="isforeigner" propId="119" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ISNONCOMPLETE" displayName="Isnoncomplete" name="isnoncomplete" propId="120"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ISSUSPECTEDTERRORIST" displayName="Issuspectedterrorist" name="issuspectedterrorist"
+                        propId="121" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ISSUSPICIOUSPERSON" displayName="Issuspiciousperson" name="issuspiciousperson"
+                        propId="122" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="ISVICTIM" displayName="Isvictim" name="isvictim" propId="123" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="JOBCATEGORY" displayName="Jobcategory" name="jobcategory" precision="255" propId="124"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LOCATIONMARKTIME" displayName="Locationmarktime" name="locationmarktime" propId="125"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="MASK" displayName="Mask" name="mask" propId="126" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="MASKCOLOR" displayName="Maskcolor" name="maskcolor" propId="127" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="MEMBERTYPECODE" displayName="Membertypecode" name="membertypecode" precision="255"
+                        propId="128" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="Name" name="name" precision="255" propId="129" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NATIONALITYCODE" displayName="Nationalitycode" name="nationalitycode" precision="255"
+                        propId="130" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NATIVECITYCODE" displayName="Nativecitycode" name="nativecitycode" precision="255"
+                        propId="131" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NONVEHICLEUMBRELLACOLOR" displayName="Nonvehicleumbrellacolor"
+                        name="nonvehicleumbrellacolor" precision="10" propId="132" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NONVEHICLEUMBRELLATYPE" displayName="Nonvehicleumbrellatype" name="nonvehicleumbrellatype"
+                        propId="133" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="NONVEHICLEUMBRELLATYPERELIABILITY" displayName="Nonvehicleumbrellatypereliability"
+                        name="nonvehicleumbrellatypereliability" propId="134" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="OBJSIZE" displayName="Objsize" name="objsize" propId="135" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="OBJECTSUBTYPE" displayName="Objectsubtype" name="objectsubtype" propId="136"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="PASSENGER" displayName="Passenger" name="passenger" propId="137" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PASSPORTTYPE" displayName="Passporttype" name="passporttype" precision="255" propId="138"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PERSONAPPEARTIME" displayName="Personappeartime" name="personappeartime" propId="139"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="PERSONBOTTOM" displayName="Personbottom" name="personbottom" propId="140"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="PERSONDISAPPEARTIME" displayName="Persondisappeartime" name="persondisappeartime"
+                        propId="141" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="PERSONIMGID" displayName="Personimgid" name="personimgid" precision="100" propId="142"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PERSONLEFT" displayName="Personleft" name="personleft" propId="143" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PERSONORG" displayName="Personorg" name="personorg" precision="255" propId="144"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PERSONRIGHT" displayName="Personright" name="personright" propId="145" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PERSONTOP" displayName="Persontop" name="persontop" propId="146" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PHYSICALFEATURE" displayName="Physicalfeature" name="physicalfeature" precision="65535"
+                        propId="147" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PICRECORDID" displayName="Picrecordid" name="picrecordid" precision="100" propId="148"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLATEBOTTOM" displayName="Platebottom" name="platebottom" propId="149" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PLATECOLOR" displayName="Platecolor" name="platecolor" precision="255" propId="150"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLATEIMGURL" displayName="Plateimgurl" name="plateimgurl" precision="65535" propId="151"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLATELEFT" displayName="Plateleft" name="plateleft" propId="152" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PLATENUM" displayName="Platenum" name="platenum" precision="255" propId="153"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLATERIGHT" displayName="Plateright" name="plateright" propId="154" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="PLATETOP" displayName="Platetop" name="platetop" propId="155" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="POSTURE" displayName="Posture" name="posture" propId="156" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="POSTURERELIABILITY" displayName="Posturereliability" name="posturereliability"
+                        propId="157" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="PREVMSGRECORDID" displayName="Prevmsgrecordid" name="prevmsgrecordid" precision="100"
+                        propId="158" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="QESCORE" displayName="Qescore" name="qescore" propId="159" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="RAINCOATRELIABILITY" displayName="Raincoatreliability" name="raincoatreliability"
+                        propId="160" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="RECORDID" displayName="Recordid" name="recordid" precision="100" propId="161"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RELATEDFACE" displayName="Relatedface" name="relatedface" propId="162" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="RELATEDGAIT" displayName="Relatedgait" name="relatedgait" propId="163" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="RELATEDNONVEHICLE" displayName="Relatednonvehicle" name="relatednonvehicle" propId="164"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="RELATEDNONVEHICLELIST" displayName="Relatednonvehiclelist" name="relatednonvehiclelist"
+                        precision="65535" propId="165" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RELATEDPERSON" displayName="Relatedperson" name="relatedperson" propId="166"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="RELIABLITY" displayName="Reliablity" name="reliablity" propId="167" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="RESIDENCEADMINDIVISION" displayName="Residenceadmindivision" name="residenceadmindivision"
+                        precision="255" propId="168" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RESPIRATORCOLOR" displayName="Respiratorcolor" name="respiratorcolor" precision="10"
+                        propId="169" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RFIDINFO" displayName="Rfidinfo" name="rfidinfo" precision="65535" propId="170"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RIDERVEHICLE" displayName="Ridervehicle" name="ridervehicle" propId="171"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="SNUMBER" displayName="Snumber" name="snumber" precision="10" propId="172"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SCARFCOLOR" displayName="Scarfcolor" name="scarfcolor" precision="10" propId="173"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SHOESCOLOR" displayName="Shoescolor" name="shoescolor" precision="10" propId="174"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SHOESSTYLE" displayName="Shoesstyle" name="shoesstyle" precision="10" propId="175"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SKINCOLOR" displayName="Skincolor" name="skincolor" precision="255" propId="176"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SOURCEID" displayName="Sourceid" name="sourceid" precision="100" propId="177"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="Status" name="status" precision="10" propId="178"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUSPECTEDTERRORISTNUMBER" displayName="Suspectedterroristnumber"
+                        name="suspectedterroristnumber" precision="255" propId="179" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TARGETIMGURL" displayName="Targetimgurl" name="targetimgurl" precision="65535"
+                        propId="180" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TRACESERVICEINPUTTIME" displayName="Traceserviceinputtime" name="traceserviceinputtime"
+                        propId="181" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="TRACETHINGSINPUTTIME" displayName="Tracethingsinputtime" name="tracethingsinputtime"
+                        propId="182" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="TROUSERSCOLOR" displayName="Trouserscolor" name="trouserscolor" precision="10"
+                        propId="183" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TROUSERSCOLORRELIABILITY" displayName="Trouserscolorreliability"
+                        name="trouserscolorreliability" propId="184" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="TROUSERSLEN" displayName="Trouserslen" name="trouserslen" precision="10" propId="185"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TROUSERSLENRELIABILITY" displayName="Trouserslenreliability" name="trouserslenreliability"
+                        propId="186" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="TROUSERSSTYLE" displayName="Trousersstyle" name="trousersstyle" precision="10"
+                        propId="187" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UID" displayName="Uid" name="uid" precision="10" propId="188" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="UMBRELLA" displayName="Umbrella" name="umbrella" propId="189" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="UMBRELLACOLOR" displayName="Umbrellacolor" name="umbrellacolor" precision="10"
+                        propId="190" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UMBRELLARELIABILITY" displayName="Umbrellareliability" name="umbrellareliability"
+                        propId="191" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="UNIFORMSTYLE" displayName="Uniformstyle" name="uniformstyle" propId="192"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="UNIFORMSTYLERELIABILITY" displayName="Uniformstylereliability"
+                        name="uniformstylereliability" propId="193" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="USEDNAME" displayName="Usedname" name="usedname" precision="255" propId="194"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="USERCHANNELCODE" displayName="Userchannelcode" name="userchannelcode" precision="100"
+                        propId="195" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VEHICLECOLOR" displayName="Vehiclecolor" name="vehiclecolor" precision="10" propId="196"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VEHICLETYPE" displayName="Vehicletype" name="vehicletype" propId="197" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="VEHICLETYPERELIABILITY" displayName="Vehicletypereliability" name="vehicletypereliability"
+                        propId="198" stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="VENDOR" displayName="Vendor" name="vendor" precision="10" propId="199"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VICTIMTYPE" displayName="Victimtype" name="victimtype" precision="255" propId="200"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
     </entities>
 </orm>

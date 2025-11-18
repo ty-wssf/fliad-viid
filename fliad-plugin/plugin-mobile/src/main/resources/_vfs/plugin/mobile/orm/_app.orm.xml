@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-mobile" ext:entityPackageName="com.fliad.mobile.dao.entity"
+     ext:basePackageName="com.fliad.mobile" ext:appName="plugin-mobile" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.mobile.dao.entity.MobileResource" displayName="移动资源"
+                name="com.fliad.mobile.dao.entity.MobileResource" registerShortName="true" tableName="MOBILE_RESOURCE">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PARENT_ID" displayName="父ID" name="parentId" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="名称" name="title" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CODE" displayName="编码" name="code" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="MODULE" displayName="模块" name="module" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="MENU_TYPE" displayName="菜单类型" name="menuType" precision="255" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PATH" displayName="路径" name="path" precision="255" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="ICON" displayName="图标" name="icon" precision="255" propId="9" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="COLOR" displayName="颜色" name="color" precision="255" propId="10" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="REG_TYPE" displayName="规则类型" name="regType" precision="255" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="可用状态" name="status" precision="255" propId="12" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序码" name="sortCode" propId="13" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="14" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="18" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="19"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

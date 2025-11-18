@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-client" ext:entityPackageName="com.fliad.client.dao.entity"
+     ext:basePackageName="com.fliad.client" ext:appName="plugin-client" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.client.dao.entity.ClientRelation" displayName="关系"
+                name="com.fliad.client.dao.entity.ClientRelation" registerShortName="true" tableName="client_relation">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OBJECT_ID" displayName="对象ID" name="objectId" precision="255" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TARGET_ID" displayName="目标ID" name="targetId" precision="255" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="分类" name="category" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="5" stdDataType="string"
+                        stdSqlType="CLOB"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.client.dao.entity.ClientUser" displayName="C端用户"
+                name="com.fliad.client.dao.entity.ClientUser" registerShortName="true" tableName="client_user">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="AVATAR" displayName="头像" name="avatar" propId="2" stdDataType="string" stdSqlType="CLOB"/>
+                <column code="SIGNATURE" displayName="签名" name="signature" propId="3" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="ACCOUNT" displayName="账号" name="account" precision="255" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PASSWORD" displayName="密码" name="password" precision="255" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="姓名" name="name" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NICKNAME" displayName="昵称" name="nickname" precision="255" propId="7" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="GENDER" displayName="性别" name="gender" precision="255" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="AGE" displayName="年龄" name="age" precision="255" propId="9" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="BIRTHDAY" displayName="出生日期" name="birthday" precision="255" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NATION" displayName="民族" name="nation" precision="255" propId="11" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="NATIVE_PLACE" displayName="籍贯" name="nativePlace" precision="255" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="HOME_ADDRESS" displayName="家庭住址" name="homeAddress" precision="65535" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="MAILING_ADDRESS" displayName="通信地址" name="mailingAddress" precision="65535" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ID_CARD_TYPE" displayName="证件类型" name="idCardType" precision="255" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ID_CARD_NUMBER" displayName="证件号码" name="idCardNumber" precision="255" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CULTURE_LEVEL" displayName="文化程度" name="cultureLevel" precision="255" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="POLITICAL_OUTLOOK" displayName="政治面貌" name="politicalOutlook" precision="255" propId="18"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COLLEGE" displayName="毕业院校" name="college" precision="255" propId="19"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EDUCATION" displayName="学历" name="education" precision="255" propId="20"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EDU_LENGTH" displayName="学制" name="eduLength" precision="255" propId="21"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEGREE" displayName="学位" name="degree" precision="255" propId="22" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PHONE" displayName="手机" name="phone" precision="255" propId="23" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EMAIL" displayName="邮箱" name="email" precision="255" propId="24" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="HOME_TEL" displayName="家庭电话" name="homeTel" precision="255" propId="25"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="OFFICE_TEL" displayName="办公电话" name="officeTel" precision="255" propId="26"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EMERGENCY_CONTACT" displayName="紧急联系人" name="emergencyContact" precision="255" propId="27"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EMERGENCY_PHONE" displayName="紧急联系人电话" name="emergencyPhone" precision="255" propId="28"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EMERGENCY_ADDRESS" displayName="紧急联系人地址" name="emergencyAddress" precision="65535"
+                        propId="29" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LAST_LOGIN_IP" displayName="上次登录ip" name="lastLoginIp" precision="255" propId="30"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LAST_LOGIN_ADDRESS" displayName="上次登录地点" name="lastLoginAddress" precision="255"
+                        propId="31" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LAST_LOGIN_TIME" displayName="上次登录时间" name="lastLoginTime" propId="32"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="LAST_LOGIN_DEVICE" displayName="上次登录设备" name="lastLoginDevice" precision="65535"
+                        propId="33" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LATEST_LOGIN_IP" displayName="最新登录ip" name="latestLoginIp" precision="255" propId="34"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LATEST_LOGIN_ADDRESS" displayName="最新登录地点" name="latestLoginAddress" precision="255"
+                        propId="35" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LATEST_LOGIN_TIME" displayName="最新登录时间" name="latestLoginTime" propId="36"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="LATEST_LOGIN_DEVICE" displayName="最新登录设备" name="latestLoginDevice" precision="65535"
+                        propId="37" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="USER_STATUS" displayName="用户状态" name="userStatus" precision="255" propId="38"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序码" name="sortCode" propId="39" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="40" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="41"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="42" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="43"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="44" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="45"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

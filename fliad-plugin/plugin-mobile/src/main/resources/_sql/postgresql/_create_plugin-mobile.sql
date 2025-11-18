@@ -1,0 +1,65 @@
+
+CREATE TABLE MOBILE_RESOURCE(
+  ID VARCHAR(20) NOT NULL ,
+  PARENT_ID VARCHAR(255)  ,
+  TITLE VARCHAR(255)  ,
+  CODE VARCHAR(255)  ,
+  CATEGORY VARCHAR(255)  ,
+  MODULE VARCHAR(255)  ,
+  MENU_TYPE VARCHAR(255)  ,
+  PATH VARCHAR(255)  ,
+  ICON VARCHAR(255)  ,
+  COLOR VARCHAR(255)  ,
+  REG_TYPE VARCHAR(255)  ,
+  STATUS VARCHAR(255)  ,
+  SORT_CODE INT4  ,
+  EXT_JSON TEXT  ,
+  DELETE_FLAG VARCHAR(255)  ,
+  CREATE_TIME TIMESTAMP  ,
+  CREATE_USER VARCHAR(20)  ,
+  UPDATE_TIME TIMESTAMP  ,
+  UPDATE_USER VARCHAR(20)  ,
+  constraint PK_MOBILE_RESOURCE primary key (ID)
+);
+
+
+      COMMENT ON TABLE MOBILE_RESOURCE IS '移动资源';
+                
+      COMMENT ON COLUMN MOBILE_RESOURCE.ID IS '主键';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.PARENT_ID IS '父ID';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.TITLE IS '名称';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CODE IS '编码';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CATEGORY IS '分类';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.MODULE IS '模块';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.MENU_TYPE IS '菜单类型';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.PATH IS '路径';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.ICON IS '图标';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.COLOR IS '颜色';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.REG_TYPE IS '规则类型';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.STATUS IS '可用状态';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.SORT_CODE IS '排序码';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.EXT_JSON IS '扩展信息';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.DELETE_FLAG IS '删除标志';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CREATE_TIME IS '创建时间';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.CREATE_USER IS '创建用户';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.UPDATE_TIME IS '修改时间';
+                    
+      COMMENT ON COLUMN MOBILE_RESOURCE.UPDATE_USER IS '修改用户';
+                    

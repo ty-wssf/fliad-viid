@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-biz" ext:entityPackageName="com.fliad.biz.dao.entity"
+     ext:basePackageName="com.fliad.biz" ext:appName="plugin-biz" ext:mavenVersion="0.1.0" ext:registerShortName="true"
+     ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0" ext:dialect="mysql,oracle,postgresql,h2"
+     x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en"
+     xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl" xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.biz.dao.entity.BizNotice" displayName="通知公告"
+                name="com.fliad.biz.dao.entity.BizNotice" registerShortName="true" tableName="BIZ_NOTICE">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="标题" name="title" precision="200" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="IMAGE" displayName="封面图" name="image" precision="200" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CONTENT" displayName="内容" name="content" precision="65535" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="DIGEST" displayName="摘要" name="digest" precision="300" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TYPE" displayName="类型" name="type" precision="50" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PLACE" displayName="发布位置" name="place" precision="50" propId="7" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="状态" name="status" precision="10" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SORT_CODE" displayName="排序" name="sortCode" propId="9" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="REMARK" displayName="备注" name="remark" precision="500" propId="10" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="EXT_JSON" displayName="扩展信息" name="extJson" propId="11" stdDataType="string"
+                        stdSqlType="CLOB"/>
+                <column code="DELETE_FLAG" displayName="删除标志" name="deleteFlag" precision="255" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="13" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="15" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="更新用户" name="updateUser" precision="20" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>
