@@ -1,0 +1,38 @@
+
+CREATE TABLE resource_datasource(
+  ID VARCHAR(20) NOT NULL    COMMENT 'Id',
+  IS_TEMPLATE BOOLEAN default 0  NULL    COMMENT '是否为模板',
+  TITLE VARCHAR(255) NULL    COMMENT '标题',
+  SUBSCRIBE_DETAIL VARCHAR(255) NULL    COMMENT '订阅类别',
+  TYPE VARCHAR(50) NULL    COMMENT '类型',
+  REMARK VARCHAR(255) NULL    COMMENT '备注',
+  CONTENT TEXT NULL    COMMENT '数据源配置的 JSON 内容',
+  CREATE_TIME DATETIME NULL    COMMENT '创建时间',
+  CREATE_USER VARCHAR(20) NULL    COMMENT '创建用户',
+  UPDATE_TIME DATETIME NULL    COMMENT '修改时间',
+  UPDATE_USER VARCHAR(20) NULL    COMMENT '修改用户',
+  STATUS VARCHAR(10) NULL    COMMENT '状态',
+  SCRIPT_FILTER TEXT NULL    COMMENT '脚本过滤器',
+  constraint PK_resource_datasource primary key (ID)
+);
+
+CREATE TABLE resource_workflow(
+  ID VARCHAR(20) NOT NULL    COMMENT 'Id',
+  IS_TEMPLATE BOOLEAN default 0  NULL    COMMENT '是否为模板',
+  TITLE VARCHAR(255) NULL    COMMENT '标题',
+  SUBSCRIBE_DETAIL VARCHAR(255) NULL    COMMENT '订阅类别',
+  STATUS VARCHAR(10) NULL    COMMENT '状态',
+  REMARK VARCHAR(255) NULL    COMMENT '备注',
+  CONTENT TEXT NULL    COMMENT '工作流设计的 JSON 内容',
+  CREATE_TIME DATETIME NULL    COMMENT '创建时间',
+  CREATE_USER VARCHAR(20) NULL    COMMENT '创建用户',
+  UPDATE_TIME DATETIME NULL    COMMENT '修改时间',
+  UPDATE_USER VARCHAR(20) NULL    COMMENT '修改用户',
+  constraint PK_resource_workflow primary key (ID)
+);
+
+
+   ALTER TABLE resource_datasource COMMENT '数据源';
+                
+   ALTER TABLE resource_workflow COMMENT '工作流';
+                

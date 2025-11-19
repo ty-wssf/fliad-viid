@@ -60,12 +60,6 @@ public class DataSourceInitializer implements LifecycleBean {
      */
     private void executeInitScript(String databaseId) {
         try (Connection connection = dataSource.getConnection()) {
-            // 执行schema脚本
-            for (String u1 : ResourceUtil.scanResources(String.format("classpath:_sql/%s/*.sql", databaseId))) {
-                if ((u1.contains("schema") || u1.contains("_create"))) {
-                    executeScript(connection, u1);
-                }
-            }
             executeScript(connection, String.format("_sql/%s/snowy_data.sql", databaseId));
             for (String u1 : ResourceUtil.scanResources(String.format("classpath:_sql/%s/*.sql", databaseId))) {
                 if (u1.contains("data") && !u1.contains("snowy_data")) {

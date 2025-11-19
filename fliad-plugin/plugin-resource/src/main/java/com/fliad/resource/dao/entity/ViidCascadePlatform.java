@@ -1,0 +1,11 @@
+package com.fliad.resource.dao.entity;
+
+import io.nop.api.core.annotations.biz.BizObjName;
+import com.fliad.resource.dao.entity._gen._ViidCascadePlatform;
+
+
+@BizObjName("ViidCascadePlatform")
+public class ViidCascadePlatform extends _ViidCascadePlatform{
+
+
+}

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-viid" ext:entityPackageName="com.fliad.viid.dao.entity"
+     ext:basePackageName="com.fliad.viid" ext:appName="plugin-viid" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.viid.dao.entity.ViidApe" displayName="采集设备表"
+                name="com.fliad.viid.dao.entity.ViidApe" registerShortName="true" tableName="viid_ape">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="APEID" displayName="设备唯一标识（DeviceIDType）" mandatory="true" name="apeid" precision="64"
+                        propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="设备名称" mandatory="true" name="name" precision="128" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="MODEL" displayName="设备型号" mandatory="true" name="model" precision="64" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IPADDR" displayName="IPv4地址" mandatory="true" name="ipaddr" precision="64" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IPV6ADDR" displayName="IPv6地址" name="ipv6addr" precision="128" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PORT" displayName="网络端口号" mandatory="true" name="port" propId="7" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="LONGITUDE" displayName="经度（-180~180，保留6位小数）" mandatory="true" name="longitude"
+                        precision="10" propId="8" scale="6" stdDataType="decimal" stdSqlType="DECIMAL"/>
+                <column code="LATITUDE" displayName="纬度（-90~90，保留6位小数）" mandatory="true" name="latitude" precision="10"
+                        propId="9" scale="6" stdDataType="decimal" stdSqlType="DECIMAL"/>
+                <column code="PLACECODE" displayName="安装地点行政区划代码（GB/T 2260）" mandatory="true" name="placecode"
+                        precision="12" propId="10" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLACE" displayName="具体位置描述（乡镇街道+街路巷+门楼牌号+详细地址）" name="place" precision="256" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ORGCODE" displayName="管辖单位代码" name="orgcode" precision="64" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CAPDIRECTION" displayName="车辆抓拍方向：0=拍车头，1=拍车尾，兼容无视频卡口信息设备" name="capdirection" propId="13"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="MONITORDIRECTION" displayName="监视方向（如东、东北）" name="monitordirection" precision="32"
+                        propId="14" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="MONITORAREADESC" displayName="监视区域说明" name="monitorareadesc" precision="256" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ISONLINE" displayName="设备在线状态：1=在线，0=离线" mandatory="true" name="isonline" propId="16"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="OWNERAPSID" displayName="所属采集系统设备ID" name="ownerapsid" precision="64" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="USERID" displayName="设备登录账号" name="userid" precision="64" propId="18" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PASSWORD" displayName="设备登录密码（建议加密存储）" name="password" precision="128" propId="19"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FUNCTIONTYPE"
+                        displayName="功能类型（多选，/分隔：1=车辆卡口,2=人员卡口,3=微卡口,4=特征摄像机,5=普通监控,6=高空瞭望摄像机,99=其他）" mandatory="true"
+                        name="functiontype" precision="64" propId="20" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="POSITIONTYPE"
+                        displayName="位置类型（多选，/分隔：1=省际检查站,2=党政机关,3=车站码头,4=中心广场,5=体育场馆,6=商业中心,7=宗教场所,8=校园周边,9=治安复杂区域,10=交通干线,11=医院周边,12=金融机构周边,13=危险物品场所周边,14=博物馆展览馆,15=重点水域、航道,96=市际公安检查站,97=涉外场所,98=边境沿线,99=旅游景区）"
+                        name="positiontype" precision="128" propId="21" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="记录创建时间" mandatory="true" name="createTime" propId="22"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="UPDATE_TIME" displayName="记录最后更新时间" mandatory="true" name="updateTime" propId="23"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+            </columns>
+            <unique-keys>
+                <unique-key columns="apeid" constraint="IDX_APE_ID" name="IDX_APE_ID"/>
+            </unique-keys>
+        </entity>
+        <entity className="com.fliad.viid.dao.entity.ViidCascadePlatform" displayName="级联信息表"
+                name="com.fliad.viid.dao.entity.ViidCascadePlatform" registerShortName="true"
+                tableName="viid_cascade_platform">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SYSTEM_ID" displayName="平台ID" mandatory="true" name="systemId" precision="20" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="平台名称" name="name" precision="100" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="IP_ADDR" displayName="IP地址" name="ipAddr" precision="30" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PORT" displayName="端口" name="port" precision="6" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="IS_REGISTER" displayName="是否注册" name="isRegister" precision="1" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IS_ONLINE" displayName="是否在线" name="isOnline" precision="1" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LAST_ONLINE_TIME" displayName="最后在线时间" name="lastOnlineTime" propId="8"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="TYPE" displayName="级联平台类型（0上级 1下级）" name="type" precision="255" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="USER_ID" displayName="用户ID" name="userId" precision="64" propId="10" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="PASSWORD" displayName="密码" name="password" precision="32" propId="11" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="HEARTBEAT_INTERVAL" displayName="心跳间隔" name="heartbeatInterval" propId="12"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+                <column code="KEEPALIVE_TIMEOUT_COUNT" displayName="心跳间隔" name="keepaliveTimeoutCount" propId="13"
+                        stdDataType="int" stdSqlType="INTEGER"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.viid.dao.entity.ViidSubscribe" displayName="订阅信息表"
+                name="com.fliad.viid.dao.entity.ViidSubscribe" registerShortName="true" tableName="viid_subscribe">
+            <columns>
+                <column code="SUBSCRIBEID" displayName="订阅标识符" mandatory="true" name="subscribeid" precision="40"
+                        primary="true" propId="1" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="订阅标题" name="title" precision="255" propId="2" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBEDETAIL" displayName="订阅类别" name="subscribedetail" precision="255" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="RESOURCEURI" displayName="订阅资源路径" name="resourceuri" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="APPLICANTNAME" displayName="申请人" name="applicantname" precision="50" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="APPLICANTORG" displayName="申请单位" name="applicantorg" precision="50" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="BEGINTIME" displayName="开始时间" name="begintime" precision="15" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ENDTIME" displayName="结束时间" name="endtime" precision="15" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="RECEIVEADDR" displayName="信息接收地址" name="receiveaddr" precision="255" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="REPORTINTERVAL" displayName="信息上报间隔时间" name="reportinterval" propId="10" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="REASON" displayName="理由" name="reason" precision="255" propId="11" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="OPERATETYPE" displayName="操作类型" name="operatetype" precision="5" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBESTATUS" displayName="订阅执行状态" name="subscribestatus" precision="5" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBECANCELORG" displayName="订阅取消单位" name="subscribecancelorg" precision="50"
+                        propId="14" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBECANCELPERSON" displayName="订阅取消人" name="subscribecancelperson" precision="32"
+                        propId="15" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CANCELTIME" displayName="取消时间" name="canceltime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CANCELREASON" displayName="取消原因" name="cancelreason" precision="64" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBETYPE" displayName="0 订阅上级 1被订阅" name="subscribetype" precision="1" propId="18"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBERSENDORGID" displayName="订阅发起方ID" name="subscribersendorgid" precision="255"
+                        propId="19" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBERRECOVERORGID" displayName="被订阅方ID" name="subscriberrecoverorgid" precision="255"
+                        propId="20" stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.viid.dao.entity.ViidSubscribeNotifications" displayName="订阅通知表"
+                name="com.fliad.viid.dao.entity.ViidSubscribeNotifications" registerShortName="true"
+                tableName="viid_subscribe_notifications">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NOTIFICATIONID" displayName="通知标识" mandatory="true" name="notificationid" precision="64"
+                        propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBEID" displayName="订阅标识" mandatory="true" name="subscribeid" precision="64"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TITLE" displayName="订阅标题" name="title" precision="256" propId="4" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="TRIGGERTIME" displayName="触发时间" name="triggertime" propId="5" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="INFOIDS" displayName="信息标识" name="infoids" precision="512" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="REQUESTDATA"
+                        displayName="请求字段数据（根据InfoIDs存储DeviceStatusList或者VehiclesFlowListObject等真实字段的数据）"
+                        name="requestdata" propId="7" stdDataType="string" stdSqlType="CLOB"/>
+                <column code="RESPONSEDATA" displayName="响应字段数据（存储处理当前数据接口处理结果）" name="responsedata" propId="8"
+                        stdDataType="string" stdSqlType="CLOB"/>
+                <column code="REQUESTCOST" displayName="请求耗时（毫秒）" name="requestcost" propId="9" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="CREATETIME" displayName="创建时间" mandatory="true" name="createtime" propId="10"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+                <column code="UPDATETIME" displayName="更新时间" mandatory="true" name="updatetime" propId="11"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.viid.dao.entity.ViidTollgate" displayName="视频卡口对象表"
+                name="com.fliad.viid.dao.entity.ViidTollgate" registerShortName="true" tableName="viid_tollgate">
+            <columns>
+                <column code="ID" displayName="主键" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TOLLGATEID" displayName="卡口ID，全局唯一标识，对应DeviceIDType类型，必选字段" mandatory="true"
+                        name="tollgateid" precision="64" propId="2" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NAME" displayName="卡口名称，对应DeviceNameType类型，必选字段" mandatory="true" name="name"
+                        precision="128" propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LONGITUDE" displayName="卡口经度，对应LongitudeType类型，必选字段" mandatory="true" name="longitude"
+                        precision="10" propId="4" scale="6" stdDataType="decimal" stdSqlType="DECIMAL"/>
+                <column code="LATITUDE" displayName="卡口纬度，对应LatitudeType类型，必选字段" mandatory="true" name="latitude"
+                        precision="10" propId="5" scale="6" stdDataType="decimal" stdSqlType="DECIMAL"/>
+                <column code="PLACECODE" displayName="安装地点行政区划代码，对应PlaceCodeType类型，必选字段" mandatory="true"
+                        name="placecode" precision="20" propId="6" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PLACE" displayName="位置名，具体到位置或街道门牌号，由(乡镇街道)+(街路巷)+(门牌号)+(门楼详细地址)构成，可选字段" name="place"
+                        precision="256" propId="7" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="卡口状态，1-正常，2-停用，9-其他，对应StatusType类型，必选字段" mandatory="true"
+                        name="status" propId="8" stdDataType="byte" stdSqlType="TINYINT"/>
+                <column code="TOLLGATECAT" displayName="卡口类型，对应TollgateType类型，必选字段" mandatory="true" name="tollgatecat"
+                        precision="32" propId="9" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TOLLGATEUSAGE" displayName="卡口用途，80-治安卡口，81-交通卡口，82-其他，必选字段" mandatory="true"
+                        name="tollgateusage" propId="10" stdDataType="byte" stdSqlType="TINYINT"/>
+                <column code="LANENUM" displayName="卡口车道数，整数类型，可选字段" name="lanenum" propId="11" stdDataType="int"
+                        stdSqlType="INTEGER"/>
+                <column code="ORGCODE" displayName="管辖单位代码，对应OrgCodeType类型，可选字段" name="orgcode" precision="32"
+                        propId="12" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ACTIVETIME" displayName="卡口启用时间，启用时间之后的数据有效，可选字段" name="activetime" propId="13"
+                        stdDataType="datetime" stdSqlType="DATETIME"/>
+            </columns>
+            <unique-keys>
+                <unique-key columns="tollgateid" constraint="IDX_TOLLGATE_ID" name="IDX_TOLLGATE_ID"/>
+            </unique-keys>
+        </entity>
+    </entities>
+</orm>

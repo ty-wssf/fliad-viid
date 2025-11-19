@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="订阅通知表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.viid.dao.entity.ViidSubscribeNotifications</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="notificationid" displayName="通知标识" propId="2" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="subscribeid" displayName="订阅标识" propId="3" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="title" displayName="订阅标题" propId="4" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="256"/>
+        </prop>
+        <prop name="triggertime" displayName="触发时间" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="infoids" displayName="信息标识" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="512"/>
+        </prop>
+        <prop name="requestdata" displayName="请求字段数据（根据InfoIDs存储DeviceStatusList或者VehiclesFlowListObject等真实字段的数据）"
+              propId="7" queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="responsedata" displayName="响应字段数据（存储处理当前数据接口处理结果）" propId="8" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String"/>
+        </prop>
+        <prop name="requestcost" displayName="请求耗时（毫秒）" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="createtime" displayName="创建时间" propId="10" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updatetime" displayName="更新时间" propId="11" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+    </props>
+</meta>

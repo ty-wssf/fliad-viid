@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="视频卡口对象表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.viid.dao.entity.ViidTollgate</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys>
+        <key name="IDX_TOLLGATE_ID" props="tollgateid"/>
+    </keys>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="tollgateid" displayName="卡口ID，全局唯一标识，对应DeviceIDType类型，必选字段" propId="2" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="name" displayName="卡口名称，对应DeviceNameType类型，必选字段" propId="3" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="longitude" displayName="卡口经度，对应LongitudeType类型，必选字段" propId="4" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.math.BigDecimal" precision="10" scale="6"/>
+        </prop>
+        <prop name="latitude" displayName="卡口纬度，对应LatitudeType类型，必选字段" propId="5" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.math.BigDecimal" precision="10" scale="6"/>
+        </prop>
+        <prop name="placecode" displayName="安装地点行政区划代码，对应PlaceCodeType类型，必选字段" propId="6" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="place" displayName="位置名，具体到位置或街道门牌号，由(乡镇街道)+(街路巷)+(门牌号)+(门楼详细地址)构成，可选字段" propId="7" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="256"/>
+        </prop>
+        <prop name="status" displayName="卡口状态，1-正常，2-停用，9-其他，对应StatusType类型，必选字段" propId="8" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Byte"/>
+        </prop>
+        <prop name="tollgatecat" displayName="卡口类型，对应TollgateType类型，必选字段" propId="9" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="tollgateusage" displayName="卡口用途，80-治安卡口，81-交通卡口，82-其他，必选字段" propId="10" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Byte"/>
+        </prop>
+        <prop name="lanenum" displayName="卡口车道数，整数类型，可选字段" propId="11" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="orgcode" displayName="管辖单位代码，对应OrgCodeType类型，可选字段" propId="12" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="activetime" displayName="卡口启用时间，启用时间之后的数据有效，可选字段" propId="13" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+    </props>
+</meta>

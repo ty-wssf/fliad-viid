@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-resource" ext:entityPackageName="com.fliad.resource.dao.entity"
+     ext:basePackageName="com.fliad.resource" ext:appName="plugin-resource" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.resource.dao.entity.ResourceDatasource" displayName="数据源"
+                name="com.fliad.resource.dao.entity.ResourceDatasource" registerShortName="true"
+                tableName="resource_datasource">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IS_TEMPLATE" defaultValue="0" displayName="是否为模板" name="isTemplate" propId="2"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="TITLE" displayName="标题" name="title" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBE_DETAIL" displayName="订阅类别" name="subscribeDetail" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TYPE" displayName="类型" name="type" precision="50" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="REMARK" displayName="备注" name="remark" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CONTENT" displayName="数据源配置的 JSON 内容" name="content" precision="65535" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="8" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="10" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="状态" name="status" precision="10" propId="12" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SCRIPT_FILTER" displayName="脚本过滤器" name="scriptFilter" precision="65535" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.resource.dao.entity.ResourceWorkflow" displayName="工作流"
+                name="com.fliad.resource.dao.entity.ResourceWorkflow" registerShortName="true"
+                tableName="resource_workflow">
+            <columns>
+                <column code="ID" displayName="Id" mandatory="true" name="id_" precision="20" primary="true" propId="1"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IS_TEMPLATE" defaultValue="0" displayName="是否为模板" name="isTemplate" propId="2"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="TITLE" displayName="标题" name="title" precision="255" propId="3" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="SUBSCRIBE_DETAIL" displayName="订阅类别" name="subscribeDetail" precision="255" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="STATUS" displayName="状态" name="status" precision="10" propId="5" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="REMARK" displayName="备注" name="remark" precision="255" propId="6" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="CONTENT" displayName="工作流设计的 JSON 内容" name="content" precision="65535" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="8" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_USER" displayName="创建用户" name="createUser" precision="20" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="修改时间" name="updateTime" propId="10" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_USER" displayName="修改用户" name="updateUser" precision="20" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

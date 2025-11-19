@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="采集设备表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.viid.dao.entity.ViidApe</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys>
+        <key name="IDX_APE_ID" props="apeid"/>
+    </keys>
+
+    <props>
+        <prop name="id_" displayName="主键" propId="1" mandatory="true" queryable="true" sortable="true" insertable="true"
+              updatable="false">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="apeid" displayName="设备唯一标识（DeviceIDType）" propId="2" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="name" displayName="设备名称" propId="3" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="model" displayName="设备型号" propId="4" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="ipaddr" displayName="IPv4地址" propId="5" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="ipv6addr" displayName="IPv6地址" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="port" displayName="网络端口号" propId="7" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Integer"/>
+        </prop>
+        <prop name="longitude" displayName="经度（-180~180，保留6位小数）" propId="8" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.math.BigDecimal" precision="10" scale="6"/>
+        </prop>
+        <prop name="latitude" displayName="纬度（-90~90，保留6位小数）" propId="9" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.math.BigDecimal" precision="10" scale="6"/>
+        </prop>
+        <prop name="placecode" displayName="安装地点行政区划代码（GB/T 2260）" propId="10" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="12"/>
+        </prop>
+        <prop name="place" displayName="具体位置描述（乡镇街道+街路巷+门楼牌号+详细地址）" propId="11" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="256"/>
+        </prop>
+        <prop name="orgcode" displayName="管辖单位代码" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="capdirection" displayName="车辆抓拍方向：0=拍车头，1=拍车尾，兼容无视频卡口信息设备" propId="13" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="monitordirection" displayName="监视方向（如东、东北）" propId="14" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="32"/>
+        </prop>
+        <prop name="monitorareadesc" displayName="监视区域说明" propId="15" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="256"/>
+        </prop>
+        <prop name="isonline" displayName="设备在线状态：1=在线，0=离线" propId="16" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="ownerapsid" displayName="所属采集系统设备ID" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="userid" displayName="设备登录账号" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="password" displayName="设备登录密码（建议加密存储）" propId="19" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="functiontype" displayName="功能类型（多选，/分隔：1=车辆卡口,2=人员卡口,3=微卡口,4=特征摄像机,5=普通监控,6=高空瞭望摄像机,99=其他）"
+              propId="20" mandatory="true" queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="positiontype"
+              displayName="位置类型（多选，/分隔：1=省际检查站,2=党政机关,3=车站码头,4=中心广场,5=体育场馆,6=商业中心,7=宗教场所,8=校园周边,9=治安复杂区域,10=交通干线,11=医院周边,12=金融机构周边,13=危险物品场所周边,14=博物馆展览馆,15=重点水域、航道,96=市际公安检查站,97=涉外场所,98=边境沿线,99=旅游景区）"
+              propId="21" queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="128"/>
+        </prop>
+        <prop name="createTime" displayName="记录创建时间" propId="22" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateTime" displayName="记录最后更新时间" propId="23" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+    </props>
+</meta>
