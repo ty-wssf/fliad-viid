@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fliad</groupId>
+        <artifactId>fliad-plugin</artifactId>
+        <version>0.1.0</version>
+    </parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>fliad-plugin-nop-api-core</module>
+        <module>fliad-plugin-nop-commons</module>
+        <module>fliad-plugin-nop-dataset</module>
+        <module>fliad-plugin-nop-xdefs</module>
+        <module>fliad-plugin-nop-javac</module>
+        <module>fliad-plugin-nop-core</module>
+        <module>fliad-plugin-nop-antlr4-common</module>
+        <module>fliad-plugin-nop-xlang</module>
+        <module>fliad-plugin-nop-ooxml-common</module>
+        <module>fliad-plugin-nop-excel</module>
+        <module>fliad-plugin-nop-ooxml-xlsx</module>
+        <module>fliad-plugin-nop-report-core</module>
+        <module>fliad-plugin-nop-ooxml-docx</module>
+        <module>fliad-plugin-nop-report-docx</module>
+        <module>fliad-plugin-nop-dao</module>
+        <module>fliad-plugin-nop-antlr4-tool</module>
+        <module>fliad-plugin-nop-orm-model</module>
+        <module>fliad-plugin-nop-codegen</module>
+        <module>fliad-plugin-nop-orm-eql</module>
+        <module>fliad-plugin-nop-orm</module>
+    </modules>
+
+    <artifactId>plugin-nop</artifactId>
+
+</project>

@@ -37,16 +37,16 @@
         <module>plugin-sys</module>
 
         <!-- 视图库 -->
-        <module>fliad-plugin-viid</module>
+        <module>plugin-viid</module>
 
         <!-- 资源管理插件 -->
-        <module>fliad-plugin-resource</module>
+        <module>plugin-resource</module>
 
         <!-- SIP GB28181协议插件 -->
-        <module>fliad-plugin-sip-gb28181</module>
-        <module>fliad-plugin-nop</module>
+        <module>plugin-sip</module>
+        <module>plugin-nop</module>
         <module>plugin-hikvision</module>
-        <module>fliad-plugin-report</module>
+        <module>plugin-report</module>
         <module>plugin-dahua</module>
     </modules>
 </project>

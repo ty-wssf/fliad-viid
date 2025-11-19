@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.fliad</groupId>
+        <artifactId>fliad-plugin</artifactId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>plugin-sip</artifactId>
+    <packaging>jar</packaging>
+    <description>SIP GB28181协议插件</description>
+
+    <dependencies>
+        <!-- 依赖核心包 -->
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-common</artifactId>
+        </dependency>
+
+        <!-- 依赖API -->
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>fliad-plugin-sip-gb28181-api</artifactId>
+        </dependency>
+
+        <!-- 添加SIP相关依赖 -->
+        <!-- https://mvnrepository.com/artifact/javax.sip/jain-sip-ri -->
+        <dependency>
+            <groupId>javax.sip</groupId>
+            <artifactId>jain-sip-ri</artifactId>
+            <version>1.3.0-91</version>
+        </dependency>
+
+        <!-- Solon框架依赖 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon</artifactId>
+        </dependency>
+
+        <!-- XML解析依赖 -->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-aot</artifactId>
+        </dependency>
+    </dependencies>
+</project>

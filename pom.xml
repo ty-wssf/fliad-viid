@@ -214,25 +214,25 @@
             <!-- fliad-plugin-resource -->
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-resource</artifactId>
+                <artifactId>plugin-resource</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-viid</artifactId>
+                <artifactId>plugin-viid</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-sip-gb28181</artifactId>
+                <artifactId>plugin-sip</artifactId>
                 <version>${viid.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.fliad</groupId>
-                <artifactId>fliad-plugin-report</artifactId>
+                <artifactId>plugin-report</artifactId>
                 <version>${viid.version}</version>
             </dependency>
             <dependency>

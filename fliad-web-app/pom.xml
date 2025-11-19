@@ -270,13 +270,13 @@
         <!-- 视图库功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-viid</artifactId>
+            <artifactId>plugin-viid</artifactId>
         </dependency>
 
         <!-- 资源管理功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-resource</artifactId>
+            <artifactId>plugin-resource</artifactId>
         </dependency>
 
         <dependency>
@@ -292,12 +292,12 @@
 
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-sip-gb28181</artifactId>
+            <artifactId>plugin-sip</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-report</artifactId>
+            <artifactId>plugin-report</artifactId>
         </dependency>
 
         <!--<dependency>
