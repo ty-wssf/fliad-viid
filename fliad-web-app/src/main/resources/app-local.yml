@@ -24,6 +24,8 @@ snowy.redis.timeout: 10s
 #########################################
 snowy.datasource.dynamic.type: "com.zaxxer.hikari.HikariDataSource"
 snowy.datasource.dynamic.strict: true
+orm:
+  init-database-schema: true
 
 # mysql
 # snowy.datasource.dynamic.master.driverClassName: com.mysql.cj.jdbc.Driver

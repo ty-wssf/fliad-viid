@@ -142,7 +142,7 @@
         <!-- 登录鉴权插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-auth</artifactId>
+            <artifactId>plugin-auth</artifactId>
             <exclusions>
                 <exclusion>
                     <artifactId>fastjson</artifactId>
@@ -210,19 +210,19 @@
         <!-- 业务功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-biz</artifactId>
+            <artifactId>plugin-biz</artifactId>
         </dependency>
 
         <!-- C端功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-client</artifactId>
+            <artifactId>plugin-client</artifactId>
         </dependency>
 
         <!-- 开发工具插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-dev</artifactId>
+            <artifactId>plugin-dev</artifactId>
             <exclusions>
                 <exclusion>
                     <artifactId>hutool-json</artifactId>
@@ -252,13 +252,13 @@
         <!-- 移动端管理插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-mobile</artifactId>
+            <artifactId>plugin-mobile</artifactId>
         </dependency>
 
         <!-- 系统功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
-            <artifactId>fliad-plugin-sys</artifactId>
+            <artifactId>plugin-sys</artifactId>
         </dependency>
 
         <!-- jackson序列化工具 -->

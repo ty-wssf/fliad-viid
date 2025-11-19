@@ -181,7 +181,7 @@ public class GlobalConfigure {
         );
     }
 
-    @Bean("nopJdbcTemplate")
+    @Bean(name = "nopJdbcTemplate", typed = true)
     public IJdbcTemplate nopJdbcTemplate(DataSource dataSource) {
         JdbcFactory factory = new JdbcFactory();
         ITransactionTemplate transactionTemplate = factory.newTransactionTemplate(dataSource);
