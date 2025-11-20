@@ -7,7 +7,7 @@
             <data>
                 <record sid="328661015414015168" ID="328661015414015168" IS_TEMPLATE="true"
                         TITLE="订阅RabbitMQ数据模版"
-                        SUBSCRIBE_DETAIL="102"
+                        SUBSCRIBE_DETAIL="901"
                         TYPE="rabbitmq" REMARK="1"
                         STATUS="DISABLED">
                     <CONTENT>
