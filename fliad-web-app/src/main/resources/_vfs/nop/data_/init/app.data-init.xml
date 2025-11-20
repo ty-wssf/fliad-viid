@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<data-init x:schema="/nop/schema/data-init.xdef"
+           xmlns:x="/nop/schema/xdsl.xdef">
+    <tables>
+        <table tableName="RESOURCE_DATASOURCE">
+            <data>
+                <record sid="328661015414015168" ID="328661015414015168" IS_TEMPLATE="true"
+                        TITLE="订阅RabbitMQ数据模版11"
+                        SUBSCRIBE_DETAIL="102"
+                        TYPE="rabbitmq" REMARK="1"
+                        STATUS="DISABLED">
+                    <CONTENT>
+                        <![CDATA[
+                            {
+                                "host": "192.168.1.1",
+                                "port": 5672,
+                                "username": "admin",
+                                "password": "admin",
+                                "virtualHost": "/",
+                                "exchange": "exchange",
+                                "queue": "queue",
+                                "routingKey": "routingKey",
+                                "autoAck": true,
+                                "queueName": "test"
+                            }
+                        ]]>
+                    </CONTENT>
+                </record>
+            </data>
+        </table>
+    </tables>
+</data-init>

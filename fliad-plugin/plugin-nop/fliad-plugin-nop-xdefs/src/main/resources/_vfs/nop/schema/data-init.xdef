@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<data-init x:schema="/nop/schema/xdef.xdef"
+           xmlns:x="/nop/schema/xdsl.xdef"
+           xmlns:xdef="/nop/schema/xdef.xdef"
+           xdef:name="DataInitModel"
+           xdef:bean-package="io.nop.data_.init.model">
+
+    <tables xdef:body-type="list" xdef:key-attr="tableName">
+        <table xdef:name="TableInitModel" tableName="!string">
+
+            <data xdef:body-type="list" xdef:key-attr="sid">
+                <record xdef:name="RecordData"
+                        sid="!string"
+                        xdef:unknown-attr="string"
+                        xdef:bean-unknown-attrs-prop="attributes">
+                    <!-- 脚本字段可以作为子节点 -->
+                    <xdef:unknown-tag xdef:name="FieldNode"
+                                      xdef:value="string"
+                                      xdef:bean-tag-prop="name"
+                                      xdef:bean-body-prop="value"/>
+                </record>
+            </data>
+        </table>
+    </tables>
+</data-init>

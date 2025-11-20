@@ -2,8 +2,12 @@ package com.fliad.core.config;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import com.fliad.core.DataInitializerLoader;
+import io.nop.api.core.ioc.BeanContainer;
+import io.nop.dao.api.IDaoProvider;
 import io.nop.dao.jdbc.IJdbcTemplate;
 import io.nop.orm.IOrmSessionFactory;
+import io.nop.orm.IOrmTemplate;
 import io.nop.orm.initialize.DataBaseSchemaInitializer;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
@@ -48,6 +52,14 @@ public class DataSourceInitializer implements LifecycleBean {
             schemaInitializer.setJdbcTemplate(jdbcTemplate);
             schemaInitializer.setOrmSessionFactory(ormSessionFactory);
             schemaInitializer.init();
+        }
+        if (Solon.cfg().getBool("orm.init-database-data", false)) {
+            IOrmTemplate ormTemplate = BeanContainer.instance()
+                    .getBeanByType(IOrmTemplate.class);
+            IDaoProvider daoProvider = BeanContainer.instance()
+                    .getBeanByType(IDaoProvider.class);
+            DataInitializerLoader loader = new DataInitializerLoader(daoProvider);
+            loader.loadAndExecute(ormTemplate);
         }
         String databaseId = customDbIdProvider.getDatabaseId(dataSource);
         log.info("检测到{}数据库，开始执行初始化脚本...", databaseId);
