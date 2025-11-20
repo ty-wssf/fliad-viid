@@ -38,6 +38,12 @@ import io.nop.orm.dao.OrmDaoProvider;
 import io.nop.orm.factory.DefaultOrmColumnBinderEnhancer;
 import io.nop.orm.factory.OrmSessionFactoryBean;
 import io.nop.orm.impl.OrmTemplateImpl;
+import io.nop.report.core.XptConstants;
+import io.nop.report.core.engine.IReportEngine;
+import io.nop.report.core.engine.IReportRendererFactory;
+import io.nop.report.core.engine.ReportEngine;
+import io.nop.report.core.engine.renderer.HtmlReportRendererFactory;
+import io.nop.report.core.engine.renderer.XlsxReportRendererFactory;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Bean;
@@ -179,6 +185,16 @@ public class GlobalConfigure {
         config.registerInsertListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class);
         config.registerUpdateListener(customMetaObjectListener, ListenerEntity.class, CommonEntity.class, SysIndexVisLogListResult.class, SysIndexMessageDetailResult.class, SysIndexOpLogListResult.class, DevLog.class
         );
+    }
+
+    @Bean
+    public IReportEngine reportEngine() {
+        ReportEngine reportEngine = new ReportEngine();
+        Map<String, IReportRendererFactory> renderers = new HashMap<>();
+        renderers.put(XptConstants.RENDER_TYPE_XLSX, new XlsxReportRendererFactory());
+        renderers.put(XptConstants.RENDER_TYPE_HTML, new HtmlReportRendererFactory());
+        reportEngine.setRenderers(renderers);
+        return reportEngine;
     }
 
     @Bean(name = "nopJdbcTemplate", typed = true)

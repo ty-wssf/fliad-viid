@@ -1,6 +1,6 @@
-package com.fliad.report;
+package com.fliad.nop;
 
-import com.fliad.report.service.SolonBeanContainer;
+import com.fliad.nop.service.SolonBeanContainer;
 import io.nop.api.core.ioc.BeanContainer;
 import io.nop.core.initialize.CoreInitialization;
 import org.noear.solon.core.AppContext;

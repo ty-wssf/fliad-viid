@@ -261,43 +261,10 @@
             <artifactId>plugin-sys</artifactId>
         </dependency>
 
-        <!-- jackson序列化工具 -->
-        <!--<dependency>
-            <groupId>org.noear</groupId>
-            <artifactId>solon.serialization.jackson</artifactId>
-        </dependency>-->
-
-        <!-- 视图库功能插件 -->
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>plugin-viid</artifactId>
-        </dependency>
-
         <!-- 资源管理功能插件 -->
         <dependency>
             <groupId>com.fliad</groupId>
             <artifactId>plugin-resource</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>plugin-hikvision</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>plugin-dahua</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>plugin-sip</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fliad</groupId>
-            <artifactId>plugin-report</artifactId>
         </dependency>
 
         <!--<dependency>
@@ -343,6 +310,78 @@
                     <groupId>org.graalvm.js</groupId>
                     <artifactId>js-scriptengine</artifactId>
                     <version>25.0.1</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>viid</id>
+            <activation>
+                <jdk>viid</jdk>
+            </activation>
+            <dependencies>
+                <!-- 视图库功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-viid</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>report</id>
+            <activation>
+                <jdk>report</jdk>
+            </activation>
+            <dependencies>
+                <!-- 报表功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-report</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>sip</id>
+            <activation>
+                <jdk>sip</jdk>
+            </activation>
+            <dependencies>
+                <!-- 信令服务器功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-sip</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>hikvision</id>
+            <activation>
+                <jdk>hikvision</jdk>
+            </activation>
+            <dependencies>
+                <!-- 海康功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-hikvision</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>dahua</id>
+            <activation>
+                <jdk>dahua</jdk>
+            </activation>
+            <dependencies>
+                <!-- 大华功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-dahua</artifactId>
+                    <version>${project.version}</version>
                 </dependency>
             </dependencies>
         </profile>

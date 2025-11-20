@@ -49,14 +49,4 @@ public class ReportConfigure {
                 .vendorExtensions(openApiExtensionResolver.buildExtensions());
     }
 
-    @Bean
-    public IReportEngine reportEngine() {
-        ReportEngine reportEngine = new ReportEngine();
-        Map<String, IReportRendererFactory> renderers = new HashMap<>();
-        renderers.put(XptConstants.RENDER_TYPE_XLSX, new XlsxReportRendererFactory());
-        renderers.put(XptConstants.RENDER_TYPE_HTML, new HtmlReportRendererFactory());
-        reportEngine.setRenderers(renderers);
-        return reportEngine;
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.fliad.report.service;
+package com.fliad.nop.service;
 
 import io.nop.api.core.ioc.IBeanContainer;
 import org.noear.solon.core.BeanContainer;
