@@ -6,7 +6,7 @@
         <table tableName="RESOURCE_DATASOURCE">
             <data>
                 <record sid="328661015414015168" ID="328661015414015168" IS_TEMPLATE="true"
-                        TITLE="订阅RabbitMQ数据模版11"
+                        TITLE="订阅RabbitMQ数据模版"
                         SUBSCRIBE_DETAIL="102"
                         TYPE="rabbitmq" REMARK="1"
                         STATUS="DISABLED">

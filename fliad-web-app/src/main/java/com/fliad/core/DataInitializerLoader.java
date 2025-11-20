@@ -1,8 +1,13 @@
 package com.fliad.core;
 
+import io.nop.api.core.util.SourceLocation;
 import io.nop.core.lang.eval.IEvalAction;
 import io.nop.core.lang.eval.IEvalScope;
+import io.nop.core.module.ModuleManager;
+import io.nop.core.resource.IResource;
+import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.component.ResourceComponentManager;
+import io.nop.dao.api.IDaoEntity;
 import io.nop.dao.api.IDaoProvider;
 import io.nop.dao.api.IEntityDao;
 import io.nop.data_.init.model.DataInitModel;
@@ -25,8 +30,6 @@ import java.util.Map;
 public class DataInitializerLoader {
     private static final Logger LOG = LoggerFactory.getLogger(DataInitializerLoader.class);
 
-    private static final String INIT_DATA_PATH = "/nop/data_/init/app.data-init.xml";
-
     private final IDaoProvider daoProvider;
 
     public DataInitializerLoader(IDaoProvider daoProvider) {
@@ -34,24 +37,49 @@ public class DataInitializerLoader {
     }
 
     public void loadAndExecute(IOrmTemplate ormTemplate) {
-        // 使用 ResourceComponentManager 加载模型,自动支持 Delta 合并
-        DataInitModel model = (DataInitModel) ResourceComponentManager
-                .instance()
-                .loadComponentModel(INIT_DATA_PATH);
+        // Create merged model
+        DataInitModel model = new DataInitModel();
+        model.setLocation(SourceLocation.fromPath("/nop/data_/init/merged-app.data-init.xml"));
 
-        if (model == null) {
-            LOG.info("nop.data-init.model-not-found:path={}", INIT_DATA_PATH);
-            return;
+        // Discover and merge all module data-init files
+        ModuleManager.instance()
+                .getAllModuleResourcesInModules(
+                        ModuleManager.instance().getEnabledModules(false),
+                        "orm/app.data-init.xml"
+                )
+                .forEach(resource -> {
+                    DataInitModel moduleModel = (DataInitModel) ResourceComponentManager
+                            .instance()
+                            .loadComponentModel(resource.getPath());
+                    if (moduleModel != null) {
+                        mergeDataInitModel(model, moduleModel);
+                    }
+                });
+
+        // Load and merge main model (with override capability)
+        IResource mainResource = VirtualFileSystem.instance()
+                .getResource("/main/orm/app.data-init.xml");
+        if (mainResource.exists()) {
+            DataInitModel mainModel = (DataInitModel) ResourceComponentManager
+                    .instance()
+                    .loadComponentModel(mainResource.getPath());
+            if (mainModel != null) {
+                mergeDataInitModel(model, mainModel);
+            }
         }
 
-        LOG.info("nop.data-init.start:tables={}", model.getTables().size());
-
-        // 遍历所有表的初始化配置
+        // 遍历所有表的初始化配置 l
         for (TableInitModel table : model.getTables()) {
             insertData(ormTemplate, table);
         }
+    }
 
-        LOG.info("nop.data-init.complete");
+    private void mergeDataInitModel(DataInitModel base, DataInitModel ext) {
+        // Implement merge logic based on your DataInitModel structure
+        // Similar to OrmModelLoader.merge() - merge tables, handle conflicts, etc.
+        for (TableInitModel table : ext.getTables()) {
+            base.addTable(table); // Adjust based on your model's API
+        }
     }
 
     private void insertData(IOrmTemplate ormTemplate, TableInitModel table) {
@@ -91,7 +119,13 @@ public class DataInitializerLoader {
                 // 创建实体对象并设置属性
                 IOrmEntity entity = newEntityFromRow(dataMap, ormDao);
                 entity.orm_disableAutoStamp(true);  // 禁用自动时间戳
-                ormDao.saveEntity(entity);
+                IDaoEntity oldEntity = ormDao.getEntityById(entity.get_id());
+                if (oldEntity != null) {
+                    oldEntity.orm_restoreValues(entity.orm_initedValues());
+                    session.saveOrUpdate((IOrmEntity) oldEntity);
+                } else {
+                    session.save(entity);
+                }
             }
             session.flush();
             session.clear();

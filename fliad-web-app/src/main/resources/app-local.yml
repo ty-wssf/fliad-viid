@@ -26,7 +26,7 @@ snowy.datasource.dynamic.type: "com.zaxxer.hikari.HikariDataSource"
 snowy.datasource.dynamic.strict: true
 orm:
   init-database-schema: true
-  init-database-data: false
+  init-database-data: true
 
 # mysql
 # snowy.datasource.dynamic.master.driverClassName: com.mysql.cj.jdbc.Driver
