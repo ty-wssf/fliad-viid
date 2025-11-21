@@ -644,8 +644,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 获取第一个模块下的第一个菜单
         Optional<SysMenu> sysMenus = menuList.stream()
                 .filter(sysMenu -> sysMenu.getModule().equals(firstModule.getId()))
-                .findFirst()
-                .filter(sysMenu -> !sysMenu.getMenuType().equals(SysResourceMenuTypeEnum.CATALOG.getValue()));
+                .filter(sysMenu -> !sysMenu.getMenuType().equals(SysResourceMenuTypeEnum.CATALOG.getValue()))
+                .findFirst();
 
         // 最终处理，构造meta
         List<JSONObject> resultJsonObjectList = resultList.stream().map(sysMenu -> {

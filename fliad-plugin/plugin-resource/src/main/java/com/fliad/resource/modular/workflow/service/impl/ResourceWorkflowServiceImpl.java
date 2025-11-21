@@ -139,7 +139,8 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         newWorkflow.setId(null); // 生成新的ID
         newWorkflow.setTitle(originalWorkflow.getTitle() + "_副本"); // 添加副本标识
         newWorkflow.setStatus(ResourceWorkflowStatus.DISABLED.getValue()); // 设置为禁用状态
-        newWorkflow.setIsTemplate(false); // 设置为非模板
+        // 保持原有的模板属性，即如果是模板则复制后还是模板，如果不是则复制后也不是模板
+        // newDatasource.setIsTemplate(false); // 注释掉这行，保持原有的isTemplate值
 
         // 保存新工作流
         this.save(newWorkflow);
