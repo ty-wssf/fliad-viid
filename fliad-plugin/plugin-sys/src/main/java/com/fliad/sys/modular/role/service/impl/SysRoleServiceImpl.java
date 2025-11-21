@@ -30,6 +30,7 @@ import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
 import io.swagger.annotations.ApiOperation;
+import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
@@ -210,7 +211,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         sysRoleOwnResourceResult.setId(sysRoleIdParam.getId());
         sysRoleOwnResourceResult.setGrantInfoList(sysRelationService.getRelationListByObjectIdAndCategory(sysRoleIdParam.getId(),
                 SysRelationCategoryEnum.SYS_ROLE_HAS_RESOURCE.getValue()).stream().map(sysRelation ->
-                JSONUtil.toBean(sysRelation.getExtJson(), SysRoleOwnResourceResult.SysRoleOwnResource.class)).collect(Collectors.toList()));
+                JSONUtil.toBean(handleEscapeCharacters(sysRelation.getExtJson()), SysRoleOwnResourceResult.SysRoleOwnResource.class)).collect(Collectors.toList()));
         return sysRoleOwnResourceResult;
     }
 
@@ -262,9 +263,60 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRoleOwnPermissionResult sysRoleOwnPermissionResult = new SysRoleOwnPermissionResult();
         sysRoleOwnPermissionResult.setId(sysRoleIdParam.getId());
         sysRoleOwnPermissionResult.setGrantInfoList(sysRelationService.getRelationListByObjectIdAndCategory(sysRoleIdParam.getId(),
-                SysRelationCategoryEnum.SYS_ROLE_HAS_PERMISSION.getValue()).stream().map(sysRelation ->
-                JSONUtil.toBean(sysRelation.getExtJson(), SysRoleOwnPermissionResult.SysRoleOwnPermission.class)).collect(Collectors.toList()));
+                SysRelationCategoryEnum.SYS_ROLE_HAS_PERMISSION.getValue()).stream().map(sysRelation -> {
+            return JSONUtil.toBean(handleEscapeCharacters(sysRelation.getExtJson()), SysRoleOwnPermissionResult.SysRoleOwnPermission.class);
+        }).collect(Collectors.toList()));
         return sysRoleOwnPermissionResult;
+    }
+
+    /**
+     * 处理字符串中的转义字符
+     *
+     * @param jsonStr 包含可能转义字符的JSON字符串
+     * @return 处理后的JSON字符串
+     */
+    private String handleEscapeCharacters(String jsonStr) {
+        if (jsonStr == null || jsonStr.isEmpty()) {
+            return jsonStr;
+        }
+
+        // 先尝试直接解析
+        if (isValidJson(jsonStr)) {
+            return jsonStr;
+        }
+
+        // 尝试不同的策略来修复转义字符
+        String[] strategies = {
+                jsonStr.replace("\\\"", "\""),           // 将 \" 替换为 "
+                jsonStr.replace("\\\\", "\\"),           // 将 \\ 替换为 \
+                jsonStr.replace("\\\"", "\"").replace("\\\\", "\\"),  // 组合策略1
+                jsonStr.replace("\\\\\"", "\"").replace("\\\\'", "'"), // 组合策略2
+        };
+
+        // 尝试每种策略，找到第一个能生成有效JSON的
+        for (String strategy : strategies) {
+            if (isValidJson(strategy)) {
+                return strategy;
+            }
+        }
+
+        // 如果所有策略都失败，返回原始字符串
+        return jsonStr;
+    }
+
+    /**
+     * 检查字符串是否为有效的JSON
+     *
+     * @param jsonStr 待检查的字符串
+     * @return 是否为有效的JSON
+     */
+    private boolean isValidJson(String jsonStr) {
+        try {
+            ONode.loadStr(jsonStr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

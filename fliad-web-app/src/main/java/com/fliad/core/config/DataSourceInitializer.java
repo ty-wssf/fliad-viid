@@ -1,7 +1,10 @@
 package com.fliad.core.config;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fliad.core.DataInitializerLoader;
 import com.fliad.sys.dao.entity.SysRelation;
@@ -20,6 +23,9 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.noear.solon.core.handle.Action;
+import org.noear.solon.core.handle.Handler;
+import org.noear.solon.core.route.Routing;
 import org.noear.solon.core.util.ResourceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +35,9 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 数据库初始化器
@@ -206,48 +214,19 @@ public class DataSourceInitializer implements LifecycleBean {
                     sysRelation.setTargetId(resource.getId_());
                     sysRelation.setId_(resource.getId_());
                     sysRelation.setCategory("SYS_ROLE_HAS_RESOURCE");
-                    /*allByExample.stream().filter()
-                    sysRelation.setExtJson(new ONode().set("menuId", resource.getId_()).set("buttonInfo", new ONode().asArray()).toString());*/
+                    // 查询菜单关联按钮
+                    SysResource buttonResource = resourceIEntityDao.newEntity();
+                    buttonResource.setCategory("BUTTON");
+                    buttonResource.setParentId(resource.getId_());
+                    List<String> buttonList = resourceIEntityDao.findAllByExample(buttonResource)
+                            .stream().map(button -> button.getId_()).collect(Collectors.toList());
+
+                    sysRelation.setExtJson(new ONode().set("menuId", resource.getId_()).set("buttonInfo", buttonList).toString());
+                    relationIEntityDao.saveEntity(sysRelation);
                 }
             }
         }
-        try {
-            /*IOrmTemplate ormTemplate = BeanContainer.instance().getBeanByType(IOrmTemplate.class);
-            
-            // 删除该角色现有的资源授权
-            Object relationExample = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysRelation");
-            relationExample.getClass().getMethod("setObjectId", String.class).invoke(relationExample, roleId);
-            relationExample.getClass().getMethod("setCategory", String.class).invoke(relationExample, "SYS_ROLE_HAS_RESOURCE");
-            ormTemplate.deleteByExample(relationExample);
-            
-            // 查询所有业务模块菜单资源
-            Object resourceExample = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysResource");
-            resourceExample.getClass().getMethod("setModule", String.class).invoke(resourceExample, "1548901111999773976");
-            
-            List<?> resources = ormTemplate.findAllByExample(resourceExample);
-            log.info("找到 {} 个业务模块资源", resources.size());
-            
-            // 为角色授予所有业务模块资源
-            for (Object resource : resources) {
-                String resourceId = (String) resource.getClass().getMethod("getId_").invoke(resource);
-                String resourceCategory = (String) resource.getClass().getMethod("getCategory").invoke(resource);
-                
-                // 只处理菜单和目录类型资源
-                if ("MENU".equals(resourceCategory) || "CATALOG".equals(resourceCategory)) {
-                    Object relation = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysRelation");
-                    relation.getClass().getMethod("setId_", String.class).invoke(relation, "ROLE_" + roleId.substring(0, Math.min(roleId.length(), 10)) + "_RES_" + resourceId.substring(0, Math.min(resourceId.length(), 10)));
-                    relation.getClass().getMethod("setObjectId", String.class).invoke(relation, roleId);
-                    relation.getClass().getMethod("setTargetId", String.class).invoke(relation, resourceId);
-                    relation.getClass().getMethod("setCategory", String.class).invoke(relation, "SYS_ROLE_HAS_RESOURCE");
-                    relation.getClass().getMethod("setExtJson", String.class).invoke(relation, "{\"menuId\":\"" + resourceId + "\",\"buttonInfo\":[]}");
-                    
-                    ormTemplate.save(relation);
-                }
-            }*/
-            log.info("为角色 {} 授权所有业务模块资源完成", roleId);
-        } catch (Exception e) {
-            log.error("为角色授予所有业务模块资源失败", e);
-        }
+        log.info("为角色 {} 授权所有业务模块资源完成", roleId);
     }
 
     /**
@@ -256,40 +235,52 @@ public class DataSourceInitializer implements LifecycleBean {
      * @param roleId 角色ID
      */
     private void grantAllBusinessPermissionsToRole(String roleId) {
-        try {
-            /*IOrmTemplate ormTemplate = BeanContainer.instance().getBeanByType(IOrmTemplate.class);
-            
-            // 删除该角色现有的权限授权
-            Object relationExample = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysRelation");
-            relationExample.getClass().getMethod("setObjectId", String.class).invoke(relationExample, roleId);
-            relationExample.getClass().getMethod("setCategory", String.class).invoke(relationExample, "SYS_ROLE_HAS_PERMISSION");
-            ormTemplate.deleteByExample(relationExample);
-            
-            // 查询所有业务模块资源以获取权限URL
-            Object resourceExample = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysResource");
-            resourceExample.getClass().getMethod("setModule", String.class).invoke(resourceExample, "1548901111999773976");
-            
-            List<?> resources = ormTemplate.findAllByExample(resourceExample);
-            log.info("找到 {} 个业务模块资源用于权限授权", resources.size());
-            
-            // 为角色授予所有业务模块权限
-            for (Object resource : resources) {
-                String apiUrl = (String) resource.getClass().getMethod("getApiUrl").invoke(resource);
-                if (apiUrl != null && !apiUrl.isEmpty()) {
-                    Object relation = ormTemplate.newEntity("com.fliad.sys.dao.entity.SysRelation");
-                    String relationId = "ROLE_" + roleId.substring(0, Math.min(roleId.length(), 10)) + "_PER_" + Math.abs(apiUrl.hashCode() % 1000000);
-                    relation.getClass().getMethod("setId_", String.class).invoke(relation, relationId);
-                    relation.getClass().getMethod("setObjectId", String.class).invoke(relation, roleId);
-                    relation.getClass().getMethod("setTargetId", String.class).invoke(relation, apiUrl);
-                    relation.getClass().getMethod("setCategory", String.class).invoke(relation, "SYS_ROLE_HAS_PERMISSION");
-                    relation.getClass().getMethod("setExtJson", String.class).invoke(relation, "{\"apiUrl\":\"" + apiUrl + "\",\"scopeCategory\":\"SCOPE_ALL\",\"scopeDefineOrgIdList\":[]}");
-                    
-                    ormTemplate.save(relation);
-                }
-            }*/
-            log.info("为角色 {} 授权所有业务模块权限完成", roleId);
-        } catch (Exception e) {
-            log.error("为角色授予所有业务模块权限失败", e);
+        IEntityDao<SysRelation> relationIEntityDao = DaoProvider.instance().daoFor(SysRelation.class);
+        List<String> list = permissionTreeSelector();
+        for (String permission : list) {
+            // 添加权限
+            SysRelation sysRelationQry = relationIEntityDao.newEntity();
+            sysRelationQry.setObjectId(roleId);
+            List<SysRelation> rolePerList = relationIEntityDao.findAllByExample(sysRelationQry);
+            List<String> perStrList = rolePerList.stream().map(s -> s.getTargetId()).collect(Collectors.toList());
+            if (!perStrList.contains(permission)) {
+                SysRelation sysRelation = relationIEntityDao.newEntity();
+                sysRelation.setObjectId(roleId);
+                sysRelation.setTargetId(permission);
+                sysRelation.setId_(IdUtil.getSnowflakeNextIdStr());
+                sysRelation.setCategory("SYS_ROLE_HAS_PERMISSION");
+                sysRelation.setExtJson(new ONode().set("apiUrl", permission).set("scopeCategory", "SCOPE_ALL").set("scopeDefineOrgIdList", new ONode().asArray()).toString());
+                relationIEntityDao.saveEntity(sysRelation);
+            }
         }
+        log.info("为角色 {} 授权所有业务模块权限完成", roleId);
     }
+
+    public List<String> permissionTreeSelector() {
+        List<String> permissionResult = CollectionUtil.newArrayList();
+
+        Collection<Routing<Handler>> routingAll = Solon.app().router().getAll();
+
+        for (Routing<Handler> routing : routingAll) {
+            if (routing.target() instanceof Action) {
+                Action action = (Action) routing.target();
+
+                SaCheckPermission saCheckPermission = action.method().getAnnotation(SaCheckPermission.class);
+                if (ObjectUtil.isNotEmpty(saCheckPermission)) {
+                    String pathExpr = routing.path();
+                    if (pathExpr != null) {
+                        permissionResult.add(pathExpr);
+                    }
+                }
+            }
+        }
+
+
+        return CollectionUtil.sortByPinyin(permissionResult.stream().filter(api ->
+                !api.startsWith("/" + StrUtil.BRACKET_START)
+                        && !api.startsWith("/error")
+                        && !api.contains("/api-docs")
+                        && !api.contains("/swagger-resources")).collect(Collectors.toList()));
+    }
+
 }
