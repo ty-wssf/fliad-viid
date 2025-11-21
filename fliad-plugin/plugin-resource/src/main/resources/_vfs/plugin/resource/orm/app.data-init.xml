@@ -29,5 +29,23 @@
                 </record>
             </data>
         </table>
+        <!-- 业务配置资源 -->
+        <table tableName="SYS_RESOURCE">
+            <data>
+                <record sid="bizConfig" ID="1979521093836898822" PARENT_ID="0" TITLE="业务配置" NAME="bizConfig"
+                        CODE="BIZ_CONFIG" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
+                        PATH="/resource/config" COMPONENT="resource/config/index" ICON="setting-outlined" VISIBLE="TRUE"
+                        SORT_CODE="101"
+                        DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-22 10:00:00"/>
+            </data>
+        </table>
+        <!-- 业务配置资源授权给业务管理员 -->
+        <table tableName="SYS_RELATION">
+            <data>
+                <record sid="roleHasResource_1" id="3287000000000000010"
+                        object_id="1570687866138206209" target_id="1979521093836898822"
+                        category="SYS_ROLE_HAS_RESOURCE" ext_json='{"menuId":"1979521093836898822","buttonInfo":[]}'/>
+            </data>
+        </table>
     </tables>
 </data-init>

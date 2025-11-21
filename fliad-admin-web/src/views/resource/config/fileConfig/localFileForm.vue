@@ -26,7 +26,7 @@
 	import { cloneDeep } from 'lodash-es'
 	import { required } from '@/utils/formRules'
 	import { message } from 'ant-design-vue'
-	import configApi from '@/api/viid/viidConfigApi'
+	import configApi from '@/api/resource/configApi'
 
 	const formRef = ref()
 	const formData = ref({})

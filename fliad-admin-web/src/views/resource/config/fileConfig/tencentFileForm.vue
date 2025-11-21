@@ -8,17 +8,17 @@
 			:label-col="{ ...layout.labelCol, offset: 0 }"
 			:wrapper-col="{ ...layout.wrapperCol, offset: 0 }"
 		>
-			<a-form-item label="MINIO通道KEY：" name="SNOWY_FILE_MINIO_ACCESS_KEY">
-				<a-input v-model:value="formData.SNOWY_FILE_MINIO_ACCESS_KEY" placeholder="请输入MINIO通道KEY" />
+			<a-form-item label="腾讯云密钥ID：" name="SNOWY_FILE_TENCENT_SECRET_ID">
+				<a-input v-model:value="formData.SNOWY_FILE_TENCENT_SECRET_ID" placeholder="请输入腾讯云密钥ID" />
 			</a-form-item>
-			<a-form-item label="MINIO密钥KEY：" name="SNOWY_FILE_MINIO_SECRET_KEY">
-				<a-input v-model:value="formData.SNOWY_FILE_MINIO_SECRET_KEY" placeholder="请输入MINIO密钥KEY" />
+			<a-form-item label="腾讯云密钥SECRET：" name="SNOWY_FILE_TENCENT_SECRET_KEY">
+				<a-input v-model:value="formData.SNOWY_FILE_TENCENT_SECRET_KEY" placeholder="请输入腾讯云密钥SECRET" />
 			</a-form-item>
-			<a-form-item label="MINIO端点：" name="SNOWY_FILE_MINIO_END_POINT">
-				<a-input v-model:value="formData.SNOWY_FILE_MINIO_END_POINT" placeholder="请输入MINIO端点" />
+			<a-form-item label="腾讯云区域ID：" name="SNOWY_FILE_TENCENT_REGION_ID">
+				<a-input v-model:value="formData.SNOWY_FILE_TENCENT_REGION_ID" placeholder="请输入腾讯云区域ID" />
 			</a-form-item>
-			<a-form-item label="MINIO储存桶：" name="SNOWY_FILE_MINIO_DEFAULT_BUCKET_NAME">
-				<a-input v-model:value="formData.SNOWY_FILE_MINIO_DEFAULT_BUCKET_NAME" placeholder="请输入MINIO储存桶" />
+			<a-form-item label="腾讯云储存桶：" name="SNOWY_FILE_TENCENT_DEFAULT_BUCKET_NAME">
+				<a-input v-model:value="formData.SNOWY_FILE_TENCENT_DEFAULT_BUCKET_NAME" placeholder="请输入腾讯云储存桶" />
 			</a-form-item>
 			<a-form-item>
 				<a-button type="primary" :loading="submitLoading" @click="onSubmit()">保存</a-button>
@@ -28,11 +28,11 @@
 	</a-spin>
 </template>
 
-<script setup name="minioFileForm">
+<script setup name="tencentFileForm">
 	import { cloneDeep } from 'lodash-es'
 	import { required } from '@/utils/formRules'
 	import { message } from 'ant-design-vue'
-	import configApi from '@/api/viid/viidConfigApi'
+	import configApi from '@/api/resource/configApi'
 
 	const formRef = ref()
 	const formData = ref({})
@@ -41,7 +41,7 @@
 
 	// 查询此界面的配置项,并转为表单
 	const param = {
-		category: 'FILE_MINIO'
+		category: 'FILE_TENCENT'
 	}
 	configApi.configList(param).then((data) => {
 		loadSpinning.value = false
@@ -56,10 +56,10 @@
 
 	// 默认要校验的
 	const formRules = {
-		SNOWY_FILE_MINIO_ACCESS_KEY: [required('请输入MINIO通道KEY')],
-		SNOWY_FILE_MINIO_SECRET_KEY: [required('请输入MINIO密钥KEY')],
-		SNOWY_FILE_MINIO_END_POINT: [required('请输入MINIO端点')],
-		SNOWY_FILE_MINIO_DEFAULT_BUCKET_NAME: [required('请输入MINIO储存桶')]
+		SNOWY_FILE_TENCENT_SECRET_ID: [required('请输入腾讯云密钥ID')],
+		SNOWY_FILE_TENCENT_SECRET_KEY: [required('请输入腾讯云密钥SECRET')],
+		SNOWY_FILE_TENCENT_REGION_ID: [required('请输入腾讯云区域ID')],
+		SNOWY_FILE_TENCENT_DEFAULT_BUCKET_NAME: [required('请输入腾讯云储存桶')]
 	}
 	// 验证并提交数据
 	const onSubmit = () => {

@@ -42,7 +42,7 @@
 
 <script setup name="sysModule">
 	import Form from './form.vue'
-	import configApi from '@/api/viid/viidConfigApi'
+	import configApi from '@/api/resource/configApi'
 	const searchFormState = ref({})
 	const formRef = ref()
 	const tableRef = ref()

@@ -33,7 +33,7 @@
 
 <script setup>
 	import { required } from '@/utils/formRules'
-	import configApi from '@/api/viid/viidConfigApi'
+	import configApi from '@/api/resource/configApi'
 	// 默认是关闭状态
 	const visible = ref(false)
 	const emit = defineEmits({ successful: null })

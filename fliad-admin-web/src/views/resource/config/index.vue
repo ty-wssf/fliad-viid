@@ -6,10 +6,7 @@
       :active-tab-key="noTitleKey"
       @tabChange="(key) => onTabChange(key, 'noTitleKey')"
   >
-    <p v-if="noTitleKey === 'sysConfig'">
-      <SysConfig/>
-    </p>
-    <p v-else-if="noTitleKey === 'fileConfig'">
+    <p v-if="noTitleKey === 'fileConfig'">
       <FileConfig />
     </p>
     <p v-else-if="noTitleKey === 'otherConfig'">
@@ -19,18 +16,13 @@
 </template>
 
 <script setup name="devConfig">
-import SysConfig from './sysConfig.vue'
 import FileConfig from './fileConfig/index.vue'
 import OtherConfig from './otherConfig/index.vue'
 
-const key = ref('sysConfig')
-const noTitleKey = ref('sysConfig')
+const key = ref('otherConfig')
+const noTitleKey = ref('otherConfig')
 
 const tabListNoTitle = [
-  {
-    key: 'sysConfig',
-    tab: '系统配置'
-  },
   {
     key: 'fileConfig',
     tab: '文件配置'

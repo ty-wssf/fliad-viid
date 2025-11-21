@@ -10,7 +10,7 @@
  * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
  * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
  */
-package com.fliad.viid.modular.config.controller;
+package com.fliad.resource.controller;
 
 import com.fliad.dev.modular.config.param.*;
 import com.mybatisflex.core.paginate.Page;
@@ -37,7 +37,7 @@ import java.util.List;
 @Api(tags = "配置控制器")
 @Controller
 @Valid
-public class ViidConfigController {
+public class ResourceConfigController {
 
     @Inject
     private DevConfigService devConfigService;
@@ -50,7 +50,7 @@ public class ViidConfigController {
      */
     @ApiOperation("获取配置分页")
     @Get
-    @Mapping("/viid/config/page")
+    @Mapping("/resource/config/page")
     public CommonResult<Page<DevConfig>> page(DevConfigPageParam devConfigPageParam) {
         return CommonResult.data(devConfigService.page(devConfigPageParam));
     }
@@ -63,7 +63,7 @@ public class ViidConfigController {
      */
     @ApiOperation("获取系统基础配置")
     @Get
-    @Mapping("/viid/config/sysBaseList")
+    @Mapping("/resource/config/sysBaseList")
     public CommonResult<List<DevConfig>> sysBaseList() {
         return CommonResult.data(devConfigService.sysBaseList());
     }
@@ -76,7 +76,7 @@ public class ViidConfigController {
      */
     @ApiOperation("获取配置列表")
     @Get
-    @Mapping("/viid/config/list")
+    @Mapping("/resource/config/list")
     public CommonResult<List<DevConfig>> list(DevConfigListParam devConfigListParam) {
         return CommonResult.data(devConfigService.list(devConfigListParam));
     }
@@ -90,7 +90,7 @@ public class ViidConfigController {
     @ApiOperation("添加配置")
     @CommonLog("添加配置")
     @Post
-    @Mapping("/viid/config/add")
+    @Mapping("/resource/config/add")
     public CommonResult<String> add(@Validated DevConfigAddParam devConfigAddParam) {
         devConfigService.add(devConfigAddParam);
         return CommonResult.ok();
@@ -105,7 +105,7 @@ public class ViidConfigController {
     @ApiOperation("编辑配置")
     @CommonLog("编辑配置")
     @Post
-    @Mapping("/viid/config/edit")
+    @Mapping("/resource/config/edit")
     public CommonResult<String> edit(@Validated DevConfigEditParam devConfigEditParam) {
         devConfigService.edit(devConfigEditParam);
         return CommonResult.ok();
@@ -120,7 +120,7 @@ public class ViidConfigController {
     @ApiOperation("删除配置")
     @CommonLog("删除配置")
     @Post
-    @Mapping("/viid/config/delete")
+    @Mapping("/resource/config/delete")
     public CommonResult<String> delete(@Validated @NotEmpty(message = "集合不能为空")
                                        CommonValidList<DevConfigIdParam> devConfigIdParamList) {
         devConfigService.delete(devConfigIdParamList);
@@ -135,7 +135,7 @@ public class ViidConfigController {
      */
     @ApiOperation("获取配置详情")
     @Get
-    @Mapping("/viid/config/detail")
+    @Mapping("/resource/config/detail")
     public CommonResult<DevConfig> detail(@Validated DevConfigIdParam devConfigIdParam) {
         return CommonResult.data(devConfigService.detail(devConfigIdParam));
     }
@@ -149,7 +149,7 @@ public class ViidConfigController {
     @ApiOperation("配置批量更新")
     @CommonLog("配置批量更新")
     @Post
-    @Mapping("/viid/config/editBatch")
+    @Mapping("/resource/config/editBatch")
     public CommonResult<String> editBatch(@Validated @NotEmpty(message = "集合不能为空")
                                           CommonValidList<DevConfigBatchParam> devConfigBatchParamList) {
         devConfigService.editBatch(devConfigBatchParamList);
