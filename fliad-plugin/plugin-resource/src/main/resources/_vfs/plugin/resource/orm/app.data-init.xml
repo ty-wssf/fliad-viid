@@ -38,24 +38,6 @@
                 </record>
             </data>
         </table>
-        <!-- 业务配置资源 -->
-        <table tableName="SYS_RESOURCE">
-            <data>
-                <record sid="bizConfig" ID="1979521093836898822" PARENT_ID="0" TITLE="业务配置" NAME="bizConfig"
-                        CODE="BIZ_CONFIG" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
-                        PATH="/resource/config" COMPONENT="resource/config/index" ICON="setting-outlined" VISIBLE="TRUE"
-                        SORT_CODE="101"
-                        DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-22 10:00:00"/>
-            </data>
-        </table>
-        <!-- 业务配置资源授权给业务管理员 -->
-        <table tableName="SYS_RELATION">
-            <data>
-                <record sid="roleHasResource_1" id="3287000000000000010"
-                        object_id="1570687866138206209" target_id="1979521093836898822"
-                        category="SYS_ROLE_HAS_RESOURCE" ext_json='{"menuId":"1979521093836898822","buttonInfo":[]}'/>
-            </data>
-        </table>
         <!-- 字典项配置 字典项范围需要根据业务划分 -->
         <table tableName="DEV_DICT">
             <data>
@@ -65,6 +47,88 @@
                 <record sid="427614447551016963" id="427614447551016963" parent_id="317404597701394432"
                         dict_label="其它" dict_value="9999" category="BIZ" sort_code="9999"
                         delete_flag="NOT_DELETE" create_time="2025-10-21 12:54:00"/>
+            </data>
+        </table>
+        <!-- 资源管理模块 -->
+        <table tableName="SYS_RESOURCE">
+            <data>
+                <record sid="bizConfig" ID="1979521093836898822" PARENT_ID="0" TITLE="业务配置" NAME="bizConfig"
+                        CODE="BIZ_CONFIG" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
+                        PATH="/resource/config" COMPONENT="resource/config/index" ICON="setting-outlined" VISIBLE="TRUE"
+                        SORT_CODE="101"
+                        DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-22 10:00:00"/>
+                <record sid="317770316242853888" ID="317770316242853888" PARENT_ID="0" TITLE="资源管理" 
+                        NAME="" CODE="" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="CATALOG"
+                        PATH="/7365927662977552384" COMPONENT="" ICON="appstore-outlined" VISIBLE="TRUE"
+                        SORT_CODE="111" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-08-26 10:06:47"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 数据源功能资源 -->
+                <!-- 数据源主菜单 -->
+                <record sid="1980000000000000001" ID="1980000000000000001" PARENT_ID="317770316242853888" TITLE="数据源" 
+                        NAME="datasource" CODE="DATASOURCE_MANAGE" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
+                        PATH="/resource/datasource" COMPONENT="resource/datasource/index" ICON="appstore-outlined" VISIBLE="TRUE"
+                        SORT_CODE="100" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 数据源操作按钮 -->
+                <record sid="1980000000000000002" ID="1980000000000000002" PARENT_ID="1980000000000000001" TITLE="新增数据源" 
+                        NAME="" CODE="viidDatasourceAdd" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="1" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1980000000000000003" ID="1980000000000000003" PARENT_ID="1980000000000000001" TITLE="编辑数据源" 
+                        NAME="" CODE="viidDatasourceEdit" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="2" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1980000000000000004" ID="1980000000000000004" PARENT_ID="1980000000000000001" TITLE="删除数据源" 
+                        NAME="" CODE="viidDatasourceDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="3" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1980000000000000005" ID="1980000000000000005" PARENT_ID="1980000000000000001" TITLE="批量删除数据源" 
+                        NAME="" CODE="viidDatasourceBatchDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="4" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 数据源模板相关按钮 -->
+                <record sid="1980000000000000006" ID="1980000000000000006" PARENT_ID="1980000000000000001" TITLE="安装数据源模板" 
+                        NAME="" CODE="viidDatasourceInstallTemplate" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="5" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        UPDATE_TIME="1543837863788879871" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 工作流主菜单 -->
+                <record sid="1968883972877418496" ID="1968883972877418496" PARENT_ID="317770316242853888" TITLE="工作流" 
+                        NAME="workflow" CODE="j4DOSt5Aun" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
+                        PATH="/resource/workflow" COMPONENT="resource/workflow/index" ICON="appstore-outlined" VISIBLE="TRUE"
+                        SORT_CODE="102" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 工作流操作按钮 -->
+                <record sid="1968883972881612800" ID="1968883972881612800" PARENT_ID="1968883972877418496" TITLE="新增工作流" 
+                        NAME="" CODE="viidWorkflowAdd" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="1" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1968883972881612803" ID="1968883972881612803" PARENT_ID="1968883972877418496" TITLE="批量删除工作流" 
+                        NAME="" CODE="viidWorkflowBatchDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="2" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1968883972881612801" ID="1968883972881612801" PARENT_ID="1968883972877418496" TITLE="编辑工作流" 
+                        NAME="" CODE="viidWorkflowEdit" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="3" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
+                <record sid="1968883972881612802" ID="1968883972881612802" PARENT_ID="1968883972877418496" TITLE="删除工作流" 
+                        NAME="" CODE="viidWorkflowDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="4" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
+                <!-- 工作流模板相关按钮 -->
+                <record sid="1968883972881612804" ID="1968883972881612804" PARENT_ID="1968883972877418496" TITLE="安装工作流模板" 
+                        NAME="" CODE="viidWorkflowInstallTemplate" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="5" DELETE_FLAG="NOT_DELETE" CREATE_TIME=""
+                        UPDATE_TIME="" CREATE_USER="" UPDATE_USER=""/>
             </data>
         </table>
     </tables>
