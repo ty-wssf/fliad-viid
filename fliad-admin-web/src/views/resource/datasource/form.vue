@@ -223,7 +223,7 @@ const onOpen = (record, templateMode = false) => {
 			isTemplate: templateMode // 根据templateMode设置默认值
 		}
 	}
-	subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
+	subscribedetailOptions.value = tool.dictList('RESOURCE_Subscribe_Detail_Type')
 }
 // 关闭抽屉
 const onClose = () => {

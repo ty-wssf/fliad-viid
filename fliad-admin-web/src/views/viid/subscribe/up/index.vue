@@ -46,7 +46,7 @@
 			<template #bodyCell="{ column, record }">
 				<template v-if="column.dataIndex === 'SubscribeDetail'">
 					<a-tag v-for="textValue in JSON.parse(record.SubscribeDetail)" :key="textValue" color="processing">
-						{{ $TOOL.dictTypeData('VIID_Subscribe_Detail_Type', textValue) }}
+						{{ $TOOL.dictTypeData('RESOURCE_Subscribe_Detail_Type', textValue) }}
 					</a-tag>
 				</template>
 				<template v-if="column.dataIndex === 'SubscribeStatus'">

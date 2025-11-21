@@ -111,7 +111,7 @@
 			recordData.ReceiveAddr = 'http://localhost:8080/VIID/SubscribeNotifications'
 			formData.value = Object.assign({}, recordData)
 		}
-		subscribedetailOptions.value = tool.dictList('VIID_Subscribe_Detail_Type')
+		subscribedetailOptions.value = tool.dictList('RESOURCE_Subscribe_Detail_Type')
 		viidCascadePlatformApi.viidCascadePlatformList({ type: "0" })
 			.then((res) => {
 				viidCascadePlatformOptions.value = res

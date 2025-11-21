@@ -54,7 +54,7 @@
 					<template #bodyCell="{ column, record }">
 						<template v-if="column.dataIndex === 'subscribeDetail'">
 							<a-tag color="processing">
-								{{ $TOOL.dictTypeData('VIID_Subscribe_Detail_Type', record.subscribeDetail) }}
+								{{ $TOOL.dictTypeData('RESOURCE_Subscribe_Detail_Type', record.subscribeDetail) }}
 							</a-tag>
 						</template>
 						<template v-if="column.dataIndex === 'type'">
@@ -112,7 +112,7 @@
 					<template #bodyCell="{ column, record }">
 						<template v-if="column.dataIndex === 'subscribeDetail'">
 							<a-tag color="processing">
-								{{ $TOOL.dictTypeData('VIID_Subscribe_Detail_Type', record.subscribeDetail) }}
+								{{ $TOOL.dictTypeData('RESOURCE_Subscribe_Detail_Type', record.subscribeDetail) }}
 							</a-tag>
 						</template>
 						<template v-if="column.dataIndex === 'type'">

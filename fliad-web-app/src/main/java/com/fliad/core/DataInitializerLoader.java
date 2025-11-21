@@ -121,7 +121,7 @@ public class DataInitializerLoader {
                 entity.orm_disableAutoStamp(true);  // 禁用自动时间戳
                 IDaoEntity oldEntity = ormDao.getEntityById(entity.get_id());
                 if (oldEntity != null) {
-                    oldEntity.orm_restoreValues(entity.orm_initedValues());
+                    entity.orm_initedValues().forEach(oldEntity::orm_propValueByName);
                     session.saveOrUpdate((IOrmEntity) oldEntity);
                 } else {
                     session.save(entity);
