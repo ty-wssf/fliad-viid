@@ -102,11 +102,6 @@ public class DataSourceInitializer implements LifecycleBean {
     private void executeInitScript(String databaseId) {
         try (Connection connection = dataSource.getConnection()) {
             executeScript(connection, String.format("_sql/%s/snowy_data.sql", databaseId));
-            for (String u1 : ResourceUtil.scanResources(String.format("classpath:_sql/%s/*.sql", databaseId))) {
-                if (u1.contains("data") && !u1.contains("snowy_data")) {
-                    executeScript(connection, u1);
-                }
-            }
         } catch (SQLException e) {
             log.error("执行H2数据库初始化脚本失败", e);
         }
