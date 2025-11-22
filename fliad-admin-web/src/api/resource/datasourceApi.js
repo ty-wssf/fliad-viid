@@ -25,6 +25,10 @@ export default {
 	datasourceDetail(data) {
 		return request('detail', data, 'get')
 	},
+	// 导出数据源为data-init.xml格式
+	datasourceExportDataInit(data) {
+		return request('exportDataInit', data, 'get')
+	},
 	// 禁用数据源
 	disableDatasource(data) {
 		return request('disableDatasource', data)

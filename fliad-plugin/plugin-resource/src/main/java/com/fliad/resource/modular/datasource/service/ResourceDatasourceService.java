@@ -115,4 +115,12 @@ public interface ResourceDatasourceService extends IService<ResourceDatasource> 
      * @param viidDatasourceIdParam 数据源ID参数
      */
     void convertToTemplate(ResourceDatasourceIdParam viidDatasourceIdParam);
+    
+    /**
+     * 导出数据源为data-init.xml格式
+     *
+     * @param viidDatasourceIdParam 数据源ID参数
+     * @return data-init.xml格式的字符串
+     */
+    String exportDataInit(ResourceDatasourceIdParam viidDatasourceIdParam);
 }

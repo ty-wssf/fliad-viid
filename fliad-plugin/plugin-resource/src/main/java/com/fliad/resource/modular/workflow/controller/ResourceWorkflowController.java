@@ -111,6 +111,20 @@ public class ResourceWorkflowController {
     }
 
     /**
+     * 导出工作流为data-init.xml格式
+     *
+     * @author wyl
+     * @date 2025/11/22
+     */
+    @ApiOperation("导出工作流为data-init.xml格式")
+    @SaCheckPermission("/resource/workflow/exportDataInit")
+    @Get
+    @Mapping("/resource/workflow/exportDataInit")
+    public CommonResult<String> exportDataInit(ResourceWorkflowIdParam workflowIdParam) {
+        return CommonResult.data(workflowService.exportDataInit(workflowIdParam));
+    }
+
+    /**
      * 复制工作流
      *
      * @author 
@@ -118,7 +132,7 @@ public class ResourceWorkflowController {
      */
     @ApiOperation("复制工作流")
     @CommonLog("复制工作流")
-    @SaCheckPermission("/resource/workflow/add")
+    @SaCheckPermission("/resource/workflow/copy")
     @Post
     @Mapping("/resource/workflow/copy")
     public CommonResult<String> copy(ResourceWorkflowIdParam workflowIdParam) {

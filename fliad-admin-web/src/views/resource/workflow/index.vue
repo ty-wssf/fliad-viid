@@ -55,6 +55,8 @@
 						</template>
 
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="exportDataInit(record)">导出</a>
+							<a-divider type="vertical" />
 							<a @click="copyViidWorkflow(record)" v-if="hasPerm('viidWorkflowAdd')">复制</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowAdd', 'viidWorkflowEdit'], 'and')" />
 							<a @click="convertToTemplate(record)" v-if="hasPerm('viidWorkflowEdit')">转为模板</a>
@@ -104,6 +106,8 @@
 							</a-tag>
 						</template>
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="exportDataInit(record)">导出</a>
+							<a-divider type="vertical" />
 							<a @click="copyTemplate(record)" v-if="hasPerm('viidWorkflowAdd')">复制</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidWorkflowAdd', 'viidWorkflowEdit'], 'and')" />
 							<a @click="formRef.onOpen(record, true)" v-if="hasPerm('viidWorkflowEdit')">编辑</a>
@@ -169,7 +173,7 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '320px'
+			width: '360px'
 		})
 	}
 
@@ -195,7 +199,7 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '320px'
+			width: '330px'
 		}
 	]
 
@@ -311,6 +315,22 @@
 					loading.value = false
 				})
 		}
+	}
+
+	// 导出为data-init.xml格式
+	const exportDataInit = (record) => {
+		workflowApi.workflowExportDataInit({id: record.id}).then((res) => {
+			// 创建Blob对象
+			const blob = new Blob([res], { type: 'application/xml' });
+			// 创建下载链接
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `workflow_${record.id}_data-init.xml`;
+			link.click();
+			// 清理URL对象
+			window.URL.revokeObjectURL(url);
+		});
 	}
 
 	// 加载模板

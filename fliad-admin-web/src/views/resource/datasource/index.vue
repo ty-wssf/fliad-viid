@@ -69,6 +69,8 @@
 							</a-tag>
 						</template>
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="exportDataInit(record)">导出</a>
+							<a-divider type="vertical" />
 							<a @click="copyViidDatasource(record)" v-if="hasPerm('viidDatasourceAdd')">复制</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceAdd', 'viidDatasourceEdit'], 'and')" />
 							<a @click="convertToTemplate(record)" v-if="hasPerm('viidDatasourceEdit')">转为模板</a>
@@ -119,6 +121,8 @@
 							{{ getTypeLabel(record.type) }}
 						</template>
 						<template v-if="column.dataIndex === 'action'">
+							<a @click="exportDataInit(record)">导出</a>
+							<a-divider type="vertical" />
 							<a @click="copyTemplate(record)" v-if="hasPerm('viidDatasourceAdd')">复制</a>
 							<a-divider type="vertical" v-if="hasPerm(['viidDatasourceAdd', 'viidDatasourceEdit'], 'and')" />
 							<a @click="formRef.onOpen(record, true)" v-if="hasPerm('viidDatasourceEdit')">编辑</a>
@@ -227,7 +231,7 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '200px'
+			width: '240px'
 		}
 	]
 
@@ -333,6 +337,22 @@
 					loading.value = false
 				})
 		}
+	}
+
+	// 导出为data-init.xml格式
+	const exportDataInit = (record) => {
+		viidDatasourceApi.datasourceExportDataInit({id: record.id}).then((res) => {
+			// 创建Blob对象
+			const blob = new Blob([res], { type: 'application/xml' });
+			// 创建下载链接
+			const url = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = `datasource_${record.id}_data-init.xml`;
+			link.click();
+			// 清理URL对象
+			window.URL.revokeObjectURL(url);
+		});
 	}
 
 	// 复制数据源

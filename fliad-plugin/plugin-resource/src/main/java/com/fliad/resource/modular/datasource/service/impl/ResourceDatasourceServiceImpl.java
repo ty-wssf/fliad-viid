@@ -252,4 +252,55 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
 		// 保存新模板
 		this.save(templateDatasource);
 	}
+
+    @Override
+    public String exportDataInit(ResourceDatasourceIdParam resourceDatasourceIdParam) {
+        ResourceDatasource datasource = this.queryEntity(resourceDatasourceIdParam.getId());
+        
+        StringBuilder xmlBuilder = new StringBuilder();
+        xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+        xmlBuilder.append("\n");
+        xmlBuilder.append("<data-init x:schema=\"/nop/schema/data-init.xdef\"\n");
+        xmlBuilder.append("           xmlns:x=\"/nop/schema/xdsl.xdef\">\n");
+        xmlBuilder.append("    <tables>\n");
+        xmlBuilder.append("        <table tableName=\"RESOURCE_DATASOURCE\">\n");
+        xmlBuilder.append("            <data>\n");
+        xmlBuilder.append("                <record sid=\"").append(datasource.getId()).append("\" ID=\"").append(datasource.getId()).append("\"");
+        
+        if (datasource.getIsTemplate() != null) {
+            xmlBuilder.append(" IS_TEMPLATE=\"").append(datasource.getIsTemplate() ? "true" : "false").append("\"");
+        }
+        
+        xmlBuilder.append("\n");
+        xmlBuilder.append("                        TITLE=\"").append(datasource.getTitle()).append("\"\n");
+        xmlBuilder.append("                        SUBSCRIBE_DETAIL=\"").append(datasource.getSubscribeDetail()).append("\"\n");
+        xmlBuilder.append("                        TYPE=\"").append(datasource.getType()).append("\"\n");
+        xmlBuilder.append("                        STATUS=\"").append(datasource.getStatus()).append("\"\n");
+        
+        if (datasource.getRemark() != null) {
+            xmlBuilder.append("                        REMARK=\"").append(datasource.getRemark()).append("\"\n");
+        }
+        
+        if (datasource.getScriptFilter() != null) {
+            xmlBuilder.append("                        SCRIPT_FILTER=\"").append(datasource.getScriptFilter()).append("\"\n");
+        }
+        
+        xmlBuilder.append("                        >\n");
+        
+        if (datasource.getContent() != null) {
+            xmlBuilder.append("                    <CONTENT>\n");
+            xmlBuilder.append("                        <![CDATA[\n");
+            xmlBuilder.append(datasource.getContent()).append("\n");
+            xmlBuilder.append("                        ]]>\n");
+            xmlBuilder.append("                    </CONTENT>\n");
+        }
+        
+        xmlBuilder.append("                </record>\n");
+        xmlBuilder.append("            </data>\n");
+        xmlBuilder.append("        </table>\n");
+        xmlBuilder.append("    </tables>\n");
+        xmlBuilder.append("</data-init>");
+        
+        return xmlBuilder.toString();
+    }
 }

@@ -40,6 +40,14 @@ export default {
 		return request('detail', parameter, 'get')
 	},
 	/**
+	 * 导出工作流为data-init.xml格式
+	 * @param parameter
+	 * @returns {*}
+	 */
+	workflowExportDataInit: (parameter) => {
+		return request('exportDataInit', parameter, 'get')
+	},
+	/**
 	 * 复制VIID工作流
 	 * @param parameter
 	 * @returns {*}

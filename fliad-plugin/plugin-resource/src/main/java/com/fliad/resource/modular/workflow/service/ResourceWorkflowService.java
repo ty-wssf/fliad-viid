@@ -115,4 +115,12 @@ public interface ResourceWorkflowService extends IService<ResourceWorkflow> {
      * @param workflowIdParam 工作流ID参数
      */
     void convertToTemplate(ResourceWorkflowIdParam workflowIdParam);
+    
+    /**
+     * 导出工作流为data-init.xml格式
+     *
+     * @param workflowIdParam 工作流ID参数
+     * @return data-init.xml格式的字符串
+     */
+    String exportDataInit(ResourceWorkflowIdParam workflowIdParam);
 }

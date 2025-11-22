@@ -110,6 +110,20 @@ public class ResourceDatasourceController {
         return CommonResult.data(datasourceService.detail(datasourceIdParam));
     }
 
+    /**
+     * 导出数据源为data-init.xml格式
+     *
+     * @author wyl
+     * @date 2025/11/22
+     */
+    @ApiOperation("导出数据源为data-init.xml格式")
+    @SaCheckPermission("/resource/datasource/detail")
+    @Get
+    @Mapping("/resource/datasource/exportDataInit")
+    public CommonResult<String> exportDataInit(ResourceDatasourceIdParam datasourceIdParam) {
+        return CommonResult.data(datasourceService.exportDataInit(datasourceIdParam));
+    }
+
     @ApiOperation("禁用数据源")
     @Post
     @Mapping("/resource/datasource/disableDatasource")

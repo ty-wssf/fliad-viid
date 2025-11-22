@@ -295,4 +295,50 @@ public class ResourceWorkflowServiceImpl extends ServiceImpl<ResourceWorkflowMap
         // 使缓存失效
         cacheService.remove("viid_workflow_list");
     }
+
+    @Override
+    public String exportDataInit(ResourceWorkflowIdParam workflowIdParam) {
+        ResourceWorkflow workflow = this.queryEntity(workflowIdParam.getId());
+        
+        StringBuilder xmlBuilder = new StringBuilder();
+        xmlBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+        xmlBuilder.append("\n");
+        xmlBuilder.append("<data-init x:schema=\"/nop/schema/data-init.xdef\"\n");
+        xmlBuilder.append("           xmlns:x=\"/nop/schema/xdsl.xdef\">\n");
+        xmlBuilder.append("    <tables>\n");
+        xmlBuilder.append("        <table tableName=\"RESOURCE_WORKFLOW\">\n");
+        xmlBuilder.append("            <data>\n");
+        xmlBuilder.append("                <record sid=\"").append(workflow.getId()).append("\" ID=\"").append(workflow.getId()).append("\"");
+        
+        if (workflow.getIsTemplate() != null) {
+            xmlBuilder.append(" IS_TEMPLATE=\"").append(workflow.getIsTemplate() ? "true" : "false").append("\"");
+        }
+        
+        xmlBuilder.append("\n");
+        xmlBuilder.append("                        TITLE=\"").append(workflow.getTitle()).append("\"\n");
+        xmlBuilder.append("                        SUBSCRIBE_DETAIL='").append(workflow.getSubscribeDetail()).append("'\n");
+        xmlBuilder.append("                        STATUS=\"").append(workflow.getStatus()).append("\"\n");
+        
+        if (workflow.getRemark() != null) {
+            xmlBuilder.append("                        REMARK=\"").append(workflow.getRemark()).append("\"\n");
+        }
+        
+        xmlBuilder.append("                        >\n");
+        
+        if (workflow.getContent() != null) {
+            xmlBuilder.append("                    <CONTENT>\n");
+            xmlBuilder.append("                        <![CDATA[\n");
+            xmlBuilder.append(workflow.getContent()).append("\n");
+            xmlBuilder.append("                        ]]>\n");
+            xmlBuilder.append("                    </CONTENT>\n");
+        }
+        
+        xmlBuilder.append("                </record>\n");
+        xmlBuilder.append("            </data>\n");
+        xmlBuilder.append("        </table>\n");
+        xmlBuilder.append("    </tables>\n");
+        xmlBuilder.append("</data-init>");
+        
+        return xmlBuilder.toString();
+    }
 }
