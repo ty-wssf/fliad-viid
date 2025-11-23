@@ -266,12 +266,6 @@
             <groupId>com.fliad</groupId>
             <artifactId>plugin-resource</artifactId>
         </dependency>
-
-        <!--<dependency>
-            <groupId>io.github.entropy-cloud</groupId>
-            <artifactId>nop-xlang-debugger</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-        </dependency>-->
     </dependencies>
 
     <!-- GraalVM JS引擎 -->
@@ -382,6 +376,21 @@
                     <groupId>com.fliad</groupId>
                     <artifactId>plugin-dahua</artifactId>
                     <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <id>xlang-debugger</id>
+            <activation>
+                <jdk>xlang-debugger</jdk>
+            </activation>
+            <dependencies>
+                <!-- xlang-debugger -->
+                <dependency>
+                    <groupId>io.github.entropy-cloud</groupId>
+                    <artifactId>nop-xlang-debugger</artifactId>
+                    <version>2.0.0-SNAPSHOT</version>
                 </dependency>
             </dependencies>
         </profile>

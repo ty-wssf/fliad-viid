@@ -27,7 +27,7 @@ snowy.datasource.dynamic.strict: true
 orm:
   init-database-schema: true
   init-database-data: true
-  update-existing-data: true
+  update-existing-data: false
 
 # mysql
 # snowy.datasource.dynamic.master.driverClassName: com.mysql.cj.jdbc.Driver
