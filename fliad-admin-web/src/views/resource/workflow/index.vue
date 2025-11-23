@@ -125,7 +125,7 @@
 			</a-tab-pane>
 		</a-tabs>
 	</a-card>
-	<Form ref="formRef" @successful="table.refresh(true)" />
+	<Form ref="formRef" @successful="table.refresh(true);templateTable.refresh(true);" />
 	<design-workflow ref="designWorkflowRef" @successful="table.refresh(true)" />
 </template>
 

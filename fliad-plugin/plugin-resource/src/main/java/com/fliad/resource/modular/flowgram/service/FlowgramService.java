@@ -1,6 +1,7 @@
 package com.fliad.resource.modular.flowgram.service;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.fliad.resource.modular.flowgram.domain.*;
 import org.noear.snack.ONode;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -115,9 +117,76 @@ public class FlowgramService implements LifecycleBean {
                             throw e;
                         }
 
+                    } else if (task.getNode().getType() == NodeType.INCLUSIVE) {
+                        // 执行任务
+                        nodeStatus.addSnapshot(new Snapshot(task.getNode().getId()));
+                        super.handleTask(exchanger, task);
+                        // nodeStatus.getLastSnapshot().setOutputs(exchanger.context().getAs("output"));
+                        nodeStatus.success();
                     }
                 } else {
                     super.handleTask(exchanger, task);
+                }
+            }
+
+            @Override
+            protected boolean tryAsScriptCondition(FlowExchanger exchanger, Condition condition, String description) throws Throwable {
+                if (StrUtil.isNotBlank(description)) {
+                    // 执行条件的时候不知道
+                    String nodeId = description.split("#")[0];
+                    String key = description.split("#")[1];
+                    TaskReportOutput report = exchanger.context().getAs("report");
+                    if (report != null) {
+                        Node node = condition.getChain().getNode(nodeId);
+                        Map<String, Object> data = node.getMeta("data");
+                        List<Map<String, Object>> conditions = (List<Map<String, Object>>) data.get("conditions");
+                        for (Map<String, Object> condition_ : conditions) {
+                            if (key.equals(condition_.get("key"))) {
+                                ONode conditionNode = ONode.load(condition_);
+                                String valueNodeId = conditionNode.select("value.left.content[0]").getString();
+                                String valueNodeKey = conditionNode.select("value.left.content[1]").getString();
+                                ONode leftValueNodeJson = ONode.load(condition.getChain().getNode(valueNodeId).getMetas());
+                                String type = leftValueNodeJson.select(String.format("data.outputs.properties.%s.type", valueNodeKey)).getString();
+                                Object leftValue = null;
+                                if ("string".equals(type)) {
+                                    leftValue = "'" + report.getNodeStatus(valueNodeId).getLastSnapshot().getOutputs().get(valueNodeKey) + "'";
+                                } else {
+                                    leftValue = report.getNodeStatus(valueNodeId).getLastSnapshot().getOutputs().get(valueNodeKey);
+                                }
+                                Object rightValue = conditionNode.select("value.right.content").getString();
+                                String code = leftValue + convertOperator(conditionNode.select("value.operator").getString()) + rightValue;
+                                boolean res = (boolean) SnEL.eval(code, new HashMap());
+                                report.getNodeStatus(nodeId).getLastSnapshot().getOutputs().put(valueNodeId + "." + valueNodeKey + convertOperator(conditionNode.select("value.operator").getString()) + rightValue, res);
+                                return res;
+                            }
+                        }
+                    }
+                } else {
+                    return super.tryAsScriptCondition(exchanger, condition, description);
+                }
+                return super.tryAsScriptCondition(exchanger, condition, description);
+            }
+
+            // 转化操作符
+            private String convertOperator(String operator) {
+                if ("gte".equals(operator)) {
+                    return " >= ";
+                } else if ("lte".equals(operator)) {
+                    return " <= ";
+                } else if ("gt".equals(operator)) {
+                    return " > ";
+                } else if ("lt".equals(operator)) {
+                    return " < ";
+                } else if ("eq".equals(operator)) {
+                    return " == ";
+                } else if ("neq".equals(operator)) {
+                    return " != ";
+                } else if ("contains".equals(operator)) {
+                    return " LIKE ";
+                } else if ("not contains".equals(operator)) {
+                    return " NOT LIKE ";
+                } else {
+                    return operator;
                 }
             }
         });
@@ -153,6 +222,9 @@ public class FlowgramService implements LifecycleBean {
                         nodeDecl = NodeDecl.activityOf(node.get("id").getString()).title(node.get("data").get("title").getString()).task("@database");
                     } else if (node.get("type").getString().equals("code")) {
                         nodeDecl = NodeDecl.activityOf(node.get("id").getString()).title(node.get("data").get("title").getString()).task("@code");
+                    } else if (node.get("type").getString().equals("condition")) { // 条件
+                        // 包容网关（类似多选）
+                        nodeDecl = NodeDecl.inclusiveOf(node.get("id").getString()).title(node.get("data").get("title").getString());
                     } else {
                         nodeDecl = null;
                         log.warn("没有处理的节点类型：{}", node.get("type").getString());
@@ -161,7 +233,18 @@ public class FlowgramService implements LifecycleBean {
                         nodeDecl.metaPut("data", node.get("data").toData());
                         ONode.load(request.getSchema()).get("edges").forEach(edge -> {
                             if (node.get("id").getString().equals(edge.get("sourceNodeID").getString())) {
-                                nodeDecl.linkAdd(edge.get("targetNodeID").getString());
+                                // 条件组件即网关情况
+                                if (edge.contains("sourcePortID")) {
+                                    node.get("data").get("conditions").forEach(condition -> {
+                                        if (edge.get("sourcePortID").getString().equals(condition.get("key").getString())) {
+                                            nodeDecl.linkAdd(edge.get("targetNodeID").getString(), l -> {
+                                                l.when(node.get("id").getString() + "#" + condition.get("key").getString());
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    nodeDecl.linkAdd(edge.get("targetNodeID").getString());
+                                }
                             }
                         });
                         decl.addNode(nodeDecl);
@@ -226,4 +309,9 @@ public class FlowgramService implements LifecycleBean {
         throwable.printStackTrace(pw);
         return sw.toString();
     }
+
+    public static void main(String[] args) {
+        System.out.println(SnEL.eval("'e' == 'e'", new HashMap()));
+    }
+
 }

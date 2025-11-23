@@ -43,6 +43,17 @@
                         ]]>
                     </CONTENT>
                 </record>
+                <record sid="349792297167941632" ID="349792297167941632" IS_TEMPLATE="true"
+                        TITLE="条件分支使用示例"
+                        SUBSCRIBE_DETAIL='["9999"]'
+                        STATUS="DISABLED"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":147.35}},"data":{"title":"Start","outputs":{"type":"object","properties":{"inputs":{"type":"string","default":"Hello Flow."}},"required":[]}}},{"id":"end_0","type":"end","meta":{"position":{"x":2020,"y":147.35}},"data":{"title":"End","inputsValues":{"key0":{"type":"ref","content":["code_De1SP","key0"],"extra":{"index":0}}},"inputs":{"type":"object","properties":{"key0":{"type":"string"}}}}},{"id":"code_De1SP","type":"code","meta":{"position":{"x":640,"y":107}},"data":{"title":"Code_1","inputsValues":{"inputs":{"type":"ref","content":["start_0","inputs"],"extra":{"index":0}}},"script":{"language":"xlang","content":"<c:script>  \n  <!-- json解析实例 -->\n  let inputJson = $JSON.parse(inputs);\n  <!-- 日志打印示例 -->\n  logInfo(\"===: {}\", inputJson);\n  <!-- 返回对象用于输出 -->\n  return inputJson;\n</c:script>"},"outputs":{"type":"object","properties":{"key0":{"type":"string"}},"required":[]},"inputs":{"type":"object","properties":{"inputs":{"type":"string"}}}}},{"id":"condition_m4_wr","type":"condition","meta":{"position":{"x":1100,"y":76}},"data":{"title":"Condition","conditions":[{"value":{"type":"expression","content":"","left":{"type":"ref","content":["code_De1SP","key0"]},"operator":"eq","right":{"type":"constant","content":"'e'","schema":{"type":"string","extra":{"weak":true}}}},"key":"if_bvEBvx"},{"value":{"type":"expression","content":"","left":{"type":"ref","content":["code_De1SP","key0"]},"operator":"neq","right":{"type":"constant","content":"'e'","schema":{"type":"string","extra":{"weak":true}}}},"key":"if_cslWK_"}]}},{"id":"code_USNpG","type":"code","meta":{"position":{"x":1560,"y":234}},"data":{"title":"Code_1","inputsValues":{"key0":{"type":"ref","content":["code_De1SP","key0"],"extra":{"index":0}}},"script":{"language":"xlang","content":"<c:script>  \n  logInfo(\"满足条件打印2\");\n</c:script>"},"outputs":{"type":"object","properties":{},"required":[]},"inputs":{"type":"object","properties":{"key0":{"type":"string"}}}}},{"id":"code_eeXnf","type":"code","meta":{"position":{"x":1560,"y":0}},"data":{"title":"Code_1","inputsValues":{"input":{"type":"constant","content":""}},"script":{"language":"xlang","content":"<c:script>  \n  logInfo(\"满足条件打印1\");\n</c:script>"},"outputs":{"type":"object","properties":{},"required":[]},"inputs":{"type":"object","properties":{"input":{"type":"string"}}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"code_De1SP"},{"sourceNodeID":"code_USNpG","targetNodeID":"end_0"},{"sourceNodeID":"code_eeXnf","targetNodeID":"end_0"},{"sourceNodeID":"code_De1SP","targetNodeID":"condition_m4_wr"},{"sourceNodeID":"condition_m4_wr","targetNodeID":"code_eeXnf","sourcePortID":"if_bvEBvx"},{"sourceNodeID":"condition_m4_wr","targetNodeID":"code_USNpG","sourcePortID":"if_cslWK_"}]}
+                        ]]>
+                    </CONTENT>
+                </record>
             </data>
         </table>
         <!-- 字典项配置 字典项范围需要根据业务划分 -->
