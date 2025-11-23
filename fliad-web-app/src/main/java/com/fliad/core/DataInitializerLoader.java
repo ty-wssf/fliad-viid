@@ -20,6 +20,7 @@ import io.nop.orm.dao.IOrmEntityDao;
 import io.nop.orm.model.IColumnModel;
 import io.nop.orm.model.IEntityModel;
 import io.nop.xlang.api.XLang;
+import org.noear.solon.Solon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,6 +108,8 @@ public class DataInitializerLoader {
         }
 
         IOrmEntityDao ormDao = (IOrmEntityDao) dao;
+        // 获取是否更新已存在数据的配置
+        boolean updateExistingData = Solon.cfg().getBool("orm.update-existing-data", false);
 
         ormTemplate.runInSession(session -> {
             for (RecordData record : records) {
@@ -121,6 +124,13 @@ public class DataInitializerLoader {
                 entity.orm_disableAutoStamp(true);  // 禁用自动时间戳
                 IDaoEntity oldEntity = ormDao.getEntityById(entity.get_id());
                 if (oldEntity != null) {
+                    // 如果配置为不更新已存在数据，则跳过
+                    if (!updateExistingData) {
+                        LOG.debug("Skipping existing record for table {} with id {}, update-existing-data is disabled", 
+                                tableName, entity.get_id());
+                        continue;
+                    }
+                    // 更新已存在的实体
                     entity.orm_initedValues().forEach(oldEntity::orm_propValueByName);
                     session.saveOrUpdate((IOrmEntity) oldEntity);
                 } else {

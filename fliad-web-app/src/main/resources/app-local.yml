@@ -27,6 +27,7 @@ snowy.datasource.dynamic.strict: true
 orm:
   init-database-schema: true
   init-database-data: true
+  update-existing-data: false
 
 # mysql
 # snowy.datasource.dynamic.master.driverClassName: com.mysql.cj.jdbc.Driver
@@ -54,7 +55,7 @@ orm:
 #snowy.datasource.dynamic.strict=true
 
 # h2
-snowy.datasource.dynamic.master.driverClassName: org.h2.Driver
-snowy.datasource.dynamic.master.jdbcUrl: jdbc:h2:file:./data/testdb;AUTO_SERVER=TRUE
-snowy.datasource.dynamic.master.username: sa
-snowy.datasource.dynamic.master.password:
+# snowy.datasource.dynamic.h2.driverClassName: org.h2.Driver
+# snowy.datasource.dynamic.h2.jdbcUrl: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+# snowy.datasource.dynamic.h2.username: sa
+# snowy.datasource.dynamic.h2.password: 
