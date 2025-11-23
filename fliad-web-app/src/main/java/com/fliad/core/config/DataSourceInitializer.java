@@ -91,6 +91,13 @@ public class DataSourceInitializer implements LifecycleBean {
                 // 为该业务角色授权所有业务模块的权限
                 grantAllBusinessPermissionsToRole(bizAdminRoleId);
             }
+            String superAdminRoleId = getSuperAdminRoleId();
+            if (superAdminRoleId != null) {
+                // 为该角色授权所有业务模块资源
+                grantAllBusinessResourcesToRole(superAdminRoleId);
+                // 为该业务角色授权所有业务模块的权限
+                grantAllBusinessPermissionsToRole(superAdminRoleId);
+            }
         });
 
         log.info("{}数据库初始化脚本执行完成", databaseId);
@@ -172,6 +179,19 @@ public class DataSourceInitializer implements LifecycleBean {
         IEntityDao<SysRole> entityDao = DaoProvider.instance().daoFor(SysRole.class);
         SysRole sysRole = entityDao.newEntity();
         sysRole.setCode("bizAdmin");
+        SysRole firstByExample = entityDao.findFirstByExample(sysRole);
+        return firstByExample.getId_();
+    }
+
+    /**
+     * 获取系统管理员角色ID
+     *
+     * @return 系统管理员角色ID
+     */
+    private String getSuperAdminRoleId() {
+        IEntityDao<SysRole> entityDao = DaoProvider.instance().daoFor(SysRole.class);
+        SysRole sysRole = entityDao.newEntity();
+        sysRole.setCode("superAdmin");
         SysRole firstByExample = entityDao.findFirstByExample(sysRole);
         return firstByExample.getId_();
     }

@@ -24,6 +24,7 @@ import org.noear.solon.Solon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,18 +70,99 @@ public class DataInitializerLoader {
             }
         }
 
-        // 遍历所有表的初始化配置 l
+        // 遍历所有表的初始化配置
         for (TableInitModel table : model.getTables()) {
             insertData(ormTemplate, table);
         }
     }
 
+    /**
+     * 合并两个DataInitModel对象
+     * 当多个app.data-init.xml文件定义了相同表的数据时，需要合并这些数据而不是简单替换
+     * @param base 基础模型，将合并结果存储在此模型中
+     * @param ext 扩展模型，提供需要合并的数据
+     */
     private void mergeDataInitModel(DataInitModel base, DataInitModel ext) {
-        // Implement merge logic based on your DataInitModel structure
-        // Similar to OrmModelLoader.merge() - merge tables, handle conflicts, etc.
+        // 遍历扩展模型中的所有表
         for (TableInitModel table : ext.getTables()) {
-            base.addTable(table); // Adjust based on your model's API
+            // 检查基础模型中是否已存在同名表
+            TableInitModel existingTable = base.getTable(table.getTableName());
+            if (existingTable != null) {
+                // 如果存在同名表，则合并两个表中的记录数据
+                TableInitModel mergedTable = mergeTableData(existingTable, table);
+                // 移除旧表并添加合并后的新表
+                // 由于模型可能被冻结，我们需要使用特殊方法来替换表
+                removeAndAddTable(base, existingTable.getTableName(), mergedTable);
+            } else {
+                // 如果不存在同名表，则直接添加新表的克隆版本
+                // 避免直接引用可能被冻结的原始对象
+                base.addTable(cloneTable(table));
+            }
         }
+    }
+
+    /**
+     * 克隆表对象及其所有记录，避免直接修改冻结对象
+     * @param table 原始表对象
+     * @return 克隆后的表对象
+     */
+    private TableInitModel cloneTable(TableInitModel table) {
+        TableInitModel clonedTable = table.cloneInstance();
+        List<RecordData> clonedRecords = new ArrayList<>();
+        for (RecordData record : table.getData()) {
+            clonedRecords.add(record.cloneInstance());
+        }
+        clonedTable.setData(clonedRecords);
+        return clonedTable;
+    }
+
+    /**
+     * 合并两个表的记录数据
+     * 将源表中的所有记录合并到目标表中
+     * 创建新表对象以避免修改已冻结的对象
+     * @param targetTable 目标表，将记录合并到此表中
+     * @param sourceTable 源表，从中获取需要合并的记录
+     * @return 合并后的新表对象
+     */
+    private TableInitModel mergeTableData(TableInitModel targetTable, TableInitModel sourceTable) {
+        // 创建新的表对象以避免修改已冻结的对象
+        TableInitModel mergedTable = targetTable.cloneInstance();
+        
+        // 克隆并合并记录数据
+        List<RecordData> mergedRecords = new ArrayList<>();
+        // 添加目标表的所有记录
+        for (RecordData record : targetTable.getData()) {
+            mergedRecords.add(record.cloneInstance());
+        }
+        // 添加源表的所有记录（会自动覆盖相同SID的记录）
+        for (RecordData record : sourceTable.getData()) {
+            mergedRecords.add(record.cloneInstance());
+        }
+        
+        mergedTable.setData(mergedRecords);
+        return mergedTable;
+    }
+
+    /**
+     * 从基础模型中移除指定表并添加新表
+     * 由于模型对象可能已被冻结，不能直接修改，需要创建新的列表
+     * @param base 基础模型
+     * @param tableName 要移除的表名
+     * @param newTable 要添加的新表
+     */
+    private void removeAndAddTable(DataInitModel base, String tableName, TableInitModel newTable) {
+        // 创建新的表列表
+        List<TableInitModel> newTableList = new ArrayList<>();
+        for (TableInitModel table : base.getTables()) {
+            if (!table.getTableName().equals(tableName)) {
+                newTableList.add(cloneTable(table));
+            }
+        }
+        // 添加合并后的新表
+        newTableList.add(newTable);
+        
+        // 重新设置表列表
+        base.setTables(newTableList);
     }
 
     private void insertData(IOrmTemplate ormTemplate, TableInitModel table) {
