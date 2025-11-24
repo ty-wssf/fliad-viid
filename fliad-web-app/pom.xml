@@ -266,6 +266,12 @@
             <groupId>com.fliad</groupId>
             <artifactId>plugin-resource</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.fliad</groupId>
+            <artifactId>plugin-nop-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <!-- GraalVM JS引擎 -->
