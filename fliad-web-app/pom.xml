@@ -69,7 +69,7 @@
         <!-- dynamic-datasource -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.data.dynamicds</artifactId>
+            <artifactId>solon-data-dynamicds</artifactId>
         </dependency>
 
         <!-- cache -->

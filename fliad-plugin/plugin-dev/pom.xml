@@ -35,7 +35,7 @@
 
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.scheduling.simple</artifactId>
+            <artifactId>solon-scheduling-simple</artifactId>
         </dependency>
 
         <!-- sms4j短信sdk -->

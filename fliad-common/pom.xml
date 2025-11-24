@@ -18,13 +18,17 @@
         <!-- validation -->
         <dependency>
             <groupId>org.noear</groupId>
-            <artifactId>solon.validation</artifactId>
+            <artifactId>solon-security-validation</artifactId>
         </dependency>
 
         <!-- web -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>solon-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-serialization-snack3</artifactId>
         </dependency>
 
         <!-- redis -->
