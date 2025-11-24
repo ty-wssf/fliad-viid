@@ -52,14 +52,52 @@ public class CommonDownloadUtil {
      */
     public static void download(String fileName, byte[] fileBytes, Context ctx) {
         try {
-            ctx.headerSet("Content-Disposition", "attachment;filename=" + URLUtil.encode(fileName));
+            // 判断是否为图片类型，如果是则默认预览而不是强制下载
+            String contentType = getContentType(fileName);
+            if (contentType.startsWith("image/")) {
+                ctx.contentType(contentType + ";charset=UTF-8");
+                // 图片默认预览，不设置Content-Disposition或者设置为inline
+                ctx.headerSet("Content-Disposition", "inline;filename=" + URLUtil.encode(fileName));
+            } else {
+                // 非图片文件强制下载
+                ctx.headerSet("Content-Disposition", "attachment;filename=" + URLUtil.encode(fileName));
+                ctx.contentType("application/octet-stream;charset=UTF-8");
+            }
             ctx.headerSet("Content-Length", "" + fileBytes.length);
             ctx.headerSet("Access-Control-Allow-Origin", "*");
             ctx.headerSet("Access-Control-Expose-Headers", "Content-Disposition");
-            ctx.contentType("application/octet-stream;charset=UTF-8");
             IoUtil.write(ctx.outputStream(), true, fileBytes);
         } catch (IOException e) {
             log.error(">>> 文件下载异常：", e);
+        }
+    }
+    
+    /**
+     * 根据文件名获取内容类型
+     *
+     * @param fileName 文件名
+     * @return 内容类型
+     */
+    private static String getContentType(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "application/octet-stream";
+        }
+        
+        String lowerFileName = fileName.toLowerCase();
+        if (lowerFileName.endsWith(".jpg") || lowerFileName.endsWith(".jpeg")) {
+            return "image/jpeg";
+        } else if (lowerFileName.endsWith(".png")) {
+            return "image/png";
+        } else if (lowerFileName.endsWith(".gif")) {
+            return "image/gif";
+        } else if (lowerFileName.endsWith(".bmp")) {
+            return "image/bmp";
+        } else if (lowerFileName.endsWith(".webp")) {
+            return "image/webp";
+        } else if (lowerFileName.endsWith(".svg")) {
+            return "image/svg+xml";
+        } else {
+            return "application/octet-stream";
         }
     }
 }

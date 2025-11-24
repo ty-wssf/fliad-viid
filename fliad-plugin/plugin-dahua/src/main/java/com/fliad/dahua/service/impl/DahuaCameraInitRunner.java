@@ -41,8 +41,8 @@ public class DahuaCameraInitRunner implements LifecycleBean {
      */
     @Override
     public void start() throws Throwable {
-        // 0: 不启用 1： 监听  2： 布防
-        dahua_defense = devConfigApi.getValueByKey("hikvision_defense");
+        // 大华布防启用配置 0: 不启用 1： 布防
+        dahua_defense = devConfigApi.getValueByKey("dahua_defense");
         if ("0".equals(dahua_defense)) {
             log.info("大华布防功能未启用，跳过设备初始化");
             return;

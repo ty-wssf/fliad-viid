@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import com.fliad.dev.modular.file.provider.DevFileApiProvider;
 import com.netsdk.lib.NetSDKLib;
 import com.netsdk.lib.structure.DEV_EVENT_TRAFFICJUNCTION_INFO;
+import com.netsdk.lib.structure.NET_RIDER_INFO;
 import com.sun.jna.Pointer;
 import org.noear.snack.ONode;
 import org.noear.snack.core.utils.IOUtil;
@@ -54,8 +55,8 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                         log.error("解析交通路口事件号牌号码异常", e);
                     }
 
+                    // 骑车人数
                     trafficInfo.set("nNumOfCycling", msg.stuNonMotor.nNumOfCycling);
-
                     // 帽子类型
                     trafficInfo.set("emCap", Arrays.stream(msg.stuNonMotor.stuRiderList).map(rider -> rider.emCap).collect(Collectors.toList()).subList(0, msg.stuNonMotor.nNumOfCycling));
                     // trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
@@ -64,6 +65,20 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                     UploadedFile file = new UploadedFile("image/jpeg", IoUtil.toStream(img_array), "1.jpg");
                     String url = devFileApiProvider.storageFileWithReturnUrlLocal(file, new ONode().asObject().set("persistence", false));
                     trafficInfo.set("tpurl", url);
+
+                    // 骑车人特征,个数和nNumOfCycling关联
+                    NET_RIDER_INFO[] stuRiderList = msg.stuNonMotor.stuRiderList;
+                    ONode riderFaceUrls = new ONode().asArray();
+                    for (int i = 0; i < stuRiderList.length; i++) {
+                        // 骑车人图片二进制数据 @todo  完成骑车人图片存储
+                        if (stuRiderList[i].bHasFaceImage == 1 && stuRiderList[i].stuFaceImage.uLength > 0) {
+                            byte[] faceImageBytes = pBuffer.getByteArray(stuRiderList[i].stuFaceImage.uOffset, stuRiderList[i].stuFaceImage.uLength);
+                            UploadedFile faceImageFile = new UploadedFile("image/jpeg", IoUtil.toStream(faceImageBytes), "rider_" + i + "_face.jpg");
+                            String faceImageUrl = devFileApiProvider.storageFileWithReturnUrlLocal(faceImageFile, new ONode().asObject().set("persistence", false));
+                            riderFaceUrls.add(faceImageUrl);
+                        }
+                    }
+                    trafficInfo.set("riderFaceUrls", riderFaceUrls);
                     log.info("交通路口事件解析结果: {}", trafficInfo);
                     break;
                 default:

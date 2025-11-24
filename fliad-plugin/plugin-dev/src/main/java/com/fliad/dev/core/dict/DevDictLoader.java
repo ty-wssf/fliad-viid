@@ -18,8 +18,10 @@ import io.nop.core.i18n.I18nMessageManager;
 import com.fliad.dev.modular.dict.entity.DevDict;
 import com.fliad.dev.modular.dict.service.DevDictService;
 import com.fliad.dev.dao.entity.dao.PluginDevDaoConstants;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 import com.mybatisflex.core.query.QueryWrapper;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Destroy;
@@ -28,7 +30,7 @@ import org.noear.solon.annotation.Inject;
 
 @Component
 public class DevDictLoader implements IDictLoader {
-    
+
     @Inject
     DevDictService devDictService;
 
@@ -57,23 +59,27 @@ public class DevDictLoader implements IDictLoader {
 
         // Extract the actual dict name by removing the prefix
         String categoryName = dictName.substring(PluginDevDaoConstants.DEV_DICT_PREFIX.length());
-        
-        QueryWrapper queryWrapper = new QueryWrapper();
-        queryWrapper.eq(DevDict::getCategory, categoryName);
-        queryWrapper.orderBy(DevDict::getSortCode, true); // Order by sortCode ascending
-        
-        List<DevDict> dictList = devDictService.list(queryWrapper);
-        
-        List<DictOptionBean> options = dictList.stream().map(dict -> {
-            DictOptionBean opt = new DictOptionBean();
-            opt.setLabel(dict.getDictLabel());
-            opt.setValue(dict.getDictValue());
-            opt.setDeprecated(false); // DevDict doesn't seem to have a deprecated flag
-            opt.setInternal(false); // DevDict doesn't seem to have an internal flag
-            return opt;
-        }).collect(Collectors.toList());
 
-        bean.setOptions(options);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq(DevDict::getDictValue, categoryName).eq(DevDict::getParentId, 0);
+
+        DevDict devDictC = devDictService.getOneAs(queryWrapper, DevDict.class);
+
+        if (devDictC != null) {
+            List<DevDict> dictList = devDictService.list(QueryWrapper.create().eq(DevDict::getParentId, devDictC.getId()));
+            List<DictOptionBean> options = dictList.stream().map(dict -> {
+                DictOptionBean opt = new DictOptionBean();
+                opt.setLabel(dict.getDictLabel());
+                opt.setValue(dict.getDictValue());
+                opt.setDeprecated(false); // DevDict doesn't seem to have a deprecated flag
+                opt.setInternal(false); // DevDict doesn't seem to have an internal flag
+                return opt;
+            }).collect(Collectors.toList());
+            bean.setOptions(options);
+        } else {
+            return null;
+        }
+
         return bean;
     }
 
@@ -81,10 +87,10 @@ public class DevDictLoader implements IDictLoader {
     public boolean existsDict(String dictName) {
         // Extract the actual dict name by removing the prefix
         String categoryName = dictName.substring(PluginDevDaoConstants.DEV_DICT_PREFIX.length());
-        
+
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.eq(DevDict::getCategory, categoryName);
-        
+
         return devDictService.exists(queryWrapper);
     }
 }
