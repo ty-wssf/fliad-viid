@@ -310,9 +310,6 @@
 
         <profile>
             <id>viid</id>
-            <activation>
-                <jdk>viid</jdk>
-            </activation>
             <dependencies>
                 <!-- 视图库功能插件 -->
                 <dependency>
@@ -324,9 +321,6 @@
 
         <profile>
             <id>report</id>
-            <activation>
-                <jdk>report</jdk>
-            </activation>
             <dependencies>
                 <!-- 报表功能插件 -->
                 <dependency>
@@ -338,9 +332,6 @@
 
         <profile>
             <id>sip</id>
-            <activation>
-                <jdk>sip</jdk>
-            </activation>
             <dependencies>
                 <!-- 信令服务器功能插件 -->
                 <dependency>
@@ -352,9 +343,6 @@
 
         <profile>
             <id>hikvision</id>
-            <activation>
-                <jdk>hikvision</jdk>
-            </activation>
             <dependencies>
                 <!-- 海康功能插件 -->
                 <dependency>
@@ -367,9 +355,6 @@
 
         <profile>
             <id>dahua</id>
-            <activation>
-                <jdk>dahua</jdk>
-            </activation>
             <dependencies>
                 <!-- 大华功能插件 -->
                 <dependency>
@@ -382,9 +367,6 @@
 
         <profile>
             <id>xlang-debugger</id>
-            <activation>
-                <jdk>xlang-debugger</jdk>
-            </activation>
             <dependencies>
                 <!-- xlang-debugger -->
                 <dependency>
