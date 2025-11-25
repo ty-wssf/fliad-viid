@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workbook xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/excel/workbook.xdef">
+
+    <model>
+
+        <beforeExpand>let ds1 = [
+            { "地区":"华东", "销售员": "张三", "产品类型": "饮料", "产品":"苹果汁","销售量": 140},
+            { "地区":"华东", "销售员": "张三", "产品类型": "饮料", "产品":"牛奶","销售量": 431},
+            { "地区":"华东", "销售员": "张三", "产品类型": "饮料", "产品":"柳橙汁","销售量": 176},
+            { "地区":"华东", "销售员": "张三", "产品类型": "点心", "产品":"巧克力","销售量": 333},
+            { "地区":"华东", "销售员": "张三", "产品类型": "点心", "产品":"牛肉干","销售量": 789},
+            { "地区":"华东", "销售员": "李四", "产品类型": "饮料", "产品":"苹果汁","销售量": 290},
+            { "地区":"华东", "销售员": "李四", "产品类型": "饮料", "产品":"牛奶","销售量": 635},
+            { "地区":"华东", "销售员": "李四", "产品类型": "饮料", "产品":"柳橙汁","销售量": 500},
+            { "地区":"华东", "销售员": "李四", "产品类型": "点心", "产品":"巧克力","销售量": 420},
+            { "地区":"华东", "销售员": "李四", "产品类型": "点心", "产品":"牛肉干","销售量": 156},
+
+            { "地区":"华北", "销售员": "李四", "产品类型": "饮料", "产品":"苹果汁","销售量": 250},
+            { "地区":"华北", "销售员": "李四", "产品类型": "饮料", "产品":"牛奶","销售量": 234},
+            { "地区":"华北", "销售员": "李四", "产品类型": "饮料", "产品":"柳橙汁","销售量": 300},
+            { "地区":"华北", "销售员": "李四", "产品类型": "点心", "产品":"巧克力","销售量": 352},
+            { "地区":"华北", "销售员": "李四", "产品类型": "点心", "产品":"牛肉干","销售量": 218},
+
+            ];
+            assign("ds1",ds1)</beforeExpand>
+
+    </model>
+
+    <sheets>
+
+        <sheet defaultColumnWidth="55.25" defaultRowHeight="14.0" name="sheet1">
+
+            <model/>
+
+            <pageMargins bottom="19.440000772476196" footer="0.0" header="0.0" left="54.0" right="54.0" top="19.440000772476196"/>
+
+            <pageSetup orientationHorizontal="false" paperSize="9"/>
+
+            <table>
+
+                <cols>
+
+                    <col width="63.375"/>
+
+                    <col width="63.375"/>
+
+                    <col width="63.375"/>
+
+                    <col width="53.625"/>
+
+                    <col width="54.69140625"/>
+
+                    <col width="54.69140625"/>
+
+                </cols>
+
+                <rows>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell styleId="1">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model/>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell styleId="2">
+
+                                <model/>
+
+                                <value>地区</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model/>
+
+                                <value>销售员</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model/>
+
+                                <value>产品</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model ds="ds1" expandType="c" field="产品"/>
+
+                                <value>苹果汁</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model/>
+
+                                <value>小计</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model/>
+
+                                <value>合计</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model ds="ds1" expandType="r" field="地区"/>
+
+                                <value>*=^ds1!地区</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model ds="ds1" expandType="r" field="销售员" rowParent="A3"/>
+
+                                <value>*=^ds1!销售员</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model ds="ds1" expandType="r" field="产品类型" rowParent="B3"/>
+
+                                <value>*=^ds1!产品类型</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model colParent="D2" field="销售量" rowParent="C3"/>
+
+                                <value>*=销售量</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="C3">
+
+                                    <valueExpr>SUM(D3)</valueExpr>
+
+                                </model>
+
+                                <value>747</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <formula>SUM(D3)</formula>
+
+                                <model exportFormula="true" rowParent="B3">
+
+                                    <valueExpr>SUM(D3)</valueExpr>
+
+                                </model>
+
+                                <value>0</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell mergeAcross="2" styleId="6">
+
+                                <model/>
+
+                                <value>合计</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell styleId="3">
+
+                                <model colParent="D2">
+
+                                    <valueExpr>SUM(D3)</valueExpr>
+
+                                </model>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model>
+
+                                    <valueExpr>tpl`${SUM(E3)}`</valueExpr>
+
+                                </model>
+
+                                <value>${SUM(E3)}</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model>
+
+                                    <valueExpr>SUM(F3)</valueExpr>
+
+                                </model>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                </rows>
+
+            </table>
+
+        </sheet>
+
+    </sheets>
+
+    <styles>
+        <style fillPattern="none" id="0" verticalAlign="center">
+            <bottomBorder type="none" weight="1"/>
+            <diagonalLeftBorder type="none" weight="1"/>
+            <font charSet="1" fontColor="FF000000" fontFamily="swiss" fontName="等线" fontSize="11.0"/>
+            <leftBorder type="none" weight="1"/>
+            <numberFormat>General</numberFormat>
+            <rightBorder type="none" weight="1"/>
+            <topBorder type="none" weight="1"/>
+        </style>
+
+        <style fillPattern="none" id="1" verticalAlign="center" wrapText="true">
+            <bottomBorder type="none" weight="1"/>
+            <diagonalLeftBorder type="none" weight="1"/>
+            <font charSet="134" fontName="SimSun" fontSize="9.0"/>
+            <leftBorder type="none" weight="1"/>
+            <numberFormat>General</numberFormat>
+            <rightBorder type="none" weight="1"/>
+            <topBorder type="none" weight="1"/>
+        </style>
+
+        <!-- 表头样式 -->
+        <style fillBgColor="FFECEFF4" fillFgColor="FFECEFF4" fillPattern="solid" horizontalAlign="center" id="2" verticalAlign="center" wrapText="true">
+            <bottomBorder color="FFADD6FF" type="thin" weight="1"/>
+            <diagonalLeftBorder type="none" weight="1"/>
+            <font charSet="134" fontColor="FF000000" fontName="SimSun" fontSize="9.0"/>
+            <leftBorder color="FFADD6FF" type="thin" weight="1"/>
+            <numberFormat>General</numberFormat>
+            <rightBorder color="FFADD6FF" type="thin" weight="1"/>
+            <topBorder color="FFADD6FF" type="thin" weight="1"/>
+        </style>
+
+        <!-- 数据行样式: 与表头保持相同的边框和字体,但无背景色 -->
+        <style fillPattern="none" horizontalAlign="center" id="3" verticalAlign="center" wrapText="true">
+            <bottomBorder color="FFADD6FF" type="thin" weight="1"/>
+            <diagonalLeftBorder type="none" weight="1"/>
+            <font charSet="134" fontColor="FF000000" fontName="SimSun" fontSize="9.0"/>
+            <leftBorder color="FFADD6FF" type="thin" weight="1"/>
+            <numberFormat>General</numberFormat>
+            <rightBorder color="FFADD6FF" type="thin" weight="1"/>
+            <topBorder color="FFADD6FF" type="thin" weight="1"/>
+        </style>
+
+        <style fillBgColor="FF000000" fillFgColor="BDD6EE" fillPattern="solid" id="4" verticalAlign="top">
+            <numberFormat>General</numberFormat>
+        </style>
+
+        <style fillPattern="none" id="5" verticalAlign="top" wrapText="true">
+            <numberFormat>General</numberFormat>
+        </style>
+
+        <!-- 合计行样式: 与表头保持相同的边框和字体,但无背景色 -->
+        <style fillPattern="none" horizontalAlign="center" id="6" verticalAlign="center" wrapText="true">
+            <bottomBorder color="FFADD6FF" type="thin" weight="1"/>
+            <diagonalLeftBorder type="none" weight="1"/>
+            <font charSet="134" fontColor="FF000000" fontName="SimSun" fontSize="9.0"/>
+            <leftBorder color="FFADD6FF" type="thin" weight="1"/>
+            <numberFormat>General</numberFormat>
+            <rightBorder color="FFADD6FF" type="thin" weight="1"/>
+            <topBorder color="FFADD6FF" type="thin" weight="1"/>
+        </style>
+
+        <style fillPattern="none" horizontalAlign="left" id="7" verticalAlign="top" wrapText="true">
+            <numberFormat>General</numberFormat>
+        </style>
+    </styles>
+
+</workbook>

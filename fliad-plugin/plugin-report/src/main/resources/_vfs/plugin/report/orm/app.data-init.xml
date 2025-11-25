@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<data-init x:schema="/nop/schema/data-init.xdef"
+           xmlns:x="/nop/schema/xdsl.xdef">
+    <tables>
+        <!-- 报表管理模块 -->
+        <table tableName="SYS_RESOURCE">
+            <data>
+                <record sid="317770316242853889" ID="317770316242853889" PARENT_ID="0" TITLE="报表管理"
+                        NAME="" CODE="" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="CATALOG"
+                        PATH="/7365927662977552385" COMPONENT="" ICON="pie-chart-outlined" VISIBLE="TRUE"
+                        SORT_CODE="112" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-08-26 10:06:47"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <!-- 报表演示主菜单 -->
+                <record sid="1990000000000000001" ID="1990000000000000001" PARENT_ID="317770316242853889" TITLE="报表演示"
+                        NAME="reportdemo" CODE="REPORT_DEMO" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU"
+                        PATH="/report/demo" COMPONENT="report/demo/index" ICON="pie-chart-outlined" VISIBLE="TRUE"
+                        SORT_CODE="100" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <!-- 报表演示操作按钮 -->
+                <record sid="1990000000000000002" ID="1990000000000000002" PARENT_ID="1990000000000000001" TITLE="新增报表"
+                        NAME="" CODE="reportDemoAdd" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="1" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <record sid="1990000000000000003" ID="1990000000000000003" PARENT_ID="1990000000000000001" TITLE="编辑报表"
+                        NAME="" CODE="reportDemoEdit" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="2" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <record sid="1990000000000000004" ID="1990000000000000004" PARENT_ID="1990000000000000001" TITLE="删除报表"
+                        NAME="" CODE="reportDemoDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="3" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <record sid="1990000000000000005" ID="1990000000000000005" PARENT_ID="1990000000000000001" TITLE="批量删除报表"
+                        NAME="" CODE="reportDemoBatchDelete" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="4" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+                <!-- 报表模板相关按钮 -->
+                <record sid="1990000000000000006" ID="1990000000000000006" PARENT_ID="1990000000000000001" TITLE="安装报表模板"
+                        NAME="" CODE="reportDemoInstallTemplate" CATEGORY="BUTTON" MODULE="" MENU_TYPE=""
+                        PATH="" COMPONENT="" ICON="" VISIBLE=""
+                        SORT_CODE="5" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-24 20:05:00"
+                        CREATE_USER="1543837863788879871" UPDATE_TIME="" UPDATE_USER=""/>
+            </data>
+        </table>
+    </tables>
+</data-init>

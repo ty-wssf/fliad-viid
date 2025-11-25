@@ -14,7 +14,6 @@ import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.eval.IEvalScope;
 import io.nop.core.resource.IResource;
 import io.nop.core.resource.ResourceConstants;
-import io.nop.core.resource.ResourceHelper;
 import io.nop.core.resource.VirtualFileSystem;
 import io.nop.core.resource.tpl.ITemplateOutput;
 import io.nop.core.resource.tpl.ITextTemplateOutput;
@@ -78,6 +77,12 @@ public class ReportController {
                 bean.setLabel(rptName);
                 bean.setValue(StringHelper.removeHead(child.getPath(), REPORT_DEMO_PATH));
                 ret.add(bean);
+            } else if (!child.getName().startsWith("~") && child.getName().endsWith(".xpt.xml")) {
+                TreeResultBean bean = new TreeResultBean();
+                String rptName = StringHelper.removeTail(child.getName(), ".xpt.xml");
+                bean.setLabel(rptName);
+                bean.setValue(StringHelper.removeHead(child.getPath(), REPORT_DEMO_PATH));
+                ret.add(bean);
             }
         }
         return ret;
@@ -108,6 +113,9 @@ public class ReportController {
         String path = REPORT_DEMO_PATH + reportName;
 
         ITextTemplateOutput output = reportEngine.getHtmlRenderer(path);
+
+        // String xml = XptModelLoader.instance().loadModelNodeFromResource(VirtualFileSystem.instance().getResource(path)).xml();
+
         IEvalScope scope = XLang.newEvalScope();
         String text = output.generateText(scope);
 
