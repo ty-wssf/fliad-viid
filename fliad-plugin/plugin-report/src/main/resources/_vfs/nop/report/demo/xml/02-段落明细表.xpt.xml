@@ -1,0 +1,1004 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<workbook xmlns:x="/nop/schema/xdsl.xdef" x:schema="/nop/schema/excel/workbook.xdef">
+
+    <model>
+
+        <beforeExpand>let orders = [
+            {
+            "订单ID": "10277",
+            "客户名称": "测试客户",
+            "雇员": "张三",
+            "订购日期": "2022-01-02",
+            "发货日期": "2022-03-01",
+            "到货日期": "2022-03-03",
+            "货主姓名": "货主A",
+            "货主地址": "北京西直门",
+            "邮编": "100086",
+            "货主国家": "中国",
+            "货主地区": "北京",
+            "货主城市": "上海",
+            "运货商": "菜鸟",
+            "运货费": 32.5
+            },
+            {
+            "订单ID": "10278",
+            "客户名称": "测试客户2",
+            "雇员": "李四",
+            "订购日期": "2022-02-02",
+            "发货日期": "2022-04-01",
+            "到货日期": "2022-04-03",
+            "货主姓名": "货主B",
+            "货主地址": "上海下南路",
+            "邮编": "200086",
+            "货主国家": "中国",
+            "货主地区": "华东",
+            "货主城市": "上海",
+            "运货商": "顺丰",
+            "运货费": 232.5
+            }
+            ]
+            assign("orders",orders)</beforeExpand>
+
+    </model>
+
+    <sheets>
+
+        <sheet defaultColumnWidth="55.25" defaultRowHeight="14.0" name="sheet1">
+
+            <model/>
+
+            <pageMargins bottom="5.616000115871429" footer="0.0" header="0.0" left="14.11199963092804" right="11.30400037765503" top="11.30400037765503"/>
+
+            <pageSetup orientationHorizontal="false" paperSize="9"/>
+
+            <table>
+
+                <cols>
+
+                    <col width="111.033203125"/>
+
+                    <col width="105.06640625"/>
+
+                    <col width="110.5"/>
+
+                    <col width="95.31640625"/>
+
+                    <col width="111.033203125"/>
+
+                    <col width="95.31640625"/>
+
+                </cols>
+
+                <rows>
+
+                    <row height="38.4">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="16">
+
+                                <model/>
+
+                                <value>  段落明细表</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="7.5">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="17">
+
+                                <model expandType="r">
+
+                                    <expandExpr>orders</expandExpr>
+
+                                    <valueExpr>null</valueExpr>
+
+                                </model>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="24.9">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="18">
+
+                                <model rowParent="A2"/>
+
+                                <value>    订单基本信息</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="16.5">
+
+                        <cells>
+
+                            <cell styleId="1">
+
+                                <model rowParent="A2"/>
+
+                                <value>订单  ID</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model field="订单ID" rowParent="A2"/>
+
+                                <value>*=订单ID</value>
+
+                            </cell>
+
+                            <cell styleId="1">
+
+                                <model rowParent="A2"/>
+
+                                <value>客户名称</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model field="客户名称" rowParent="A2"/>
+
+                                <value>*=客户名称</value>
+
+                            </cell>
+
+                            <cell styleId="1">
+
+                                <model rowParent="A2"/>
+
+                                <value>雇员</value>
+
+                            </cell>
+
+                            <cell styleId="2">
+
+                                <model field="雇员" rowParent="A2"/>
+
+                                <value>*=雇员</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="15.75">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>订购日期</value>
+
+                            </cell>
+
+                            <cell styleId="4">
+
+                                <model field="订购日期" rowParent="A2"/>
+
+                                <value>*=订购日期</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>发货日期</value>
+
+                            </cell>
+
+                            <cell styleId="4">
+
+                                <model field="发货日期" rowParent="A2"/>
+
+                                <value>*=发货日期</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>到货日期</value>
+
+                            </cell>
+
+                            <cell styleId="4">
+
+                                <model field="到货日期" rowParent="A2"/>
+
+                                <value>*=到货日期</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="5.25">
+
+                        <cells>
+
+                            <cell styleId="5">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="6">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="5">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="6">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="5">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="6">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="16.5">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主信息</value>
+
+                            </cell>
+
+                            <cell mergeAcross="4" styleId="19">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="15.75">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主名称</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="货主姓名" rowParent="A2"/>
+
+                                <value>*=货主姓名</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主地址</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="货主地址" rowParent="A2"/>
+
+                                <value>*=货主地址</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>邮编</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="邮编" rowParent="A2"/>
+
+                                <value>*=邮编</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="15.0">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主国家</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="货主国家" rowParent="A2"/>
+
+                                <value>*=货主国家</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主地区</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="货主地区" rowParent="A2"/>
+
+                                <value>*=货主地区</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>货主城市</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="货主城市" rowParent="A2"/>
+
+                                <value>*=货主城市</value>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="4.5">
+
+                        <cells>
+
+                            <cell styleId="5">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="6">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="5">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="6">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="8">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell styleId="8">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="17.25">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>运货信息</value>
+
+                            </cell>
+
+                            <cell mergeAcross="4" styleId="19">
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="18.75">
+
+                        <cells>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>运 货 商</value>
+
+                            </cell>
+
+                            <cell styleId="7">
+
+                                <model field="运货商" rowParent="A2"/>
+
+                                <value>*=运货商</value>
+
+                            </cell>
+
+                            <cell styleId="3">
+
+                                <model rowParent="A2"/>
+
+                                <value>运 货 费</value>
+
+                            </cell>
+
+                            <cell mergeAcross="2" styleId="15">
+
+                                <model field="运货费" rowParent="A2"/>
+
+                                <value>*=运货费</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                            <cell>
+
+                                <model rowParent="A2"/>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="12">
+
+                                <model/>
+
+                                <value>段落明细表说明：</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="13">
+
+                                <model/>
+
+                                <value>    段落明细表为普通的明细格式报表。每条数据占据较规则的一片区域，一个段落。形成多个单据主体。</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell mergeAcross="5" styleId="14">
+
+                                <model/>
+
+                                <value>    此类报表的设计方法非常简单，仅需在设计时自定义数据的跟随扩展父格即可。</value>
+
+                            </cell>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                            <cell/>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                    <row height="14.25">
+
+                        <cells>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                            <cell styleId="9">
+
+                                <model/>
+
+                            </cell>
+
+                        </cells>
+
+                        <model/>
+
+                    </row>
+
+                </rows>
+
+            </table>
+
+        </sheet>
+
+    </sheets>
+
+    <styles>
+
+        <style fillPattern="none" id="0" verticalAlign="center">
+
+            <bottomBorder type="none" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <font charSet="1" fontColor="FF000000" fontFamily="swiss" fontName="等线" fontSize="11.0"/>
+
+            <leftBorder type="none" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder type="none" weight="1"/>
+
+            <topBorder type="none" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFDCF2F0" fillFgColor="FFDCF2F0" fillPattern="solid" horizontalAlign="center" id="1" verticalAlign="center" wrapText="true">
+
+            <bottomBorder color="FFB8E3E4" type="thin" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <font charSet="134" fontColor="FF333333" fontFamily="swiss" fontName="Microsoft YaHei UI" fontSize="9.0"/>
+
+            <leftBorder color="FFB8E3E4" type="thin" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder color="FFB8E3E4" type="thin" weight="1"/>
+
+            <topBorder color="FFB8E3E4" type="thin" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="2" verticalAlign="center" wrapText="true">
+
+            <font charSet="134" fontColor="FF666666" fontFamily="swiss" fontName="Microsoft YaHei UI" fontSize="9.0"/>
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFDCF2F0" fillFgColor="FFDCF2F0" fillPattern="solid" horizontalAlign="center" id="3" verticalAlign="center" wrapText="true">
+
+            <bottomBorder color="FFA4DAED" type="thin" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <leftBorder color="FFA4DAED" type="thin" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder color="FFA4DAED" type="thin" weight="1"/>
+
+            <topBorder color="FFA4DAED" type="thin" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="4" verticalAlign="center" wrapText="true">
+
+            <numberFormat>yyyy\-mm\-dd</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="5" verticalAlign="center" wrapText="true">
+
+            <bottomBorder type="none" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <leftBorder type="none" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder type="none" weight="1"/>
+
+            <topBorder type="none" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="6" verticalAlign="center" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="7" verticalAlign="center" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="8" verticalAlign="center" wrapText="true">
+
+            <font charSet="134" fontColor="FF000000" fontFamily="swiss" fontName="Microsoft YaHei UI" fontSize="9.0"/>
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillPattern="none" id="9" verticalAlign="center" wrapText="true">
+
+            <font charSet="134" fontColor="FF000000" fontFamily="swiss" fontName="微软雅黑" fontSize="9.0"/>
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FF000000" fillFgColor="BDD6EE" fillPattern="solid" id="10" verticalAlign="top">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillPattern="none" id="11" verticalAlign="top" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFFAFAFA" fillFgColor="FFFAFAFA" fillPattern="solid" horizontalAlign="left" id="12" verticalAlign="center" wrapText="true">
+
+            <bottomBorder type="none" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <leftBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <topBorder color="FF96CCD9" type="thin" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFAFAFA" fillFgColor="FFFAFAFA" fillPattern="solid" horizontalAlign="left" id="13" verticalAlign="center" wrapText="true">
+
+            <bottomBorder type="none" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <leftBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <topBorder type="none" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFAFAFA" fillFgColor="FFFAFAFA" fillPattern="solid" horizontalAlign="left" id="14" verticalAlign="center" wrapText="true">
+
+            <bottomBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <leftBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder color="FF96CCD9" type="thin" weight="1"/>
+
+            <topBorder type="none" weight="1"/>
+
+        </style>
+
+        <style fillBgColor="FFFFFFFF" fillFgColor="FFFFFFFF" fillPattern="solid" horizontalAlign="left" id="15" verticalAlign="center" wrapText="true">
+
+            <numberFormat>#0.00</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFEBF7FC" fillFgColor="FFEBF7FC" fillPattern="solid" horizontalAlign="left" id="16" verticalAlign="center" wrapText="true">
+
+            <bottomBorder color="FF95D3F4" type="thick" weight="3"/>
+
+            <diagonalLeftBorder type="none" weight="1"/>
+
+            <font charSet="134" fontColor="FF2A87C6" fontFamily="swiss" fontName="Microsoft YaHei UI" fontSize="17.0"/>
+
+            <leftBorder type="none" weight="1"/>
+
+            <numberFormat>General</numberFormat>
+
+            <rightBorder type="none" weight="1"/>
+
+            <topBorder type="none" weight="1"/>
+
+        </style>
+
+        <style fillPattern="none" id="17" verticalAlign="center" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFB8E3E4" fillFgColor="FFB8E3E4" fillPattern="solid" horizontalAlign="left" id="18" verticalAlign="center" wrapText="true">
+
+            <font charSet="134" fontColor="FF000000" fontFamily="swiss" fontName="Microsoft YaHei UI" fontSize="11.0"/>
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillBgColor="FFDCF2F0" fillFgColor="FFDCF2F0" fillPattern="solid" horizontalAlign="center" id="19" verticalAlign="center" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+        <style fillPattern="none" horizontalAlign="left" id="20" verticalAlign="top" wrapText="true">
+
+            <numberFormat>General</numberFormat>
+
+        </style>
+
+    </styles>
+
+</workbook>
