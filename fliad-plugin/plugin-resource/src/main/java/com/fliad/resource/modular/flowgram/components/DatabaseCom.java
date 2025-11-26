@@ -201,7 +201,11 @@ public class DatabaseCom implements TaskComponent {
             // 设置参数值
             for (int i = 0; i < fieldValues.size(); i++) {
                 // @todo: 根据类型转换
-                stmt.setString(i + 1, fieldValues.get(i).toString());
+                if (fieldValues.get(i) != null) {
+                    stmt.setString(i + 1, fieldValues.get(i).toString());
+                } else {
+                    stmt.setNull(i + 1, Types.NULL);
+                }
             }
 
             log.debug("执行插入语句: {}", sql);

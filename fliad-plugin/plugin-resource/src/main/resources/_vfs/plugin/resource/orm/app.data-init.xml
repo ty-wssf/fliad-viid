@@ -32,6 +32,17 @@
         <!-- 工作流模版 -->
         <table tableName="RESOURCE_WORKFLOW">
             <data>
+                <record sid="351122438514356224" ID="351122438514356224" IS_TEMPLATE="true"
+                        TITLE="数据写入rabbitmq示例"
+                        SUBSCRIBE_DETAIL='["9999"]'
+                        STATUS="DISABLED"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":89.5}},"data":{"title":"Start","outputs":{"type":"object","properties":{"inputs":{"type":"string","default":"Hello Flow."}},"required":[]}}},{"id":"end_0","type":"end","meta":{"position":{"x":1560,"y":89.5}},"data":{"title":"End","inputsValues":{},"inputs":{"type":"object","properties":{}}}},{"id":"rabbitmq_-78f4","type":"rabbitmq","meta":{"position":{"x":640,"y":0}},"data":{"title":"Rabbitmq_1","inputsValues":{"ip":{"type":"constant","content":"xxx","schema":{"type":"string"}},"port":{"type":"constant","content":5672},"username":{"type":"constant","content":"ahbcht"},"password":{"type":"constant","content":"xxx","schema":{"type":"string"}},"exchange":{"type":"constant","content":"BCHT_ITS_DATA"},"routingKey":{"type":"constant","content":"test"},"msg":{"type":"ref","content":["start_0","inputs"]}},"inputs":{"type":"object","required":["ip","port","username","password","exchange","routingKey"],"properties":{"ip":{"type":"string"},"port":{"type":"number"},"username":{"type":"string"},"password":{"type":"string"},"exchange":{"type":"string"},"routingKey":{"type":"string"},"msg":{"type":"string"}}},"outputs":{}}},{"id":"code_Hmuhe","type":"code","meta":{"position":{"x":1100,"y":0}},"data":{"title":"Code_1","inputsValues":{"inputs":{"type":"ref","content":["start_0","inputs"],"extra":{"index":0}}},"script":{"language":"xlang","content":"<c:script>  \n  <!-- 日志打印 -->\n  logInfo(\"send xxx msg to rabbitmq success: {}\", inputJson);\n</c:script>"},"outputs":{"type":"object","properties":{},"required":[]},"inputs":{"type":"object","properties":{"inputs":{"type":"string"}}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"rabbitmq_-78f4"},{"sourceNodeID":"code_Hmuhe","targetNodeID":"end_0"},{"sourceNodeID":"rabbitmq_-78f4","targetNodeID":"code_Hmuhe"}]}
+                        ]]>
+                    </CONTENT>
+                </record>
                 <record sid="349671506841526272" ID="349671506841526272" IS_TEMPLATE="true"
                         TITLE="XLang脚本使用示例"
                         SUBSCRIBE_DETAIL='["9999"]'

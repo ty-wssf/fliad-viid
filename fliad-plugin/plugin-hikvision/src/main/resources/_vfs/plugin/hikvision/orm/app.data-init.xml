@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-init x:schema="/nop/schema/data-init.xdef">
+    <tables>
+        <!-- 海康布防启用配置 -->
+        <table tableName="DEV_CONFIG">
+            <data>
+                <record sid="1980000000000000011" ID="1980000000000000011" CONFIG_KEY="hikvision_defense" CONFIG_VALUE="0" CATEGORY="BIZ_DEFINE" REMARK="海康布防启用配置 0: 不启用 1： 监听  2： 布防" SORT_CODE="100" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-10-11 10:00:00" CREATE_USER="1543837863788879871"/>
+            </data>
+        </table>
+
+        <!-- 海康布防模块资源 -->
+        <table tableName="SYS_RESOURCE">
+            <data>
+                <!-- 海康布防模块 -->
+                <record sid="1980000000000000022" ID="1980000000000000022" PARENT_ID="0" TITLE="海康布防" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="CATALOG" PATH="/7365927918486163457" ICON="appstore-outlined" VISIBLE="TRUE" SORT_CODE="122" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-10-29 10:00:00" CREATE_USER="1543837863788879871"/>
+                <!-- 海康设备主菜单 -->
+                <record sid="1980000000000000026" ID="1980000000000000026" PARENT_ID="1980000000000000022" TITLE="海康设备" NAME="hikvision" CODE="HIKVISION_DEFENSE_MANAGE" CATEGORY="MENU" MODULE="1548901111999773976" MENU_TYPE="MENU" PATH="/hikvision" COMPONENT="hikvision/defense/index" ICON="appstore-outlined" VISIBLE="TRUE" SORT_CODE="104" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-27 10:00:00" CREATE_USER="1543837863788879871"/>
+                <!-- 海康布防操作按钮 -->
+                <record sid="1980000000000000027" ID="1980000000000000027" PARENT_ID="1980000000000000026" TITLE="新增海康设备" CODE="hikvisionDefenseAdd" CATEGORY="BUTTON" SORT_CODE="1" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-27 10:00:00" CREATE_USER="1543837863788879871"/>
+                <record sid="1980000000000000028" ID="1980000000000000028" PARENT_ID="1980000000000000026" TITLE="编辑海康设备" CODE="hikvisionDefenseEdit" CATEGORY="BUTTON" SORT_CODE="2" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-27 10:00:00" CREATE_USER="1543837863788879871"/>
+                <record sid="1980000000000000029" ID="1980000000000000029" PARENT_ID="1980000000000000026" TITLE="删除海康设备" CODE="hikvisionDefenseDelete" CATEGORY="BUTTON" SORT_CODE="3" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-27 10:00:00" CREATE_USER="1543837863788879871"/>
+                <record sid="1980000000000000030" ID="1980000000000000030" PARENT_ID="1980000000000000026" TITLE="批量删除海康设备" CODE="hikvisionDefenseBatchDelete" CATEGORY="BUTTON" SORT_CODE="4" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-09-27 10:00:00" CREATE_USER="1543837863788879871"/>
+            </data>
+        </table>
+
+        <!-- 字典项配置 字典项范围需要根据业务划分 海康模块 200-299 -->
+        <table tableName="DEV_DICT">
+            <data>
+                <record sid="327614547551016963" ID="327614547551016963" PARENT_ID="317404597701394432" DICT_LABEL="车道统计数据（海康）" DICT_VALUE="200" CATEGORY="BIZ" SORT_CODE="200" DELETE_FLAG="NOT_DELETE" CREATE_TIME="2025-11-26 10:53:00" CREATE_USER="1543837863788879871"/>
+            </data>
+        </table>
+
+        <table tableName="RESOURCE_WORKFLOW">
+            <data>
+                <record sid="351125624105013248" ID="351125624105013248" IS_TEMPLATE="true"
+                        TITLE="（海康）车道统计数据流程"
+                        SUBSCRIBE_DETAIL='["9999"]'
+                        STATUS="DISABLED"
+                        REMARK="发送到消息队列，存储到bc接入网关数据库"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":104.5}},"data":{"title":"Start","outputs":{"type":"object","properties":{"inputs":{"type":"string","default":"Hello Flow."}},"required":[]}}},{"id":"end_0","type":"end","meta":{"position":{"x":2020,"y":104.5}},"data":{"title":"End","inputsValues":{},"inputs":{"type":"object","properties":{}}}},{"id":"rabbitmq_-78f4","type":"rabbitmq","meta":{"position":{"x":640,"y":15}},"data":{"title":"Rabbitmq_1","inputsValues":{"ip":{"type":"constant","content":"xxx","schema":{"type":"string"}},"port":{"type":"constant","content":5672},"username":{"type":"constant","content":"xxx","schema":{"type":"string"}},"password":{"type":"constant","content":"xxx","schema":{"type":"string"}},"exchange":{"type":"constant","content":"BCHT_ITS_DATA"},"routingKey":{"type":"constant","content":"test"},"msg":{"type":"ref","content":["start_0","inputs"]}},"inputs":{"type":"object","required":["ip","port","username","password","exchange","routingKey"],"properties":{"ip":{"type":"string"},"port":{"type":"number"},"username":{"type":"string"},"password":{"type":"string"},"exchange":{"type":"string"},"routingKey":{"type":"string"},"msg":{"type":"string"}}},"outputs":{}}},{"id":"code_Hmuhe","type":"code","meta":{"position":{"x":1100,"y":15}},"data":{"title":"Code_1","inputsValues":{"inputs":{"type":"ref","content":["start_0","inputs"],"extra":{"index":0}}},"script":{"language":"xlang","content":"<c:script>  \n  <!-- 日志打印 -->\n  logInfo(\"send xxx msg to rabbitmq success: {}\", inputs);\n  let inputJson = $JSON.parse(inputs);\n  return inputJson;\n</c:script>"},"outputs":{"type":"object","properties":{"lsh":{"type":"string","extra":{"index":1}},"sbbh":{"type":"string","extra":{"index":2}},"cdh":{"type":"string","extra":{"index":3}},"tjsd":{"type":"string","extra":{"index":4}},"tjzqs":{"type":"string","extra":{"index":5}},"txcls":{"type":"string","extra":{"index":6}},"dcs":{"type":"string","extra":{"index":7}},"xcs":{"type":"string","extra":{"index":8}},"zxcs":{"type":"string","extra":{"index":9}},"mtcsl":{"type":"string","extra":{"index":10}},"cccsl":{"type":"string","extra":{"index":11}},"pjsd":{"type":"string","extra":{"index":12}},"pjcc":{"type":"string","extra":{"index":13}},"sjzyl":{"type":"string","extra":{"index":14}},"kjzyl":{"type":"string","extra":{"index":15}},"pjctsj":{"type":"string","extra":{"index":16}},"pjctjj":{"type":"string","extra":{"index":17}},"clmd":{"type":"string","extra":{"index":18}},"cscl":{"type":"string","extra":{"index":19}},"dscl":{"type":"string","extra":{"index":20}},"pjpdcd":{"type":"string","extra":{"index":21}},"jrsj":{"type":"string","extra":{"index":22}},"fssj":{"type":"string","extra":{"index":23}}},"required":[]},"inputs":{"type":"object","properties":{"inputs":{"type":"string"}}}}},{"id":"database_8hLF2","type":"database","meta":{"position":{"x":1560,"y":0}},"data":{"title":"数据库_2","connection":{"type":"mysql","port":3306,"host":{"type":"constant","content":"xxx","schema":{"type":"string"}},"database":{"type":"constant","content":"sjhj_jrwgfz","schema":{"type":"string"}},"username":{"type":"constant","content":"bcht","schema":{"type":"string"}},"password":{"type":"constant","content":"xxx","schema":{"type":"string"}}},"query":{"queryType":"params","table":{"type":"constant","content":"ds_trafficflowinfo","schema":{"type":"string"}}},"fields":{"lsh":{"type":"ref","content":["code_Hmuhe","lsh"],"extra":{"index":0}},"sbbh":{"type":"ref","content":["code_Hmuhe","sbbh"],"extra":{"index":1}},"cdh":{"type":"ref","content":["code_Hmuhe","cdh"],"extra":{"index":2}},"tjsj":{"type":"ref","content":["code_Hmuhe","tjsd"],"extra":{"index":3}},"tjzqs":{"type":"ref","content":["code_Hmuhe","tjzqs"],"extra":{"index":4}},"txcls":{"type":"ref","content":["code_Hmuhe","txcls"],"extra":{"index":5}},"dcs":{"type":"ref","content":["code_Hmuhe","dcs"],"extra":{"index":6}},"xcs":{"type":"ref","content":["code_Hmuhe","xcs"],"extra":{"index":7}},"zxcs":{"type":"ref","content":["code_Hmuhe","zxcs"],"extra":{"index":8}},"mtcsl":{"type":"ref","content":["code_Hmuhe","mtcsl"],"extra":{"index":9}},"cccsl":{"type":"ref","content":["code_Hmuhe","cccsl"],"extra":{"index":10}},"pjsd":{"type":"ref","content":["code_Hmuhe","pjsd"],"extra":{"index":11}},"pjcc":{"type":"ref","content":["code_Hmuhe","pjcc"],"extra":{"index":12}},"sjzyl":{"type":"ref","content":["code_Hmuhe","sjzyl"],"extra":{"index":13}},"kjzyl":{"type":"ref","content":["code_Hmuhe","kjzyl"],"extra":{"index":14}},"pjctsj":{"type":"ref","content":["code_Hmuhe","pjctsj"],"extra":{"index":15}},"pjctjj":{"type":"ref","content":["code_Hmuhe","pjctjj"],"extra":{"index":16}},"clmd":{"type":"ref","content":["code_Hmuhe","clmd"],"extra":{"index":17}},"cscl":{"type":"ref","content":["code_Hmuhe","cscl"],"extra":{"index":18}},"dscl":{"type":"ref","content":["code_Hmuhe","dscl"],"extra":{"index":19}},"pjpdcd":{"type":"ref","content":["code_Hmuhe","pjpdcd"],"extra":{"index":20}},"jrsj":{"type":"ref","content":["code_Hmuhe","jrsj"],"extra":{"index":21}},"fssj":{"type":"ref","content":["code_Hmuhe","fssj"],"extra":{"index":22}}},"outputs":{"type":"object","properties":{"rowCount":{"type":"integer","description":"影响的行数"},"success":{"type":"boolean","description":"写入是否成功"}}},"params":{"type":"object","properties":{"lsh":{"type":"string"},"sbbh":{"type":"string"},"cdh":{"type":"string"},"tjsj":{"type":"string"},"tjzqs":{"type":"string"},"txcls":{"type":"string"},"dcs":{"type":"string"},"xcs":{"type":"string"},"zxcs":{"type":"string"},"mtcsl":{"type":"string"},"cccsl":{"type":"string"},"pjsd":{"type":"string"},"pjcc":{"type":"string"},"sjzyl":{"type":"string"},"kjzyl":{"type":"string"},"pjctsj":{"type":"string"},"pjctjj":{"type":"string"},"clmd":{"type":"string"},"cscl":{"type":"string"},"dscl":{"type":"string"},"pjpdcd":{"type":"string"},"jrsj":{"type":"string"},"fssj":{"type":"string"}}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"rabbitmq_-78f4"},{"sourceNodeID":"database_8hLF2","targetNodeID":"end_0"},{"sourceNodeID":"rabbitmq_-78f4","targetNodeID":"code_Hmuhe"},{"sourceNodeID":"code_Hmuhe","targetNodeID":"database_8hLF2"}]}
+                        ]]>
+                    </CONTENT>
+                </record>
+            </data>
+        </table>
+    </tables>
+</data-init>
