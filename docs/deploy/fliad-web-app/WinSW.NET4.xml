@@ -1,0 +1,14 @@
+<configuration>
+	<!--安装成Windows服务后的服务名-->
+    <id>fliad-web-app</id>
+    <!--显示的服务名称-->
+    <name>fliad-web-app</name>
+    <!--对服务的描述-->
+    <description>fliad-web-app</description>
+    <!--这里写java的路径，如何配置了环境变量直接写"java"就行-->
+    <executable>java</executable>
+    <!--Xmx256m 代表堆内存最大值为256MB -jar后面的是项目名-->
+    <arguments>-jar fliad-web-app-0.1.0.jar</arguments>
+    <!--日志模式-->
+    <logmode>none</logmode>
+</configuration>
