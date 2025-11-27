@@ -14,6 +14,13 @@
     <packaging>jar</packaging>
     <description>主启动模块</description>
 
+    <properties>
+        <!-- 该模块为c，不会被其他项目所依赖，故，不发布至仓库 -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
+        <!-- End -->
+    </properties>
+
     <dependencies>
 
         <dependency>
