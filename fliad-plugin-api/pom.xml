@@ -41,5 +41,7 @@
 
         <!-- SIP GB28181协议插件api接口 -->
         <module>fliad-plugin-sip-gb28181-api</module>
+
+        <module>fliad-plugin-workflow-api</module>
     </modules>
 </project>

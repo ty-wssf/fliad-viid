@@ -161,6 +161,13 @@
                 <artifactId>fliad-plugin-sip-gb28181-api</artifactId>
                 <version>${viid.version}</version>
             </dependency>
+            
+            <!-- fliad-plugin-workflow-api -->
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>fliad-plugin-workflow-api</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
 
             <!-- fliad-plugin-auth -->
             <dependency>
@@ -235,6 +242,14 @@
                 <artifactId>plugin-report</artifactId>
                 <version>${viid.version}</version>
             </dependency>
+            
+            <!-- fliad-plugin-workflow -->
+            <dependency>
+                <groupId>com.fliad</groupId>
+                <artifactId>plugin-workflow</artifactId>
+                <version>${viid.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.fliad</groupId>
                 <artifactId>fliad-plugin-nop-api-core</artifactId>
@@ -562,6 +577,17 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <!-- Warm-Flow 仓库 -->
+        <repository>
+            <id>sonatype-ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 

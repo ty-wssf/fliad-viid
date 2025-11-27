@@ -48,5 +48,7 @@
         <module>plugin-hikvision</module>
         <module>plugin-report</module>
         <module>plugin-dahua</module>
+
+        <module>plugin-workflow</module>
     </modules>
 </project>

@@ -379,6 +379,18 @@
         </profile>
 
         <profile>
+            <id>workflow</id>
+            <dependencies>
+                <!-- 大华功能插件 -->
+                <dependency>
+                    <groupId>com.fliad</groupId>
+                    <artifactId>plugin-workflow</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>xlang-debugger</id>
             <dependencies>
                 <!-- xlang-debugger -->
