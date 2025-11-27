@@ -8,7 +8,7 @@
 package io.nop.core.model.graph.dag;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.commons.util.CollectionHelper;
 import io.nop.core.model.graph.DefaultEdge;

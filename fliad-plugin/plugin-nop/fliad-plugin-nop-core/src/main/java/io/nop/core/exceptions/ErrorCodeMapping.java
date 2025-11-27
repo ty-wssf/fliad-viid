@@ -8,7 +8,7 @@
 package io.nop.core.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.ISourceLocationSetter;
 import io.nop.api.core.util.SourceLocation;

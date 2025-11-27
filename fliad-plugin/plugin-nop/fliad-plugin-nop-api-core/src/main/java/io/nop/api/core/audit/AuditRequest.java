@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.audit;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.auth.IUserContext;
 import io.nop.api.core.beans.ExtensibleBean;
 

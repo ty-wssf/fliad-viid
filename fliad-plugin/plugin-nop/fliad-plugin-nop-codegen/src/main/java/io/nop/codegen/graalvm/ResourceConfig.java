@@ -7,7 +7,7 @@
  */
 package io.nop.codegen.graalvm;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.commons.collections.KeyedList;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package io.nop.api.core.beans.oauth;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.beans.ExtensibleBean;
 
 import java.util.Map;

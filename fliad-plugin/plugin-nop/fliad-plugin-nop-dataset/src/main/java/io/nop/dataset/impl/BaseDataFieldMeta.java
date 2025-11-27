@@ -9,8 +9,8 @@ package io.nop.dataset.impl;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.commons.type.StdDataType;
 import io.nop.commons.type.StdSqlType;
 import io.nop.dataset.IDataFieldMeta;

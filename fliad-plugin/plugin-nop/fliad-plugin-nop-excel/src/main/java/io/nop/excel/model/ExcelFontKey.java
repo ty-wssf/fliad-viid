@@ -7,10 +7,9 @@
  */
 package io.nop.excel.model;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.excel.ExcelConstants;
 import io.nop.excel.model.constants.ExcelFontFamily;
-import io.nop.excel.model.constants.ExcelModelConstants;
 
 @DataBean
 public class ExcelFontKey {

@@ -7,7 +7,7 @@
  */
 package io.nop.xlang.api;
 
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.util.IComponentModel;
 import io.nop.core.lang.eval.IExecutableExpression;
 

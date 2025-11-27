@@ -7,7 +7,7 @@
  */
 package io.nop.xlang.xmeta;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.json.IJsonString;
 import io.nop.api.core.util.Guard;
 import io.nop.xlang.xdef.XDefConstants;

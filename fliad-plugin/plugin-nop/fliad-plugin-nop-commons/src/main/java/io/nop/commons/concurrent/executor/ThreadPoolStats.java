@@ -7,7 +7,7 @@
  */
 package io.nop.commons.concurrent.executor;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.io.Serializable;
 

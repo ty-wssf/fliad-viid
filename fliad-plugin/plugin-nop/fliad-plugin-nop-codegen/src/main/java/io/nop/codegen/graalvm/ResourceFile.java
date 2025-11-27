@@ -7,7 +7,7 @@
  */
 package io.nop.codegen.graalvm;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 @DataBean
 public class ResourceFile {

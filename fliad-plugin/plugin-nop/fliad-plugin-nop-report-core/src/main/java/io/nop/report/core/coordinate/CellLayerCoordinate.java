@@ -7,7 +7,7 @@
  */
 package io.nop.report.core.coordinate;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.util.List;
 

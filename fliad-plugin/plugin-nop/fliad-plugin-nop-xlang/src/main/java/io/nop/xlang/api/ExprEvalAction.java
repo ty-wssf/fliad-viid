@@ -7,7 +7,7 @@
  */
 package io.nop.xlang.api;
 
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.json.IJsonString;
 import io.nop.api.core.util.ISourceLocationGetter;
 import io.nop.api.core.util.SourceLocation;

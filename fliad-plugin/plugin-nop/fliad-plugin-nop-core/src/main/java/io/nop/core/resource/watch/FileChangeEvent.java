@@ -8,7 +8,7 @@
 package io.nop.core.resource.watch;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.io.File;
 import java.nio.file.Path;

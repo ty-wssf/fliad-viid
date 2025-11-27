@@ -1,7 +1,7 @@
 package io.nop.api.core.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 @DataBean
 public class BinaryDataBean {

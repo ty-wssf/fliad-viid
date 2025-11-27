@@ -1,6 +1,6 @@
 package io.nop.report.core.record;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 @DataBean
 public class ExcelIOConfig {

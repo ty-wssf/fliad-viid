@@ -20,7 +20,7 @@ package io.nop.commons.util;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.nop.api.core.annotations.core.NoReflection;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.lang.IClassLoader;

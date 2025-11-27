@@ -8,8 +8,8 @@
 package io.nop.api.core.annotations.txn;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.DataBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 
 import java.io.Serializable;
 

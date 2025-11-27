@@ -1,6 +1,6 @@
 package io.nop.api.core.beans.query;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.beans.TreeBean;
 import io.nop.api.core.util.ICloneable;
 

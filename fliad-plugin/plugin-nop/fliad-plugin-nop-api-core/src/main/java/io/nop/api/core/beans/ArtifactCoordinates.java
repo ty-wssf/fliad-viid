@@ -2,7 +2,7 @@ package io.nop.api.core.beans;
 
 import io.nop.api.core.annotations.core.Name;
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.Guard;
 
 @DataBean

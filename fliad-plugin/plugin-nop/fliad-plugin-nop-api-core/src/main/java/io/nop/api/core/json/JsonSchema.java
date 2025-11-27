@@ -1,7 +1,7 @@
 package io.nop.api.core.json;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.util.List;
 import java.util.Map;

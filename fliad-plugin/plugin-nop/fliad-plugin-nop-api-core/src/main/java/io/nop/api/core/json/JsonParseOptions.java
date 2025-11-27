@@ -7,7 +7,7 @@
  */
 package io.nop.api.core.json;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.lang.reflect.Type;
 

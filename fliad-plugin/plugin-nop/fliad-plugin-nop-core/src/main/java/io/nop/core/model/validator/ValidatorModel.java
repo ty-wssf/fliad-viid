@@ -7,7 +7,7 @@
  */
 package io.nop.core.model.validator;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.xml.XNode;
 import io.nop.core.model.validator._gen._ValidatorModel;

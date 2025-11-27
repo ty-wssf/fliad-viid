@@ -7,7 +7,7 @@
  */
 package io.nop.core.type;
 
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.json.IJsonString;
 import io.nop.commons.type.StdDataType;

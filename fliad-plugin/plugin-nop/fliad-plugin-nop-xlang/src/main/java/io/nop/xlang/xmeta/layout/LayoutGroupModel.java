@@ -8,7 +8,7 @@
 package io.nop.xlang.xmeta.layout;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.model.table.IRow;
 import io.nop.core.model.table.impl.BaseCell;

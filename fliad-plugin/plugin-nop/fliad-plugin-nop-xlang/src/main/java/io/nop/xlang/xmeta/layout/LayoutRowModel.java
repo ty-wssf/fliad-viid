@@ -7,7 +7,7 @@
  */
 package io.nop.xlang.xmeta.layout;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.commons.util.StringHelper;
 import io.nop.core.lang.json.IJsonHandler;
 import io.nop.core.model.table.ICell;

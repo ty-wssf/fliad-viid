@@ -7,7 +7,7 @@
  */
 package io.nop.config.model;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.core.resource.component.AbstractComponentModel;
 
 import java.util.Map;

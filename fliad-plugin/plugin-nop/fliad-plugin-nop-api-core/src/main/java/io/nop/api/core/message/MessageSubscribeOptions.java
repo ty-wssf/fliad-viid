@@ -8,7 +8,7 @@
 package io.nop.api.core.message;
 
 import io.nop.api.core.annotations.config.ConfigBean;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 @DataBean
 @ConfigBean

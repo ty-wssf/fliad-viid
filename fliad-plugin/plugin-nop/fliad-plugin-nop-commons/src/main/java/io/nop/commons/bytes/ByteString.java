@@ -18,7 +18,7 @@
 package io.nop.commons.bytes;
 
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.convert.IByteArrayView;
 import io.nop.api.core.exceptions.ErrorCode;
 import io.nop.api.core.exceptions.NopException;

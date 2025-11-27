@@ -7,7 +7,7 @@
  */
 package io.nop.commons.util.objects;
 
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 
 import java.io.Serializable;
 import java.util.Map;

@@ -8,7 +8,7 @@
 package io.nop.core.resource.component.version;
 
 import io.nop.api.core.annotations.core.Name;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.Guard;
 
 import java.io.Serializable;

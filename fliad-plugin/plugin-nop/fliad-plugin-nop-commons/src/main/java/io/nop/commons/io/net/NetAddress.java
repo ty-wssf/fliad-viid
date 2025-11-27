@@ -8,7 +8,7 @@
 package io.nop.commons.io.net;
 
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.exceptions.NopException;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.env.DnsResolver;

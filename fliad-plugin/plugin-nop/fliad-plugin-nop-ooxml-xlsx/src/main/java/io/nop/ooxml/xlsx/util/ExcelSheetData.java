@@ -1,6 +1,6 @@
 package io.nop.ooxml.xlsx.util;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.util.List;
 import java.util.Map;

@@ -7,7 +7,7 @@
  */
 package io.nop.codegen.graalvm;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;

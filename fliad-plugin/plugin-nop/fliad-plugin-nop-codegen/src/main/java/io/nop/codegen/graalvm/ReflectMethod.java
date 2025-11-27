@@ -8,7 +8,7 @@
 package io.nop.codegen.graalvm;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.commons.util.StringHelper;
 
 import java.util.Collections;

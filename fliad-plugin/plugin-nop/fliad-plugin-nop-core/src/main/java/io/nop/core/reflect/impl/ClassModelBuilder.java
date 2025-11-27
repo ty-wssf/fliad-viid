@@ -11,7 +11,7 @@ import io.nop.api.core.annotations.core.Description;
 import io.nop.api.core.annotations.core.Name;
 import io.nop.api.core.annotations.core.NoReflection;
 import io.nop.api.core.annotations.core.StaticFactoryMethod;
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.exceptions.NopEvalException;
 import io.nop.commons.util.ClassHelper;
 import io.nop.commons.util.CollectionHelper;

@@ -7,7 +7,7 @@
  */
 package io.nop.commons.collections;
 
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.util.StringHelper;
 

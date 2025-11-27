@@ -5,7 +5,7 @@
  * Gitee:  https://gitee.com/canonical-entropy/nop-entropy
  * Github: https://github.com/entropy-cloud/nop-entropy
  */
-package io.nop.api.core.annotations.data_;
+package io.nop.api.core.annotations.data;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

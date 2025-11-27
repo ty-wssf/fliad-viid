@@ -8,7 +8,7 @@
 package io.nop.api.core.message;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nop.api.core.annotations.data_.DataBean;
+import io.nop.api.core.annotations.data.DataBean;
 
 @DataBean
 public final class ConsumeLater {

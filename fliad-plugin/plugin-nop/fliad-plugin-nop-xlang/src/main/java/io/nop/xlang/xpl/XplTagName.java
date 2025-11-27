@@ -7,7 +7,7 @@
  */
 package io.nop.xlang.xpl;
 
-import io.nop.api.core.annotations.data_.ImmutableBean;
+import io.nop.api.core.annotations.data.ImmutableBean;
 import io.nop.api.core.util.Guard;
 import io.nop.commons.util.StringHelper;
 import io.nop.xlang.XLangConstants;

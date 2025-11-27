@@ -56,6 +56,6 @@ orm:
 
 # h2
 snowy.datasource.dynamic.master.driverClassName: org.h2.Driver
-snowy.datasource.dynamic.master.jdbcUrl: jdbc:h2:file:./data/testdb;AUTO_SERVER=TRUE
+snowy.datasource.dynamic.master.jdbcUrl: jdbc:h2:file:./h2-data/testdb;AUTO_SERVER=TRUE
 snowy.datasource.dynamic.master.username: sa
 snowy.datasource.dynamic.master.password:
