@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<orm ext:mavenArtifactId="plugin-workflow" ext:entityPackageName="com.fliad.workflow.dao.entity"
+     ext:basePackageName="com.fliad.workflow" ext:appName="plugin-workflow" ext:mavenVersion="0.1.0"
+     ext:registerShortName="true" ext:mavenGroupId="com.fliad" ext:platformVersion="0.1.0"
+     ext:dialect="mysql,oracle,postgresql,h2" x:schema="/nop/schema/orm/orm.xdef" xmlns:x="/nop/schema/xdsl.xdef"
+     xmlns:i18n-en="i18n-en" xmlns:ref-i18n-en="ref-i18n-en" xmlns:ext="ext" xmlns:orm-gen="orm-gen" xmlns:xpl="xpl"
+     xmlns:ui="ui">
+
+    <x:post-extends x:override="replace">
+        <orm-gen:DefaultPostExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:post-extends>
+
+    <x:gen-extends x:override="replace">
+        <orm-gen:DefaultGenExtends xpl:lib="/nop/orm/xlib/orm-gen.xlib"/>
+    </x:gen-extends>
+
+    <entities>
+        <entity className="com.fliad.workflow.dao.entity.FlowDefinition" displayName="流程定义表"
+                name="com.fliad.workflow.dao.entity.FlowDefinition" registerShortName="true" tableName="flow_definition">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="FLOW_CODE" displayName="流程编码" mandatory="true" name="flowCode" precision="40" propId="2"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FLOW_NAME" displayName="流程名称" mandatory="true" name="flowName" precision="100" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="MODEL_VALUE" displayName="设计器模型（CLASSICS经典模型 MIMIC仿钉钉模型）" mandatory="true"
+                        name="modelValue" precision="40" propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CATEGORY" displayName="流程类别" name="category" precision="100" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VERSION" displayName="流程版本" mandatory="true" name="version" precision="20" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="IS_PUBLISH" defaultValue="0" displayName="是否发布（0未发布 1已发布 9失效）" mandatory="true"
+                        name="isPublish" propId="7" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="FORM_CUSTOM" displayName="审批表单是否自定义（Y是 N否）" name="formCustom" precision="1" propId="8"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="FORM_PATH" displayName="审批表单路径" name="formPath" precision="100" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ACTIVITY_STATUS" defaultValue="1" displayName="流程激活状态（0挂起 1激活）" mandatory="true"
+                        name="activityStatus" propId="10" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="LISTENER_TYPE" displayName="监听器类型" name="listenerType" precision="100" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LISTENER_PATH" displayName="监听器路径" name="listenerPath" precision="400" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXT" displayName="业务详情 存业务表对象json字符串" name="ext" precision="500" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="14" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="64" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="16" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="更新人" name="updateBy" precision="64" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="18"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="19"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowHisTask" displayName="历史任务记录表"
+                name="com.fliad.workflow.dao.entity.FlowHisTask" registerShortName="true" tableName="flow_his_task">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="DEFINITION_ID" displayName="对应flow_definition表的id" mandatory="true" name="definitionId"
+                        propId="2" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="INSTANCE_ID" displayName="对应flow_instance表的id" mandatory="true" name="instanceId"
+                        propId="3" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="TASK_ID" displayName="对应flow_task表的id" mandatory="true" name="taskId" propId="4"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="NODE_CODE" displayName="开始节点编码" name="nodeCode" precision="100" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_NAME" displayName="开始节点名称" name="nodeName" precision="100" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_TYPE" displayName="开始节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" name="nodeType" propId="7"
+                        stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="TARGET_NODE_CODE" displayName="目标节点编码" name="targetNodeCode" precision="200" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="TARGET_NODE_NAME" displayName="结束节点名称" name="targetNodeName" precision="200" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="APPROVER" displayName="审批人" name="approver" precision="40" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COOPERATE_TYPE" defaultValue="0" displayName="协作方式(1审批 2转办 3委派 4会签 5票签 6加签 7减签)"
+                        mandatory="true" name="cooperateType" propId="11" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="COLLABORATOR" displayName="协作人" name="collaborator" precision="500" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SKIP_TYPE" displayName="流转类型（PASS通过 REJECT退回 NONE无动作）" mandatory="true" name="skipType"
+                        precision="10" propId="13" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FLOW_STATUS" displayName="流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回）"
+                        mandatory="true" name="flowStatus" precision="20" propId="14" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="FORM_CUSTOM" displayName="审批表单是否自定义（Y是 N否）" name="formCustom" precision="1" propId="15"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="FORM_PATH" displayName="审批表单路径" name="formPath" precision="100" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="MESSAGE" displayName="审批意见" name="message" precision="500" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VARIABLE" displayName="任务变量" name="variable" precision="65535" propId="18"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXT" displayName="业务详情 存业务表对象json字符串" name="ext" precision="65535" propId="19"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="任务开始时间" name="createTime" propId="20" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_TIME" displayName="审批完成时间" name="updateTime" propId="21" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="22"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="23"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowInstance" displayName="流程实例表"
+                name="com.fliad.workflow.dao.entity.FlowInstance" registerShortName="true" tableName="flow_instance">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="DEFINITION_ID" displayName="对应flow_definition表的id" mandatory="true" name="definitionId"
+                        propId="2" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="BUSINESS_ID" displayName="业务id" mandatory="true" name="businessId" precision="40"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_TYPE" displayName="节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" mandatory="true"
+                        name="nodeType" propId="4" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="NODE_CODE" displayName="流程节点编码" mandatory="true" name="nodeCode" precision="40" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_NAME" displayName="流程节点名称" name="nodeName" precision="100" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VARIABLE" displayName="任务变量" name="variable" precision="65535" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FLOW_STATUS" displayName="流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回）"
+                        mandatory="true" name="flowStatus" precision="20" propId="8" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="ACTIVITY_STATUS" defaultValue="1" displayName="流程激活状态（0挂起 1激活）" mandatory="true"
+                        name="activityStatus" propId="9" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="DEF_JSON" displayName="流程定义json" name="defJson" precision="65535" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="64" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="13" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="更新人" name="updateBy" precision="64" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXT" displayName="扩展字段，预留给业务系统使用" name="ext" precision="500" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="16"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="17"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowNode" displayName="流程节点表"
+                name="com.fliad.workflow.dao.entity.FlowNode" registerShortName="true" tableName="flow_node">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="NODE_TYPE" displayName="节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" mandatory="true"
+                        name="nodeType" propId="2" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="DEFINITION_ID" displayName="流程定义id" mandatory="true" name="definitionId" propId="3"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="NODE_CODE" displayName="流程节点编码" mandatory="true" name="nodeCode" precision="100"
+                        propId="4" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_NAME" displayName="流程节点名称" name="nodeName" precision="100" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="PERMISSION_FLAG" displayName="权限标识（权限类型:权限标识，可以多个，用@@隔开)" name="permissionFlag"
+                        precision="200" propId="6" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_RATIO" displayName="流程签署比例值" name="nodeRatio" precision="200" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COORDINATE" displayName="坐标" name="coordinate" precision="100" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ANY_NODE_SKIP" displayName="任意结点跳转" name="anyNodeSkip" precision="100" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LISTENER_TYPE" displayName="监听器类型" name="listenerType" precision="100" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="LISTENER_PATH" displayName="监听器路径" name="listenerPath" precision="400" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="FORM_CUSTOM" displayName="审批表单是否自定义（Y是 N否）" name="formCustom" precision="1" propId="12"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="FORM_PATH" displayName="审批表单路径" name="formPath" precision="100" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="VERSION" displayName="版本" mandatory="true" name="version" precision="20" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="15" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="64" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="17" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="更新人" name="updateBy" precision="64" propId="18"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="EXT" displayName="节点扩展属性" name="ext" precision="65535" propId="19" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="20"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="21"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowSkip" displayName="节点跳转关联表"
+                name="com.fliad.workflow.dao.entity.FlowSkip" registerShortName="true" tableName="flow_skip">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="DEFINITION_ID" displayName="流程定义id" mandatory="true" name="definitionId" propId="2"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="NOW_NODE_CODE" displayName="当前流程节点的编码" mandatory="true" name="nowNodeCode" precision="100"
+                        propId="3" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NOW_NODE_TYPE" displayName="当前节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" name="nowNodeType"
+                        propId="4" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="NEXT_NODE_CODE" displayName="下一个流程节点的编码" mandatory="true" name="nextNodeCode"
+                        precision="100" propId="5" stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NEXT_NODE_TYPE" displayName="下一个节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" name="nextNodeType"
+                        propId="6" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="SKIP_NAME" displayName="跳转名称" name="skipName" precision="100" propId="7"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SKIP_TYPE" displayName="跳转类型（PASS审批通过 REJECT退回）" name="skipType" precision="40" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="SKIP_CONDITION" displayName="跳转条件" name="skipCondition" precision="200" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="COORDINATE" displayName="坐标" name="coordinate" precision="100" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="11" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="64" propId="12"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="13" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="更新人" name="updateBy" precision="64" propId="14"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="15"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="16"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowTask" displayName="待办任务表"
+                name="com.fliad.workflow.dao.entity.FlowTask" registerShortName="true" tableName="flow_task">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="DEFINITION_ID" displayName="对应flow_definition表的id" mandatory="true" name="definitionId"
+                        propId="2" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="INSTANCE_ID" displayName="对应flow_instance表的id" mandatory="true" name="instanceId"
+                        propId="3" stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="NODE_CODE" displayName="节点编码" mandatory="true" name="nodeCode" precision="100" propId="4"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_NAME" displayName="节点名称" name="nodeName" precision="100" propId="5"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="NODE_TYPE" displayName="节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" mandatory="true"
+                        name="nodeType" propId="6" stdDataType="boolean" stdSqlType="BOOLEAN"/>
+                <column code="FLOW_STATUS" displayName="流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回）"
+                        mandatory="true" name="flowStatus" precision="20" propId="7" stdDataType="string"
+                        stdSqlType="VARCHAR"/>
+                <column code="FORM_CUSTOM" displayName="审批表单是否自定义（Y是 N否）" name="formCustom" precision="1" propId="8"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="FORM_PATH" displayName="审批表单路径" name="formPath" precision="100" propId="9"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="10" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="64" propId="11"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="12" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="更新人" name="updateBy" precision="64" propId="13"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="14"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="15"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+        <entity className="com.fliad.workflow.dao.entity.FlowUser" displayName="流程用户表"
+                name="com.fliad.workflow.dao.entity.FlowUser" registerShortName="true" tableName="flow_user">
+            <columns>
+                <column code="ID" displayName="主键id" mandatory="true" name="id_" primary="true" propId="1"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="TYPE" displayName="人员类型（1待办任务的审批人权限 2待办任务的转办人权限 3待办任务的委托人权限）" mandatory="true" name="type"
+                        precision="1" propId="2" stdDataType="string" stdSqlType="CHAR"/>
+                <column code="PROCESSED_BY" displayName="权限人" name="processedBy" precision="80" propId="3"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="ASSOCIATED" displayName="任务表id" mandatory="true" name="associated" propId="4"
+                        stdDataType="long" stdSqlType="BIGINT"/>
+                <column code="CREATE_TIME" displayName="创建时间" name="createTime" propId="5" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="CREATE_BY" displayName="创建人" name="createBy" precision="80" propId="6"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="UPDATE_TIME" displayName="更新时间" name="updateTime" propId="7" stdDataType="datetime"
+                        stdSqlType="DATETIME"/>
+                <column code="UPDATE_BY" displayName="创建人" name="updateBy" precision="64" propId="8"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+                <column code="DEL_FLAG" defaultValue="0" displayName="删除标志" name="delFlag" precision="1" propId="9"
+                        stdDataType="string" stdSqlType="CHAR"/>
+                <column code="TENANT_ID" displayName="租户id" name="tenantId" precision="40" propId="10"
+                        stdDataType="string" stdSqlType="VARCHAR"/>
+            </columns>
+        </entity>
+    </entities>
+</orm>

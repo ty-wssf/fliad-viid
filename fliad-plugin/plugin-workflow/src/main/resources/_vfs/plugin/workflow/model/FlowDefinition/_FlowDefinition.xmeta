@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="流程定义表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.workflow.dao.entity.FlowDefinition</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="主键id" propId="1" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="false" graphql:type="String">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="flowCode" displayName="流程编码" propId="2" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="40"/>
+        </prop>
+        <prop name="flowName" displayName="流程名称" propId="3" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="modelValue" displayName="设计器模型（CLASSICS经典模型 MIMIC仿钉钉模型）" propId="4" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="40"/>
+        </prop>
+        <prop name="category" displayName="流程类别" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="version" displayName="流程版本" propId="6" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="isPublish" displayName="是否发布（0未发布 1已发布 9失效）" propId="7" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true" defaultValue="0">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="formCustom" displayName="审批表单是否自定义（Y是 N否）" propId="8" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="1"/>
+        </prop>
+        <prop name="formPath" displayName="审批表单路径" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="activityStatus" displayName="流程激活状态（0挂起 1激活）" propId="10" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true" defaultValue="1">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="listenerType" displayName="监听器类型" propId="11" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="listenerPath" displayName="监听器路径" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="400"/>
+        </prop>
+        <prop name="ext" displayName="业务详情 存业务表对象json字符串" propId="13" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="500"/>
+        </prop>
+        <prop name="createTime" displayName="创建时间" propId="14" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="createBy" displayName="创建人" propId="15" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="updateTime" displayName="更新时间" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateBy" displayName="更新人" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="64"/>
+        </prop>
+        <prop name="delFlag" displayName="删除标志" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true" defaultValue="0">
+            <schema type="java.lang.String" precision="1"/>
+        </prop>
+        <prop name="tenantId" displayName="租户id" propId="19" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="40"/>
+        </prop>
+    </props>
+</meta>

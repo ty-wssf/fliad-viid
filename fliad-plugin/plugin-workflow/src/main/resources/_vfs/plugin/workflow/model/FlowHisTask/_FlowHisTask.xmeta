@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<meta x:schema="/nop/schema/xmeta.xdef" xmlns:x="/nop/schema/xdsl.xdef" xmlns:i18n-en="i18n-en" xmlns:ext="ext"
+      xmlns:xpl="xpl" ext:model="orm" xmlns:c="c" xmlns:graphql="graphql" xmlns:meta-gen="meta-gen" xmlns:biz="biz"
+      displayName="历史任务记录表" xmlns:ui="ui" xmlns:orm="orm">
+
+    <entityName>com.fliad.workflow.dao.entity.FlowHisTask</entityName>
+
+    <primaryKey>id_</primaryKey>
+
+    <x:gen-extends>
+        <meta-gen:DefaultMetaGenExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:gen-extends>
+
+    <x:post-extends>
+        <meta-gen:DefaultMetaPostExtends xpl:lib="/nop/core/xlib/meta-gen.xlib"/>
+    </x:post-extends>
+
+    <keys/>
+
+    <props>
+        <prop name="id_" displayName="主键id" propId="1" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="false" graphql:type="String">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="definitionId" displayName="对应flow_definition表的id" propId="2" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="instanceId" displayName="对应flow_instance表的id" propId="3" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="taskId" displayName="对应flow_task表的id" propId="4" mandatory="true" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.Long"/>
+        </prop>
+        <prop name="nodeCode" displayName="开始节点编码" propId="5" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="nodeName" displayName="开始节点名称" propId="6" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="nodeType" displayName="开始节点类型（0开始节点 1中间节点 2结束节点 3互斥网关 4并行网关）" propId="7" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="targetNodeCode" displayName="目标节点编码" propId="8" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="200"/>
+        </prop>
+        <prop name="targetNodeName" displayName="结束节点名称" propId="9" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="200"/>
+        </prop>
+        <prop name="approver" displayName="审批人" propId="10" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="40"/>
+        </prop>
+        <prop name="cooperateType" displayName="协作方式(1审批 2转办 3委派 4会签 5票签 6加签 7减签)" propId="11" mandatory="true"
+              queryable="true" sortable="true" insertable="true" updatable="true" defaultValue="0">
+            <schema type="java.lang.Boolean"/>
+        </prop>
+        <prop name="collaborator" displayName="协作人" propId="12" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="500"/>
+        </prop>
+        <prop name="skipType" displayName="流转类型（PASS通过 REJECT退回 NONE无动作）" propId="13" mandatory="true" queryable="true"
+              sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="10"/>
+        </prop>
+        <prop name="flowStatus" displayName="流程状态（0待提交 1审批中 2审批通过 4终止 5作废 6撤销 8已完成 9已退回 10失效 11拿回）" propId="14"
+              mandatory="true" queryable="true" sortable="true" insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="20"/>
+        </prop>
+        <prop name="formCustom" displayName="审批表单是否自定义（Y是 N否）" propId="15" queryable="true" sortable="true"
+              insertable="true" updatable="true">
+            <schema type="java.lang.String" precision="1"/>
+        </prop>
+        <prop name="formPath" displayName="审批表单路径" propId="16" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="100"/>
+        </prop>
+        <prop name="message" displayName="审批意见" propId="17" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="500"/>
+        </prop>
+        <prop name="variable" displayName="任务变量" propId="18" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="ext" displayName="业务详情 存业务表对象json字符串" propId="19" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="65535"/>
+        </prop>
+        <prop name="createTime" displayName="任务开始时间" propId="20" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="updateTime" displayName="审批完成时间" propId="21" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.time.LocalDateTime"/>
+        </prop>
+        <prop name="delFlag" displayName="删除标志" propId="22" queryable="true" sortable="true" insertable="true"
+              updatable="true" defaultValue="0">
+            <schema type="java.lang.String" precision="1"/>
+        </prop>
+        <prop name="tenantId" displayName="租户id" propId="23" queryable="true" sortable="true" insertable="true"
+              updatable="true">
+            <schema type="java.lang.String" precision="40"/>
+        </prop>
+    </props>
+</meta>
