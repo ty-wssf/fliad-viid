@@ -46,24 +46,19 @@
 
         <!-- Warm-Flow 工作流引擎 -->
         <dependency>
-            <groupId>org.dromara.warm</groupId>
-            <artifactId>warm-flow-core</artifactId>
-            <version>1.8.4</version>
+            <groupId>org.dromara.warm-flow-mybatis-flex</groupId>
+            <artifactId>warm-flow-mybatis-flex-core</artifactId>
+            <version>1.8.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-solon-plugin</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.dromara.warm</groupId>
             <artifactId>warm-flow-plugin-modes-solon</artifactId>
-            <version>1.8.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.dromara.warm</groupId>
-            <artifactId>warm-flow-plugin-modes-solon</artifactId>
-            <version>1.8.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.dromara.warm</groupId>
-            <artifactId>warm-flow-mybatis-core</artifactId>
-            <version>1.8.4</version>
+            <version>1.8.1</version>
         </dependency>
 
     </dependencies>

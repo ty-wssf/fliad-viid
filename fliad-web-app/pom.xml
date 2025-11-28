@@ -279,6 +279,12 @@
             <artifactId>plugin-nop-config</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- mybatis-flex -->
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-solon-plugin</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- GraalVM JS引擎 -->
