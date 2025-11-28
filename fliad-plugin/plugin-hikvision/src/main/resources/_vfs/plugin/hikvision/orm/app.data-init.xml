@@ -34,7 +34,7 @@
             <data>
                 <record sid="351125624105013248" ID="351125624105013248" IS_TEMPLATE="true"
                         TITLE="（海康）车道统计数据流程"
-                        SUBSCRIBE_DETAIL='["9999"]'
+                        SUBSCRIBE_DETAIL='["200"]'
                         STATUS="DISABLED"
                         REMARK="发送到消息队列，存储到bc接入网关数据库"
                 >
