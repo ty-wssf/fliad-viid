@@ -48,7 +48,12 @@
         <dependency>
             <groupId>org.dromara.warm</groupId>
             <artifactId>warm-flow-core</artifactId>
-            <version>1.8.3</version>
+            <version>1.8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dromara.warm</groupId>
+            <artifactId>warm-flow-plugin-modes-solon</artifactId>
+            <version>1.8.4</version>
         </dependency>
 
     </dependencies>
