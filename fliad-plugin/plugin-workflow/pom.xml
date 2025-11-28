@@ -55,6 +55,16 @@
             <artifactId>warm-flow-plugin-modes-solon</artifactId>
             <version>1.8.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.dromara.warm</groupId>
+            <artifactId>warm-flow-plugin-modes-solon</artifactId>
+            <version>1.8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dromara.warm</groupId>
+            <artifactId>warm-flow-mybatis-core</artifactId>
+            <version>1.8.4</version>
+        </dependency>
 
     </dependencies>
 </project>
