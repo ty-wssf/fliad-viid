@@ -3,6 +3,8 @@ package com.fliad.hikvision.acl.alarm.handler;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import com.fliad.hikvision.acl.NetSDK.HCNetSDK;
+import com.fliad.hikvision.acl.NetSDK.NET_DVR_TPS_LANE_PARAM;
+import com.fliad.hikvision.acl.NetSDK.NET_DVR_TPS_STATISTICS_INFO;
 import com.fliad.hikvision.acl.alarm.HikvisionAlarmManager;
 import com.fliad.hikvision.acl.domain.TrafficFlowInfo;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
@@ -42,7 +44,7 @@ public class TpsStatisticsAlarmHandler implements AlarmHandler {
         }
 
         // 解析交通参数统计信息
-        HCNetSDK.NET_DVR_TPS_STATISTICS_INFO netDvrTpsStatisticsInfo = new HCNetSDK.NET_DVR_TPS_STATISTICS_INFO();
+        NET_DVR_TPS_STATISTICS_INFO netDvrTpsStatisticsInfo = new NET_DVR_TPS_STATISTICS_INFO();
         netDvrTpsStatisticsInfo.write();
         Pointer pTpsVehicle = netDvrTpsStatisticsInfo.getPointer();
         pTpsVehicle.write(0, pAlarmInfo.getByteArray(0, netDvrTpsStatisticsInfo.size()), 0, netDvrTpsStatisticsInfo.size());
@@ -70,7 +72,7 @@ public class TpsStatisticsAlarmHandler implements AlarmHandler {
 
         // 记录每个车道的统计信息
         for (int i = 0; i < totalLaneNum && i < netDvrTpsStatisticsInfo.struTPSStatisticsInfo.struLaneParam.length; i++) {
-            HCNetSDK.NET_DVR_TPS_LANE_PARAM laneParam = netDvrTpsStatisticsInfo.struTPSStatisticsInfo.struLaneParam[i];
+            NET_DVR_TPS_LANE_PARAM laneParam = netDvrTpsStatisticsInfo.struTPSStatisticsInfo.struLaneParam[i];
 
             // 创建交通流量信息对象
             TrafficFlowInfo trafficFlowInfo = new TrafficFlowInfo();
