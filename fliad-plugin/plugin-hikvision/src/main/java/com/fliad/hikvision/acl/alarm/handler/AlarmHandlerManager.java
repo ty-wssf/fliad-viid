@@ -24,7 +24,7 @@ public class AlarmHandlerManager {
     }
 
     private void initHandlers() {
-        handlers.put(HCNetSDK.COMM_ITS_PLATE_RESULT, new ItsPlateResultHandler(alarmManager));
+        /*handlers.put(HCNetSDK.COMM_ITS_PLATE_RESULT, new ItsPlateResultHandler(alarmManager));
         handlers.put(HCNetSDK.COMM_ALARM_AID_V41, new AidAlarmV41Handler());
         handlers.put(HCNetSDK.COMM_ALARM_TPS_V41, new TpsAlarmV41Handler());
         handlers.put(HCNetSDK.COMM_ISAPI_ALARM, new IsapiAlarmHandler());
@@ -37,7 +37,7 @@ public class AlarmHandlerManager {
         handlers.put(HCNetSDK.COMM_THERMOMETRY_DIFF_ALARM, new ThermometryDiffAlarmHandler());
         handlers.put(HCNetSDK.COMM_UPLOAD_AIOP_PICTURE, new AiopPictureUploadHandler());
         handlers.put(HCNetSDK.COMM_FIREDETECTION_ALARM, new FireDetectionAlarmHandler());
-        handlers.put(HCNetSDK.COMM_ALARMHOST_DATA_UPLOAD, new AlarmHostDataUploadHandler(alarmManager));
+        handlers.put(HCNetSDK.COMM_ALARMHOST_DATA_UPLOAD, new AlarmHostDataUploadHandler(alarmManager));*/
         handlers.put(HCNetSDK.COMM_ALARM_TPS_STATISTICS, new TpsStatisticsAlarmHandler(alarmManager));
         handlers.put(HCNetSDK.COMM_ALARM_TPS_REAL_TIME, new TpsRealTimeAlarmHandler(alarmManager));
     }
