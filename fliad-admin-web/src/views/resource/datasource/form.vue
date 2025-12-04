@@ -220,13 +220,18 @@ const onOpen = (record, templateMode = false) => {
 		if (recordData.content && typeof recordData.content === 'string') {
 			try {
 				const config = JSON.parse(recordData.content)
-				recordData.rabbitmqHost = config.host
-				recordData.rabbitmqPort = config.port
-				recordData.rabbitmqUsername = config.username
-				recordData.rabbitmqPassword = config.password
-				recordData.rabbitmqExchange = config.exchange
-				recordData.rabbitmqRoutingKey = config.routingKey
-				recordData.rabbitmqQueueName = config.queueName
+				if (recordData.type === 'rabbitmq') {
+					recordData.rabbitmqHost = config.host
+					recordData.rabbitmqPort = config.port
+					recordData.rabbitmqUsername = config.username
+					recordData.rabbitmqPassword = config.password
+					recordData.rabbitmqExchange = config.exchange
+					recordData.rabbitmqRoutingKey = config.routingKey
+					recordData.rabbitmqQueueName = config.queueName
+				} else if (recordData.type === 'cron') {
+					recordData.cronExpression = config.cronExpression
+					recordData.payload = config.payload
+				}
 			} catch (e) {
 				console.error('解析config失败', e)
 			}
@@ -260,6 +265,8 @@ const onClose = () => {
 		rabbitmqExchange: undefined,
 		rabbitmqRoutingKey: undefined,
 		rabbitmqQueueName: undefined,
+		cronExpression: undefined,
+		payload: undefined,
 		isTemplate: false
 	}
 	isTemplateMode.value = false

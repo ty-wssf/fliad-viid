@@ -232,7 +232,7 @@
 			title: '操作',
 			dataIndex: 'action',
 			align: 'center',
-			width: '240px'
+			width: '250px'
 		}
 	]
 

@@ -3,6 +3,41 @@
 <data-init x:schema="/nop/schema/data-init.xdef"
            xmlns:x="/nop/schema/xdsl.xdef">
     <tables>
-
+        <!-- 数据源模版 -->
+        <table tableName="RESOURCE_DATASOURCE">
+            <data>
+                <record sid="354104436165967872" ID="354104436165967872" IS_TEMPLATE="false"
+                        TITLE="道安云GPS数据获取数据源"
+                        SUBSCRIBE_DETAIL="9999"
+                        TYPE="cron"
+                        STATUS="DISABLED"
+                        REMARK="定时调用道安云GPS数据查询接口获取数据"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"cronExpression":"0 0/1 * * * ?"}
+                        ]]>
+                    </CONTENT>
+                </record>
+            </data>
+        </table>
+        
+        <!-- 工作流模版 -->
+        <table tableName="RESOURCE_WORKFLOW">
+            <data>
+                <record sid="354105933201240064" ID="354105933201240064" IS_TEMPLATE="false"
+                        TITLE="处理道安云GPS数据"
+                        SUBSCRIBE_DETAIL='["9999"]'
+                        STATUS="DISABLED"
+                        REMARK="处理来自道安云的GPS数据，打印单条数据日志"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":89.5}},"data":{"title":"Start","outputs":{"type":"object","properties":{},"required":[]}}},{"id":"end_0","type":"end","meta":{"position":{"x":1100,"y":89.5}},"data":{"title":"End","inputsValues":{},"inputs":{"type":"object","properties":{}}}},{"id":"code_y78ww","type":"code","meta":{"position":{"x":640,"y":0}},"data":{"title":"Code_1","inputsValues":{"input":{"type":"constant","content":""}},"script":{"language":"xlang","content":"<c:script>  \n  <!-- 日志打印示例 -->\n  logInfo(\"===: {}\", \"安道云\");\n</c:script>"},"outputs":{"type":"object","properties":{},"required":[]},"inputs":{"type":"object","properties":{"input":{"type":"string"}}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"code_y78ww"},{"sourceNodeID":"code_y78ww","targetNodeID":"end_0"}]}
+                        ]]>
+                    </CONTENT>
+                </record>
+            </data>
+        </table>
     </tables>
 </data-init>
