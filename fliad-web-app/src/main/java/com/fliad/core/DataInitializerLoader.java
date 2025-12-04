@@ -39,11 +39,11 @@ public class DataInitializerLoader {
     }
 
     public void loadAndExecute(IOrmTemplate ormTemplate) {
-        // Create merged model
+        // 创建合并模型
         DataInitModel model = new DataInitModel();
         model.setLocation(SourceLocation.fromPath("/nop/data_/init/merged-app.data-init.xml"));
 
-        // Discover and merge all module data-init files
+        // 查找并合并所有模块的data-init文件
         ModuleManager.instance()
                 .getAllModuleResourcesInModules(
                         ModuleManager.instance().getEnabledModules(false),
@@ -56,9 +56,29 @@ public class DataInitializerLoader {
                     if (moduleModel != null) {
                         mergeDataInitModel(model, moduleModel);
                     }
+
+                    // 支持按照地区加载数据文件 deployment.location为配置地区
+                    String deploymentLocation = Solon.cfg().get("deployment.location");
+                    if (deploymentLocation != null && !deploymentLocation.isEmpty()) {
+                        // 构造地区相关的数据文件路径
+                        String regionalDataPath = "orm/data-init/" + deploymentLocation + "/app.data-init.xml";
+                        ModuleManager.instance()
+                                .getAllModuleResourcesInModules(
+                                        ModuleManager.instance().getEnabledModules(false),
+                                        regionalDataPath
+                                )
+                                .forEach(regionalResource -> {
+                                    DataInitModel regionalModel = (DataInitModel) ResourceComponentManager
+                                            .instance()
+                                            .loadComponentModel(regionalResource.getPath());
+                                    if (regionalModel != null) {
+                                        mergeDataInitModel(model, regionalModel);
+                                    }
+                                });
+                    }
                 });
 
-        // Load and merge main model (with override capability)
+        // 加载并合并主模型（具有覆盖能力）
         IResource mainResource = VirtualFileSystem.instance()
                 .getResource("/main/orm/app.data-init.xml");
         if (mainResource.exists()) {

@@ -89,6 +89,27 @@
 					</a-col>
 				</a-row>
 			</template>
+			<template v-if="formData.type === 'cron'">
+				<a-row :gutter="24">
+					<a-col :span="24">
+						<a-form-item label="Cron表达式：" name="cronExpression">
+							<a-input v-model:value="formData.cronExpression" placeholder="请输入Cron表达式，如：*/5 * * * * * （每5秒执行一次）" allow-clear/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+				<a-row :gutter="24">
+					<a-col :span="24">
+						<a-form-item label="触发消息：" name="payload">
+							<a-textarea
+								v-model:value="formData.payload"
+								placeholder='{"event": "定时任务触发"}'
+								:auto-size="{ minRows: 4, maxRows: 8 }"
+								allow-clear
+							/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+			</template>
 			<a-row :gutter="24">
 				<a-col :span="24">
 					<a-form-item label="备注：" name="remark">
@@ -182,7 +203,8 @@ const validateHost = (rule, value) => {
 
 onMounted(() => {
 	datasourceTypeOptions.value = [
-		{label: 'RabbitMQ', value: 'rabbitmq'}
+		{label: 'RabbitMQ', value: 'rabbitmq'},
+		{label: '定时任务', value: 'cron'}
 	]
 })
 
@@ -220,6 +242,8 @@ const onOpen = (record, templateMode = false) => {
 			rabbitmqExchange: undefined,
 			rabbitmqRoutingKey: undefined,
 			rabbitmqQueueName: undefined,
+			cronExpression: undefined,
+			payload: undefined,
 			isTemplate: templateMode // 根据templateMode设置默认值
 		}
 	}
@@ -252,7 +276,8 @@ const formRules = {
 	rabbitmqPassword: [required('请输入密码')],
 	rabbitmqExchange: [required('请输入Exchange')],
 	rabbitmqRoutingKey: [required('请输入Routing Key')],
-	rabbitmqQueueName: [required('请输入队列名')]
+	rabbitmqQueueName: [required('请输入队列名')],
+	cronExpression: [required('请输入Cron表达式')]
 }
 // 验证并提交数据
 const onSubmit = () => {
@@ -279,6 +304,17 @@ const onSubmit = () => {
 			delete formDataParam.rabbitmqExchange
 			delete formDataParam.rabbitmqRoutingKey
 			delete formDataParam.rabbitmqQueueName
+		}
+		// 如果是cron类型，构造config对象
+		else if (formDataParam.type === 'cron') {
+			const config = {
+				cronExpression: formDataParam.cronExpression,
+				payload: formDataParam.payload
+			}
+			formDataParam.content = JSON.stringify(config)
+			// 删除临时字段
+			delete formDataParam.cronExpression
+			delete formDataParam.payload
 		}
 		viidDatasourceApi
 			.datasourceSubmitForm(formDataParam, formDataParam.id)

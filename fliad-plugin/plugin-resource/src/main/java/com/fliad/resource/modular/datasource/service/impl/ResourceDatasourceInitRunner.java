@@ -16,6 +16,8 @@ import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.cron.CronUtil;
+import cn.hutool.cron.task.Task;
 import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
 import com.fliad.resource.modular.datasource.service.ResourceDatasourceService;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
@@ -62,6 +64,9 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
     // 存储数据源频道信息
     private final Map<String, Channel> datasourceChannels = new ConcurrentHashMap<>();
 
+    // 存储定时任务信息
+    private final Map<String, String> datasourceCronTaskIds = new ConcurrentHashMap<>();
+
     @Override
     public void start() throws Throwable {
         log.info(">>> 开始初始化数据源 <<<");
@@ -101,9 +106,76 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             case "rabbitmq":
                 initRabbitMQConnection(datasource);
                 break;
+            case "cron":
+                initCronConnection(datasource);
+                break;
             default:
                 log.warn("不支持的数据源类型：{}", datasource.getType());
                 break;
+        }
+    }
+
+    /**
+     * 初始化 Cron 定时任务连接
+     *
+     * @param datasource 数据源实体
+     */
+    private void initCronConnection(ResourceDatasource datasource) {
+        try {
+            // 解析 Cron 配置
+            String content = datasource.getContent();
+            if (StrUtil.isBlank(content)) {
+                log.warn("数据源配置内容为空，数据源ID：{}", datasource.getId());
+                return;
+            }
+
+            ONode config = ONode.load(handleEscapeCharacters(content));
+            String cronExpression = config.get("cronExpression").getString();
+            String payload = config.get("payload").getString();
+
+            // 如果没有配置消息内容，则使用默认消息
+            if (StrUtil.isBlank(payload)) {
+                payload = "{}";
+            }
+
+            log.info("Cron配置信息：cronExpression={}, payload={}", cronExpression, payload);
+
+            // 使用 Hutool 的 CronUtil 来创建定时任务
+            String finalPayload = payload;
+            String taskId = CronUtil.schedule(datasource.getId(), "0 0/1 * * * ?", new Task() {
+                @Override
+                public void execute() {
+                    log.info("执行定时任务，数据源ID：{}，订阅类别：{}", datasource.getId(), datasource.getSubscribeDetail());
+                    try {
+                        // 处理定时任务触发
+                        if (StrUtil.isNotBlank(datasource.getScriptFilter())) {
+                            Map<String, Object> context = ONode.deserialize(finalPayload);
+                            Object result = SnEL.eval(datasource.getScriptFilter(), context);
+                            // 如果result是布尔类型
+                            if (result instanceof Boolean) {
+                                if ((Boolean) result) {
+                                    processMessage(finalPayload, datasource);
+                                } else {
+                                    log.info("脚本过滤器结果为false，不处理消息");
+                                }
+                            } else {
+                                log.warn("脚本过滤器结果不是布尔类型");
+                            }
+                        } else {
+                            processMessage(finalPayload, datasource);
+                        }
+                    } catch (Exception e) {
+                        log.error("处理定时任务消息失败，数据源ID：{}", datasource.getId(), e);
+                    }
+                }
+            });
+
+            // 将定时任务ID存储起来，便于后续管理和停止
+            datasourceCronTaskIds.put(datasource.getId(), taskId);
+
+            log.info("Cron 数据源初始化完成，数据源ID：{}，定时任务ID：{}", datasource.getId(), taskId);
+        } catch (Exception e) {
+            log.error("解析 Cron 配置失败，数据源ID：{}", datasource.getId(), e);
         }
     }
 
@@ -198,7 +270,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
                         if (result instanceof Boolean) {
                             if ((Boolean) result) {
                                 processMessage(message, datasource);
-                            } else  {
+                            } else {
                                 log.info("脚本过滤器结果为false，不处理消息");
                             }
                         } else {
@@ -315,8 +387,22 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             }
         }
 
+        // 取消所有定时任务
+        for (Map.Entry<String, String> entry : datasourceCronTaskIds.entrySet()) {
+            try {
+                CronUtil.remove(entry.getValue());
+                log.info("取消定时任务，数据源ID：{}", entry.getKey());
+            } catch (Exception e) {
+                log.error("取消定时任务时发生错误，数据源ID：{}", entry.getKey(), e);
+            }
+        }
+
         datasourceChannels.clear();
         datasourceConnections.clear();
+        datasourceCronTaskIds.clear();
+
+        // 停止定时任务调度器
+        CronUtil.stop();
     }
 
     /**

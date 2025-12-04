@@ -156,7 +156,8 @@
 	const loading = ref(false)
 	const activeKey = ref('datasource')
 	const datasourceTypeOptions = ref([
-		{ label: 'RabbitMQ', value: 'rabbitmq' }
+		{ label: 'RabbitMQ', value: 'rabbitmq' },
+		{ label: '定时任务', value: 'cron' }
 	])
 
 	// 添加一个方法来获取type的显示标签
