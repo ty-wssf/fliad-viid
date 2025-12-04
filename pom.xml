@@ -82,6 +82,7 @@
         <!-- 服务监控模块 -->
         <module>fliad-service-monitor</module>
         <module>fliad-tts</module>
+        <module>fliad-test</module>
     </modules>
 
     <dependencyManagement>

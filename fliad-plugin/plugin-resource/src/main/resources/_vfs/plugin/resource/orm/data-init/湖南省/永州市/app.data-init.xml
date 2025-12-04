@@ -3,12 +3,37 @@
 <data-init x:schema="/nop/schema/data-init.xdef"
            xmlns:x="/nop/schema/xdsl.xdef">
     <tables>
+        <!-- 字典项配置 根据行政区划划分 -->
+        <table tableName="DEV_DICT">
+            <data>
+                <record sid="427614447651116963" id="427614447651116963" parent_id="317404597701394432"
+                        dict_label="道安云两客一危车辆GPS（永州）" dict_value="431100_01" category="BIZ" sort_code="9999"
+                        delete_flag="NOT_DELETE" create_time="2025-10-21 12:54:00"/>
+                <record sid="427615447651116963" id="427615447651116963" parent_id="317404597701394432"
+                        dict_label="道安云货运车辆GPS（永州）" dict_value="431100_02" category="BIZ" sort_code="9999"
+                        delete_flag="NOT_DELETE" create_time="2025-10-21 12:54:00"/>
+            </data>
+        </table>
+
         <!-- 数据源模版 -->
         <table tableName="RESOURCE_DATASOURCE">
             <data>
-                <record sid="354104436165967872" ID="354104436165967872" IS_TEMPLATE="false"
-                        TITLE="道安云GPS数据获取数据源"
-                        SUBSCRIBE_DETAIL="9999"
+                <record sid="GPS_LKYW_001" ID="GPS_LKYW_001" IS_TEMPLATE="false"
+                        TITLE="道安云两客一危车辆GPS数据源（永州）"
+                        SUBSCRIBE_DETAIL="431100_01"
+                        TYPE="cron"
+                        STATUS="DISABLED"
+                        REMARK="定时调用道安云GPS数据查询接口获取数据"
+                >
+                    <CONTENT>
+                        <![CDATA[
+{"cronExpression":"0 0/1 * * * ?"}
+                        ]]>
+                    </CONTENT>
+                </record>
+                <record sid="GPS_HYCL_001" ID="GPS_HYCL_001" IS_TEMPLATE="false"
+                        TITLE="道安云货运车辆GPS数据源（永州）"
+                        SUBSCRIBE_DETAIL="431100_02"
                         TYPE="cron"
                         STATUS="DISABLED"
                         REMARK="定时调用道安云GPS数据查询接口获取数据"
@@ -25,18 +50,19 @@
         <!-- 工作流模版 -->
         <table tableName="RESOURCE_WORKFLOW">
             <data>
-                <record sid="354105933201240064" ID="354105933201240064" IS_TEMPLATE="false"
-                        TITLE="处理道安云GPS数据"
-                        SUBSCRIBE_DETAIL='["9999"]'
-                        STATUS="DISABLED"
-                        REMARK="处理来自道安云的GPS数据，打印单条数据日志"
+                <record sid="GPS_LKYW_001" ID="GPS_LKYW_001" IS_TEMPLATE="false"
+                        TITLE="两客一危车辆GPS数据采集"
+                        SUBSCRIBE_DETAIL='["431100_01"]'
+                        STATUS="ENABLED"
+                        REMARK="每分钟采集一次两客一危车辆GPS数据"
                 >
                     <CONTENT>
                         <![CDATA[
-{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":89.5}},"data":{"title":"Start","outputs":{"type":"object","properties":{},"required":[]}}},{"id":"end_0","type":"end","meta":{"position":{"x":1100,"y":89.5}},"data":{"title":"End","inputsValues":{},"inputs":{"type":"object","properties":{}}}},{"id":"code_y78ww","type":"code","meta":{"position":{"x":640,"y":0}},"data":{"title":"Code_1","inputsValues":{"input":{"type":"constant","content":""}},"script":{"language":"xlang","content":"<c:script>  \n  <!-- 日志打印示例 -->\n  logInfo(\"===: {}\", \"安道云\");\n</c:script>"},"outputs":{"type":"object","properties":{},"required":[]},"inputs":{"type":"object","properties":{"input":{"type":"string"}}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"code_y78ww"},{"sourceNodeID":"code_y78ww","targetNodeID":"end_0"}]}
-                        ]]>
-                    </CONTENT>
-                </record>
+{"nodes":[{"id":"start_0","type":"start","meta":{"position":{"x":180,"y":89.5}},"data":{"title":"Start","outputs":{"type":"object","properties":{},"required":[]}}},{"id":"code_time","type":"code","meta":{"position":{"x":640,"y":0}},"data":{"title":"计算时间区间","inputsValues":{},"script":{"language":"xlang","content":"<c:script>  \n  import java.time.Instant;  \n  import java.time.ZoneId;  \n  import java.time.LocalDateTime;  \n  import java.time.format.DateTimeFormatter;  \n  import io.nop.commons.util.DateHelper;  \n    \n  let now = DateHelper.currentTimeMillis();  \n  let endTime = now - 60000;  \n  let startTime = endTime - 60000;  \n    \n  // Convert to LocalDateTime and format  \n  let endDateTime = Instant.ofEpochMilli(endTime).atZone(ZoneId.systemDefault()).toLocalDateTime();  \n  let startDateTime = Instant.ofEpochMilli(startTime).atZone(ZoneId.systemDefault()).toLocalDateTime();  \n    \n  return {  \n    \"kssj\": DateHelper.DATETIME_FORMATTER.format(startDateTime),  \n    \"jssj\": DateHelper.DATETIME_FORMATTER.format(endDateTime)  \n  };  \n</c:script>"},"outputs":{"type":"object","properties":{"kssj":{"type":"string"},"jssj":{"type":"string"}}},"inputs":{"type":"object","properties":{}}}},{"id":"code_http","type":"code","meta":{"position":{"x":1100,"y":0}},"data":{"title":"调用两客一危接口","inputsValues":{"kssj":{"type":"ref","content":["code_time","kssj"],"extra":{"index":0}},"jssj":{"type":"ref","content":["code_time","jssj"],"extra":{"index":1}}},"script":{"language":"xlang","content":"<c:script>  \n  import cn.hutool.http.HttpRequest;  \n  import cn.hutool.http.HttpResponse;  \n  import java.util.HashMap;  \n  import java.util.Map;  \n  import org.noear.snack.ONode;  \n    \n  let baseUrl = 'http://localhost:12009/jkfw/region/getyzlkywgps';  \n    \n  // 创建请求头Map  \n  let headers = new HashMap();  \n  headers.put('token', '8914dfc5-beca-45c9-918c-01791b9c8b62');  \n  headers.put('Content-Type', 'application/json');  \n    \n  // 创建请求对象  \n  let request = HttpRequest.get(baseUrl);  \n    \n  // 使用addHeaders批量添加请求头  \n  request = request.addHeaders(headers);  \n\n  // 创建参数 Map  \n  let params = new HashMap();  \n  params.put('kssj', kssj);  \n  params.put('jssj', jssj);  \n  params.put('size', '10');  \n  // 转换为 JSON  \n  let jsonBody = ONode.load(params).toJson();  \n  // 添加参数 \n  request = request.body(jsonBody);  \n\n    \n  // 设置超时  \n  request = request.timeout(30000);  \n    \n  // 执行请求  \n  let response = request.execute();  \n    \n  let responseBody = response.body();  \n    \n  if (!response.isOk()) {  \n    logError('HTTP请求失败，状态码: {}', response.getStatus());  \n  }  \n    \n  return {  \n    \"response\": responseBody  \n  };  \n</c:script>"},"outputs":{"type":"object","properties":{"response":{"type":"string"}}},"inputs":{"type":"object","properties":{"kssj":{"type":"string"},"jssj":{"type":"string"}}}}},{"id":"code_parse","type":"code","meta":{"position":{"x":1560,"y":0}},"data":{"title":"解析并打印数据","inputsValues":{"httpResult":{"type":"ref","content":["code_http","response"]}},"script":{"language":"xlang","content":"<c:script><![CDATA[  \n  let result = $JSON.parse(httpResult);    \n  logInfo('result: {}', result);   \n      \n  if (result.success) {    \n    let records = result.data.hits.hits;   \n        \n    // 使用占位符模式    \n    logInfo('两客一危GPS数据总数: {}', result.data.hits.total);    \n        \n    for (let i = 0; i < records.length; i++) {    \n      let record = records[i];    \n      logInfo('==== 记录 {}，流水编号: {}, 号牌号码: {}, 号牌颜色: {}, GPS时间: {}, 经度: {}, 纬度: {}, 速度: {} km/h, 方向: {}度',   \n        i + 1,   \n        record.id,   \n        record.vehicleNo,   \n        record.vehicleColor,   \n        record.gps_time,   \n        record.lon,   \n        record.lat,   \n        record.vec1,   \n        record.direction  \n      );    \n    }    \n  } else {    \n    logError('接口调用失败: {}', result.msg);    \n  }    \n      \n  return {\"status\": \"completed\"};    \n]]]]><![CDATA[></c:script>"},"outputs":{"type":"object","properties":{"status":{"type":"string"}}},"inputs":{"type":"object","properties":{"httpResult":{"type":"string"}}}}},{"id":"end_0","type":"end","meta":{"position":{"x":2020,"y":89.5}},"data":{"title":"End","inputsValues":{},"inputs":{"type":"object","properties":{}}}}],"edges":[{"sourceNodeID":"start_0","targetNodeID":"code_time"},{"sourceNodeID":"code_time","targetNodeID":"code_http"},{"sourceNodeID":"code_http","targetNodeID":"code_parse"},{"sourceNodeID":"code_parse","targetNodeID":"end_0"}]}
+                    ]]>
+                </CONTENT>
+            </record>
+
             </data>
         </table>
     </tables>
