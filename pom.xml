@@ -83,6 +83,7 @@
         <module>fliad-service-monitor</module>
         <module>fliad-tts</module>
         <module>fliad-test</module>
+        <module>fliad-customize</module>
     </modules>
 
     <dependencyManagement>

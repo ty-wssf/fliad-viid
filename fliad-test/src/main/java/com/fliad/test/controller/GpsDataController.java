@@ -32,9 +32,9 @@ public class GpsDataController {
      */
     @ApiOperation("两客一危车辆GPS数据查询接口")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "kssj", value = "GPS开始时间", required = true, dataType = "string", paramType = "query"),
-        @ApiImplicitParam(name = "jssj", value = "GPS结束时间", required = true, dataType = "string", paramType = "query"),
-        @ApiImplicitParam(name = "size", value = "返回条数", dataType = "integer", paramType = "query")
+            @ApiImplicitParam(name = "kssj", value = "GPS开始时间", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "jssj", value = "GPS结束时间", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "返回条数", dataType = "integer", paramType = "query")
     })
     @Get
     @Mapping("/getyzlkywgps")
@@ -54,7 +54,7 @@ public class GpsDataController {
         if (size == null) {
             size = 10000;
         }
-        
+
         // 限制最大size
         size = Math.min(size, 10000);
 
@@ -66,7 +66,7 @@ public class GpsDataController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", size);
-        
+
         List<Map<String, Object>> dataList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Map<String, Object> record = new HashMap<>();
@@ -74,8 +74,8 @@ public class GpsDataController {
             record.put("vehicleNo", "湘A" + String.format("%05d", new Random().nextInt(100000)));
             record.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
             record.put("gps_time", kssj);
-            record.put("lon", 112.0 + new Random().nextDouble() * 2);
-            record.put("lat", 28.0 + new Random().nextDouble() * 2);
+            record.put("lon", 112.256562);
+            record.put("lat", 25.630252);
             record.put("vec1", new Random().nextInt(120));
             record.put("direction", new Random().nextInt(360));
             dataList.add(record);
@@ -84,10 +84,10 @@ public class GpsDataController {
         Map<String, Object> hitMap = new HashMap<>();
         hitMap.put("total", size);
         hitMap.put("hits", dataList);
-        
+
         data.put("hits", hitMap);
         result.put("data", data);
-        
+
         return result;
     }
 
@@ -101,9 +101,9 @@ public class GpsDataController {
      */
     @ApiOperation("货运车辆GPS数据查询接口")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "kssj", value = "GPS开始时间", required = true, dataType = "string", paramType = "query"),
-        @ApiImplicitParam(name = "jssj", value = "GPS结束时间", required = true, dataType = "string", paramType = "query"),
-        @ApiImplicitParam(name = "size", value = "返回条数", dataType = "integer", paramType = "query")
+            @ApiImplicitParam(name = "kssj", value = "GPS开始时间", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "jssj", value = "GPS结束时间", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "返回条数", dataType = "integer", paramType = "query")
     })
     @Get
     @Mapping("/getyzhcgps")
@@ -123,7 +123,7 @@ public class GpsDataController {
         if (size == null) {
             size = 10000;
         }
-        
+
         // 限制最大size
         size = Math.min(size, 10000);
 
@@ -135,7 +135,7 @@ public class GpsDataController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("total", size);
-        
+
         List<Map<String, Object>> dataList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Map<String, Object> record = new HashMap<>();
@@ -156,7 +156,7 @@ public class GpsDataController {
 
         data.put("hits", hitMap);
         result.put("data", data);
-        
+
         return result;
     }
 }
