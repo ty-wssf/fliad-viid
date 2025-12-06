@@ -198,4 +198,14 @@ public class VehicleStatService {
         
         return allStats;
     }
+    
+    /**
+     * 推送指定日期的统计数据到Kafka（公开方法，用于测试）
+     * 
+     * @param date 指定日期
+     */
+    public void pushStatDataToKafka(LocalDate date) {
+        List<VehicleStatData> statDataList = getStatData(date);
+        pushToKafka(statDataList);
+    }
 }

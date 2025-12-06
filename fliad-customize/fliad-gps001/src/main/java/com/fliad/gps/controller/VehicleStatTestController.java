@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * 车辆统计数据推送测试控制器
+ * 车辆统计数据测试控制器
  *
  * @author lingma
  * @since 1.0.0
@@ -28,14 +28,36 @@ public class VehicleStatTestController {
     private VehicleStatService vehicleStatService;
     
     /**
+     * 手动触发车辆统计数据任务（用于测试）
+     *
+     * @return 执行结果
+     */
+    @Post
+    @Mapping("/test/stat/job")
+    public String testStatJob() {
+        try {
+            logger.info("开始手动执行车辆统计数据任务测试");
+            
+            // 手动调用统计任务方法
+            vehicleStatService.statAndPushVehicleDataJob();
+            
+            logger.info("车辆统计数据任务测试执行完成");
+            return "车辆统计数据任务测试执行完成";
+        } catch (Exception e) {
+            logger.error("车辆统计数据任务测试执行失败", e);
+            return "车辆统计数据任务测试执行失败: " + e.getMessage();
+        }
+    }
+    
+    /**
      * 测试获取指定日期的统计数据
      *
      * @param date 日期，格式为 yyyy-MM-dd，默认为昨天
      * @return 统计结果
      */
     @Get
-    @Mapping("/stat/data")
-    public String getStatData(@Param(defaultValue = "") String date) {
+    @Mapping("/test/stat/data")
+    public String testGetStatData(@Param(defaultValue = "") String date) {
         try {
             LocalDate statDate;
             if (date == null || date.isEmpty()) {
@@ -44,16 +66,17 @@ public class VehicleStatTestController {
                 statDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             }
             
-            logger.info("开始获取 {} 的车辆统计数据", statDate);
+            logger.info("开始测试获取 {} 的车辆统计数据", statDate);
             
+            // 获取统计数据
             List<VehicleStatData> statDataList = vehicleStatService.getStatData(statDate);
             
-            logger.info("获取到 {} 条车辆统计数据", statDataList.size());
+            logger.info("成功获取 {} 条车辆统计数据", statDataList.size());
             
-            return String.format("获取到 %d 条车辆统计数据", statDataList.size());
+            return String.format("成功获取 %d 条车辆统计数据", statDataList.size());
         } catch (Exception e) {
-            logger.error("获取车辆统计数据失败", e);
-            return "获取车辆统计数据失败: " + e.getMessage();
+            logger.error("测试获取车辆统计数据失败", e);
+            return "测试获取车辆统计数据失败: " + e.getMessage();
         }
     }
     
@@ -64,8 +87,8 @@ public class VehicleStatTestController {
      * @return 推送结果
      */
     @Post
-    @Mapping("/stat/push")
-    public String pushStatData(@Param(defaultValue = "") String date) {
+    @Mapping("/test/stat/push")
+    public String testPushStatData(@Param(defaultValue = "") String date) {
         try {
             LocalDate statDate;
             if (date == null || date.isEmpty()) {
@@ -74,20 +97,16 @@ public class VehicleStatTestController {
                 statDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             }
             
-            logger.info("开始推送 {} 的车辆统计数据到Kafka", statDate);
+            logger.info("开始测试推送 {} 的车辆统计数据到Kafka", statDate);
             
-            // 获取统计数据
-            List<VehicleStatData> statDataList = vehicleStatService.getStatData(statDate);
+            // 推送统计数据
+            vehicleStatService.pushStatDataToKafka(statDate);
             
-            // 推送到Kafka
-            vehicleStatService.pushToKafka(statDataList);
-            
-            logger.info("成功推送 {} 条车辆统计数据到Kafka", statDataList.size());
-            
-            return String.format("成功推送 %d 条车辆统计数据到Kafka", statDataList.size());
+            logger.info("车辆统计数据推送测试执行完成");
+            return "车辆统计数据推送测试执行完成";
         } catch (Exception e) {
-            logger.error("推送车辆统计数据到Kafka失败", e);
-            return "推送车辆统计数据到Kafka失败: " + e.getMessage();
+            logger.error("测试推送车辆统计数据到Kafka失败", e);
+            return "测试推送车辆统计数据到Kafka失败: " + e.getMessage();
         }
     }
     
@@ -98,8 +117,8 @@ public class VehicleStatTestController {
      * @return 统计数据的JSON表示
      */
     @Get
-    @Mapping("/stat/data/json")
-    public String getStatDataAsJson(@Param(defaultValue = "") String date) {
+    @Mapping("/test/stat/data/json")
+    public String testGetStatDataAsJson(@Param(defaultValue = "") String date) {
         try {
             LocalDate statDate;
             if (date == null || date.isEmpty()) {
@@ -108,18 +127,20 @@ public class VehicleStatTestController {
                 statDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             }
             
-            logger.info("开始获取 {} 的车辆统计数据(JSON格式)", statDate);
+            logger.info("开始测试获取 {} 的车辆统计数据(JSON格式)", statDate);
             
+            // 获取统计数据
             List<VehicleStatData> statDataList = vehicleStatService.getStatData(statDate);
             
+            // 转换为JSON格式
             String jsonData = ONode.ofBean(statDataList).toJson();
             
             logger.info("成功获取 {} 条车辆统计数据(JSON格式)", statDataList.size());
             
             return jsonData;
         } catch (Exception e) {
-            logger.error("获取车辆统计数据(JSON格式)失败", e);
-            return "获取车辆统计数据(JSON格式)失败: " + e.getMessage();
+            logger.error("测试获取车辆统计数据(JSON格式)失败", e);
+            return "测试获取车辆统计数据(JSON格式)失败: " + e.getMessage();
         }
     }
 }
