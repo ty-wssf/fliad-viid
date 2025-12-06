@@ -110,6 +110,41 @@
 					</a-col>
 				</a-row>
 			</template>
+			<template v-if="formData.type === 'jdbc'">
+				<a-row :gutter="24">
+					<a-col :span="24">
+						<a-form-item label="驱动类名：" name="jdbcDriverClassName">
+							<a-input v-model:value="formData.jdbcDriverClassName" placeholder="请输入驱动类名，如：com.mysql.cj.jdbc.Driver" allow-clear/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+				<a-row :gutter="24">
+					<a-col :span="24">
+						<a-form-item label="数据库URL：" name="jdbcUrl">
+							<a-input v-model:value="formData.jdbcUrl" placeholder="请输入数据库URL，如：jdbc:mysql://localhost:3306/dbname" allow-clear/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+				<a-row :gutter="24">
+					<a-col :span="12">
+						<a-form-item label="用户名：" name="jdbcUsername">
+							<a-input v-model:value="formData.jdbcUsername" placeholder="请输入用户名" allow-clear/>
+						</a-form-item>
+					</a-col>
+					<a-col :span="12">
+						<a-form-item label="密码：" name="jdbcPassword">
+							<a-input-password v-model:value="formData.jdbcPassword" placeholder="请输入密码"/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+				<a-row :gutter="24">
+					<a-col :span="24">
+						<a-form-item label="数据源名称：" name="jdbcDataSourceName">
+							<a-input v-model:value="formData.jdbcDataSourceName" placeholder="请输入数据源名称（可选，默认使用数据源ID）" allow-clear/>
+						</a-form-item>
+					</a-col>
+				</a-row>
+			</template>
 			<a-row :gutter="24">
 				<a-col :span="24">
 					<a-form-item label="备注：" name="remark">
@@ -204,7 +239,8 @@ const validateHost = (rule, value) => {
 onMounted(() => {
 	datasourceTypeOptions.value = [
 		{label: 'RabbitMQ', value: 'rabbitmq'},
-		{label: '定时任务', value: 'cron'}
+		{label: '定时任务', value: 'cron'},
+		{label: 'JDBC数据库', value: 'jdbc'}
 	]
 })
 
@@ -231,6 +267,12 @@ const onOpen = (record, templateMode = false) => {
 				} else if (recordData.type === 'cron') {
 					recordData.cronExpression = config.cronExpression
 					recordData.payload = config.payload
+				} else if (recordData.type === 'jdbc') {
+					recordData.jdbcDriverClassName = config.driverClassName
+					recordData.jdbcUrl = config.jdbcUrl
+					recordData.jdbcUsername = config.username
+					recordData.jdbcPassword = config.password
+					recordData.jdbcDataSourceName = config.dataSourceName
 				}
 			} catch (e) {
 				console.error('解析config失败', e)
@@ -249,6 +291,11 @@ const onOpen = (record, templateMode = false) => {
 			rabbitmqQueueName: undefined,
 			cronExpression: undefined,
 			payload: undefined,
+			jdbcDriverClassName: undefined,
+			jdbcUrl: undefined,
+			jdbcUsername: undefined,
+			jdbcPassword: undefined,
+			jdbcDataSourceName: undefined,
 			isTemplate: templateMode // 根据templateMode设置默认值
 		}
 	}
@@ -267,6 +314,11 @@ const onClose = () => {
 		rabbitmqQueueName: undefined,
 		cronExpression: undefined,
 		payload: undefined,
+		jdbcDriverClassName: undefined,
+		jdbcUrl: undefined,
+		jdbcUsername: undefined,
+		jdbcPassword: undefined,
+		jdbcDataSourceName: undefined,
 		isTemplate: false
 	}
 	isTemplateMode.value = false
@@ -284,7 +336,11 @@ const formRules = {
 	rabbitmqExchange: [required('请输入Exchange')],
 	rabbitmqRoutingKey: [required('请输入Routing Key')],
 	rabbitmqQueueName: [required('请输入队列名')],
-	cronExpression: [required('请输入Cron表达式')]
+	cronExpression: [required('请输入Cron表达式')],
+	jdbcDriverClassName: [required('请输入驱动类名')],
+	jdbcUrl: [required('请输入数据库URL')],
+	jdbcUsername: [required('请输入用户名')],
+	jdbcPassword: [required('请输入密码')]
 }
 // 验证并提交数据
 const onSubmit = () => {
@@ -322,6 +378,23 @@ const onSubmit = () => {
 			// 删除临时字段
 			delete formDataParam.cronExpression
 			delete formDataParam.payload
+		}
+		// 如果是jdbc类型，构造config对象
+		else if (formDataParam.type === 'jdbc') {
+			const config = {
+				driverClassName: formDataParam.jdbcDriverClassName,
+				jdbcUrl: formDataParam.jdbcUrl,
+				username: formDataParam.jdbcUsername,
+				password: formDataParam.jdbcPassword,
+				dataSourceName: formDataParam.jdbcDataSourceName
+			}
+			formDataParam.content = JSON.stringify(config)
+			// 删除临时字段
+			delete formDataParam.jdbcDriverClassName
+			delete formDataParam.jdbcUrl
+			delete formDataParam.jdbcUsername
+			delete formDataParam.jdbcPassword
+			delete formDataParam.jdbcDataSourceName
 		}
 		viidDatasourceApi
 			.datasourceSubmitForm(formDataParam, formDataParam.id)

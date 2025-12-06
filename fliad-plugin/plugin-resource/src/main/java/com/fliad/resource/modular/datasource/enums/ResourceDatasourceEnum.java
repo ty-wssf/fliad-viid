@@ -20,8 +20,14 @@ package com.fliad.resource.modular.datasource.enums;
  */
 public enum ResourceDatasourceEnum {
 
-    /** 测试 */
-    TEST("TEST");
+    /** RabbitMQ */
+    RABBITMQ("rabbitmq"),
+    
+    /** Cron */
+    CRON("cron"),
+    
+    /** JDBC */
+    JDBC("jdbc");
 
     private final String value;
 

@@ -15,7 +15,6 @@ package com.fliad.resource.modular.datasource.service.impl;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
 import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
@@ -26,6 +25,7 @@ import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
 import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.rabbitmq.client.*;
 import org.noear.snack.ONode;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
@@ -66,6 +66,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
 
     // 存储定时任务信息
     private final Map<String, String> datasourceCronTaskIds = new ConcurrentHashMap<>();
+
 
     @Override
     public void start() throws Throwable {
@@ -108,6 +109,9 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
                 break;
             case "cron":
                 initCronConnection(datasource);
+                break;
+            case "jdbc":
+                initJdbcConnection(datasource);
                 break;
             default:
                 log.warn("不支持的数据源类型：{}", datasource.getType());
@@ -243,6 +247,51 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             log.info("RabbitMQ 数据源初始化完成，数据源ID：{}", datasource.getId());
         } catch (Exception e) {
             log.error("解析 RabbitMQ 配置失败，数据源ID：{}", datasource.getId(), e);
+        }
+    }
+
+    /**
+     * 初始化 JDBC 连接
+     *
+     * @param datasource 数据源实体
+     */
+    private void initJdbcConnection(ResourceDatasource datasource) {
+        // 解析配置信息
+        if (StrUtil.isBlank(datasource.getContent())) {
+            log.warn("数据源配置内容为空，数据源ID：{}", datasource.getId());
+            return;
+        }
+
+        try {
+            // 解析 JDBC 配置
+            ONode config = ONode.load(handleEscapeCharacters(datasource.getContent()));
+            String driverClassName = config.get("driverClassName").getString();
+            String jdbcUrl = config.get("jdbcUrl").getString();
+            String username = config.get("username").getString();
+            String password = config.get("password").getString();
+            String dataSourceName = config.get("dataSourceName").getString();
+            
+            // 如果未配置数据源名称，则使用数据源ID作为名称
+            if (StrUtil.isBlank(dataSourceName)) {
+                dataSourceName = datasource.getId();
+            }
+
+            log.info("JDBC配置信息：driverClassName={}, jdbcUrl={}, username={}, dataSourceName={}"
+                    , driverClassName, jdbcUrl, username, dataSourceName);
+
+            // 创建数据源
+            com.zaxxer.hikari.HikariDataSource hikariDataSource = new com.zaxxer.hikari.HikariDataSource();
+            hikariDataSource.setJdbcUrl(jdbcUrl);
+            hikariDataSource.setUsername(username);
+            hikariDataSource.setPassword(password);
+            hikariDataSource.setDriverClassName(driverClassName);
+            hikariDataSource.setPoolName(dataSourceName);
+
+            Solon.context().wrapAndPut(dataSourceName, hikariDataSource);
+
+            log.info("JDBC 数据源初始化完成，数据源ID：{}，数据源名称：{}", datasource.getId(), dataSourceName);
+        } catch (Exception e) {
+            log.error("解析 JDBC 配置失败，数据源ID：{}", datasource.getId(), e);
         }
     }
 
@@ -386,6 +435,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
                 log.error("关闭连接时发生错误，数据源ID：{}", entry.getKey(), e);
             }
         }
+
 
         // 取消所有定时任务
         for (Map.Entry<String, String> entry : datasourceCronTaskIds.entrySet()) {
