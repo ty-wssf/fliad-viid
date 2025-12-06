@@ -7,7 +7,7 @@
 		:footer-style="{ textAlign: 'right' }"
 		@close="onClose"
 	>
-		<a-form ref="formRef" :model="formData" :rules="formRules" layout="vertical">
+		<a-form ref="formRef" :model="combinedFormData" :rules="formRules" layout="vertical">
 			<a-row :gutter="24">
 				<a-col :span="24">
 					<a-form-item label="标题：" name="title">
@@ -29,141 +29,27 @@
 							v-model:value="formData.type"
 							placeholder="请选择类型"
 							:options="datasourceTypeOptions"
+							@change="handleTypeChange"
 						/>
 					</a-form-item>
 				</a-col>
 				<!-- 移除了"是否为模板"选项，因为根据需求无论是普通数据源还是模板数据源新增时都不显示该选项 -->
 			</a-row>
-			<template v-if="formData.type === 'rabbitmq'">
-				<a-row :gutter="24">
-					<a-col :span="12">
-						<a-form-item label="RabbitMQ地址：" name="rabbitmqHost">
-							<a-input v-model:value="formData.rabbitmqHost" placeholder="请输入RabbitMQ地址"
-									 allow-clear/>
-						</a-form-item>
-					</a-col>
-					<a-col :span="12">
-						<a-form-item label="RabbitMQ端口：" name="rabbitmqPort">
-							<a-input-number
-								v-model:value="formData.rabbitmqPort"
-								placeholder="请输入RabbitMQ端口"
-								style="width: 100%"
-								:min="1"
-								:max="65535"
-								:precision="0"
-							/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="12">
-						<a-form-item label="用户名：" name="rabbitmqUsername">
-							<a-input v-model:value="formData.rabbitmqUsername" placeholder="请输入用户名" allow-clear/>
-						</a-form-item>
-					</a-col>
-					<a-col :span="12">
-						<a-form-item label="密码：" name="rabbitmqPassword">
-							<a-input-password v-model:value="formData.rabbitmqPassword" placeholder="请输入密码"/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="12">
-						<a-form-item label="交换机：" name="rabbitmqExchange">
-							<a-input v-model:value="formData.rabbitmqExchange" placeholder="请输入Exchange"
-									 allow-clear/>
-						</a-form-item>
-					</a-col>
-					<a-col :span="12">
-						<a-form-item label="路由键：" name="rabbitmqRoutingKey">
-							<a-input v-model:value="formData.rabbitmqRoutingKey" placeholder="请输入Routing Key"
-									 allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="队列名：" name="rabbitmqQueueName">
-							<a-input v-model:value="formData.rabbitmqQueueName" placeholder="请输入队列名" allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-			</template>
-			<template v-if="formData.type === 'cron'">
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="Cron表达式：" name="cronExpression">
-							<a-input v-model:value="formData.cronExpression" placeholder="请输入Cron表达式，如：*/5 * * * * * （每5秒执行一次）" allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="触发消息：" name="payload">
-							<a-textarea
-								v-model:value="formData.payload"
-								placeholder='{"event": "定时任务触发"}'
-								:auto-size="{ minRows: 4, maxRows: 8 }"
-								allow-clear
-							/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-			</template>
-			<template v-if="formData.type === 'jdbc'">
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="驱动类名：" name="jdbcDriverClassName">
-							<a-input v-model:value="formData.jdbcDriverClassName" placeholder="请输入驱动类名，如：com.mysql.cj.jdbc.Driver" allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="数据库URL：" name="jdbcUrl">
-							<a-input v-model:value="formData.jdbcUrl" placeholder="请输入数据库URL，如：jdbc:mysql://localhost:3306/dbname" allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="12">
-						<a-form-item label="用户名：" name="jdbcUsername">
-							<a-input v-model:value="formData.jdbcUsername" placeholder="请输入用户名" allow-clear/>
-						</a-form-item>
-					</a-col>
-					<a-col :span="12">
-						<a-form-item label="密码：" name="jdbcPassword">
-							<a-input-password v-model:value="formData.jdbcPassword" placeholder="请输入密码"/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-				<a-row :gutter="24">
-					<a-col :span="24">
-						<a-form-item label="数据源名称：" name="jdbcDataSourceName">
-							<a-input v-model:value="formData.jdbcDataSourceName" placeholder="请输入数据源名称（可选，默认使用数据源ID）" allow-clear/>
-						</a-form-item>
-					</a-col>
-				</a-row>
-			</template>
-			<a-row :gutter="24">
+			
+			<!-- 动态加载不同类型的数据源表单组件 -->
+			<component 
+				:is="formComponents[formData.type]" 
+				v-model="typeSpecificData"
+				v-if="formData.type && formComponents[formData.type]"
+			/>
+			
+			<a-row :gutter="24" v-if="formData.type !== 'rabbitmq'">
 				<a-col :span="24">
 					<a-form-item label="备注：" name="remark">
 						<a-textarea
 							v-model:value="formData.remark"
 							placeholder="请输入备注"
 							:auto-size="{ minRows: 3, maxRows: 6 }"
-							allow-clear
-						/>
-					</a-form-item>
-				</a-col>
-			</a-row>
-			<a-row :gutter="24">
-				<a-col :span="24">
-					<a-form-item label="脚本过滤器：" name="scriptFilter">
-						<a-textarea
-							v-model:value="formData.scriptFilter"
-							placeholder="(((age > 18 AND salary < 5000) OR (NOT isMarried)) AND label IN ['aa','bb'] AND title NOT IN ['cc','dd']) OR vip=='l3'"
-							:auto-size="{ minRows: 6, maxRows: 12 }"
 							allow-clear
 						/>
 					</a-form-item>
@@ -182,6 +68,11 @@ import {cloneDeep} from 'lodash-es'
 import {required} from '@/utils/formRules'
 import viidDatasourceApi from '@/api/resource/datasourceApi'
 import tool from '@/utils/tool'
+// 引入各数据源类型的表单组件
+import formComponents from './forms/index.js'
+// 引入各数据源类型的处理器
+import datasourceHandlers from './handlers/index.js'
+
 // 抽屉状态
 const visible = ref(false)
 const emit = defineEmits({successful: null})
@@ -190,51 +81,21 @@ const formRef = ref()
 const formData = ref({
 	config: {}
 })
+
+// 特定类型数据源的数据
+const typeSpecificData = ref({})
+
+// 计算属性：合并通用数据和特定类型数据，用于表单验证
+const combinedFormData = computed(() => {
+  return {...formData.value, ...typeSpecificData.value}
+})
+
 const submitLoading = ref(false)
 const datasourceTypeOptions = ref([])
 const subscribedetailOptions = ref([])
 // 是否为模板模式
 const isTemplateMode = ref(false)
 // 移除了showTemplateSwitch变量，因为不再需要控制"是否为模板"选项的显示
-
-// Host 格式校验规则
-const validateHost = (rule, value) => {
-	debugger
-	if (!value) {
-		return Promise.reject('')
-	}
-
-	// IP 地址正则表达式
-	const ipRegex = /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
-
-	// 域名正则表达式
-	const domainRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,6}$/;
-
-	// 检查是否为有效的 IP 地址
-	if (ipRegex.test(value)) {
-		const parts = value.split('.')
-		for (let part of parts) {
-			const num = parseInt(part, 10)
-			if (num < 0 || num > 255) {
-				return Promise.reject('请输入有效的IP地址或域名')
-			}
-		}
-		return Promise.resolve()
-	}
-
-	// 检查是否为有效的域名
-	if (domainRegex.test(value)) {
-		// 确保域名至少有一个点，或者是一个有效的单级域名
-		if (value.includes('.') || /^[a-zA-Z0-9]+$/.test(value)) {
-			return Promise.resolve()
-		}
-	}
-
-	return Promise.reject('请输入有效的IP地址或域名')
-}
-
-// 端口范围校验规则
-// 已使用 a-input-number 组件的 min/max 属性进行范围限制，无需额外校验
 
 onMounted(() => {
 	datasourceTypeOptions.value = [
@@ -244,6 +105,29 @@ onMounted(() => {
 	]
 })
 
+// 处理类型变更
+const handleTypeChange = (value) => {
+  // 当类型改变时，清空之前特定类型的表单数据
+  typeSpecificData.value = {}
+  
+  // 更新表单验证规则
+  updateFormRules()
+}
+
+// 更新表单验证规则
+const updateFormRules = () => {
+  // 先重置为基本规则
+  formRules.title = [required('请输入标题')]
+  formRules.subscribeDetail = [required('请选择订阅类别')]
+  formRules.type = [required('请选择类型')]
+  
+  // 根据类型添加特定规则
+  if (formData.value.type && datasourceHandlers[formData.value.type]) {
+    const typeRules = datasourceHandlers[formData.value.type].getValidationRules()
+    Object.assign(formRules, typeRules)
+  }
+}
+
 // 打开抽屉
 const onOpen = (record, templateMode = false) => {
 	visible.value = true
@@ -252,150 +136,59 @@ const onOpen = (record, templateMode = false) => {
 
 	if (record) {
 		let recordData = cloneDeep(record)
-		// 如果存在config且为字符串，则解析为对象
-		if (recordData.content && typeof recordData.content === 'string') {
-			try {
-				const config = JSON.parse(recordData.content)
-				if (recordData.type === 'rabbitmq') {
-					recordData.rabbitmqHost = config.host
-					recordData.rabbitmqPort = config.port
-					recordData.rabbitmqUsername = config.username
-					recordData.rabbitmqPassword = config.password
-					recordData.rabbitmqExchange = config.exchange
-					recordData.rabbitmqRoutingKey = config.routingKey
-					recordData.rabbitmqQueueName = config.queueName
-				} else if (recordData.type === 'cron') {
-					recordData.cronExpression = config.cronExpression
-					recordData.payload = config.payload
-				} else if (recordData.type === 'jdbc') {
-					recordData.jdbcDriverClassName = config.driverClassName
-					recordData.jdbcUrl = config.jdbcUrl
-					recordData.jdbcUsername = config.username
-					recordData.jdbcPassword = config.password
-					recordData.jdbcDataSourceName = config.dataSourceName
-				}
-			} catch (e) {
-				console.error('解析config失败', e)
-			}
-		}
-		formData.value = Object.assign({}, recordData)
+    const dataType = recordData.type
+        
+    // 使用对应数据源类型的处理器处理打开逻辑
+    if (dataType && datasourceHandlers[dataType]) {
+      const { formData: processedFormData, typeSpecificData: processedTypeData } = datasourceHandlers[dataType].handleOpen(recordData)
+      formData.value = processedFormData
+      typeSpecificData.value = processedTypeData
+    } else {
+      formData.value = Object.assign({}, recordData)
+    }
 	} else {
 		// 默认添加空的config对象，并初始化所有属性
-		formData.value = {
-			rabbitmqHost: undefined,
-			rabbitmqPort: undefined,
-			rabbitmqUsername: undefined,
-			rabbitmqPassword: undefined,
-			rabbitmqExchange: undefined,
-			rabbitmqRoutingKey: undefined,
-			rabbitmqQueueName: undefined,
-			cronExpression: undefined,
-			payload: undefined,
-			jdbcDriverClassName: undefined,
-			jdbcUrl: undefined,
-			jdbcUsername: undefined,
-			jdbcPassword: undefined,
-			jdbcDataSourceName: undefined,
-			isTemplate: templateMode // 根据templateMode设置默认值
-		}
+		formData.value = {}
+    typeSpecificData.value = {}
 	}
 	subscribedetailOptions.value = tool.dictList('RESOURCE_Subscribe_Detail_Type')
+  
+  // 初始化表单验证规则
+  updateFormRules()
 }
 // 关闭抽屉
 const onClose = () => {
 	formRef.value.resetFields()
-	formData.value = {
-		rabbitmqHost: undefined,
-		rabbitmqPort: undefined,
-		rabbitmqUsername: undefined,
-		rabbitmqPassword: undefined,
-		rabbitmqExchange: undefined,
-		rabbitmqRoutingKey: undefined,
-		rabbitmqQueueName: undefined,
-		cronExpression: undefined,
-		payload: undefined,
-		jdbcDriverClassName: undefined,
-		jdbcUrl: undefined,
-		jdbcUsername: undefined,
-		jdbcPassword: undefined,
-		jdbcDataSourceName: undefined,
-		isTemplate: false
-	}
+	formData.value = {}
+  typeSpecificData.value = {}
 	isTemplateMode.value = false
 	visible.value = false
 }
+
 // 默认要校验的
 const formRules = {
 	title: [required('请输入标题')],
 	subscribeDetail: [required('请选择订阅类别')],
-	type: [required('请选择类型')],
-	rabbitmqHost: [required('请输入RabbitMQ地址'), {validator: validateHost, trigger: 'blur'}],
-	rabbitmqPort: [required('请输入RabbitMQ端口')],
-	rabbitmqUsername: [required('请输入用户名')],
-	rabbitmqPassword: [required('请输入密码')],
-	rabbitmqExchange: [required('请输入Exchange')],
-	rabbitmqRoutingKey: [required('请输入Routing Key')],
-	rabbitmqQueueName: [required('请输入队列名')],
-	cronExpression: [required('请输入Cron表达式')],
-	jdbcDriverClassName: [required('请输入驱动类名')],
-	jdbcUrl: [required('请输入数据库URL')],
-	jdbcUsername: [required('请输入用户名')],
-	jdbcPassword: [required('请输入密码')]
+	type: [required('请选择类型')]
 }
+
 // 验证并提交数据
 const onSubmit = () => {
 	formRef.value.validate().then(() => {
 		submitLoading.value = true
-		const formDataParam = cloneDeep(formData.value)
-		// 如果是rabbitmq类型，构造config对象
-		if (formDataParam.type === 'rabbitmq') {
-			const config = {
-				host: formDataParam.rabbitmqHost,
-				port: formDataParam.rabbitmqPort,
-				username: formDataParam.rabbitmqUsername,
-				password: formDataParam.rabbitmqPassword,
-				exchange: formDataParam.rabbitmqExchange,
-				routingKey: formDataParam.rabbitmqRoutingKey,
-				queueName: formDataParam.rabbitmqQueueName
-			}
-			formDataParam.content = JSON.stringify(config)
-			// 删除临时字段
-			delete formDataParam.rabbitmqHost
-			delete formDataParam.rabbitmqPort
-			delete formDataParam.rabbitmqUsername
-			delete formDataParam.rabbitmqPassword
-			delete formDataParam.rabbitmqExchange
-			delete formDataParam.rabbitmqRoutingKey
-			delete formDataParam.rabbitmqQueueName
-		}
-		// 如果是cron类型，构造config对象
-		else if (formDataParam.type === 'cron') {
-			const config = {
-				cronExpression: formDataParam.cronExpression,
-				payload: formDataParam.payload
-			}
-			formDataParam.content = JSON.stringify(config)
-			// 删除临时字段
-			delete formDataParam.cronExpression
-			delete formDataParam.payload
-		}
-		// 如果是jdbc类型，构造config对象
-		else if (formDataParam.type === 'jdbc') {
-			const config = {
-				driverClassName: formDataParam.jdbcDriverClassName,
-				jdbcUrl: formDataParam.jdbcUrl,
-				username: formDataParam.jdbcUsername,
-				password: formDataParam.jdbcPassword,
-				dataSourceName: formDataParam.jdbcDataSourceName
-			}
-			formDataParam.content = JSON.stringify(config)
-			// 删除临时字段
-			delete formDataParam.jdbcDriverClassName
-			delete formDataParam.jdbcUrl
-			delete formDataParam.jdbcUsername
-			delete formDataParam.jdbcPassword
-			delete formDataParam.jdbcDataSourceName
-		}
+		
+    // 使用对应数据源类型的处理器处理提交逻辑
+    let formDataParam
+    if (formData.value.type && datasourceHandlers[formData.value.type]) {
+      const { formDataParam: processedFormData } = datasourceHandlers[formData.value.type].handleSubmit(
+        formData.value, 
+        typeSpecificData.value
+      )
+      formDataParam = processedFormData
+    } else {
+      formDataParam = {...formData.value, ...typeSpecificData.value}
+    }
+    
 		viidDatasourceApi
 			.datasourceSubmitForm(formDataParam, formDataParam.id)
 			.then(() => {
