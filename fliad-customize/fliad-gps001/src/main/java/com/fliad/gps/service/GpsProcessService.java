@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * GPS数据处理服务类（基于Solon框架）
@@ -46,11 +48,17 @@ public class GpsProcessService {
     @Inject("doris")
     private DataSource dorisDataSource;
 
-    @Inject("${gps.api.url}")
-    private String gpsApiUrl;
+    @Inject("${gps.api.lkyw.url}")
+    private String lkywApiUrl;
 
-    @Inject("${gps.api.token}")
-    private String gpsApiToken;
+    @Inject("${gps.api.lkyw.token}")
+    private String lkywApiToken;
+
+    @Inject("${gps.api.hc.url}")
+    private String hcApiUrl;
+
+    @Inject("${gps.api.hc.token}")
+    private String hcApiToken;
 
     // 全局共享的GPS处理服务实例
     private GpsProcessingService processingService;
@@ -112,19 +120,36 @@ public class GpsProcessService {
 
             logger.info("获取时间范围内的GPS数据: {} 至 {}", startTimeStr, endTimeStr);
 
-            // 获取GPS数据
-            List<GpsData> gpsDataList = getGpsData(startTimeStr, endTimeStr);
-            logger.info("获取GPS数据: {} 条", gpsDataList.size());
+            // 并行获取两种类型的GPS数据
+            CompletableFuture<List<GpsData>> lkywFuture = CompletableFuture.supplyAsync(() -> 
+                getGpsData(lkywApiUrl, lkywApiToken, startTimeStr, endTimeStr, 1));
+            CompletableFuture<List<GpsData>> hcFuture = CompletableFuture.supplyAsync(() -> 
+                getGpsData(hcApiUrl, hcApiToken, startTimeStr, endTimeStr, 2));
+
+            // 等待两个任务完成
+            List<GpsData> lkywDataList = lkywFuture.get();
+            List<GpsData> hcDataList = hcFuture.get();
+
+            logger.info("获取两客一危GPS数据: {} 条", lkywDataList.size());
+            logger.info("获取货车GPS数据: {} 条", hcDataList.size());
+
+            // 合并数据
+            List<GpsData> allGpsDataList = new ArrayList<>();
+            allGpsDataList.addAll(lkywDataList);
+            allGpsDataList.addAll(hcDataList);
 
             // 处理每条GPS数据（复用已有的处理服务）
-            for (GpsData gpsData : gpsDataList) {
+            for (GpsData gpsData : allGpsDataList) {
                 processingService.processGpsData(gpsData);
             }
 
             // 将处理后的数据写入Doris数据库
-            writeToDoris(gpsDataList);
+            writeToDoris(allGpsDataList);
 
-            logger.info("GPS数据处理完成，共处理: {} 条数据", gpsDataList.size());
+            logger.info("GPS数据处理完成，共处理: {} 条数据", allGpsDataList.size());
+        } catch (InterruptedException | ExecutionException e) {
+            logger.error("处理GPS数据时发生错误", e);
+            Thread.currentThread().interrupt();
         } catch (Exception e) {
             logger.error("处理GPS数据时发生错误", e);
         }
@@ -133,21 +158,24 @@ public class GpsProcessService {
     /**
      * 获取GPS数据
      *
+     * @param apiUrl API地址
+     * @param apiToken API令牌
      * @param startTime 开始时间
      * @param endTime   结束时间
+     * @param vehicleType 车辆类型 1:两客一危 2:货车
      * @return GPS数据列表
      */
-    private List<GpsData> getGpsData(String startTime, String endTime) {
+    private List<GpsData> getGpsData(String apiUrl, String apiToken, String startTime, String endTime, int vehicleType) {
         List<GpsData> gpsDataList = new ArrayList<>();
 
         try {
             // 创建请求头Map
             Map<String, String> headers = new HashMap<>();
-            headers.put("token", gpsApiToken);
+            headers.put("token", apiToken);
             headers.put("Content-Type", "application/json");
 
             // 创建请求对象
-            HttpRequest request = HttpRequest.get(gpsApiUrl);
+            HttpRequest request = HttpRequest.get(apiUrl);
 
             // 使用addHeaders批量添加请求头
             request = request.addHeaders(headers);
@@ -194,6 +222,7 @@ public class GpsProcessService {
                         gpsData.setLat(record.get("lat").getDouble());
                         gpsData.setSpeed(record.get("vec1").getDouble());
                         gpsData.setDirection(record.get("direction").getDouble());
+                        gpsData.setVehicleType(vehicleType); // 设置车辆类型
 
                         gpsDataList.add(gpsData);
                     }
@@ -216,7 +245,7 @@ public class GpsProcessService {
     private void writeToDoris(List<GpsData> gpsDataList) {
         logger.info("将 {} 条GPS数据写入Doris数据库", gpsDataList.size());
 
-        String sql = "INSERT INTO gps_data_table (id, vehicle_no, vehicle_color, gps_time, lon, lat, speed, direction, matched_cross_id, matched_road_seg_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO gps_data_table (id, vehicle_no, vehicle_color, vehicle_type, gps_time, lon, lat, speed, direction, matched_cross_id, matched_road_seg_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dorisDataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -227,13 +256,14 @@ public class GpsProcessService {
                 stmt.setString(1, gpsData.getId());
                 stmt.setString(2, gpsData.getVehicleNo());
                 stmt.setString(3, gpsData.getVehicleColor());
-                stmt.setString(4, gpsData.getGpsTime());
-                stmt.setDouble(5, gpsData.getLon());
-                stmt.setDouble(6, gpsData.getLat());
-                stmt.setDouble(7, gpsData.getSpeed());
-                stmt.setDouble(8, gpsData.getDirection());
-                stmt.setString(9, gpsData.getMatchedCrossId());
-                stmt.setString(10, gpsData.getMatchedRoadSegId());
+                stmt.setInt(4, gpsData.getVehicleType()); // 新增的车辆类型字段
+                stmt.setString(5, gpsData.getGpsTime());
+                stmt.setDouble(6, gpsData.getLon());
+                stmt.setDouble(7, gpsData.getLat());
+                stmt.setDouble(8, gpsData.getSpeed());
+                stmt.setDouble(9, gpsData.getDirection());
+                stmt.setString(10, gpsData.getMatchedCrossId());
+                stmt.setString(11, gpsData.getMatchedRoadSegId());
 
                 stmt.addBatch();
             }

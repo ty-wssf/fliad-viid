@@ -139,7 +139,7 @@ public class GpsProcessingService {
                     double meterDistance = degreeToMeter(degreeDistance);
 
                     // 如果距离小于等于50米，则认为匹配成功
-                    if (meterDistance <= 50) {
+                    if (meterDistance <= 5) {
                         gpsData.setMatchedRoadSegId(roadSegment.getRoadSegId());
                         break;
                     }

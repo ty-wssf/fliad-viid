@@ -24,6 +24,8 @@ public class GpsData {
     private String matchedCrossId;
     // 匹配的路段ID
     private String matchedRoadSegId;
+    // 车辆类型 1:两客一危 2:货车
+    private int vehicleType;
 
     public GpsData() {}
 
@@ -120,6 +122,14 @@ public class GpsData {
         this.matchedRoadSegId = matchedRoadSegId;
     }
 
+    public int getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(int vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
     @Override
     public String toString() {
         return "GpsData{" +
@@ -133,6 +143,7 @@ public class GpsData {
                 ", direction=" + direction +
                 ", matchedCrossId='" + matchedCrossId + '\'' +
                 ", matchedRoadSegId='" + matchedRoadSegId + '\'' +
+                ", vehicleType=" + vehicleType +
                 '}';
     }
 }

@@ -38,6 +38,7 @@ CREATE TABLE `gps_data_table` (
   `id` varchar(64) NOT NULL COMMENT '数据ID',
   `vehicle_no` varchar(32) NOT NULL COMMENT '车辆编号',
   `vehicle_color` varchar(32) DEFAULT NULL COMMENT '车辆颜色',
+  `vehicle_type` int NOT NULL COMMENT '车辆类型 1:两客一危 2:货车',
   `gps_time` datetime NOT NULL COMMENT 'GPS时间',
   `lon` double NOT NULL COMMENT '经度',
   `lat` double NOT NULL COMMENT '纬度',

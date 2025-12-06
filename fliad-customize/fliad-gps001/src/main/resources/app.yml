@@ -19,8 +19,12 @@ solon.datasource.doris:
 # GPS API配置
 gps:
   api:
-    url: http://localhost:12009/jkfw/region/getyzlkywgps
-    token: 8914dfc5-beca-45c9-918c-01791b9c8b62
+    lkyw:
+      url: http://localhost:12009/jkfw/region/getyzlkywgps
+      token: 8914dfc5-beca-45c9-918c-01791b9c8b62
+    hc:
+      url: http://localhost:12009/jkfw/region/getyzhcgps
+      token: 8914dfc5-beca-45c9-918c-01791b9c8b62
 
 #########################################
 # logging configuration

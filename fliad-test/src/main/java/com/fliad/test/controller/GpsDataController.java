@@ -74,8 +74,8 @@ public class GpsDataController {
             record.put("vehicleNo", "湘A" + String.format("%05d", new Random().nextInt(100000)));
             record.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
             record.put("gps_time", kssj);
-            record.put("lon", 112.256562);
-            record.put("lat", 25.630252);
+            record.put("lon", 112.186065);
+            record.put("lat", 25.903278);
             record.put("vec1", new Random().nextInt(120));
             record.put("direction", new Random().nextInt(360));
             dataList.add(record);
@@ -143,8 +143,8 @@ public class GpsDataController {
             record.put("vehicleNo", "湘B" + String.format("%05d", new Random().nextInt(100000)));
             record.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
             record.put("gps_time", kssj);
-            record.put("lon", 112.0 + new Random().nextDouble() * 2);
-            record.put("lat", 28.0 + new Random().nextDouble() * 2);
+            record.put("lon", 112.186065);
+            record.put("lat", 25.903278);
             record.put("vec1", new Random().nextInt(120));
             record.put("direction", new Random().nextInt(360));
             dataList.add(record);
