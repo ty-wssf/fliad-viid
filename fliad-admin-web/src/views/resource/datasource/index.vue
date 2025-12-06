@@ -157,7 +157,9 @@
 	const activeKey = ref('datasource')
 	const datasourceTypeOptions = ref([
 		{ label: 'RabbitMQ', value: 'rabbitmq' },
-		{ label: '定时任务', value: 'cron' }
+		{ label: '定时任务', value: 'cron' },
+		{ label: 'JDBC数据库', value: 'jdbc' },
+		{ label: 'HTTP接口', value: 'http' }
 	])
 
 	// 添加一个方法来获取type的显示标签

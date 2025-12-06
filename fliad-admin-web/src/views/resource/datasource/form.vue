@@ -101,7 +101,8 @@ onMounted(() => {
 	datasourceTypeOptions.value = [
 		{label: 'RabbitMQ', value: 'rabbitmq'},
 		{label: '定时任务', value: 'cron'},
-		{label: 'JDBC数据库', value: 'jdbc'}
+		{label: 'JDBC数据库', value: 'jdbc'},
+		{label: 'HTTP接口', value: 'http'}
 	]
 })
 

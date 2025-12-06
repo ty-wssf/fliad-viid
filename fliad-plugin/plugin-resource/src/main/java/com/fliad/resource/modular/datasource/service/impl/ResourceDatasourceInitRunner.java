@@ -1,15 +1,3 @@
-/*
- * Copyright [2022] [https://www.xiaonuo.vip]
- *
- * Snowy采用APACHE LICENSE 2.0开源协议，您在使用过程中，需要注意以下几点：
- *
- * 1.请不要删除和修改根目录下的LICENSE文件。
- * 2.请不要删除和修改Snowy源码头部的版权声明。
- * 3.本项目代码可免费商业使用，商业使用请保留源码和相关描述文件的项目出处，作者声明等。
- * 4.分发源码时候，请注明软件出处 https://www.xiaonuo.vip
- * 5.不可二次分发开源参与同类竞品，如有想法可联系团队xiaonuobase@qq.com商议合作。
- * 6.若您的项目无法满足以上几点，需要更多功能代码，获取Snowy商业授权许可，请在官网购买授权，地址为 https://www.xiaonuo.vip
- */
 package com.fliad.resource.modular.datasource.service.impl;
 
 import cn.hutool.core.map.MapUtil;
@@ -29,6 +17,8 @@ import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.bean.LifecycleBean;
+import org.noear.solon.core.handle.Context;
+import org.noear.solon.core.handle.Handler;
 import org.noear.solon.expression.snel.SnEL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +56,9 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
 
     // 存储定时任务信息
     private final Map<String, String> datasourceCronTaskIds = new ConcurrentHashMap<>();
+
+    // 存储HTTP接口处理器
+    private final Map<String, Handler> httpEndpointHandlers = new ConcurrentHashMap<>();
 
 
     @Override
@@ -113,9 +106,71 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             case "jdbc":
                 initJdbcConnection(datasource);
                 break;
+            case "http":
+                initHttpEndpoint(datasource);
+                break;
             default:
                 log.warn("不支持的数据源类型：{}", datasource.getType());
                 break;
+        }
+    }
+
+    /**
+     * 初始化 HTTP 接口端点
+     *
+     * @param datasource 数据源实体
+     */
+    private void initHttpEndpoint(ResourceDatasource datasource) {
+        try {
+            // 解析 HTTP 配置
+            String content = datasource.getContent();
+            if (StrUtil.isBlank(content)) {
+                log.warn("HTTP数据源配置内容为空，数据源ID：{}", datasource.getId());
+                return;
+            }
+
+            ONode config = ONode.load(handleEscapeCharacters(content));
+            String path = config.get("path").getString();
+            String method = config.get("method").getString();
+
+            log.info("注册HTTP接口：path={}, method={}", path, method);
+
+            // 创建处理器
+            Handler handler = new HttpEndpointHandler(datasource);
+
+            // 注册路由
+            Solon.app().router().add(path, handler);
+
+            // 存储处理器引用
+            httpEndpointHandlers.put(datasource.getId(), handler);
+
+            log.info("HTTP 接口注册完成，数据源ID：{}，路径：{}", datasource.getId(), path);
+        } catch (Exception e) {
+            log.error("注册 HTTP 接口失败，数据源ID：{}", datasource.getId(), e);
+        }
+    }
+
+    /**
+     * HTTP 接口处理器
+     */
+    private class HttpEndpointHandler implements Handler {
+        private final ResourceDatasource datasource;
+
+        public HttpEndpointHandler(ResourceDatasource datasource) {
+            this.datasource = datasource;
+        }
+
+        @Override
+        public void handle(Context ctx) throws Throwable {
+            log.info("处理HTTP请求，数据源ID：{}，订阅类别：{}", datasource.getId(), datasource.getSubscribeDetail());
+
+            // 获取请求体
+            String requestBody = ctx.body();
+
+            // 返回成功响应
+            ctx.status(200);
+            ctx.renderAndReturn("Success");
+
         }
     }
 
@@ -270,7 +325,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             String username = config.get("username").getString();
             String password = config.get("password").getString();
             String dataSourceName = config.get("dataSourceName").getString();
-            
+
             // 如果未配置数据源名称，则使用数据源ID作为名称
             if (StrUtil.isBlank(dataSourceName)) {
                 dataSourceName = datasource.getId();
