@@ -58,6 +58,18 @@
             <artifactId>HikariCP</artifactId>
             <version>4.0.3</version>
         </dependency>
+
+        <!-- Kafka客户端 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>kafka-solon-cloud-plugin</artifactId>
+        </dependency>
+        
+        <!-- JSON序列化 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>solon-serialization-snack3</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

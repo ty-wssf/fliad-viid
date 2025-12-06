@@ -2,6 +2,9 @@ solon.app:
   name: fliad-gps001
   group: com.fliad
 
+# 服务端口配置
+server.port: 8080
+
 # 数据源配置
 solon.datasource.mysql:
   jdbcUrl: jdbc:mysql://10.20.10.7:3307/test?useSSL=false&serverTimezone=UTC
@@ -25,6 +28,11 @@ gps:
     hc:
       url: http://localhost:12009/jkfw/region/getyzhcgps
       token: 8914dfc5-beca-45c9-918c-01791b9c8b62
+
+# Kafka配置
+kafka:
+  bootstrap:
+    servers: localhost:9092
 
 #########################################
 # logging configuration
