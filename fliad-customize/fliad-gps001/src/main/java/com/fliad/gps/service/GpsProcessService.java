@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -30,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * GPS数据处理服务类（基于Solon框架）
@@ -62,6 +65,41 @@ public class GpsProcessService {
 
     // 全局共享的GPS处理服务实例
     private GpsProcessingService processingService;
+    
+    // 同步任务正在进行标识
+    private final AtomicBoolean syncInProgress = new AtomicBoolean(false);
+
+    /**
+     * 查询Doris数据库中最新的GPS数据时间戳
+     *
+     * @return 最新的GPS数据时间戳，如果无数据则返回null
+     */
+    private Long getLatestGpsTimestampFromDoris() {
+        String sql = "SELECT MAX(gps_time) as latest_time FROM gps_data_table";
+        
+        try (Connection conn = dorisDataSource.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            if (rs.next()) {
+                String latestTimeString = rs.getString("latest_time");
+                if (latestTimeString != null && !latestTimeString.isEmpty()) {
+                    // 尝试解析时间字符串
+                    try {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                        LocalDateTime latestTime = LocalDateTime.parse(latestTimeString, formatter);
+                        return latestTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+                    } catch (Exception e) {
+                        logger.warn("解析最新GPS时间戳时出错: {}", e.getMessage());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("查询Doris数据库最新GPS时间戳时发生错误", e);
+        }
+        
+        return null; // 数据库中没有数据或者查询出错
+    }
 
     /**
      * 服务启动时初始化处理服务
@@ -91,6 +129,12 @@ public class GpsProcessService {
      */
     @Scheduled(fixedRate = 60 * 1000)
     public void processGpsDataJob() {
+        // 检查是否已经有同步任务正在进行
+        if (!syncInProgress.compareAndSet(false, true)) {
+            logger.info("检测到有同步任务正在进行，本次调度直接退出");
+            return;
+        }
+
         try {
             logger.info("开始处理GPS数据...");
 
@@ -105,53 +149,94 @@ public class GpsProcessService {
                 }
             }
 
-            // 获取当前时间和前一分钟时间
-            long now = System.currentTimeMillis();
-            long endTime = now - 60000; // 1分钟前
-            long startTime = endTime - 60000; // 2分钟前
-
-            // 转换为日期时间格式
-            LocalDateTime endDateTime = Instant.ofEpochMilli(endTime).atZone(ZoneId.systemDefault()).toLocalDateTime();
-            LocalDateTime startDateTime = Instant.ofEpochMilli(startTime).atZone(ZoneId.systemDefault()).toLocalDateTime();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            String startTimeStr = startDateTime.format(formatter);
-            String endTimeStr = endDateTime.format(formatter);
-
-            logger.info("获取时间范围内的GPS数据: {} 至 {}", startTimeStr, endTimeStr);
-
-            // 并行获取两种类型的GPS数据
-            CompletableFuture<List<GpsData>> lkywFuture = CompletableFuture.supplyAsync(() -> 
-                getGpsData(lkywApiUrl, lkywApiToken, startTimeStr, endTimeStr, 1));
-            CompletableFuture<List<GpsData>> hcFuture = CompletableFuture.supplyAsync(() -> 
-                getGpsData(hcApiUrl, hcApiToken, startTimeStr, endTimeStr, 2));
-
-            // 等待两个任务完成
-            List<GpsData> lkywDataList = lkywFuture.get();
-            List<GpsData> hcDataList = hcFuture.get();
-
-            logger.info("获取两客一危GPS数据: {} 条", lkywDataList.size());
-            logger.info("获取货车GPS数据: {} 条", hcDataList.size());
-
-            // 合并数据
-            List<GpsData> allGpsDataList = new ArrayList<>();
-            allGpsDataList.addAll(lkywDataList);
-            allGpsDataList.addAll(hcDataList);
-
-            // 处理每条GPS数据（复用已有的处理服务）
-            for (GpsData gpsData : allGpsDataList) {
-                processingService.processGpsData(gpsData);
+            // 获取Doris数据库中的最新GPS数据时间戳
+            Long latestTimestamp = getLatestGpsTimestampFromDoris();
+            long startTime;
+            
+            if (latestTimestamp == null) {
+                // 第一次同步，使用当前时间前20分钟作为起始时间
+                startTime = System.currentTimeMillis() - 20 * 60 * 1000;
+                logger.info("首次同步，使用默认起始时间: {} 分钟前", 20);
+            } else {
+                // 基于最新数据时间继续同步
+                startTime = latestTimestamp;
+                logger.info("基于最新数据时间继续同步: {}", 
+                    LocalDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneId.systemDefault()));
             }
 
-            // 将处理后的数据写入Doris数据库
-            writeToDoris(allGpsDataList);
+            // 设置结束时间为当前时间前5分钟
+            long endTimeLimit = System.currentTimeMillis() - 5 * 60 * 1000;
+            
+            // 循环同步，直到达到时间限制
+            int totalProcessedCount = 0;
+            while (startTime < endTimeLimit) {
+                // 检查是否已经有其他任务在运行（额外保护）
+                if (!syncInProgress.get()) {
+                    logger.warn("同步任务被中断");
+                    break;
+                }
+                
+                // 每次同步1分钟的数据
+                long endTime = Math.min(startTime + 60 * 1000, endTimeLimit);
 
-            logger.info("GPS数据处理完成，共处理: {} 条数据", allGpsDataList.size());
+                // 转换为日期时间格式
+                LocalDateTime startDateTime = Instant.ofEpochMilli(startTime).atZone(ZoneId.systemDefault()).toLocalDateTime();
+                LocalDateTime endDateTime = Instant.ofEpochMilli(endTime).atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String startTimeStr = startDateTime.format(formatter);
+                String endTimeStr = endDateTime.format(formatter);
+
+                logger.info("获取时间范围内的GPS数据: {} 至 {}", startTimeStr, endTimeStr);
+
+                // 并行获取两种类型的GPS数据
+                CompletableFuture<List<GpsData>> lkywFuture = CompletableFuture.supplyAsync(() -> 
+                    getGpsData(lkywApiUrl, lkywApiToken, startTimeStr, endTimeStr, 1));
+                CompletableFuture<List<GpsData>> hcFuture = CompletableFuture.supplyAsync(() -> 
+                    getGpsData(hcApiUrl, hcApiToken, startTimeStr, endTimeStr, 2));
+
+                // 等待两个任务完成
+                List<GpsData> lkywDataList = lkywFuture.get();
+                List<GpsData> hcDataList = hcFuture.get();
+
+                logger.info("获取两客一危GPS数据: {} 条", lkywDataList.size());
+                logger.info("获取货车GPS数据: {} 条", hcDataList.size());
+
+                // 合并数据
+                List<GpsData> allGpsDataList = new ArrayList<>();
+                allGpsDataList.addAll(lkywDataList);
+                allGpsDataList.addAll(hcDataList);
+
+                // 处理每条GPS数据（复用已有的处理服务）
+                for (GpsData gpsData : allGpsDataList) {
+                    processingService.processGpsData(gpsData);
+                }
+
+                // 将处理后的数据写入Doris数据库
+                if (!allGpsDataList.isEmpty()) {
+                    writeToDoris(allGpsDataList);
+                    totalProcessedCount += allGpsDataList.size();
+                }
+
+                logger.info("时间段 {} 至 {} 数据处理完成，共处理: {} 条数据", startTimeStr, endTimeStr, allGpsDataList.size());
+                
+                // 更新下一次循环的起始时间
+                startTime = endTime;
+                
+                // 添加短暂延迟，避免对API造成过大压力
+                Thread.sleep(100);
+            }
+
+            logger.info("本轮GPS数据同步任务完成，总共处理: {} 条数据", totalProcessedCount);
         } catch (InterruptedException | ExecutionException e) {
             logger.error("处理GPS数据时发生错误", e);
             Thread.currentThread().interrupt();
         } catch (Exception e) {
             logger.error("处理GPS数据时发生错误", e);
+        } finally {
+            // 确保释放同步锁
+            syncInProgress.set(false);
+            logger.info("GPS数据同步任务结束，释放同步锁");
         }
     }
 
@@ -184,7 +269,7 @@ public class GpsProcessService {
             Map<String, Object> params = new HashMap<>();
             params.put("kssj", startTime);
             params.put("jssj", endTime);
-            params.put("size", "1000"); // 增加获取的数据量
+            params.put("size", "10000"); // 增加获取的数据量
 
             // 转换为 JSON
             String jsonBody = ONode.ofBean(params).toJson();
