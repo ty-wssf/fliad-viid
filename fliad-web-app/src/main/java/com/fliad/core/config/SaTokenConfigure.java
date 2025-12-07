@@ -96,7 +96,8 @@ public class SaTokenConfigure {
             "/report/**",
             "/resource/workflow/detail",
             "/resource/workflow/edit",
-            "/hikvision/defense/listen"
+            "/hikvision/defense/listen",
+            "/api/**"
     };
 
     /**

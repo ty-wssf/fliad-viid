@@ -7,22 +7,6 @@
         </a-form-item>
       </a-col>
     </a-row>
-    <a-row :gutter="24">
-      <a-col :span="12">
-        <a-form-item label="请求方法：" name="httpMethod">
-          <a-select
-            v-model:value="formModel.httpMethod"
-            placeholder="请选择请求方法"
-            :options="methodOptions"
-          />
-        </a-form-item>
-      </a-col>
-      <a-col :span="12">
-        <a-form-item label="脚本过滤器：" name="scriptFilter">
-          <a-input v-model:value="formModel.scriptFilter" placeholder="请输入脚本过滤器表达式" allow-clear/>
-        </a-form-item>
-      </a-col>
-    </a-row>
   </div>
 </template>
 

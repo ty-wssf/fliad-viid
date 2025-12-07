@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
+import com.fliad.common.pojo.CommonResult;
 import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
 import com.fliad.resource.modular.datasource.service.ResourceDatasourceService;
 import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
@@ -169,7 +170,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
 
             // 返回成功响应
             ctx.status(200);
-            ctx.renderAndReturn("Success");
+            ctx.render(CommonResult.ok());
 
         }
     }
