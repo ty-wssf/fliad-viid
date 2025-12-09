@@ -41,7 +41,7 @@ public class RabbitMqService {
         try {
             String message = ONode.ofBean(record).toString();
             channel.basicPublish(rabbitProperties.getExchange(), "", null, message.getBytes());
-            logger.info("Sent message for vehicle: {}", record.getVehicle_no());
+            logger.debug("Sent message for vehicle: {}", record.getVehicle_no());
         } catch (IOException e) {
             logger.error("Failed to send message to RabbitMQ", e);
         }

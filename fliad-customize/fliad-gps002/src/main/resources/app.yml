@@ -8,7 +8,8 @@ ftp:
   port: 2121
   username: tjjgj
   password: Tjjgj@202512
-  file: /data/12t.txt
+  # 配置ftp目录
+  file: /dhcData/test1/
 
 # RabbitMQ配置
 rabbitmq:
