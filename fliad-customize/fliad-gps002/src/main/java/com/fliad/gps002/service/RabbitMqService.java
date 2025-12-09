@@ -40,8 +40,13 @@ public class RabbitMqService {
     public void sendMessage(VehicleRecord record) {
         try {
             String message = ONode.ofBean(record).toString();
-            channel.basicPublish(rabbitProperties.getExchange(), "", null, message.getBytes());
-            logger.debug("Sent message for vehicle: {}", record.getVehicle_no());
+            // 优先使用配置文件中的路由键，如果没有则使用默认值
+            String routingKey = rabbitProperties.getRoutingKey();
+            if (routingKey == null || routingKey.isEmpty()) {
+                routingKey = "vehicle.data"; // 默认路由键
+            }
+            channel.basicPublish(rabbitProperties.getExchange(), routingKey, null, message.getBytes());
+            logger.debug("Sent message for vehicle: {} with routing key: {}", record.getVehicle_no(), routingKey);
         } catch (IOException e) {
             logger.error("Failed to send message to RabbitMQ", e);
         }

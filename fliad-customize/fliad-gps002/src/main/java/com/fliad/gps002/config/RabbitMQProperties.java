@@ -9,6 +9,7 @@ public class RabbitMQProperties {
     private String username;
     private String password;
     private String exchange;
+    private String routingKey;
 
     public String getHost() {
         return host;
@@ -48,5 +49,13 @@ public class RabbitMQProperties {
 
     public void setExchange(String exchange) {
         this.exchange = exchange;
+    }
+
+    public String getRoutingKey() {
+        return routingKey;
+    }
+
+    public void setRoutingKey(String routingKey) {
+        this.routingKey = routingKey;
     }
 }
