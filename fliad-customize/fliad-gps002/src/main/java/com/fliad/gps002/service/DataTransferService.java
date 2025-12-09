@@ -86,16 +86,8 @@ public class DataTransferService {
                 long count = processedRecords.incrementAndGet();
 
                 // 每处理100条记录输出一次日志
-                if (count % 100 == 0) {
+                if (count % 1000 == 0) {
                     logger.info("Processed {} records success", count);
-                }
-
-                // 小延迟避免消息队列过载
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    logger.warn("Processing thread was interrupted", e);
                 }
             });
 
