@@ -14,6 +14,7 @@
     <description>定制模块父模块</description>
     <modules>
         <module>fliad-gps001</module>
+        <module>fliad-gps002</module>
     </modules>
 
     <dependencies>

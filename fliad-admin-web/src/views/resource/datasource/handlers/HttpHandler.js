@@ -62,7 +62,8 @@ export default {
    */
   getValidationRules() {
     return {
-      httpPath: [{ required: true, message: '请输入接口路径' }]
+      httpPath: [{ required: true, message: '请输入接口路径' }],
+		script: [{ required: true, message: '请输入脚本' }],
     }
   }
 }

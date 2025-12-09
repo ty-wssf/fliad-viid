@@ -29,10 +29,15 @@ gps:
       url: http://localhost:12009/jkfw/region/getyzhcgps
       token: 8914dfc5-beca-45c9-918c-01791b9c8b62
 
-# Kafka配置
-kafka:
-  bootstrap:
-    servers: localhost:9092
+# RabbitMQ配置
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  exchange: vehicle_stat_exchange
+  routingKey: vehicle.stat
+  queueName: vehicle_stat_queue
 
 #########################################
 # logging configuration

@@ -1,0 +1,32 @@
+solon.app:
+  name: fliad-gps002
+  group: com.fliad
+
+# FTP配置
+ftp:
+  server: 203.83.239.109
+  port: 2121
+  username: tjjgj
+  password: Tjjgj@202512
+  file: /data/12t.txt
+
+# RabbitMQ配置
+rabbitmq:
+  host: 10.20.10.61
+  port: 5672
+  username: ahbcht
+  password: Mq@25_#57Hf.
+  exchange: BCHT_ITS_DATA
+
+# 日志配置
+solon.logging.appender:
+  console:
+    level: INFO
+    enable: true
+  file:
+    name: "logs/${solon.app.name}"
+    level: INFO
+    enable: true
+    extension: ".log"
+    maxFileSize: "10 MB"
+    maxHistory: "7"

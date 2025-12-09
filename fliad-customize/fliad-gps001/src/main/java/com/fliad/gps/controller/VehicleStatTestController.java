@@ -100,7 +100,7 @@ public class VehicleStatTestController {
             logger.info("开始测试推送 {} 的车辆统计数据到Kafka", statDate);
             
             // 推送统计数据
-            vehicleStatService.pushStatDataToKafka(statDate);
+            vehicleStatService.pushStatDataToRabbitMQ(statDate);
             
             logger.info("车辆统计数据推送测试执行完成");
             return "车辆统计数据推送测试执行完成";

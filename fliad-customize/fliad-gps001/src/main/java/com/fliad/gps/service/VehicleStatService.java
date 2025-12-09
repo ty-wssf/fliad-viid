@@ -28,10 +28,10 @@ public class VehicleStatService {
     private DataSource dorisDataSource;
 
     @Inject
-    private KafkaProducerService kafkaProducerService;
+    private RabbitMQProducerService rabbitMQProducerService;
 
     /**
-     * 每天凌晨3点执行一次的定时任务，用于统计前一天的车辆数据并推送到Kafka
+     * 每天凌晨3点执行一次的定时任务，用于统计前一天的车辆数据并推送到RabbitMQ
      */
     @Scheduled(cron = "0 0 3 * * ?")
     public void statAndPushVehicleDataJob() {
@@ -54,8 +54,8 @@ public class VehicleStatService {
             allStats.addAll(crossStats);
             allStats.addAll(roadSegmentStats);
 
-            // 推送到Kafka
-            pushToKafka(allStats);
+            // 推送到RabbitMQ
+            pushToRabbitMQ(allStats);
 
             logger.info("车辆统计数据任务执行完成，共处理 {} 条数据", allStats.size());
         } catch (Exception e) {
@@ -166,18 +166,18 @@ public class VehicleStatService {
     }
 
     /**
-     * 将统计数据推送到Kafka
+     * 将统计数据推送到RabbitMQ
      *
      * @param stats 统计数据列表
      */
-    public void pushToKafka(List<VehicleStatData> stats) {
+    public void pushToRabbitMQ(List<VehicleStatData> stats) {
         for (VehicleStatData stat : stats) {
             try {
                 String jsonData = ONode.ofBean(stat).toJson();
-                kafkaProducerService.sendMessage("vehicle_stat_topic", jsonData);
-                logger.debug("推送统计数据到Kafka: {}", jsonData);
+                rabbitMQProducerService.sendMessage(jsonData);
+                logger.debug("推送统计数据到RabbitMQ: {}", jsonData);
             } catch (Exception e) {
-                logger.error("推送统计数据到Kafka时发生错误", e);
+                logger.error("推送统计数据到RabbitMQ时发生错误", e);
             }
         }
     }
@@ -200,12 +200,12 @@ public class VehicleStatService {
     }
     
     /**
-     * 推送指定日期的统计数据到Kafka（公开方法，用于测试）
+     * 推送指定日期的统计数据到RabbitMQ（公开方法，用于测试）
      * 
      * @param date 指定日期
      */
-    public void pushStatDataToKafka(LocalDate date) {
+    public void pushStatDataToRabbitMQ(LocalDate date) {
         List<VehicleStatData> statDataList = getStatData(date);
-        pushToKafka(statDataList);
+        pushToRabbitMQ(statDataList);
     }
 }

@@ -1,5 +1,6 @@
 package com.fliad.gps.service;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
@@ -65,7 +66,7 @@ public class GpsProcessService {
 
     // 全局共享的GPS处理服务实例
     private GpsProcessingService processingService;
-    
+
     // 同步任务正在进行标识
     private final AtomicBoolean syncInProgress = new AtomicBoolean(false);
 
@@ -76,11 +77,11 @@ public class GpsProcessService {
      */
     private Long getLatestGpsTimestampFromDoris() {
         String sql = "SELECT MAX(gps_time) as latest_time FROM gps_data_table";
-        
+
         try (Connection conn = dorisDataSource.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            
+
             if (rs.next()) {
                 String latestTimeString = rs.getString("latest_time");
                 if (latestTimeString != null && !latestTimeString.isEmpty()) {
@@ -97,7 +98,7 @@ public class GpsProcessService {
         } catch (Exception e) {
             logger.error("查询Doris数据库最新GPS时间戳时发生错误", e);
         }
-        
+
         return null; // 数据库中没有数据或者查询出错
     }
 
@@ -152,21 +153,21 @@ public class GpsProcessService {
             // 获取Doris数据库中的最新GPS数据时间戳
             Long latestTimestamp = getLatestGpsTimestampFromDoris();
             long startTime;
-            
+
             if (latestTimestamp == null) {
                 // 第一次同步，使用当前时间前20分钟作为起始时间
                 startTime = System.currentTimeMillis() - 20 * 60 * 1000;
                 logger.info("首次同步，使用默认起始时间: {} 分钟前", 20);
             } else {
-                // 基于最新数据时间继续同步
-                startTime = latestTimestamp;
-                logger.info("基于最新数据时间继续同步: {}", 
-                    LocalDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneId.systemDefault()));
+                // 基于最新数据时间继续同步，增加1秒避免重复获取
+                startTime = latestTimestamp + 1000;
+                logger.info("基于最新数据时间继续同步: {}",
+                        LocalDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneId.systemDefault()));
             }
 
             // 设置结束时间为当前时间前5分钟
             long endTimeLimit = System.currentTimeMillis() - 5 * 60 * 1000;
-            
+
             // 循环同步，直到达到时间限制
             int totalProcessedCount = 0;
             while (startTime < endTimeLimit) {
@@ -175,9 +176,9 @@ public class GpsProcessService {
                     logger.warn("同步任务被中断");
                     break;
                 }
-                
-                // 每次同步1分钟的数据
-                long endTime = Math.min(startTime + 60 * 1000, endTimeLimit);
+
+                // 每次同步30秒的数据
+                long endTime = Math.min(startTime + 30 * 1000 - 1, endTimeLimit);
 
                 // 转换为日期时间格式
                 LocalDateTime startDateTime = Instant.ofEpochMilli(startTime).atZone(ZoneId.systemDefault()).toLocalDateTime();
@@ -190,10 +191,10 @@ public class GpsProcessService {
                 logger.info("获取时间范围内的GPS数据: {} 至 {}", startTimeStr, endTimeStr);
 
                 // 并行获取两种类型的GPS数据
-                CompletableFuture<List<GpsData>> lkywFuture = CompletableFuture.supplyAsync(() -> 
-                    getGpsData(lkywApiUrl, lkywApiToken, startTimeStr, endTimeStr, 1));
-                CompletableFuture<List<GpsData>> hcFuture = CompletableFuture.supplyAsync(() -> 
-                    getGpsData(hcApiUrl, hcApiToken, startTimeStr, endTimeStr, 2));
+                CompletableFuture<List<GpsData>> lkywFuture = CompletableFuture.supplyAsync(() ->
+                        getGpsData(lkywApiUrl, lkywApiToken, startTimeStr, endTimeStr, 1));
+                CompletableFuture<List<GpsData>> hcFuture = CompletableFuture.supplyAsync(() ->
+                        getGpsData(hcApiUrl, hcApiToken, startTimeStr, endTimeStr, 2));
 
                 // 等待两个任务完成
                 List<GpsData> lkywDataList = lkywFuture.get();
@@ -219,10 +220,10 @@ public class GpsProcessService {
                 }
 
                 logger.info("时间段 {} 至 {} 数据处理完成，共处理: {} 条数据", startTimeStr, endTimeStr, allGpsDataList.size());
-                
-                // 更新下一次循环的起始时间
-                startTime = endTime;
-                
+
+                // 更新下一次循环的起始时间，增加1秒避免重复获取
+                startTime = endTime + 1000;
+
                 // 添加短暂延迟，避免对API造成过大压力
                 Thread.sleep(100);
             }
@@ -243,10 +244,10 @@ public class GpsProcessService {
     /**
      * 获取GPS数据
      *
-     * @param apiUrl API地址
-     * @param apiToken API令牌
-     * @param startTime 开始时间
-     * @param endTime   结束时间
+     * @param apiUrl      API地址
+     * @param apiToken    API令牌
+     * @param startTime   开始时间
+     * @param endTime     结束时间
      * @param vehicleType 车辆类型 1:两客一危 2:货车
      * @return GPS数据列表
      */
@@ -257,25 +258,15 @@ public class GpsProcessService {
             // 创建请求头Map
             Map<String, String> headers = new HashMap<>();
             headers.put("token", apiToken);
-            headers.put("Content-Type", "application/json");
+
+            // 构建带查询参数的URL
+            String urlWithParams = apiUrl + "?kssj=" + startTime + "&jssj=" + endTime + "&size=10000";
 
             // 创建请求对象
-            HttpRequest request = HttpRequest.get(apiUrl);
+            HttpRequest request = HttpRequest.get(urlWithParams);
 
             // 使用addHeaders批量添加请求头
             request = request.addHeaders(headers);
-
-            // 创建参数 Map
-            Map<String, Object> params = new HashMap<>();
-            params.put("kssj", startTime);
-            params.put("jssj", endTime);
-            params.put("size", "10000"); // 增加获取的数据量
-
-            // 转换为 JSON
-            String jsonBody = ONode.ofBean(params).toJson();
-
-            // 添加参数
-            request = request.body(jsonBody);
 
             // 设置超时
             request = request.timeout(30000);
@@ -293,20 +284,22 @@ public class GpsProcessService {
             // 解析响应数据
             ONode result = ONode.ofJson(responseBody);
             if (result.get("success").getBoolean()) {
-                ONode hits = result.get("data").get("hits").get("hits");
+                String data = result.get("data").getString();
+                ONode hits = ONode.ofJson(data).get("hits").get("hits");
                 if (hits.isArray()) {
                     for (int i = 0; i < hits.size(); i++) {
                         ONode record = hits.get(i);
 
                         GpsData gpsData = new GpsData();
-                        gpsData.setId(record.get("id").getString());
-                        gpsData.setVehicleNo(record.get("vehicleNo").getString());
-                        gpsData.setVehicleColor(record.get("vehicleColor").getString());
-                        gpsData.setGpsTime(record.get("gps_time").getString());
-                        gpsData.setLon(record.get("lon").getDouble());
-                        gpsData.setLat(record.get("lat").getDouble());
-                        gpsData.setSpeed(record.get("vec1").getDouble());
-                        gpsData.setDirection(record.get("direction").getDouble());
+                        gpsData.setId(record.get("_id").getString());
+                        ONode source = record.get("_source");
+                        gpsData.setVehicleNo(source.get("vehicleNo").getString());
+                        gpsData.setVehicleColor(source.get("vehicleColor").getString());
+                        gpsData.setGpsTime(source.get("gps_time").getString());
+                        gpsData.setLon(source.get("lon").getDouble());
+                        gpsData.setLat(source.get("lat").getDouble());
+                        gpsData.setSpeed(source.get("vec1").getDouble());
+                        gpsData.setDirection(source.get("direction").getDouble());
                         gpsData.setVehicleType(vehicleType); // 设置车辆类型
 
                         gpsDataList.add(gpsData);
@@ -330,7 +323,7 @@ public class GpsProcessService {
     private void writeToDoris(List<GpsData> gpsDataList) {
         logger.info("将 {} 条GPS数据写入Doris数据库", gpsDataList.size());
 
-        String sql = "INSERT INTO gps_data_table (id, vehicle_no, vehicle_color, vehicle_type, gps_time, lon, lat, speed, direction, matched_cross_id, matched_road_seg_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT IGNORE INTO gps_data_table (id, vehicle_no, vehicle_color, vehicle_type, gps_time, lon, lat, speed, direction, matched_cross_id, matched_road_seg_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dorisDataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -353,10 +346,18 @@ public class GpsProcessService {
                 stmt.addBatch();
             }
 
-            stmt.executeBatch();
+            int[] results = stmt.executeBatch();
             conn.commit();
 
-            logger.info("成功写入 {} 条GPS数据到Doris数据库", gpsDataList.size());
+            // 计算实际插入的记录数
+            int insertedCount = 0;
+            for (int result : results) {
+                if (result != PreparedStatement.EXECUTE_FAILED) {
+                    insertedCount++;
+                }
+            }
+
+            logger.info("成功写入 {} 条GPS数据到Doris数据库（忽略 {} 条重复数据）", insertedCount, gpsDataList.size() - insertedCount);
         } catch (Exception e) {
             logger.error("写入Doris数据库时发生错误", e);
         }

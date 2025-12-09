@@ -137,7 +137,7 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
             log.info("注册HTTP接口：path={}, method={}", path, method);
 
             // 创建处理器
-            Handler handler = new HttpEndpointHandler(datasource);
+            Handler handler = new HttpEndpointHandler(datasource, config);
 
             // 注册路由
             Solon.app().router().add(path, handler);
@@ -156,15 +156,18 @@ public class ResourceDatasourceInitRunner implements LifecycleBean {
      */
     private class HttpEndpointHandler implements Handler {
         private final ResourceDatasource datasource;
+        private final ONode config;
 
-        public HttpEndpointHandler(ResourceDatasource datasource) {
+        public HttpEndpointHandler(ResourceDatasource datasource, ONode config) {
             this.datasource = datasource;
+            this.config = config;
         }
 
         @Override
         public void handle(Context ctx) throws Throwable {
             log.info("处理HTTP请求，数据源ID：{}，订阅类别：{}", datasource.getId(), datasource.getSubscribeDetail());
 
+            String script = config.get("script").getString();
             // 获取请求体
             String requestBody = ctx.body();
 
