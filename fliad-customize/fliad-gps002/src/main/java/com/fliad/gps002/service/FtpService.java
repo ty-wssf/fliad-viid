@@ -12,9 +12,14 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -77,8 +82,8 @@ public class FtpService {
                 if (file.isDirectory()) {
                     processJsonFilesRecursively(fullPath, recordProcessor);
                 } 
-                // 如果是文件且以.dat结尾，则处理
-                else if (file.isFile() && fileName.toLowerCase().endsWith(".dat")) {
+                // 如果是文件且以.zip结尾，则处理
+                else if (file.isFile() && fileName.toLowerCase().endsWith(".zip")) {
                     processJsonFile(fullPath, recordProcessor);
                 }
             }
@@ -86,29 +91,68 @@ public class FtpService {
     }
     
     /**
-     * 处理单个JSON文件，逐条处理其中的记录
+     * 处理单个ZIP文件，解压后处理其中的JSON数据
      *
      * @param filePath 文件路径
      * @param recordProcessor 记录处理器
      */
     private void processJsonFile(String filePath, Consumer<VehicleRecord> recordProcessor) {
+        LocalDateTime zipStart = LocalDateTime.now();
+        int fileCount = 0;
+        long totalRecords = 0;
+        
         try (InputStream inputStream = ftpClient.retrieveFileStream(filePath)) {
             if (inputStream != null) {
-                String gpsDataStr = IoUtil.transferToString(inputStream);
-                GpsData gpsData = ONode.deserialize(gpsDataStr, GpsData.class);
-                if (gpsData != null && gpsData.getRecords() != null) {
-                    for (VehicleRecord record : gpsData.getRecords()) {
-                        recordProcessor.accept(record);
+                // 使用ZipInputStream处理ZIP文件
+                try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+                    ZipEntry entry;
+                    while ((entry = zipInputStream.getNextEntry()) != null) {
+                        // 只处理非目录的文件
+                        if (!entry.isDirectory()) {
+                            LocalDateTime fileStart = LocalDateTime.now();
+                            fileCount++;
+                            
+                            String gpsDataStr = IoUtil.transferToString(zipInputStream);
+                            GpsData gpsData = ONode.deserialize(gpsDataStr, GpsData.class);
+                            if (gpsData != null && gpsData.getRecords() != null) {
+                                int recordCount = 0;
+                                for (VehicleRecord record : gpsData.getRecords()) {
+                                    recordProcessor.accept(record);
+                                    recordCount++;
+                                }
+                                totalRecords += recordCount;
+                                
+                                LocalDateTime fileEnd = LocalDateTime.now();
+                                long fileDuration = ChronoUnit.MILLIS.between(fileStart, fileEnd);
+                                logger.info("Processed file '{}' from ZIP '{}' with {} records in {} ms", 
+                                    entry.getName(), filePath, recordCount, fileDuration);
+                            }
+                        }
+                        // 关闭当前entry
+                        zipInputStream.closeEntry();
                     }
                 }
                 ftpClient.completePendingCommand();
-                logger.info("Processed file: {}, records count: {}", filePath, 
-                    gpsData != null && gpsData.getRecords() != null ? gpsData.getRecords().size() : 0);
+                
+                LocalDateTime zipEnd = LocalDateTime.now();
+                long zipDuration = ChronoUnit.MILLIS.between(zipStart, zipEnd);
+                logger.info("Processed ZIP file: {} with {} files and {} records in {} ms", 
+                    filePath, fileCount, totalRecords, zipDuration);
+                
+                // 删除已处理的文件
+                boolean deleted = ftpClient.deleteFile(filePath);
+                if (deleted) {
+                    logger.info("Successfully deleted file: {}", filePath);
+                } else {
+                    logger.warn("Failed to delete file: {}", filePath);
+                }
             } else {
                 logger.warn("Failed to retrieve file: {}", filePath);
             }
         } catch (Exception e) {
-            logger.error("Failed to process JSON file: {}", filePath, e);
+            LocalDateTime zipEnd = LocalDateTime.now();
+            long zipDuration = ChronoUnit.MILLIS.between(zipStart, zipEnd);
+            logger.error("Failed to process ZIP file: {} in {} ms", filePath, zipDuration, e);
         }
     }
 

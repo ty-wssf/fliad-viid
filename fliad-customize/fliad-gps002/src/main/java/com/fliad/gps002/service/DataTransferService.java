@@ -87,7 +87,7 @@ public class DataTransferService {
 
                 // 每处理100条记录输出一次日志
                 if (count % 100 == 0) {
-                    logger.info("Processed {} records so far", count);
+                    logger.info("Processed {} records success", count);
                 }
 
                 // 小延迟避免消息队列过载
