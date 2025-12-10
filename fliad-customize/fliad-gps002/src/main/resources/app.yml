@@ -4,10 +4,10 @@ solon.app:
 
 # FTP配置
 ftp:
-  server: 203.83.239.109
+  server: 127.0.0.1
   port: 2121
-  username: tjjgj
-  password: Tjjgj@202512
+  username: xxx
+  password: xxx
   # 配置ftp目录
   file: /dhcData
 
