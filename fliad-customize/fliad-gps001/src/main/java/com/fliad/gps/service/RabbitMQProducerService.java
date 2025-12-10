@@ -93,20 +93,7 @@ public class RabbitMQProducerService {
      */
     public void sendMessage(String message) {
         try {
-            ONode node = ONode.ofJson(message);
-            VehicleRecord vehicleRecord = new VehicleRecord();
-            vehicleRecord.setGuid(node.get("id").getLong());
-            vehicleRecord.setVehicle_no(node.get("vehicle_no").getString());
-            vehicleRecord.setVehicle_color(node.get("vehicle_color").getInt());
-            vehicleRecord.setEncrypt(false);
-            vehicleRecord.setDate_time(node.get("gps_time").getLong());
-            vehicleRecord.setVehicle_type(node.get("v").getInt());
-            vehicleRecord.setLng(node.get("lon").getInt());
-            vehicleRecord.setLat(node.get("lat").getInt());
-            vehicleRecord.setVelocity1(node.get("speed").getDouble());
-            vehicleRecord.setVelocity2(node.get("speed").getDouble());
-            vehicleRecord.setDirection(node.get("direction").getInt());
-            channel.basicPublish(exchange, routingKey, null, ONode.ofBean(vehicleRecord).toString().getBytes(StandardCharsets.UTF_8));
+            channel.basicPublish(exchange, routingKey, null, message.getBytes(StandardCharsets.UTF_8));
             logger.debug("成功发送消息到RabbitMQ: {}", message);
         } catch (Exception e) {
             logger.error("发送消息到RabbitMQ时发生错误", e);

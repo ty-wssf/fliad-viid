@@ -67,6 +67,10 @@ public class GpsProcessService {
     @Inject("${gps.api.hc.token}")
     private String hcApiToken;
 
+    // 是否写入Doris配置项
+    @Inject("${gps.process.writeDoris:true}")
+    private boolean writeDoris;
+
     // 全局共享的GPS处理服务实例
     private GpsProcessingService processingService;
 
@@ -216,6 +220,9 @@ public class GpsProcessService {
                     processingService.processGpsData(gpsData);
                 }
 
+                // 写入rabbitmq
+                writeToRabbitMQ(allGpsDataList);
+
                 // 将处理后的数据写入Doris数据库
                 if (!allGpsDataList.isEmpty()) {
                     writeToDoris(allGpsDataList);
@@ -242,6 +249,11 @@ public class GpsProcessService {
             syncInProgress.set(false);
             logger.info("GPS数据同步任务结束，释放同步锁");
         }
+    }
+
+    // 写入RabbitMQ
+    private void writeToRabbitMQ(List<GpsData> allGpsDataList) {
+        
     }
 
     /**
@@ -324,6 +336,12 @@ public class GpsProcessService {
      * @param gpsDataList GPS数据列表
      */
     private void writeToDoris(List<GpsData> gpsDataList) {
+        // 检查是否启用写入Doris
+        if (!writeDoris) {
+            logger.info("写入Doris功能已禁用，跳过写入操作");
+            return;
+        }
+        
         logger.info("将 {} 条GPS数据写入Doris数据库", gpsDataList.size());
         
         // 使用Stream Load方式写入Doris

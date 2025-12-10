@@ -22,6 +22,8 @@ solon.datasource.doris:
 
 # GPS API配置
 gps:
+  process:
+    writeDoris: true  # 是否写入Doris数据库
   api:
     lkyw:
       url: http://localhost:12009/jkfw/region/getyzlkywgps
