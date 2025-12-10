@@ -70,14 +70,16 @@ public class GpsDataController {
         List<Map<String, Object>> dataList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Map<String, Object> record = new HashMap<>();
-            record.put("id", UUID.randomUUID().toString());
-            record.put("vehicleNo", "湘A" + String.format("%05d", new Random().nextInt(100000)));
-            record.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
-            record.put("gps_time", kssj);
-            record.put("lon", 112.186065);
-            record.put("lat", 25.903278);
-            record.put("vec1", new Random().nextInt(120));
-            record.put("direction", new Random().nextInt(360));
+            Map<String, Object> record_ = new HashMap<>();
+            record.put("_id", UUID.randomUUID().toString());
+            record_.put("vehicleNo", "湘A" + String.format("%05d", new Random().nextInt(100000)));
+            record_.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
+            record_.put("gps_time", kssj);
+            record_.put("lon", 112.186065);
+            record_.put("lat", 25.903278);
+            record_.put("vec1", new Random().nextInt(120));
+            record_.put("direction", new Random().nextInt(360));
+            record.put("_source", record_);
             dataList.add(record);
         }
 
@@ -139,14 +141,16 @@ public class GpsDataController {
         List<Map<String, Object>> dataList = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             Map<String, Object> record = new HashMap<>();
-            record.put("id", UUID.randomUUID().toString());
-            record.put("vehicleNo", "湘B" + String.format("%05d", new Random().nextInt(100000)));
-            record.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
-            record.put("gps_time", kssj);
-            record.put("lon", 112.186065);
-            record.put("lat", 25.903278);
-            record.put("vec1", new Random().nextInt(120));
-            record.put("direction", new Random().nextInt(360));
+            Map<String, Object> record_ = new HashMap<>();
+            record.put("_id", UUID.randomUUID().toString());
+            record_.put("vehicleNo", "湘B" + String.format("%05d", new Random().nextInt(100000)));
+            record_.put("vehicleColor", String.valueOf(new Random().nextInt(5) + 1));
+            record_.put("gps_time", kssj);
+            record_.put("lon", 112.186065);
+            record_.put("lat", 25.903278);
+            record_.put("vec1", new Random().nextInt(120));
+            record_.put("direction", new Random().nextInt(360));
+            record.put("_source", record_);
             dataList.add(record);
         }
 

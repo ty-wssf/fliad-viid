@@ -86,6 +86,7 @@ public class VehicleStatTestController {
      * @param date 日期，格式为 yyyy-MM-dd，默认为昨天
      * @return 推送结果
      */
+    @Get
     @Post
     @Mapping("/test/stat/push")
     public String testPushStatData(@Param(defaultValue = "") String date) {

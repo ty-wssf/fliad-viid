@@ -14,10 +14,11 @@ solon.datasource.mysql:
 
 # Doris数据源配置
 solon.datasource.doris:
-  jdbcUrl: jdbc:mysql://10.20.10.7:3307/test?useSSL=false&serverTimezone=UTC
+  jdbcUrl: jdbc:mysql://10.20.10.61:9030/ods?useSSL=false&serverTimezone=UTC
   username: root
-  password: Root@2021
+  password: Bcht@2025
   driverClassName: com.mysql.cj.jdbc.Driver
+  httpPort: 8030
 
 # GPS API配置
 gps:
@@ -31,10 +32,10 @@ gps:
 
 # RabbitMQ配置
 rabbitmq:
-  host: localhost
+  host: 10.20.10.61
   port: 5672
-  username: guest
-  password: guest
+  username: ahbcht
+  password: Mq@25_#57Hf.
   exchange: vehicle_stat_exchange
   routingKey: vehicle.stat
   queueName: vehicle_stat_queue

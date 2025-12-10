@@ -52,6 +52,9 @@ public class GpsProcessService {
     @Inject("doris")
     private DataSource dorisDataSource;
 
+    @Inject
+    private DorisStreamLoadService dorisStreamLoadService;
+
     @Inject("${gps.api.lkyw.url}")
     private String lkywApiUrl;
 
@@ -322,44 +325,8 @@ public class GpsProcessService {
      */
     private void writeToDoris(List<GpsData> gpsDataList) {
         logger.info("将 {} 条GPS数据写入Doris数据库", gpsDataList.size());
-
-        String sql = "INSERT IGNORE INTO gps_data_table (id, vehicle_no, vehicle_color, vehicle_type, gps_time, lon, lat, speed, direction, matched_cross_id, matched_road_seg_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = dorisDataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            conn.setAutoCommit(false);
-
-            for (GpsData gpsData : gpsDataList) {
-                stmt.setString(1, gpsData.getId());
-                stmt.setString(2, gpsData.getVehicleNo());
-                stmt.setString(3, gpsData.getVehicleColor());
-                stmt.setInt(4, gpsData.getVehicleType()); // 新增的车辆类型字段
-                stmt.setString(5, gpsData.getGpsTime());
-                stmt.setDouble(6, gpsData.getLon());
-                stmt.setDouble(7, gpsData.getLat());
-                stmt.setDouble(8, gpsData.getSpeed());
-                stmt.setDouble(9, gpsData.getDirection());
-                stmt.setString(10, gpsData.getMatchedCrossId());
-                stmt.setString(11, gpsData.getMatchedRoadSegId());
-
-                stmt.addBatch();
-            }
-
-            int[] results = stmt.executeBatch();
-            conn.commit();
-
-            // 计算实际插入的记录数
-            int insertedCount = 0;
-            for (int result : results) {
-                if (result != PreparedStatement.EXECUTE_FAILED) {
-                    insertedCount++;
-                }
-            }
-
-            logger.info("成功写入 {} 条GPS数据到Doris数据库（忽略 {} 条重复数据）", insertedCount, gpsDataList.size() - insertedCount);
-        } catch (Exception e) {
-            logger.error("写入Doris数据库时发生错误", e);
-        }
+        
+        // 使用Stream Load方式写入Doris
+        dorisStreamLoadService.writeGpsDataToDoris(gpsDataList, "gps_data_table");
     }
 }
