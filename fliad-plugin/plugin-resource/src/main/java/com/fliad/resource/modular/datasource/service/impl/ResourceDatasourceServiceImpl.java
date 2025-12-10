@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollStreamUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.fliad.resource.modular.datasource.enums.ResourceDatasourceStatus;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.paginate.Page;
@@ -13,6 +14,7 @@ import org.noear.solon.annotation.Component;
 import org.noear.solon.data.annotation.Tran;
 import com.fliad.common.enums.CommonSortOrderEnum;
 import com.fliad.common.exception.CommonException;
+import com.fliad.common.listener.CommonDataChangeEventCenter;
 import com.fliad.common.page.CommonPageRequest;
 import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
 import com.fliad.resource.modular.datasource.mapper.ResourceDatasourceMapper;
@@ -32,6 +34,9 @@ import java.util.List;
  **/
 @Component
 public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourceMapper, ResourceDatasource> implements ResourceDatasourceService {
+
+    /** 数据源数据类型 */
+    private static final String DATASOURCE_DATA_TYPE = "RESOURCE_DATASOURCE";
 
     @Override
     public Page<ResourceDatasource> page(ResourceDatasourcePageParam resourceDatasourcePageParam) {
@@ -68,6 +73,8 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
             resourceDatasource.setIsTemplate(false);
         }
         this.save(resourceDatasource);
+        // 发布添加事件
+        CommonDataChangeEventCenter.doAddWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(resourceDatasource));
     }
 
     @Tran
@@ -76,13 +83,18 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
         ResourceDatasource resourceDatasource = this.queryEntity(resourceDatasourceEditParam.getId());
         BeanUtil.copyProperties(resourceDatasourceEditParam, resourceDatasource);
         this.updateById(resourceDatasource);
+        // 发布更新事件
+        CommonDataChangeEventCenter.doUpdateWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(resourceDatasource));
     }
 
     @Tran
     @Override
     public void delete(List<ResourceDatasourceIdParam> resourceDatasourceIdParamList) {
         // 执行删除
-        this.removeByIds(CollStreamUtil.toList(resourceDatasourceIdParamList, ResourceDatasourceIdParam::getId));
+        List<String> ids = CollStreamUtil.toList(resourceDatasourceIdParamList, ResourceDatasourceIdParam::getId);
+        this.removeByIds(ids);
+        // 发布删除事件
+        CommonDataChangeEventCenter.doDeleteWithDataId(DATASOURCE_DATA_TYPE, ids);
     }
 
     @Override
@@ -105,12 +117,18 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
     public void disableDatasource(ResourceDatasourceIdParam resourceDatasourceIdParam) {
         this.updateChain().eq(ResourceDatasource::getId, resourceDatasourceIdParam.getId())
                 .set(ResourceDatasource::getStatus, ResourceDatasourceStatus.DISABLED.getValue()).update();
+        // 发布更新事件
+        ResourceDatasource datasource = this.getById(resourceDatasourceIdParam.getId());
+        CommonDataChangeEventCenter.doUpdateWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(datasource));
     }
 
     @Override
     public void enableDatasource(ResourceDatasourceIdParam resourceDatasourceIdParam) {
         this.updateChain().eq(ResourceDatasource::getId, resourceDatasourceIdParam.getId())
                 .set(ResourceDatasource::getStatus, ResourceDatasourceStatus.ENABLE.getValue()).update();
+        // 发布更新事件
+        ResourceDatasource datasource = this.getById(resourceDatasourceIdParam.getId());
+        CommonDataChangeEventCenter.doUpdateWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(datasource));
     }
 
     @Override
@@ -136,6 +154,8 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
 
         // 保存新数据源
         this.save(newDatasource);
+        // 发布添加事件
+        CommonDataChangeEventCenter.doAddWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(newDatasource));
     }
 
     /**
@@ -164,6 +184,8 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
 
         // 保存新数据源
         this.save(newDatasource);
+        // 发布添加事件
+        CommonDataChangeEventCenter.doAddWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(newDatasource));
     }
 
     /**
@@ -251,6 +273,8 @@ public class ResourceDatasourceServiceImpl extends ServiceImpl<ResourceDatasourc
 		templateDatasource.setIsTemplate(true); // 设置为模板
 		// 保存新模板
 		this.save(templateDatasource);
+		// 发布添加事件
+        CommonDataChangeEventCenter.doAddWithData(DATASOURCE_DATA_TYPE, JSONUtil.parseObj(templateDatasource));
 	}
 
     @Override

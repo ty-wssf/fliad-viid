@@ -1,0 +1,4 @@
+com.fliad.resource.modular.datasource.handler.RabbitMQDatasourceHandler
+com.fliad.resource.modular.datasource.handler.CronDatasourceHandler
+com.fliad.resource.modular.datasource.handler.JDBCDatasourceHandler
+com.fliad.resource.modular.datasource.handler.HTTPDatasourceHandler

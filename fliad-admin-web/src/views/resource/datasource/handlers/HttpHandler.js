@@ -22,7 +22,7 @@ export default {
         typeSpecificData = {
           httpPath: config.path,
           httpMethod: config.method,
-          scriptFilter: record.scriptFilter
+          script: config.script
         }
       } catch (e) {
         console.error('解析HTTP配置失败', e)
@@ -44,7 +44,8 @@ export default {
     // 构造config对象
     const config = {
       path: formDataParam.httpPath,
-      method: formDataParam.httpMethod
+      method: formDataParam.httpMethod,
+      script: formDataParam.script
     }
 
     formDataParam.content = JSON.stringify(config)
@@ -52,6 +53,7 @@ export default {
     // 删除临时字段
     delete formDataParam.httpPath
     delete formDataParam.httpMethod
+    delete formDataParam.script
 
     return { formDataParam }
   },
