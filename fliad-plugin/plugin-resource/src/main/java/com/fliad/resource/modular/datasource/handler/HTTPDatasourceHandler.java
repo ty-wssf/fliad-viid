@@ -1,10 +1,21 @@
 package com.fliad.resource.modular.datasource.handler;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import com.fliad.common.listener.AbstractCommonDataChangeListener;
-import com.fliad.common.pojo.CommonResult;
 import com.fliad.resource.modular.datasource.entity.ResourceDatasource;
+import io.nop.api.core.util.SourceLocation;
+import io.nop.core.lang.eval.IEvalScope;
+import io.nop.core.lang.xml.XNode;
+import io.nop.core.lang.xml.parse.XNodeParser;
+import io.nop.core.resource.IResource;
+import io.nop.core.resource.ResourceHelper;
+import io.nop.core.resource.VirtualFileSystem;
+import io.nop.xlang.api.ExprEvalAction;
+import io.nop.xlang.api.XLang;
+import io.nop.xlang.api.XplModel;
+import io.nop.xlang.ast.XLangOutputMode;
 import org.noear.snack.ONode;
 import org.noear.solon.Solon;
 import org.noear.solon.core.handle.Context;
@@ -12,6 +23,9 @@ import org.noear.solon.core.handle.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -102,10 +116,105 @@ public class HTTPDatasourceHandler extends AbstractCommonDataChangeListener impl
 
             // 获取请求体
             String requestBody = ctx.body();
+            String script = config.get("script").getString();
 
+            // 构建输入上下文
+            Map<String, Object> inputsData = new HashMap<>();
+            inputsData.put("requestBody", requestBody);
+            inputsData.put("method", ctx.method());
+            inputsData.put("path", ctx.path());
+            inputsData.put("params", ctx.paramMap());
+            inputsData.put("headers", ctx.headerMap());
+
+            Object result = executeXlangScript(datasource.getId(), inputsData, script);
             // 返回成功响应
             ctx.status(200);
-            ctx.render(CommonResult.ok());
+            ctx.render(result);
+        }
+    }
+
+    private static Object executeXlangScript(String id, Map<String, Object> inputsData, String scriptContent) {
+        IEvalScope scope = XLang.newEvalScope();
+        scope.setLocalValues(inputsData);
+
+        String scriptPath = "/nop/debug/" + id + ".xpl";
+
+        if (Solon.cfg().isDebugMode()) {
+            // 调试模式:以文件为主
+            File scriptFile = new File(ResourceHelper.getOverrideVFsDir().getAbsoluteFile() + scriptPath);
+
+            if (!scriptFile.exists()) {
+                FileUtil.mkdir(scriptFile.getParentFile());
+                FileUtil.writeString(scriptContent, scriptFile, StandardCharsets.UTF_8);
+            }
+
+            // 从文件读取内容并解析 outputMode
+            IResource resource = VirtualFileSystem.instance().getResource(scriptPath);
+            String fileContent = resource.readText();
+            XNode xnode = XNodeParser.instance().parseFromText(resource.location(), fileContent);
+            XLangOutputMode outputMode = getOutputModeFromNode(xnode);
+
+            // 使用解析出的 outputMode 来编译模型
+            XplModel model = XLang.parseXpl(resource, outputMode);
+
+            return executeByOutputMode(model, scope, outputMode);
+        } else {
+            // 非调试模式:从内存内容解析
+            XNode xnode = XNodeParser.instance().parseFromText(SourceLocation.fromPath(scriptPath), scriptContent);
+            XLangOutputMode outputMode = getOutputModeFromNode(xnode);
+
+            ExprEvalAction action = XLang.newCompileTool()
+                    .allowUnregisteredScopeVar(true)
+                    .compileTagBody(xnode, outputMode);
+
+            return executeByOutputMode(action, scope, outputMode);
+        }
+    }
+
+    /**
+     * 从 XNode 中提取 outputMode 属性
+     */
+    private static XLangOutputMode getOutputModeFromNode(XNode node) {
+        // 检查根节点的 xpl:outputMode 属性
+        String outputModeStr = node.attrText("outputMode");
+        if (outputModeStr != null) {
+            XLangOutputMode mode = XLangOutputMode.fromText(outputModeStr);
+            if (mode != null) {
+                return mode;
+            }
+        }
+
+        // 如果没有显式指定,使用默认值 html (与 XplModelParser 保持一致)
+        return XLangOutputMode.none;
+    }
+
+    /**
+     * 根据 outputMode 选择正确的执行方法
+     */
+    private static Object executeByOutputMode(ExprEvalAction action, IEvalScope scope, XLangOutputMode outputMode) {
+        switch (outputMode) {
+            case none:
+                // 不允许输出,返回执行结果
+                return action.invoke(scope);
+
+            case text:
+            case html:
+            case xml:
+                // 输出文本格式
+                return action.generateText(scope);
+
+            case node:
+            case xjson:
+                // 输出 XNode 对象
+                return action.generateNode(scope);
+
+            case sql:
+                // SQL 模式也返回文本,但包含参数信息
+                return action.generateText(scope);
+
+            default:
+                // 默认使用 invoke
+                return action.invoke(scope);
         }
     }
 
