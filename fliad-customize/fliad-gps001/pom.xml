@@ -13,6 +13,10 @@
 
     <properties>
         <jts.version>1.18.2</jts.version>
+        <!-- 该模块为c，不会被其他项目所依赖，故，不发布至仓库 -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
+        <!-- End -->
     </properties>
 
     <dependencies>
@@ -31,7 +35,7 @@
             <groupId>org.noear</groupId>
             <artifactId>solon-scheduling-simple</artifactId>
         </dependency>
-        
+
         <!-- JTS地理空间处理库 -->
         <dependency>
             <groupId>org.locationtech.jts</groupId>
@@ -64,7 +68,7 @@
             <groupId>org.noear</groupId>
             <artifactId>kafka-solon-cloud-plugin</artifactId>
         </dependency>
-        
+
         <!-- JSON序列化 -->
         <dependency>
             <groupId>org.noear</groupId>
@@ -81,36 +85,9 @@
 
     <build>
         <plugins>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-maven-plugin</artifactId>
-            </plugin>-->
-            <!-- 配置打包插件（设置主类，并打包成胖包） -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <finalName>${project.artifactId}</finalName>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <!-- 此处，要改成自己的程序入口（即 main 函数类） -->
-                        <manifest>
-                            <mainClass>com.fliad.gps.Gps001App</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

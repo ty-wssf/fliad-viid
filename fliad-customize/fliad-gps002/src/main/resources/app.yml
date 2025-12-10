@@ -9,7 +9,7 @@ ftp:
   username: tjjgj
   password: Tjjgj@202512
   # 配置ftp目录
-  file: /dhcData/test1/
+  file: /dhcData
 
 # RabbitMQ配置
 rabbitmq:
@@ -18,6 +18,7 @@ rabbitmq:
   username: ahbcht
   password: Mq@25_#57Hf.
   exchange: BCHT_ITS_DATA
+  routingKey: vehicle.gps
 
 # 日志配置
 solon.logging.appender:

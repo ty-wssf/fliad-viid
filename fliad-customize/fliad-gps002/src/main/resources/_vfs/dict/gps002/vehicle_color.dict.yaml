@@ -1,0 +1,45 @@
+label: 车牌颜色
+locale: zh-CN
+valueType: int
+description:
+options:
+
+  - label: 蓝色
+    value: 1
+    description:
+
+  - label: 黄色
+    value: 2
+    description:
+
+  - label: 黑色
+    value: 3
+    description:
+
+  - label: 白色
+    value: 4
+    description:
+
+  - label: 绿色
+    value: 5
+    description:
+
+  - label: 其他
+    value: 9
+    description:
+
+  - label: 农黄色
+    value: 91
+    description:
+
+  - label: 农绿色
+    value: 92
+    description:
+
+  - label: 黄绿色
+    value: 93
+    description:
+
+  - label: 渐变绿
+    value: 94
+    description:

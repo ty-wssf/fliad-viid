@@ -227,7 +227,7 @@ public interface CoreConfigs {
 
     @Description("字典表的label总是按照[value]-[label]格式显示")
     IConfigReference<Boolean> CFG_DICT_RETURN_NORMALIZED_LABEL = varRef(s_loc, "nop.core.dict.return-normalized-label",
-            Boolean.class, true);
+            Boolean.class, false);
 
     @Description("缺省掩码保留位数")
     IConfigReference<Integer> CFG_DEFAULT_MASKING_KEEP_CHARS = varRef(s_loc, "nop.core.default-masking-keep-chars", Integer.class, 2);

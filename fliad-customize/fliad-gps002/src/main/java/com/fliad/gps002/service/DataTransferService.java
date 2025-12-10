@@ -1,6 +1,7 @@
 package com.fliad.gps002.service;
 
-import com.fliad.gps002.entity.VehicleRecord;
+import io.nop.api.core.beans.DictBean;
+import io.nop.core.dict.DictProvider;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Init;
@@ -82,6 +83,8 @@ public class DataTransferService {
             // 流式处理数据，逐条发送到RabbitMQ
             AtomicLong processedRecords = new AtomicLong(0);
             boolean success = ftpService.processDataFiles(record -> {
+                DictBean dictBean = DictProvider.instance().getDict(null, "gps002/vehicle_color", null, null);
+                record.setVehicle_color_label(dictBean.getLabelByValue(record.getVehicle_color()));
                 rabbitMqService.sendMessage(record);
                 long count = processedRecords.incrementAndGet();
 

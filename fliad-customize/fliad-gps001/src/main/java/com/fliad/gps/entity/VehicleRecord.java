@@ -1,4 +1,4 @@
-package com.fliad.gps002.entity;
+package com.fliad.gps.entity;
 
 /**
  * 重点车辆实体类
@@ -9,278 +9,283 @@ public class VehicleRecord {
      * 全局唯一标识符
      */
     private long guid;
-    
+
     /**
      * 车牌号
      * 字符串类型，最大长度50
      */
     private String vehicle_no;
-    
+
     /**
      * 车牌颜色代码
      * 1-蓝色、2-黄色、3-黑色、4-白色、9-其它
      */
     private int vehicle_color;
-    
+
+    /**
+     * 车辆类型 1:两客一危 2:货车
+     */
+    private int vehicle_type;
+
     /**
      * 车牌颜色标签
      * 对应vehicle_color的文本描述
      */
     private String vehicle_color_label;
-    
+
     /**
      * 加密标识
      * 0-未加密，1-已加密
      */
     private boolean encrypt;
-    
+
     /**
      * GPS定位时间
      * 时间格式：yyyy-MM-dd HH:mm:ss
      */
     private long date_time;
-    
+
     /**
      * 经度
      * 单位：1*10^-6度
      */
     private int lng;
-    
+
     /**
      * 纬度
      * 单位：1*10^-6度
      */
     private int lat;
-    
+
     /**
      * 卫星定位车载终端上传行车速度
      * 单位：km/h
      */
-    private int velocity1;
-    
+    private double velocity1;
+
     /**
      * 行驶记录仪上传行车速度
      * 单位：km/h
      */
-    private int velocity2;
-    
+    private double velocity2;
+
     /**
      * 车辆上传行车里程数
      * 单位：km
      */
     private int mileage;
-    
+
     /**
      * 方向
      * 0-359度，正北为0，顺时针方向
      */
     private int direction;
-    
+
     /**
      * 海拔高度
      * 单位：米(m)
      */
     private int altitude;
-    
+
     // 状态字段 (stateXX)
-    
+
     /**
      * 车门锁状态
      * 0-车门解锁、1-车门加锁
      */
     private boolean state12;
-    
+
     /**
      * 车辆电路状态
      * 0-车辆电路正常、1-车辆电路断开
      */
     private boolean state11;
-    
+
     /**
      * 车辆油路状态
      * 0-车辆油路正常、1-车辆油路断开
      */
     private boolean state10;
-    
+
     /**
      * 经纬度加密标识
      * 0-经纬度未经保密插件加密、1-经纬度已经保密插件加密
      */
     private boolean state05;
-    
+
     /**
      * 营运状态
      * 0-运营、1-停运
      */
     private boolean state04;
-    
+
     /**
      * 经度方向
      * 0-东经、1-西经
      */
     private boolean state03;
-    
+
     /**
      * 纬度方向
      * 0-北纬、1-南纬
      */
     private boolean state02;
-    
+
     /**
      * 定位状态
      * 0-未定位、1-定位
      */
     private boolean state01;
-    
+
     /**
      * ACC状态
      * 0-关、1-开
      */
     private boolean state00;
-    
+
     // 保留的状态字段
     private boolean state13;
-    
+
     // 报警字段 (alarmXX)
-    
+
     /**
      * 车辆非法位移报警
      * 1-车辆非法位移
      */
     private boolean alarm28;
-    
+
     /**
      * 车辆非法点火报警
      * 1-车辆非法点火
      */
     private boolean alarm27;
-    
+
     /**
      * 车辆被盗报警
      * 1-车辆被盗
      */
     private boolean alarm26;
-    
+
     /**
      * 车辆油量异常报警
      * 1-车辆油量异常
      */
     private boolean alarm25;
-    
+
     /**
      * 车辆VSS故障报警
      * 1-车辆VSS故障
      */
     private boolean alarm24;
-    
+
     /**
      * 路线偏移报警
      * 1-路线偏移
      */
     private boolean alarm23;
-    
+
     /**
      * 路段行驶时间不足/过长报警
      * 1-路段行驶时间不足/过长
      */
     private boolean alarm22;
-    
+
     /**
      * 进出路线报警
      * 1-进出路线
      */
     private boolean alarm21;
-    
+
     /**
      * 进出区域报警
      * 1-进出区域
      */
     private boolean alarm20;
-    
+
     /**
      * 超时停车报警
      * 1-超时停车
      */
     private boolean alarm19;
-    
+
     /**
      * 当天累计驾驶超时报警
      * 1-当天累计驾驶超时
      */
     private boolean alarm18;
-    
+
     /**
      * 摄像头故障报警
      * 1-摄像头故障
      */
     private boolean alarm11;
-    
+
     /**
      * TTS模块故障报警
      * 1-TTS模块故障
      */
     private boolean alarm10;
-    
+
     /**
      * 终端LCD或显示器故障报警
      * 1-终端LCD或显示器故障
      */
     private boolean alarm09;
-    
+
     /**
      * 终端主电源掉电报警
      * 1-终端主电源掉电
      */
     private boolean alarm08;
-    
+
     /**
      * 终端主电源欠压报警
      * 1-终端主电源欠压
      */
     private boolean alarm07;
-    
+
     /**
      * GNSS天线短路报警
      * 1-GNSS天线短路
      */
     private boolean alarm06;
-    
+
     /**
      * GNSS天线未接或被剪断报警
      * 1-GNSS天线未接或被剪断
      */
     private boolean alarm05;
-    
+
     /**
      * GNSS模块发生故障报警
      * 1-GNSS模块发生故障
      */
     private boolean alarm04;
-    
+
     /**
      * 预警报警
      * 1-预警
      */
     private boolean alarm03;
-    
+
     /**
      * 疲劳驾驶报警
      * 1-疲劳驾驶
      */
     private boolean alarm02;
-    
+
     /**
      * 超速报警
      * 1-超速
      */
     private boolean alarm01;
-    
+
     /**
      * 紧急报警触动报警开关后触发报警
      * 1-紧急报警触动报警开关后触发
      */
     private boolean alarm00;
-    
+
     /**
      * 更新时间
      * 记录数据更新的时间戳
@@ -352,19 +357,19 @@ public class VehicleRecord {
         this.lat = lat;
     }
 
-    public int getVelocity1() {
+    public double getVelocity1() {
         return velocity1;
     }
 
-    public void setVelocity1(int velocity1) {
+    public void setVelocity1(double velocity1) {
         this.velocity1 = velocity1;
     }
 
-    public int getVelocity2() {
+    public double getVelocity2() {
         return velocity2;
     }
 
-    public void setVelocity2(int velocity2) {
+    public void setVelocity2(double velocity2) {
         this.velocity2 = velocity2;
     }
 
@@ -663,4 +668,13 @@ public class VehicleRecord {
     public void setUpdate_time(long update_time) {
         this.update_time = update_time;
     }
+
+    public int getVehicle_type() {
+        return vehicle_type;
+    }
+
+    public void setVehicle_type(int vehicle_type) {
+        this.vehicle_type = vehicle_type;
+    }
+
 }
