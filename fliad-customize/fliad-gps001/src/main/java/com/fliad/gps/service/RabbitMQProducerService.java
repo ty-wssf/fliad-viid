@@ -1,17 +1,14 @@
 package com.fliad.gps.service;
 
-import com.fliad.gps.entity.VehicleRecord;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import org.noear.snack4.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Init;
 import org.noear.solon.annotation.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
@@ -47,9 +44,9 @@ public class RabbitMQProducerService {
     @Inject("${rabbitmq.routingKey}")
     private String routingKey;
 
-    // RabbitMQ队列名称
-    @Inject("${rabbitmq.queueName}")
-    private String queueName;
+    // RabbitMQ实时数据路由键
+    @Inject("${rabbitmq.realtimeRoutingKey}")
+    private String realtimeRoutingKey;
 
     private Connection connection;
     private Channel channel;
@@ -69,14 +66,6 @@ public class RabbitMQProducerService {
             // 声明交换机
             if (exchange != null && !exchange.isEmpty()) {
                 channel.exchangeDeclare(exchange, "topic", true);
-            }
-
-            // 声明队列
-            channel.queueDeclare(queueName, true, false, false, null);
-
-            // 绑定队列到交换机
-            if (exchange != null && !exchange.isEmpty() && routingKey != null && !routingKey.isEmpty()) {
-                channel.queueBind(queueName, exchange, routingKey);
             }
 
             logger.info("RabbitMQ生产者初始化完成，服务器地址: {}:{}", host, port);
@@ -99,6 +88,31 @@ public class RabbitMQProducerService {
             logger.error("发送消息到RabbitMQ时发生错误", e);
             throw new RuntimeException("发送消息到RabbitMQ失败", e);
         }
+    }
+
+    /**
+     * 发送消息到指定队列，可自定义路由键
+     *
+     * @param message    消息内容
+     * @param routingKey 路由键
+     */
+    public void sendMessage(String message, String routingKey) {
+        try {
+            channel.basicPublish(exchange, routingKey, null, message.getBytes(StandardCharsets.UTF_8));
+            logger.debug("成功发送消息到RabbitMQ，路由键: {}，消息: {}", routingKey, message);
+        } catch (Exception e) {
+            logger.error("发送消息到RabbitMQ时发生错误", e);
+            throw new RuntimeException("发送消息到RabbitMQ失败", e);
+        }
+    }
+
+    /**
+     * 发送实时GPS数据消息
+     *
+     * @param message 消息内容
+     */
+    public void sendRealtimeMessage(String message) {
+        sendMessage(message, realtimeRoutingKey);
     }
 
     /**

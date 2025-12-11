@@ -98,7 +98,7 @@ public class VehicleStatTestController {
                 statDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             }
             
-            logger.info("开始测试推送 {} 的车辆统计数据到Kafka", statDate);
+            logger.info("开始测试推送 {} 的车辆统计数据到rabbitmq", statDate);
             
             // 推送统计数据
             vehicleStatService.pushStatDataToRabbitMQ(statDate);

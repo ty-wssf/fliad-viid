@@ -16,7 +16,6 @@
         <!-- 该模块为c，不会被其他项目所依赖，故，不发布至仓库 -->
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
-        <!-- End -->
     </properties>
 
     <dependencies>
@@ -88,6 +87,13 @@
             <plugin>
                 <groupId>org.noear</groupId>
                 <artifactId>solon-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

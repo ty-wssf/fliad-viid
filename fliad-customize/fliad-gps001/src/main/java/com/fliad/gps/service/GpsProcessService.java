@@ -11,9 +11,11 @@ import com.fliad.gps.model.GpsData;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.io.WKTReader;
+import org.noear.snack4.Feature;
 import org.noear.snack4.ONode;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.util.RunUtil;
 import org.noear.solon.scheduling.annotation.Scheduled;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +56,9 @@ public class GpsProcessService {
 
     @Inject
     private DorisStreamLoadService dorisStreamLoadService;
+
+    @Inject
+    private RabbitMQProducerService rabbitMQProducerService;
 
     @Inject("${gps.api.lkyw.url}")
     private String lkywApiUrl;
@@ -173,7 +178,7 @@ public class GpsProcessService {
             }
 
             // 设置结束时间为当前时间前5分钟
-            long endTimeLimit = System.currentTimeMillis() - 5 * 60 * 1000;
+            long endTimeLimit = System.currentTimeMillis() - 2 * 60 * 1000;
 
             // 循环同步，直到达到时间限制
             int totalProcessedCount = 0;
@@ -215,15 +220,10 @@ public class GpsProcessService {
                 allGpsDataList.addAll(lkywDataList);
                 allGpsDataList.addAll(hcDataList);
 
-                // 处理每条GPS数据（复用已有的处理服务）
-                for (GpsData gpsData : allGpsDataList) {
-                    processingService.processGpsData(gpsData);
-                }
-
                 // 写入rabbitmq
                 writeToRabbitMQ(allGpsDataList);
 
-                // 将处理后的数据写入Doris数据库
+                // 将处理后的数据写入Doris数据库（业务，后期考虑解耦）
                 if (!allGpsDataList.isEmpty()) {
                     writeToDoris(allGpsDataList);
                     totalProcessedCount += allGpsDataList.size();
@@ -253,7 +253,48 @@ public class GpsProcessService {
 
     // 写入RabbitMQ
     private void writeToRabbitMQ(List<GpsData> allGpsDataList) {
-        
+        if (allGpsDataList == null || allGpsDataList.isEmpty()) {
+            logger.info("没有GPS数据需要写入RabbitMQ");
+            return;
+        }
+
+        try {
+            // 遍历所有GPS数据并发送到RabbitMQ
+            for (GpsData gpsData : allGpsDataList) {
+                // 将GpsData对象转换为JSON字符串
+                ONode messageJson = ONode.ofBean(gpsData, Feature.Write_UseSmlSnakeStyle);
+                messageJson.set("guid", gpsData.getId());
+                messageJson.set("partition_date", gpsData.getGpsTime());
+                messageJson.set("velocity1", gpsData.getSpeed());
+                messageJson.set("velocity2", gpsData.getSpeed());
+                messageJson.set("lng", gpsData.getLon());
+
+                // 发送实时GPS数据消息到RabbitMQ
+                rabbitMQProducerService.sendRealtimeMessage(messageJson.toString());
+                logger.debug("已发送GPS数据到RabbitMQ: 车牌号={}, 车辆类型={}", gpsData.getVehicleNo(), gpsData.getVehicleType());
+            }
+
+            logger.info("成功将 {} 条GPS数据写入RabbitMQ", allGpsDataList.size());
+        } catch (Exception e) {
+            logger.error("写入RabbitMQ时发生错误", e);
+        }
+    }
+
+    /**
+     * 根据车辆类型获取对应的路由键
+     *
+     * @param vehicleType 车辆类型 1:两客一危 2:货车
+     * @return 路由键
+     */
+    private String getRoutingKeyByVehicleType(int vehicleType) {
+        switch (vehicleType) {
+            case 1:
+                return "vehicle.lkyw"; // 两客一危
+            case 2:
+                return "vehicle.hc";   // 货车
+            default:
+                return "vehicle.unknown";
+        }
     }
 
     /**
@@ -341,9 +382,14 @@ public class GpsProcessService {
             logger.info("写入Doris功能已禁用，跳过写入操作");
             return;
         }
-        
+
+        // 处理每条GPS数据（复用已有的处理服务）
+        for (GpsData gpsData : gpsDataList) {
+            processingService.processGpsData(gpsData);
+        }
+
         logger.info("将 {} 条GPS数据写入Doris数据库", gpsDataList.size());
-        
+
         // 使用Stream Load方式写入Doris
         dorisStreamLoadService.writeGpsDataToDoris(gpsDataList, "gps_data_table");
     }

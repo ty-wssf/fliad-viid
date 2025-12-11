@@ -41,9 +41,15 @@ public class VehicleRecord {
 
     /**
      * GPS定位时间
-     * 时间格式：yyyy-MM-dd HH:mm:ss
+     * 时间格式：时间戳
      */
     private long date_time;
+
+    /**
+     * GPS定位时间
+     * 时间格式：yyyy-MM-dd HH:mm:ss
+     */
+    private String partition_date;
 
     /**
      * 经度
@@ -56,6 +62,16 @@ public class VehicleRecord {
      * 单位：1*10^-6度
      */
     private int lat;
+
+    /**
+     * 所属路口id
+     */
+    private String matched_cross_id;
+
+    /**
+     * 所属路段id
+     */
+    private String matched_road_seg_id;
 
     /**
      * 卫星定位车载终端上传行车速度
@@ -675,6 +691,22 @@ public class VehicleRecord {
 
     public void setVehicle_type(int vehicle_type) {
         this.vehicle_type = vehicle_type;
+    }
+
+    public String getMatched_cross_id() {
+        return matched_cross_id;
+    }
+
+    public void setMatched_cross_id(String matched_cross_id) {
+        this.matched_cross_id = matched_cross_id;
+    }
+
+    public String getMatched_road_seg_id() {
+        return matched_road_seg_id;
+    }
+
+    public void setMatched_road_seg_id(String matched_road_seg_id) {
+        this.matched_road_seg_id = matched_road_seg_id;
     }
 
 }

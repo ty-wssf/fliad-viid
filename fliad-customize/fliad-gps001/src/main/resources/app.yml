@@ -39,8 +39,11 @@ rabbitmq:
   username: ahbcht
   password: Mq@25_#57Hf.
   exchange: vehicle_stat_exchange
+  # 统计数据
   routingKey: vehicle.stat
-  queueName: vehicle_stat_queue
+  # 实时数据
+  realtimeRoutingKey: vehicle.gps
+
 
 #########################################
 # logging configuration

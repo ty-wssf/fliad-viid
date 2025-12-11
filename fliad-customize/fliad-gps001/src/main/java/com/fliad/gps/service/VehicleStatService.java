@@ -174,6 +174,7 @@ public class VehicleStatService {
         for (VehicleStatData stat : stats) {
             try {
                 String jsonData = ONode.ofBean(stat).toJson();
+                // 发送统计数据消息到RabbitMQ（使用默认路由键）
                 rabbitMQProducerService.sendMessage(jsonData);
                 logger.debug("推送统计数据到RabbitMQ: {}", jsonData);
             } catch (Exception e) {
