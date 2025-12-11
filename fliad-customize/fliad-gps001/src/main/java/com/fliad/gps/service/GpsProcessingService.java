@@ -4,6 +4,7 @@ import com.fliad.gps.entity.Cross;
 import com.fliad.gps.entity.RoadSegment;
 import com.fliad.gps.model.GpsData;
 import org.locationtech.jts.geom.*;
+import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.io.WKTReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,10 @@ public class GpsProcessingService {
     // 预处理的几何对象缓存
     private Map<String, Point> crossPoints;
     private Map<String, LineString> roadLineStrings;
+    
+    // 空间索引
+    private STRtree crossIndex;
+    private STRtree roadIndex;
 
     public GpsProcessingService(List<Cross> crosses, List<RoadSegment> roadSegments) {
         this.crosses = crosses;
@@ -41,6 +46,9 @@ public class GpsProcessingService {
         
         // 预处理所有路段线
         preprocessRoadSegments();
+        
+        // 构建空间索引
+        buildSpatialIndexes();
     }
     
     /**
@@ -76,6 +84,31 @@ public class GpsProcessingService {
             }
         }
     }
+    
+    /**
+     * 构建空间索引
+     */
+    private void buildSpatialIndexes() {
+        // 构建路口点的空间索引
+        crossIndex = new STRtree();
+        for (Cross cross : crosses) {
+            Point point = crossPoints.get(cross.getCrossId());
+            if (point != null) {
+                crossIndex.insert(point.getEnvelopeInternal(), cross);
+            }
+        }
+        crossIndex.build();
+        
+        // 构建路段的空间索引
+        roadIndex = new STRtree();
+        for (RoadSegment roadSegment : roadSegments) {
+            LineString lineString = roadLineStrings.get(roadSegment.getRoadSegId());
+            if (lineString != null) {
+                roadIndex.insert(lineString.getEnvelopeInternal(), roadSegment);
+            }
+        }
+        roadIndex.build();
+    }
 
     /**
      * 处理GPS数据，匹配路口或路段
@@ -87,11 +120,11 @@ public class GpsProcessingService {
             Point gpsPoint = GEOM_FACTORY.createPoint(new Coordinate(gpsData.getLon(), gpsData.getLat()));
 
             // 首先尝试匹配路口（50米内）
-            matchCross(gpsPoint, gpsData);
+            matchCrossWithIndex(gpsPoint, gpsData);
 
             // 如果没有匹配到路口，则尝试匹配路段（50米内）
             if (gpsData.getMatchedCrossId() == null) {
-                matchRoadSegment(gpsPoint, gpsData);
+                matchRoadSegmentWithIndex(gpsPoint, gpsData);
             }
         } catch (Exception e) {
             logger.error("处理GPS数据时发生错误", e);
@@ -99,22 +132,30 @@ public class GpsProcessingService {
     }
 
     /**
-     * 匹配路口
+     * 使用空间索引匹配路口
      * @param gpsPoint GPS点
      * @param gpsData GPS数据
      */
-    private void matchCross(Point gpsPoint, GpsData gpsData) {
-        for (Cross cross : crosses) {
+    private void matchCrossWithIndex(Point gpsPoint, GpsData gpsData) {
+        // 使用缓冲区查询附近的路口
+        double bufferDistance = 50.0 / 111319.9; // 转换为度数
+        Geometry searchArea = gpsPoint.buffer(bufferDistance);
+        List<Cross> nearbyCrosses = crossIndex.query(searchArea.getEnvelopeInternal());
+        
+        Cross matchedCross = null;
+        double minDistance = 50.0;
+        
+        for (Cross cross : nearbyCrosses) {
             Point crossPoint = crossPoints.get(cross.getCrossId());
             if (crossPoint != null) {
                 try {
                     double degreeDistance = gpsPoint.distance(crossPoint);
                     double meterDistance = degreeToMeter(degreeDistance);
 
-                    // 如果距离小于等于50米，则认为匹配成功
-                    if (meterDistance <= 50) {
-                        gpsData.setMatchedCrossId(cross.getCrossId());
-                        break;
+                    // 如果距离小于等于50米，且比当前最小距离更近，则更新匹配结果
+                    if (meterDistance <= 50 && meterDistance < minDistance) {
+                        minDistance = meterDistance;
+                        matchedCross = cross;
                     }
                 } catch (Exception e) {
                     // 解析坐标出错，跳过该路口
@@ -123,25 +164,37 @@ public class GpsProcessingService {
                 }
             }
         }
+        
+        if (matchedCross != null) {
+            gpsData.setMatchedCrossId(matchedCross.getCrossId());
+        }
     }
 
     /**
-     * 匹配路段
+     * 使用空间索引匹配路段
      * @param gpsPoint GPS点
      * @param gpsData GPS数据
      */
-    private void matchRoadSegment(Point gpsPoint, GpsData gpsData) {
-        for (RoadSegment roadSegment : roadSegments) {
+    private void matchRoadSegmentWithIndex(Point gpsPoint, GpsData gpsData) {
+        // 使用缓冲区查询附近的路段
+        double bufferDistance = 50.0 / 111319.9; // 转换为度数
+        Geometry searchArea = gpsPoint.buffer(bufferDistance);
+        List<RoadSegment> nearbyRoads = roadIndex.query(searchArea.getEnvelopeInternal());
+        
+        RoadSegment matchedRoad = null;
+        double minDistance = 50.0;
+        
+        for (RoadSegment roadSegment : nearbyRoads) {
             LineString lineString = roadLineStrings.get(roadSegment.getRoadSegId());
             if (lineString != null) {
                 try {
                     double degreeDistance = lineString.distance(gpsPoint);
                     double meterDistance = degreeToMeter(degreeDistance);
 
-                    // 如果距离小于等于50米，则认为匹配成功
-                    if (meterDistance <= 5) {
-                        gpsData.setMatchedRoadSegId(roadSegment.getRoadSegId());
-                        break;
+                    // 如果距离小于等于50米，且比当前最小距离更近，则更新匹配结果
+                    if (meterDistance <= 50 && meterDistance < minDistance) {
+                        minDistance = meterDistance;
+                        matchedRoad = roadSegment;
                     }
                 } catch (Exception e) {
                     // 解析坐标出错，跳过该路段
@@ -149,6 +202,10 @@ public class GpsProcessingService {
                     continue;
                 }
             }
+        }
+        
+        if (matchedRoad != null) {
+            gpsData.setMatchedRoadSegId(matchedRoad.getRoadSegId());
         }
     }
 
