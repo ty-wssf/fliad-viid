@@ -76,13 +76,13 @@ public class VehicleStatService {
         String startDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 00:00:00";
         String endDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 23:59:59";
 
-        // 按小时统计路口车辆数据的SQL
+        // 按小时统计路口车辆数据的SQL，20分钟内同一车牌只算一辆车
         String sql = "SELECT " +
                 "DATE_FORMAT(gps_time, '%Y%m%d%H') AS data_time, " +
                 "matched_cross_id AS road_net_code, " +
                 "vehicle_type, " +
                 "vehicle_color, " +
-                "COUNT(*) AS vehicle_count " +
+                "COUNT(DISTINCT vehicle_no, FLOOR((MINUTE(gps_time) + SECOND(gps_time)/60)/20)) AS vehicle_count " +
                 "FROM gps_data_table " +
                 "WHERE gps_time >= ? AND gps_time <= ? " +
                 "AND matched_cross_id IS NOT NULL " +
@@ -127,13 +127,13 @@ public class VehicleStatService {
         String startDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 00:00:00";
         String endDate = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " 23:59:59";
 
-        // 按小时统计路段车辆数据的SQL
+        // 按小时统计路段车辆数据的SQL，20分钟内同一车牌只算一辆车
         String sql = "SELECT " +
                 "DATE_FORMAT(gps_time, '%Y%m%d%H') AS data_time, " +
                 "matched_road_seg_id AS road_net_code, " +
                 "vehicle_type, " +
                 "vehicle_color, " +
-                "COUNT(*) AS vehicle_count " +
+                "COUNT(DISTINCT vehicle_no, FLOOR((MINUTE(gps_time) + SECOND(gps_time)/60)/20)) AS vehicle_count " +
                 "FROM gps_data_table " +
                 "WHERE gps_time >= ? AND gps_time <= ? " +
                 "AND matched_road_seg_id IS NOT NULL " +
