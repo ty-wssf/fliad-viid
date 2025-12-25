@@ -121,6 +121,9 @@ public class ItsPlateResultHandler implements AlarmHandler {
 
         json.set("gcsj", strItsPlateResult.struSnapFirstPicTime.getTime());
         json.set("sxjbh", alarmManager.getDeviceByIp(sbip).getDeviceNumber());
+        // 如果车牌号不是"-"，则去掉第一个字符
+        sLicense = "-".equals(sLicense) ? sLicense : (sLicense.length() > 1 ? sLicense.substring(1) : "");
+        log.info("转换后图片: {}", sLicense);
         json.set("hphm", sLicense);
         json.set("hpzl", strItsPlateResult.struPlateInfo.byPlateType);
         json.set("hpys", strItsPlateResult.struPlateInfo.byColor);
@@ -419,4 +422,5 @@ public class ItsPlateResultHandler implements AlarmHandler {
             Thread.currentThread().interrupt();
         }
     }
+
 }
