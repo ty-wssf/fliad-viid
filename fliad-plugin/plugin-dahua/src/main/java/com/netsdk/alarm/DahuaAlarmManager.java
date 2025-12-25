@@ -28,7 +28,7 @@ public class DahuaAlarmManager {
     private final Map<String, DahuaDevice> devices = new ConcurrentHashMap<>();
 
     // 智能分析事件订阅句柄管理
-    private final Map<String, NetSDKLib.LLong> attachHandles = new ConcurrentHashMap<>();
+    private final Map<Long, DahuaDevice> attachHandles = new ConcurrentHashMap<>();
 
     // 智能分析回调函数实例
     private NetSDKLib.fAnalyzerDataCallBack analyzerDataCallback;
@@ -341,7 +341,7 @@ public class DahuaAlarmManager {
 
         try {
             // 构造key用于存储句柄
-            String handleKey = deviceId + "_" + channelId;
+            // String handleKey = deviceId + "_" + channelId;
 
             // 是否需要图片
             int bNeedPicture = 1;
@@ -357,7 +357,7 @@ public class DahuaAlarmManager {
                     null);
 
             if (attachHandle.longValue() != 0) {
-                attachHandles.put(handleKey, attachHandle);
+                attachHandles.put(attachHandle.longValue(), getDevice(deviceId));
                 log.info("设备 {} 通道 {} 订阅智能分析事件成功", deviceId, channelId);
                 return true;
             } else {
@@ -370,33 +370,6 @@ public class DahuaAlarmManager {
         }
     }
 
-    /**
-     * 停止上传智能分析数据
-     *
-     * @param deviceId  设备唯一标识
-     * @param channelId 通道ID
-     */
-    public void detachIVSEvent(String deviceId, int channelId) {
-        String handleKey = deviceId + "_" + channelId;
-        NetSDKLib.LLong attachHandle = attachHandles.get(handleKey);
-
-        if (attachHandle == null || attachHandle.longValue() == 0) {
-            log.warn("设备 {} 通道 {} 未订阅智能分析事件", deviceId, channelId);
-            return;
-        }
-
-        try {
-            boolean success = netsdk.CLIENT_StopLoadPic(attachHandle);
-            if (success) {
-                attachHandles.remove(handleKey);
-                log.info("设备 {} 通道 {} 停止智能分析事件订阅成功", deviceId, channelId);
-            } else {
-                log.error("设备 {} 通道 {} 停止智能分析事件订阅失败，错误码: {}", deviceId, channelId, getErrorCodeShow());
-            }
-        } catch (Exception e) {
-            log.error("设备 {} 通道 {} 停止智能分析事件订阅异常", deviceId, channelId, e);
-        }
-    }
 
     /**
      * 获取设备信息
@@ -421,6 +394,10 @@ public class DahuaAlarmManager {
             }
         }
         return null;
+    }
+
+    public DahuaDevice getDeviceByAttachHandle(long attachHandle) {
+        return attachHandles.get(attachHandle);
     }
 
 }

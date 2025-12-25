@@ -1,13 +1,20 @@
 package com.netsdk.alarm;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.IdUtil;
 import com.fliad.dev.modular.file.provider.DevFileApiProvider;
+import com.fliad.resource.modular.flowgram.domain.TaskRunInput;
+import com.fliad.resource.modular.flowgram.service.FlowgramService;
+import com.fliad.resource.modular.workflow.entity.ResourceWorkflow;
+import com.fliad.resource.modular.workflow.service.ResourceWorkflowService;
 import com.netsdk.lib.NetSDKLib;
 import com.netsdk.lib.structure.DEV_EVENT_TRAFFICJUNCTION_INFO;
 import com.netsdk.lib.structure.NET_RIDER_INFO;
 import com.sun.jna.Pointer;
 import org.noear.snack.ONode;
 import org.noear.snack.core.utils.IOUtil;
+import org.noear.solon.Solon;
 import org.noear.solon.core.handle.FileBase;
 import org.noear.solon.core.handle.UploadedFile;
 import org.slf4j.Logger;
@@ -48,7 +55,11 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                     DEV_EVENT_TRAFFICJUNCTION_INFO msg = new DEV_EVENT_TRAFFICJUNCTION_INFO();
                     ToolKits.GetPointerData(pAlarmInfo, msg);
 
+                    DahuaDevice device = dahuaAlarmManager.getDeviceByAttachHandle(lAnalyzerHandle.longValue());
+
                     ONode trafficInfo = new ONode().asObject();
+                    trafficInfo.set("sbbh", device.getDeviceNumber());
+                    trafficInfo.set("jgsj", msg.UTC.toStringTime());
                     try {
                         trafficInfo.set("m_PlateNumber", new String(msg.stuObject.szText, "GBK").trim());
                     } catch (UnsupportedEncodingException e) {
@@ -60,6 +71,9 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                     // 帽子类型
                     trafficInfo.set("emCap", Arrays.stream(msg.stuNonMotor.stuRiderList).map(rider -> rider.emCap).collect(Collectors.toList()).subList(0, msg.stuNonMotor.nNumOfCycling));
                     // trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
+
+                    // 雨棚（伞）类型
+                    trafficInfo.set("emRainShedType", msg.stuNonMotor.emRainShedType);
 
                     byte[] img_array = pBuffer.getByteArray(0, dwBufSize);
                     UploadedFile file = new UploadedFile("image/jpeg", IoUtil.toStream(img_array), "1.jpg");
@@ -79,6 +93,14 @@ public class DahuaAnalyzerDataCallBack implements NetSDKLib.fAnalyzerDataCallBac
                         }
                     }
                     trafficInfo.set("riderFaceUrls", riderFaceUrls);
+
+                    List<ResourceWorkflow> workflowList = Solon.context().getBean(ResourceWorkflowService.class).findBySubscribeDetail("100");
+                    for (ResourceWorkflow workflow : workflowList) {
+                        TaskRunInput taskRunInput = new TaskRunInput();
+                        taskRunInput.setSchema(workflow.getContent());
+                        taskRunInput.setInputs(MapUtil.of("inputs", trafficInfo.toString()));
+                        Solon.context().getBean(FlowgramService.class).taskRun(false, taskRunInput, IdUtil.getSnowflakeNextIdStr());
+                    }
                     log.info("交通路口事件解析结果: {}", trafficInfo);
                     break;
                 default:

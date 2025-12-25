@@ -28,7 +28,7 @@ public class NET_TIME_EX extends NetSDKLib.SdkStructure {
     }
 
     public String toStringTime() {
-        return String.format("%02d/%02d/%02d %02d:%02d:%02d", dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond);
+        return String.format("%02d-%02d-%02d %02d:%02d:%02d", dwYear, dwMonth, dwDay, dwHour, dwMinute, dwSecond);
     }
 
     public String toStringTitle() {
